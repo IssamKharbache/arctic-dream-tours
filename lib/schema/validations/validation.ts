@@ -10,9 +10,17 @@ export const signUpSchema = z.object({
   password: z.string().min(8, {
     message: "Password must be at least 8 characters.",
   }),
-  terms: z.literal(true, {
-    errorMap: () => ({ message: "You must accept the terms and conditions" }),
-  }),
 });
 
 export type TSignUpSchema = z.infer<typeof signUpSchema>;
+
+export const signInSchema = z.object({
+  email: z.string().email({
+    message: "Please enter a valid email address.",
+  }),
+  password: z.string().min(1, {
+    message: "Password is required.",
+  }),
+});
+
+export type TSignInSchema = z.infer<typeof signInSchema>;

@@ -1,6 +1,21 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@font-face {
+  font-family: "Cal Sans";
+  src: url("../public/fonts/CalSans-Regular.ttf");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: var(--font-geist-sans), sans-serif;
+}
+.font-heading {
+  font-family: "Cal Sans", sans-serif;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -119,4 +134,14 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* taosts styling */
+.toast-error {
+  font-family: var(--font-geist-sans), sans-serif !important;
+  background: rgb(223, 92, 92) !important;
+  color: white !important;
+  font-size: 15px;
+  width: 20vw !important;
+  padding: 30px 20px;
 }

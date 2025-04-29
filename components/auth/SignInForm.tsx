@@ -3,8 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
-  signUpSchema,
-  TSignUpSchema,
+  signInSchema,
+  TSignInSchema,
 } from "@/lib/schema/validations/validation";
 import {
   Form,
@@ -16,52 +16,52 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import { Eye, EyeClosed } from "lucide-react";
 
-export function SignUpForm() {
-  const [showPassword, setShowPassword] = useState(false);
+import LoadingButton from "../loaders/LoadingButton";
+import Link from "next/link";
+import { signIn } from "next-auth/react";
 
-  const form = useForm<TSignUpSchema>({
-    resolver: zodResolver(signUpSchema),
+const SignInForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [isPending, setIsPending] = useState(false);
+
+  const form = useForm<TSignInSchema>({
+    resolver: zodResolver(signInSchema),
     defaultValues: {
-      fullName: "",
       email: "",
       password: "",
-      terms: undefined,
     },
   });
 
-  async function onSubmit(data: TSignUpSchema) {
-    console.log(data);
-  }
+  const onSubmit = async (data: TSignInSchema) => {
+    setIsPending(true);
+    const signInData = await signIn("credentials", {
+      email: data.email,
+      password: data.password,
+      redirect: false,
+    });
+    if (!signInData?.ok) {
+      setIsPending(false);
+      console.log(signInData);
+    } else {
+      setIsPending(false);
+      console.log("You are successfullly logged in");
+    }
+  };
 
   return (
     <div className="mx-auto w-full max-w-lg space-y-6 border-2 p-10 rounded-lg">
       <div className="text-center">
-        <h1 className="text-3xl font-bold">Create an account</h1>
+        <h1 className="text-3xl font-bold font-heading">Welcome back</h1>
         <p className="text-muted-foreground">
-          Enter your details to get started
+          Enter your credentials to sign in
         </p>
       </div>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <FormField
-            control={form.control}
-            name="fullName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Full Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="John Doe" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
           <FormField
             control={form.control}
             name="email"
@@ -107,46 +107,36 @@ export function SignUpForm() {
             )}
           />
 
-          <FormField
-            control={form.control}
-            name="terms"
-            render={({ field }) => (
-              <FormItem className="flex items-start space-x-3 space-y-0 rounded-md p-2">
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <div className="space-y-1 leading-none">
-                  <FormLabel>
-                    I agree to the{" "}
-                    <a href="#" className="text-primary hover:underline">
-                      Terms of Service
-                    </a>{" "}
-                    and{" "}
-                    <a href="#" className="text-primary hover:underline">
-                      Privacy Policy
-                    </a>
-                  </FormLabel>
-                </div>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="flex justify-end">
+            <Link
+              href="/forgot-password"
+              className="text-sm text-primary hover:underline"
+            >
+              Forgot password?
+            </Link>
+          </div>
 
-          <Button type="submit" className="w-full">
-            Create Account
-          </Button>
+          {isPending ? (
+            <LoadingButton />
+          ) : (
+            <Button type="submit" className="w-full" disabled={isPending}>
+              Sign In
+            </Button>
+          )}
         </form>
       </Form>
 
       <div className="text-center text-sm text-muted-foreground">
-        Already have an account?{" "}
-        <a href="#" className="text-primary font-medium hover:underline">
-          Sign in
-        </a>
+        Don't have an account?{" "}
+        <Link
+          href="/signup"
+          className="text-primary font-medium hover:underline"
+        >
+          Sign up
+        </Link>
       </div>
     </div>
   );
-}
+};
+
+export default SignInForm;

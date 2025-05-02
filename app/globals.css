@@ -143,5 +143,13 @@ body {
   color: white !important;
   font-size: 15px;
   width: 20vw !important;
-  padding: 30px 20px;
+  padding: 30px 20px !important;
+}
+.toast-success {
+  font-family: var(--font-geist-sans), sans-serif !important;
+  background-color: #5cb85c !important;
+  color: white !important;
+  font-size: 15px;
+  width: 20vw !important;
+  padding: 30px 20px !important;
 }

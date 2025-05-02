@@ -1,3 +1,5 @@
+import SignInDialog from "@/components/auth/dialogs/SignInDialog";
+import SignupDialog from "@/components/auth/dialogs/SignupDialog";
 import NavBar from "@/components/navigation/NavBar";
 
 export default function ClientLayout({
@@ -8,6 +10,8 @@ export default function ClientLayout({
   return (
     <div>
       <NavBar />
+      <SignupDialog />
+      <SignInDialog />
       {children}
     </div>
   );

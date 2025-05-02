@@ -20,10 +20,20 @@ import { Eye, EyeClosed } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { authService } from "@/lib/api/auth";
 import LoadingButton from "../loaders/LoadingButton";
-import { showErrorToast } from "@/lib/toasts/toasts";
+import { useAuthDialogsStore } from "@/store/zustand/store";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "../ui/dialog";
+import { showSuccessToast } from "@/lib/toasts/toasts";
 
 export function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const { isSignupOpen, setIsSignUpOpen, setIsSignInOpen } =
+    useAuthDialogsStore();
 
   const form = useForm<TSignUpSchema>({
     resolver: zodResolver(signUpSchema),
@@ -37,6 +47,9 @@ export function SignUpForm() {
   const { mutate: createUser, isPending } = useMutation({
     mutationFn: authService.signUp,
     onSuccess: () => {
+      showSuccessToast("Signed up successfully");
+      setIsSignUpOpen(false);
+      setIsSignInOpen(true);
       form.reset();
     },
     onError: (error: { message: string }) => {
@@ -59,100 +72,119 @@ export function SignUpForm() {
   const onSubmit = form.handleSubmit((data) => {
     createUser(data);
   });
-
+  const handleOpenChange = () => {
+    setIsSignUpOpen(!isSignupOpen);
+  };
+  const openSignIn = () => {
+    setIsSignUpOpen(false);
+    setIsSignInOpen(true);
+  };
   return (
-    <div className="mx-auto w-full max-w-lg space-y-6 border-2 p-10 rounded-lg">
-      <div className="text-center">
-        <h1 className="text-3xl font-bold font-heading">Create an account</h1>
-        <p className="text-muted-foreground">
-          Enter your details to get started
-        </p>
-      </div>
+    <Dialog onOpenChange={handleOpenChange} open={isSignupOpen}>
+      <DialogTitle></DialogTitle>
+      <DialogContent>
+        <DialogHeader>
+          <DialogDescription></DialogDescription>
+        </DialogHeader>
+        <div className="mx-auto w-full max-w-lg space-y-6  p-10 rounded-lg">
+          <div className="text-center">
+            <h1 className="text-3xl font-bold font-heading">
+              Create an account
+            </h1>
+            <p className="text-muted-foreground">
+              Enter your details to get started
+            </p>
+          </div>
 
-      {/* Display root-level errors */}
-      {form.formState.errors.root && (
-        <p className="text-sm font-medium text-white text-center bg-destructive py-1 rounded p-5">
-          {form.formState.errors.root.message}
-        </p>
-      )}
-
-      <Form {...form}>
-        <form onSubmit={onSubmit} className="space-y-4">
-          <FormField
-            control={form.control}
-            name="fullName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Full Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="John Doe" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="your@email.com" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <div className="relative">
-                    <Input
-                      type={showPassword ? "text" : "password"}
-                      placeholder="••••••••"
-                      {...field}
-                    />
-                    <button
-                      type="button"
-                      className="absolute right-2 top-1/2 -translate-y-1/2"
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? (
-                        <EyeClosed className="h-4 w-4 text-muted-foreground" />
-                      ) : (
-                        <Eye className="h-4 w-4 text-muted-foreground" />
-                      )}
-                    </button>
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {isPending ? (
-            <LoadingButton />
-          ) : (
-            <Button type="submit" className="w-full" disabled={isPending}>
-              Create Account
-            </Button>
+          {/* Display root-level errors */}
+          {form.formState.errors.root && (
+            <p className="text-sm font-medium text-white text-center bg-destructive py-1 rounded p-5">
+              {form.formState.errors.root.message}
+            </p>
           )}
-        </form>
-      </Form>
 
-      <div className="text-center text-sm text-muted-foreground">
-        Already have an account?{" "}
-        <a href="#" className="text-primary font-medium hover:underline">
-          Sign in
-        </a>
-      </div>
-    </div>
+          <Form {...form}>
+            <form onSubmit={onSubmit} className="space-y-4">
+              <FormField
+                control={form.control}
+                name="fullName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Full Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="John Doe" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="your@email.com" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          type={showPassword ? "text" : "password"}
+                          placeholder="••••••••"
+                          {...field}
+                        />
+                        <button
+                          type="button"
+                          className="absolute right-2 top-1/2 -translate-y-1/2"
+                          onClick={() => setShowPassword(!showPassword)}
+                        >
+                          {showPassword ? (
+                            <EyeClosed className="h-4 w-4 text-muted-foreground" />
+                          ) : (
+                            <Eye className="h-4 w-4 text-muted-foreground" />
+                          )}
+                        </button>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {isPending ? (
+                <LoadingButton />
+              ) : (
+                <Button type="submit" className="w-full" disabled={isPending}>
+                  Create Account
+                </Button>
+              )}
+            </form>
+          </Form>
+
+          <div className="text-center text-sm text-muted-foreground">
+            Already have an account?{" "}
+            <button
+              onClick={openSignIn}
+              className="text-primary font-medium hover:underline cursor-pointer"
+            >
+              Sign in
+            </button>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }

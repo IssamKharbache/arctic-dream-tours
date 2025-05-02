@@ -3,6 +3,7 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
+import AuthDropDownMenu from "../auth/AuthDropDownMenu";
 
 const menus = [
   {
@@ -24,7 +25,7 @@ const NavBar = () => {
 
   return (
     <nav className="border-b-2">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between ">
+      <div className="px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
         {/* logo */}
         <div>
           <h1>Arctik</h1>
@@ -38,12 +39,12 @@ const NavBar = () => {
               {menu.name}
             </Link>
           ))}
-          {session ? (
-            <Button onClick={() => signOut()}>Logout</Button>
-          ) : (
-            <Button>Login</Button>
-          )}
         </div>
+        {session ? (
+          <Button onClick={() => signOut()}>Logout</Button>
+        ) : (
+          <AuthDropDownMenu />
+        )}
       </div>
     </nav>
   );

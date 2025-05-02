@@ -11,3 +11,14 @@ export const showErrorToast = (message: string) => {
     draggable: true,
   });
 };
+
+export const showSuccessToast = (message: string) => {
+  toast.success(message, {
+    className: "toast-success text-white ",
+    position: "top-center",
+    autoClose: 3000,
+    closeButton: true,
+    icon: false,
+    draggable: true,
+  });
+};

@@ -1,85 +1,86 @@
 import { db } from "@/lib/database/db";
 import { NextResponse } from "next/server";
-import { hash } from "bcrypt";
+import { hash } from "bcryptjs";
 import { signUpSchema } from "@/lib/schema/validations/validation";
 import { ZodError } from "zod";
 
 export const POST = async (req: Request) => {
-  try {
-    const body = await req.json();
+    try {
+        const body = await req.json();
 
-    const { fullName, email, password } = signUpSchema.parse(body);
-    //check if email already exists
-    const existingUserByEmail = await db.user.findUnique({
-      where: {
-        email,
-      },
-    });
-    if (existingUserByEmail) {
-      return NextResponse.json(
-        {
-          data: null,
-          message: "User with this email already exists",
-        },
-        {
-          status: 409,
+        const { fullName, email, password } = signUpSchema.parse(body);
+        //check if email already exists
+        const existingUserByEmail = await db.user.findUnique({
+            where: {
+                email,
+            },
+        });
+        if (existingUserByEmail) {
+            return NextResponse.json(
+                {
+                    data: null,
+                    message: "User with this email already exists",
+                },
+                {
+                    status: 409,
+                },
+            );
         }
-      );
-    }
 
-    //hashing the password
-    const hashedPassword = await hash(password, 10);
-    const newUser = await db.user.create({
-      data: {
-        email,
-        fullName,
-        password: hashedPassword,
-      },
-    });
+        //hashing the password
+        const hashedPassword = await hash(password, 10);
+        const newUser = await db.user.create({
+            data: {
+                email,
+                fullName,
+                password: hashedPassword,
+            },
+        });
 
-    const { password: newUserPassword, ...user } = newUser;
-    return NextResponse.json(
-      {
-        data: user,
-        message: "User created successfully",
-      },
-      {
-        status: 201,
-      }
-    );
-  } catch (error: unknown) {
-    if (error instanceof ZodError) {
-      return NextResponse.json(
-        {
-          error: error.flatten(),
-          message: "Validation failed",
-        },
-        {
-          status: 400,
+        const { password: newUserPassword, ...user } = newUser;
+        return NextResponse.json(
+            {
+                data: user,
+                message: "User created successfully",
+            },
+            {
+                status: 201,
+            },
+        );
+    } catch (error: unknown) {
+        if (error instanceof ZodError) {
+            return NextResponse.json(
+                {
+                    error: error.flatten(),
+                    message: "Validation failed",
+                },
+                {
+                    status: 400,
+                },
+            );
         }
-      );
-    }
 
-    if (error instanceof Error) {
-      return NextResponse.json(
-        {
-          error: error.message,
-          message: "Something went wrong while trying to create a user",
-        },
-        {
-          status: 500,
+        if (error instanceof Error) {
+            return NextResponse.json(
+                {
+                    error: error.message,
+                    message:
+                        "Something went wrong while trying to create a user",
+                },
+                {
+                    status: 500,
+                },
+            );
         }
-      );
-    }
 
-    return NextResponse.json(
-      {
-        error: "Unknown error occurred",
-        message: "Something went wrong while trying to create a user",
-      },
-      {
-        status: 500,
-      }
-    );
-  }
+        return NextResponse.json(
+            {
+                error: "Unknown error occurred",
+                message: "Something went wrong while trying to create a user",
+            },
+            {
+                status: 500,
+            },
+        );
+    }
 };

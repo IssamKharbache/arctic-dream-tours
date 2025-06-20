@@ -7,7 +7,6 @@ import { ZodError } from "zod";
 export const POST = async (req: Request) => {
     try {
         const body = await req.json();
-
         const { fullName, email, password } = signUpSchema.parse(body);
         //check if email already exists
         const existingUserByEmail = await db.user.findUnique({

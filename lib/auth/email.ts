@@ -1,5 +1,4 @@
-import nodemailer from "nodemailer"; // use import, not require
-
+import nodemailer from "nodemailer";
 import { generateVerificationEmailHtml } from "./generateEmailHtml";
 
 export const sendVerificationEmail = async (toEmail: string, code: string) => {
@@ -14,13 +13,12 @@ export const sendVerificationEmail = async (toEmail: string, code: string) => {
         },
     });
 
-    const info = await transporter.sendMail({
+    await transporter.sendMail({
         from: process.env.EMAIL_USER,
         to: toEmail,
         subject: "Your Verification Code",
         html: html,
     });
 
-    console.log("✅ Message sent: %s", info.messageId);
-    console.log("🔗 Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    console.log("✅ Message sent: %s");
 };

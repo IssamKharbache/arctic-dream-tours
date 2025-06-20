@@ -23,7 +23,6 @@ const menus = [
 
 const NavBar = () => {
     const { data: session } = useSession();
-    console.log(session?.user);
     return (
         <nav className="border-b-2">
             <div className="px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">

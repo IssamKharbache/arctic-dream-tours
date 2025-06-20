@@ -3,7 +3,6 @@ import { generateAndSendVerificationCode } from "@/lib/auth/generateAndSendCode"
 
 export async function POST(req: NextRequest) {
     const { email } = await req.json();
-    console.log(email);
     if (!email)
         return NextResponse.json(
             { error: "Email is required" },

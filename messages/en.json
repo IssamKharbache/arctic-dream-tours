@@ -8,6 +8,96 @@
     },
     "ContactPage": {
         "header": "Contact us",
-        "description": "Welcome to the contact page please fill up the form"
+        "hero": {
+            "title": "Ready for your Finnish adventure?",
+            "subtitle": "Let's plan your perfect winter experience!",
+            "badges": {
+                "aurora": "Aurora Viewing",
+                "husky": "Husky Skiing",
+                "winter": "Winter Activities"
+            }
+        },
+        "form": {
+            "title": "Plan Your Adventure",
+            "description": "Tell us about your dream Finnish experience and we'll make it happen!",
+            "fields": {
+                "firstName": "First Name *",
+                "lastName": "Last Name *",
+                "email": "Email Address *",
+                "phone": "Phone Number",
+                "activity": {
+                    "label": "Preferred Activity",
+                    "options": {
+                        "default": "Select an activity",
+                        "aurora": "Aurora Viewing",
+                        "husky": "Husky Skiing",
+                        "skiing": "Cross-country Skiing",
+                        "snowmobile": "Snowmobile Tours",
+                        "iceFishing": "Ice Fishing",
+                        "reindeer": "Reindeer Farm Visit",
+                        "custom": "Custom Package"
+                    }
+                },
+                "groupSize": "Group Size",
+                "dates": "Preferred Dates",
+                "datesPlaceholder": "e.g., December 15-20, 2024",
+                "message": "Tell us about your dream experience *",
+                "messagePlaceholder": "Describe what you're looking for, any special requirements, or questions you have...",
+                "submit": "Send Message"
+            }
+        },
+        "contactInfo": {
+            "title": "Get In Touch",
+            "visit": {
+                "title": "Visit Us",
+                "address1": "Rovaniemi, Finnish Lapland",
+                "address2": "Arctic Circle, Finland"
+            },
+            "phone": {
+                "title": "Call Us",
+                "number": "+358 40 123 4567",
+                "availability": "Available 8 AM - 8 PM"
+            },
+            "email": {
+                "title": "Email Us",
+                "address": "info@finnishadventures.fi",
+                "responseTime": "We reply within 24 hours"
+            },
+            "hours": {
+                "title": "Operating Hours",
+                "schedule": "Mon - Sun: 8:00 AM - 8:00 PM",
+                "timezone": "Finnish Time (EET/EEST)"
+            }
+        },
+        "activities": {
+            "title": "Popular Experiences",
+            "items": {
+                "aurora": {
+                    "title": "Northern Lights Safari",
+                    "description": "Chase the magical aurora borealis in the Arctic wilderness"
+                },
+                "husky": {
+                    "title": "Husky Sledding Adventure",
+                    "description": "Experience the thrill of mushing through snowy forests"
+                },
+                "skiing": {
+                    "title": "Cross-Country Skiing",
+                    "description": "Glide through pristine Lapland landscapes"
+                },
+                "packages": {
+                    "title": "Multi-Day Packages",
+                    "description": "Complete Finnish winter experience with accommodation"
+                }
+            }
+        },
+        "whyChooseUs": {
+            "title": "Why Choose Arctic Dream Tours?",
+            "points": [
+                "Local experts with 15+ years experience",
+                "Small groups for personalized experiences",
+                "All equipment and safety gear included",
+                "Flexible booking and weather guarantee"
+            ]
+        }
     }
 }

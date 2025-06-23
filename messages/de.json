@@ -1,0 +1,101 @@
+{
+    "HomePage": {
+        "header": "Dies ist die Startseite!",
+        "welcome": { "title": "Willkommen bei Arctic Dream Tours" },
+        "link": "Zur Kontaktseite"
+    },
+    "ContactPage": {
+        "header": "Kontakt",
+        "hero": {
+            "title": "Bereit für Ihr finnisches Abenteuer?",
+            "subtitle": "Lassen Sie uns Ihr perfektes Wintererlebnis planen!",
+            "badges": {
+                "aurora": "Polarlichter",
+                "husky": "Huskytouren",
+                "winter": "Winteraktivitäten"
+            }
+        },
+        "form": {
+            "title": "Planen Sie Ihr Abenteuer",
+            "description": "Erzählen Sie uns von Ihrem finnischen Traumerlebnis und wir machen es wahr!",
+            "fields": {
+                "firstName": "Vorname *",
+                "lastName": "Nachname *",
+                "email": "E-Mail-Adresse *",
+                "phone": "Telefonnummer",
+                "activity": {
+                    "label": "Bevorzugte Aktivität",
+                    "options": {
+                        "default": "Aktivität auswählen",
+                        "aurora": "Polarlichter",
+                        "husky": "Huskytouren",
+                        "skiing": "Langlauf",
+                        "snowmobile": "Schneemobil-Touren",
+                        "iceFishing": "Eisfischen",
+                        "reindeer": "Rentierfarm-Besuch",
+                        "custom": "Maßgeschneidertes Paket"
+                    }
+                },
+                "groupSize": "Gruppengröße",
+                "dates": "Bevorzugte Termine",
+                "datesPlaceholder": "z.B. 15.-20. Dezember 2024",
+                "message": "Beschreiben Sie Ihr Traumerlebnis *",
+                "messagePlaceholder": "Beschreiben Sie, was Sie suchen, besondere Anforderungen oder Fragen...",
+                "submit": "Nachricht senden"
+            }
+        },
+        "contactInfo": {
+            "title": "Kontakt",
+            "visit": {
+                "title": "Besuchen Sie uns",
+                "address1": "Rovaniemi, Finnisch-Lappland",
+                "address2": "Polarkreis, Finnland"
+            },
+            "phone": {
+                "title": "Rufen Sie uns an",
+                "number": "+358 40 123 4567",
+                "availability": "Erreichbar 8-20 Uhr"
+            },
+            "email": {
+                "title": "Schreiben Sie uns",
+                "address": "info@finnishadventures.fi",
+                "responseTime": "Antwort innerhalb von 24 Stunden"
+            },
+            "hours": {
+                "title": "Öffnungszeiten",
+                "schedule": "Mo-So: 8:00-20:00",
+                "timezone": "Finnische Zeit (EET/EEST)"
+            }
+        },
+        "activities": {
+            "title": "Beliebte Erlebnisse",
+            "items": {
+                "aurora": {
+                    "title": "Polarlichter-Safari",
+                    "description": "Erleben Sie die magischen Nordlichter in der arktischen Wildnis"
+                },
+                "husky": {
+                    "title": "Hundeschlitten-Abenteuer",
+                    "description": "Erleben Sie das Fahren mit Huskys durch schneebedeckte Wälder"
+                },
+                "skiing": {
+                    "title": "Langlauf",
+                    "description": "Gleiten Sie durch unberührte Landschaften Lapplands"
+                },
+                "packages": {
+                    "title": "Mehrtagespakete",
+                    "description": "Komplettes Wintererlebnis mit Unterkunft"
+                }
+            }
+        },
+        "whyChooseUs": {
+            "title": "Warum Finnish Adventures?",
+            "points": [
+                "Lokale Experten mit 15+ Jahren Erfahrung",
+                "Kleine Gruppen für persönliche Erlebnisse",
+                "Komplette Ausrüstung inklusive",
+                "Flexible Buchung und Wettergarantie"
+            ]
+        }
+    }
+}

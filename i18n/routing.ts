@@ -1,21 +1,21 @@
 import { defineRouting } from "next-intl/routing";
 
 export const routing = defineRouting({
-    // A list of all locales that are supported
-    locales: ["en", "fr"],
-
-    // Used when no locale matches
+    locales: ["en", "fr", "de"],
     defaultLocale: "en",
     pathnames: {
         "/contact": {
             en: "/contact",
             fr: "/contactez-nous",
+            de: "/kontakt",
         },
     },
 });
+
 export type LocaleType = keyof typeof localeMeta;
-// Add this for flags and labels
+
 export const localeMeta = {
     en: { label: "English", flag: "🇺🇸" },
     fr: { label: "Français", flag: "🇫🇷" },
+    de: { label: "Deutsch", flag: "🇩🇪" },
 };

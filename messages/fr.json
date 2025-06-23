@@ -1,13 +1,103 @@
 {
     "HomePage": {
-        "header": "cell ci est la page home",
+        "header": "Ceci est la page d'accueil !",
         "welcome": {
-            "title": "Bienvenu sur arctic dream tours"
+            "title": "Bienvenue aux circuits du rêve arctique"
         },
-        "link": "go a contact page"
+        "link": "Aller à la page de contact"
     },
     "ContactPage": {
-        "header": "Contactez nous",
-        "description": "Bienvenu sur contact page , vous pouvez bla bla"
+        "header": "Contactez-nous",
+        "hero": {
+            "title": "Prêt pour votre aventure finlandaise ?",
+            "subtitle": "Planifions ensemble votre expérience hivernale parfaite !",
+            "badges": {
+                "aurora": "Observation des aurores",
+                "husky": "Ski avec des huskies",
+                "winter": "Activités hivernales"
+            }
+        },
+        "form": {
+            "title": "Planifiez votre aventure",
+            "description": "Parlez-nous de votre expérience finlandaise rêvée et nous la concrétiserons !",
+            "fields": {
+                "firstName": "Prénom *",
+                "lastName": "Nom *",
+                "email": "Adresse email *",
+                "phone": "Numéro de téléphone",
+                "activity": {
+                    "label": "Activité préférée",
+                    "options": {
+                        "default": "Sélectionnez une activité",
+                        "aurora": "Observation des aurores",
+                        "husky": "Ski avec des huskies",
+                        "skiing": "Ski de fond",
+                        "snowmobile": "Tours en motoneige",
+                        "iceFishing": "Pêche sur glace",
+                        "reindeer": "Visite d'une ferme de rennes",
+                        "custom": "Forfait personnalisé"
+                    }
+                },
+                "groupSize": "Taille du groupe",
+                "dates": "Dates préférées",
+                "datesPlaceholder": "ex. 15-20 décembre 2024",
+                "message": "Parlez-nous de votre expérience rêvée *",
+                "messagePlaceholder": "Décrivez ce que vous recherchez, toute exigence particulière ou questions que vous pourriez avoir...",
+                "submit": "Envoyer mon message"
+            }
+        },
+        "contactInfo": {
+            "title": "Nous contacter",
+            "visit": {
+                "title": "Rendez-nous visite",
+                "address1": "Rovaniemi, Laponie finlandaise",
+                "address2": "Cercle polaire, Finlande"
+            },
+            "phone": {
+                "title": "Appelez-nous",
+                "number": "+358 40 123 4567",
+                "availability": "Disponible de 8h à 20h"
+            },
+            "email": {
+                "title": "Écrivez-nous",
+                "address": "info@finnishadventures.fi",
+                "responseTime": "Nous répondons dans les 24 heures"
+            },
+            "hours": {
+                "title": "Heures d'ouverture",
+                "schedule": "Lun - Dim : 8h00 - 20h00",
+                "timezone": "Heure finlandaise (EET/EEST)"
+            }
+        },
+        "activities": {
+            "title": "Expériences populaires",
+            "items": {
+                "aurora": {
+                    "title": "Safari des aurores boréales",
+                    "description": "Traquez la magie des aurores boréales dans la nature arctique"
+                },
+                "husky": {
+                    "title": "Aventure en traîneau à chiens",
+                    "description": "Vivez le frisson de conduire un attelage à travers les forêts enneigées"
+                },
+                "skiing": {
+                    "title": "Ski de fond",
+                    "description": "Glissez à travers les paysages immaculés de Laponie"
+                },
+                "packages": {
+                    "title": "Forfaits multi-jours",
+                    "description": "Expérience hivernale finlandaise complète avec hébergement"
+                }
+            }
+        },
+        "whyChooseUs": {
+            "title": "Pourquoi choisir Arctic Dream Tours ?",
+            "points": [
+                "Experts locaux avec 15+ ans d'expérience",
+                "Petits groupes pour des expériences personnalisées",
+                "Tout l'équipement et le matériel de sécurité inclus",
+                "Réservation flexible et garantie météo"
+            ]
+        }
     }
 }

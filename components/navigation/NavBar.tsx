@@ -1,10 +1,9 @@
 "use client";
 import { signOut, useSession } from "next-auth/react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import React from "react";
 import { Button } from "../ui/button";
 import AuthDropDownMenu from "../auth/AuthDropDownMenu";
-import { toast } from "react-toastify";
 import LocaleSwitcher from "./LocaleSwitcher";
 
 const menus = [
@@ -25,7 +24,7 @@ const menus = [
 const NavBar = () => {
     const { data: session } = useSession();
     return (
-        <nav className="border-b-2">
+        <nav>
             <div className="px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
                 {/* logo */}
                 <div>

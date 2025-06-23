@@ -1,0 +1,13 @@
+{
+    "HomePage": {
+        "header": "This is the home page !",
+        "welcome": {
+            "title": "Welcome to the arctic dream tours"
+        },
+        "link": "Go to contact page"
+    },
+    "ContactPage": {
+        "header": "Contact us",
+        "description": "Welcome to the contact page please fill up the form"
+    }
+}

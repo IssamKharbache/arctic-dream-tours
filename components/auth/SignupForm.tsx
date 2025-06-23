@@ -26,8 +26,8 @@ import {
     DialogTitle,
 } from "../ui/dialog";
 import { Button } from "../ui/button";
-import { useSendVerificationMail } from "@/app/hooks/useSendVerficationMail";
-import { useSignUpMutation } from "@/app/hooks/useSignUpMutation";
+import { useSendVerificationMail } from "@/app/[locale]/hooks/useSendVerficationMail";
+import { useSignUpMutation } from "@/app/[locale]/hooks/useSignUpMutation";
 
 export function SignUpForm() {
     const [showPassword, setShowPassword] = useState(false);

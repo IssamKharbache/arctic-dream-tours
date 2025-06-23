@@ -1,0 +1,13 @@
+{
+    "HomePage": {
+        "header": "cell ci est la page home",
+        "welcome": {
+            "title": "Bienvenu sur arctic dream tours"
+        },
+        "link": "go a contact page"
+    },
+    "ContactPage": {
+        "header": "Contactez nous",
+        "description": "Bienvenu sur contact page , vous pouvez bla bla"
+    }
+}

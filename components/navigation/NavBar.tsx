@@ -5,6 +5,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import AuthDropDownMenu from "../auth/AuthDropDownMenu";
 import { toast } from "react-toastify";
+import LocaleSwitcher from "./LocaleSwitcher";
 
 const menus = [
     {
@@ -40,7 +41,7 @@ const NavBar = () => {
                         </Link>
                     ))}
                 </div>
-                <button onClick={() => toast("test")}>Trigger</button>
+                <LocaleSwitcher />
                 {session ? (
                     <Button onClick={() => signOut()}>Logout</Button>
                 ) : (

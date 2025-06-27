@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { Eye, EyeOff, Loader, Loader2, Lock, Mail, User2 } from "lucide-react";
+import { Eye, EyeOff, Loader2, Lock, Mail, User2 } from "lucide-react";
 import LoadingButton from "../loaders/LoadingButton";
 import { useAuthDialogsStore } from "@/store/zustand/store";
 import {
@@ -35,6 +35,7 @@ export function SignUpForm() {
     const [emailCode, setEmailCode] = useState("");
     const [isVerifying, setIsVerifying] = useState(false);
     const [isEmailVerified, setIsEmailVerified] = useState(false);
+    const [isCodeVerifying, setIsCodeVerifying] = useState(false);
     const { isSignupOpen, setIsSignUpOpen, setIsSignInOpen } =
         useAuthDialogsStore();
 
@@ -97,6 +98,7 @@ export function SignUpForm() {
     };
 
     const verifyCode = async () => {
+        setIsCodeVerifying(true);
         try {
             const res = await fetch(
                 "http://localhost:3000/api/auth/verifyCode",
@@ -109,10 +111,12 @@ export function SignUpForm() {
                 },
             );
             if (res.ok) {
+                setIsCodeVerifying(false);
                 setIsEmailVerified(true);
                 form.clearErrors();
             }
         } catch (error) {
+            setIsCodeVerifying(false);
             console.log(error);
         }
     };
@@ -221,7 +225,7 @@ export function SignUpForm() {
                                                         variant="secondary"
                                                         onClick={verifyCode}
                                                     >
-                                                        {isVerifyingPending ? (
+                                                        {isCodeVerifying ? (
                                                             <>
                                                                 <Loader2 className="animate-spin" />
                                                             </>

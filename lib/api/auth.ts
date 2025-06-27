@@ -10,6 +10,7 @@ export const authService = {
                 email: email.trim().toLowerCase(),
                 fullName,
                 password,
+                role: "USER",
             }),
         });
         if (!response.ok) {

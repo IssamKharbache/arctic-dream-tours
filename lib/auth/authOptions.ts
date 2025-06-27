@@ -22,18 +22,18 @@ export const authOptions: NextAuthOptions = {
                 const email = credentials?.email;
                 const password = credentials?.password;
 
-                // Check if user credentials are Correct
                 if (!email || !password) {
                     return null;
                 }
+
                 const user = await db.user.findUnique({
-                    where: {
-                        email,
-                    },
+                    where: { email },
                 });
+
                 if (!user) {
                     return null;
                 }
+
                 const validPassword = await bcrypt.compare(
                     password,
                     user.password,
@@ -41,9 +41,13 @@ export const authOptions: NextAuthOptions = {
                 if (!validPassword) {
                     return null;
                 }
+
                 return {
                     id: user.id,
                     email: user.email,
+                    role: user.role,
+                    isVerified: user.isEmailVerified,
+                    name: user.fullName,
                 };
             },
         }),
@@ -51,26 +55,28 @@ export const authOptions: NextAuthOptions = {
     session: {
         strategy: "jwt",
     },
-
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
-                return {
-                    ...token,
-                    email: user.email,
-                    id: user.id,
-                };
+                token.id = user.id;
+                token.email = user.email;
+                token.role = user.role;
+                token.isVerified = user.isVerified;
+                token.name = user.name;
             }
             return token;
         },
-        async session({ session, user, token }) {
+        async session({ session, token }) {
             return {
                 ...session,
                 user: {
                     ...session.user,
                     id: token.id,
                     email: token.email,
+                    role: token.role,
+                    isVerified: token.isVerified,
+                    name: token.name,
                 },
             };
         },

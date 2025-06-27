@@ -42,18 +42,26 @@ export default function LocaleSwitcherSelect({
     return (
         <Select value={selectedLocale} onValueChange={onSelectChange}>
             <SelectTrigger
-                className="w-[120px] h-8 border-none bg-transparent focus:ring-0 focus:ring-offset-0"
+                className="w-[130px] h-10 border border-gray-300 bg-white rounded-md px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-between"
                 aria-label={label}
             >
-                <SelectValue
-                    placeholder={`${localeMeta[selectedLocale].flag} ${localeMeta[selectedLocale].label}`}
-                />
+                <span className="flex items-center gap-2">
+                    <span>{localeMeta[selectedLocale].flag}</span>
+                    <span className="text-sm">
+                        {localeMeta[selectedLocale].label}
+                    </span>
+                </span>
             </SelectTrigger>
 
             <SelectContent>
                 {routing.locales.map((locale) => (
                     <SelectItem key={locale} value={locale}>
-                        {localeMeta[locale].flag} {localeMeta[locale].label}
+                        <div className="flex items-center gap-2">
+                            <span>{localeMeta[locale].flag}</span>
+                            <span className="text-sm">
+                                {localeMeta[locale].label}
+                            </span>
+                        </div>
                     </SelectItem>
                 ))}
             </SelectContent>

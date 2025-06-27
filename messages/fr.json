@@ -1,4 +1,16 @@
 {
+    "Navbar": {
+        "home": "Accueil",
+        "about": "À propos",
+        "contact": "Contactez-nous",
+        "myProfile": "Mon profil",
+        "account": "Compte",
+        "bookings": "Réservations",
+        "dashboard": "Tableau de bord",
+        "logout": "Se déconnecter",
+        "signUp": "S'inscrire",
+        "logIn": "Se connecter"
+    },
     "HomePage": {
         "header": "Ceci est la page d'accueil !",
         "welcome": {

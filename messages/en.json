@@ -1,4 +1,16 @@
 {
+    "Navbar": {
+        "home": "Home",
+        "about": "About",
+        "contact": "Contact",
+        "myProfile": "My Profile",
+        "account": "Account",
+        "bookings": "Bookings",
+        "dashboard": "Dashboard",
+        "logout": "Log out",
+        "signUp": "Sign up",
+        "logIn": "Log in"
+    },
     "HomePage": {
         "header": "This is the home page !",
         "welcome": {

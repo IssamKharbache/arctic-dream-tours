@@ -1,11 +1,10 @@
 "use client";
 
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { Link } from "@/i18n/navigation";
 import React from "react";
 import { Button } from "../ui/button";
 import AuthDropDownMenu from "../auth/AuthDropDownMenu";
-import LocaleSwitcher from "./LocaleSwitcher";
 import { useAuthDialogsStore } from "@/store/zustand/store";
 import { useTranslations } from "next-intl";
 
@@ -28,12 +27,13 @@ const NavBar = () => {
     const t = useTranslations("Navbar");
     const { data: session } = useSession();
     const { setIsSignUpOpen, setIsSignInOpen } = useAuthDialogsStore();
-
+    // open the sign up dialog
     const openSignUp = () => {
         setIsSignUpOpen(true);
         setIsSignInOpen(false);
     };
 
+    // open the sign in dialog
     const openSignIn = () => {
         setIsSignUpOpen(false);
         setIsSignInOpen(true);

@@ -13,6 +13,7 @@ import { useSession, signOut } from "next-auth/react";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 const AuthDropDownMenu = () => {
     const { data: session } = useSession();
@@ -46,12 +47,14 @@ const AuthDropDownMenu = () => {
                 </DropdownMenuItem>
 
                 {session?.user.role === "ADMIN" && (
-                    <DropdownMenuItem
-                        onClick={() => router.push("/dashboard")}
-                        className="cursor-pointer"
-                    >
-                        {t("dashboard")}
-                    </DropdownMenuItem>
+                    <Link href="/dashboard">
+                        <DropdownMenuItem
+                            onClick={() => router.push("/dashboard")}
+                            className="cursor-pointer"
+                        >
+                            {t("dashboard")}
+                        </DropdownMenuItem>
+                    </Link>
                 )}
 
                 <DropdownMenuSeparator />

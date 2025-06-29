@@ -1,9 +1,7 @@
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import Providers from "./providers/Providers";
-import "./globals.css";
-import { Geist, Geist_Mono } from "next/font/google";
+import "../globals.css";
 export default async function LocaleLayout({
     children,
     params,
@@ -16,13 +14,5 @@ export default async function LocaleLayout({
     if (!hasLocale(routing.locales, locale)) {
         notFound();
     }
-    return (
-        <html lang={locale}>
-            <body>
-                <NextIntlClientProvider>
-                    <Providers>{children}</Providers>
-                </NextIntlClientProvider>
-            </body>
-        </html>
-    );
+    return <NextIntlClientProvider>{children}</NextIntlClientProvider>;
 }

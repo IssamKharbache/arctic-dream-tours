@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 import Providers from "./providers/Providers";
 
@@ -9,7 +10,10 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning>
             <body>
-                <Providers>{children}</Providers>
+                <Providers>
+                    <Toaster position="top-right" />
+                    {children}
+                </Providers>
             </body>
         </html>
     );

@@ -1,5 +1,4 @@
 "use client";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
     signUpSchema,
@@ -28,8 +27,11 @@ import {
 import { Button } from "../ui/button";
 import { useSendVerificationMail } from "@/app/hooks/useSendVerficationMail";
 import { useSignUpMutation } from "@/app/hooks/useSignUpMutation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 
 export function SignUpForm() {
+    //states
     const [showPassword, setShowPassword] = useState(false);
     const [emailSent, setEmailSent] = useState(false);
     const [emailCode, setEmailCode] = useState("");
@@ -39,34 +41,46 @@ export function SignUpForm() {
     const { isSignupOpen, setIsSignUpOpen, setIsSignInOpen } =
         useAuthDialogsStore();
 
+    //getting translations
+    const t = useTranslations("signup");
+    const v = useTranslations("validation");
+    // Use the factory function with v for validation messages
+    const schema = signUpSchema(v);
+    //zod form
     const form = useForm<TSignUpSchema>({
-        resolver: zodResolver(signUpSchema),
+        resolver: zodResolver(schema),
         defaultValues: {
-            fullName: "",
+            firstName: "",
+            lastName: "",
             email: "",
             password: "",
         },
     });
-
-    const { mutate: sendVerifMail, isPending: isVerifyingPending } =
-        useSendVerificationMail(
-            () => {
-                setEmailSent(true);
-                setIsVerifying(false);
-            },
-            () => {
-                setIsVerifying(false);
-            },
-        );
-
-    const { mutate: createUser, isPending } = useSignUpMutation(form);
-
+    //send email verif mutation
+    const { mutate: sendVerifMail } = useSendVerificationMail(
+        () => {
+            setEmailSent(true);
+            setIsVerifying(false);
+        },
+        () => {
+            setIsVerifying(false);
+        },
+    );
+    //create user mutation
+    const { mutate: createUser, isPending } = useSignUpMutation(form, v, {
+        onSuccessExtra: () => {
+            setEmailCode("");
+            setIsEmailVerified(false);
+            setEmailSent(false);
+        },
+    });
+    //send email verification
     const sendMail = () => {
         const email = form.getValues("email");
         if (!email) {
             form.setError("email", {
                 type: "manual",
-                message: "Email is required",
+                message: v("emailRequired"),
             });
             return;
         }
@@ -81,60 +95,65 @@ export function SignUpForm() {
         if (!isEmailVerified) {
             form.setError("email", {
                 type: "manual",
-                message: "You must verify your email first",
+                message: v("emailNotVerified"),
             });
             return;
         }
         createUser(data);
-        setEmailCode("");
-        setIsEmailVerified(false);
-        setEmailSent(false);
     });
-
+    //
     const handleOpenChange = () => setIsSignUpOpen(!isSignupOpen);
     const openSignIn = () => {
         setIsSignUpOpen(false);
         setIsSignInOpen(true);
     };
-
+    // verify code function
     const verifyCode = async () => {
         setIsCodeVerifying(true);
         try {
-            const res = await fetch(
-                "http://localhost:3000/api/auth/verifyCode",
-                {
-                    method: "POST",
-                    body: JSON.stringify({
-                        email: form.getValues("email"),
-                        code: emailCode,
-                    }),
-                },
-            );
+            const url = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
+            const res = await fetch(`${url}/api/auth/verifyCode`, {
+                method: "POST",
+                body: JSON.stringify({
+                    email: form.getValues("email"),
+                    code: emailCode,
+                }),
+            });
             if (res.ok) {
                 setIsCodeVerifying(false);
                 setIsEmailVerified(true);
                 form.clearErrors();
+            } else {
+                setIsCodeVerifying(false);
+                form.setError("email", {
+                    type: "manual",
+                    message: v("rootNetworkError"),
+                });
             }
         } catch (error) {
             setIsCodeVerifying(false);
-            console.log(error);
+            form.setError("root", {
+                type: "manual",
+                message: v("rootNetworkError"),
+            });
+            console.error(error);
         }
     };
 
     return (
         <Dialog onOpenChange={handleOpenChange} open={isSignupOpen}>
-            <DialogTitle />
+            <DialogTitle></DialogTitle>
             <DialogContent>
                 <DialogHeader>
-                    <DialogDescription />
+                    <DialogDescription>{t("description")}</DialogDescription>
                 </DialogHeader>
                 <div className="mx-auto w-full max-w-lg space-y-6 p-10 rounded-lg">
                     <div className="text-center">
                         <h1 className="text-3xl font-bold font-heading">
-                            Create an account
+                            {t("title")}
                         </h1>
                         <p className="text-muted-foreground">
-                            Enter your details to get started
+                            {t("description")}
                         </p>
                     </div>
 
@@ -146,18 +165,40 @@ export function SignUpForm() {
 
                     <Form {...form}>
                         <form onSubmit={onSubmit} className="space-y-4">
-                            {/* Full Name */}
+                            {/* First Name */}
                             <FormField
                                 control={form.control}
-                                name="fullName"
+                                name="firstName"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Full name</FormLabel>
+                                        <FormLabel>{t("firstName")}</FormLabel>
                                         <div className="relative">
                                             <User2 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                                             <FormControl>
                                                 <Input
-                                                    placeholder="Enter your full name"
+                                                    placeholder={t("firstName")}
+                                                    className="pl-10 h-12"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                        </div>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+
+                            {/* Last Name */}
+                            <FormField
+                                control={form.control}
+                                name="lastName"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>{t("lastName")}</FormLabel>
+                                        <div className="relative">
+                                            <User2 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                                            <FormControl>
+                                                <Input
+                                                    placeholder={t("lastName")}
                                                     className="pl-10 h-12"
                                                     {...field}
                                                 />
@@ -174,13 +215,13 @@ export function SignUpForm() {
                                 name="email"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Email address</FormLabel>
+                                        <FormLabel>{t("email")}</FormLabel>
                                         <div className="relative flex space-x-2">
                                             <div className="relative w-full">
                                                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                                                 <FormControl>
                                                     <Input
-                                                        placeholder="Enter your email"
+                                                        placeholder={t("email")}
                                                         className="pl-10 h-12"
                                                         {...field}
                                                     />
@@ -195,7 +236,7 @@ export function SignUpForm() {
                                                 {isVerifying ? (
                                                     <Loader2 className="animate-spin" />
                                                 ) : (
-                                                    "Verify"
+                                                    t("verifyButton")
                                                 )}
                                             </Button>
                                         </div>
@@ -203,15 +244,18 @@ export function SignUpForm() {
                                         {emailSent && (
                                             <>
                                                 <p className="text-sm text-green-700">
-                                                    Email sent. Check your inbox
-                                                    or spam folder for the code.
+                                                    {t("emailSentMessage")}
                                                 </p>
                                                 <div className="mt-3 space-y-2">
                                                     <FormLabel>
-                                                        Enter verification code
+                                                        {t(
+                                                            "enterVerificationCode",
+                                                        )}
                                                     </FormLabel>
                                                     <Input
-                                                        placeholder="6-digit code"
+                                                        placeholder={t(
+                                                            "enterVerificationCode",
+                                                        )}
                                                         maxLength={6}
                                                         value={emailCode}
                                                         onChange={(e) =>
@@ -226,11 +270,11 @@ export function SignUpForm() {
                                                         onClick={verifyCode}
                                                     >
                                                         {isCodeVerifying ? (
-                                                            <>
-                                                                <Loader2 className="animate-spin" />
-                                                            </>
+                                                            <Loader2 className="animate-spin" />
                                                         ) : (
-                                                            "Confirm Code"
+                                                            t(
+                                                                "confirmCodeButton",
+                                                            )
                                                         )}
                                                     </Button>
                                                 </div>
@@ -239,7 +283,7 @@ export function SignUpForm() {
 
                                         {isEmailVerified && (
                                             <p className="text-sm text-green-600">
-                                                Email successfully verified ✅
+                                                {t("emailVerifiedMessage")}
                                             </p>
                                         )}
 
@@ -254,7 +298,7 @@ export function SignUpForm() {
                                 name="password"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Password</FormLabel>
+                                        <FormLabel>{t("password")}</FormLabel>
                                         <div className="relative">
                                             <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                                             <FormControl>
@@ -264,7 +308,7 @@ export function SignUpForm() {
                                                             ? "text"
                                                             : "password"
                                                     }
-                                                    placeholder="Enter your password"
+                                                    placeholder={t("password")}
                                                     className="pl-10 pr-10 h-12"
                                                     {...field}
                                                 />
@@ -291,18 +335,18 @@ export function SignUpForm() {
                             />
 
                             <LoadingButton loading={isPending}>
-                                Create account
+                                {t("createAccountButton")}
                             </LoadingButton>
                         </form>
                     </Form>
 
                     <div className="text-center text-sm text-muted-foreground">
-                        Already have an account?{" "}
+                        {t("alreadyHaveAccount")}{" "}
                         <button
                             onClick={openSignIn}
                             className="text-primary font-medium hover:underline"
                         >
-                            Sign in
+                            {t("signIn")}
                         </button>
                     </div>
                 </div>

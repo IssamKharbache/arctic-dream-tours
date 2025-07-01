@@ -1,0 +1,29 @@
+{
+    "signup": {
+        "title": "アカウントを作成",
+        "description": "始めるために詳細を入力してください",
+        "firstName": "名",
+        "lastName": "姓",
+        "email": "メールアドレス",
+        "password": "パスワード",
+        "verifyButton": "確認",
+        "emailSentMessage": "メールが送信されました。受信トレイまたは迷惑メールフォルダでコードを確認してください。",
+        "enterVerificationCode": "確認コードを入力してください",
+        "confirmCodeButton": "コードを確認",
+        "emailVerifiedMessage": "メールが正常に確認されました ✅",
+        "alreadyHaveAccount": "すでにアカウントをお持ちですか？",
+        "signIn": "サインイン",
+        "createAccountButton": "アカウント作成"
+    },
+    "validation": {
+        "firstNameRequired": "名は必須です",
+        "lastNameRequired": "姓は必須です",
+        "emailRequired": "メールアドレスは必須です",
+        "emailInvalid": "メールアドレスが無効です",
+        "passwordRequired": "パスワードは必須です",
+        "passwordMinLength": "パスワードは6文字以上である必要があります",
+        "emailNotVerified": "まずメールを確認してください",
+        "rootNetworkError": "インターネットに接続されていることを確認して、もう一度お試しください。",
+        "userExists": "このメールアドレスはすでに使用されています"
+    }
+}

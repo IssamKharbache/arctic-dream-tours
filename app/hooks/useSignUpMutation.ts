@@ -4,23 +4,32 @@ import { showSuccessToast } from "@/lib/toasts/toasts";
 import { useAuthDialogsStore } from "@/store/zustand/store";
 import { UseFormReturn } from "react-hook-form";
 import { TSignUpSchema } from "@/lib/schema/validations/validation";
+import { useTranslations } from "next-intl";
 
-export const useSignUpMutation = (form: UseFormReturn<TSignUpSchema>) => {
+export const useSignUpMutation = (
+    form: UseFormReturn<TSignUpSchema>,
+    v: (key: string) => string,
+    options?: {
+        onSuccessExtra?: () => void;
+    },
+) => {
     const { setIsSignUpOpen, setIsSignInOpen } = useAuthDialogsStore();
+    const t = useTranslations("signup");
 
     return useMutation({
         mutationFn: authService.signUp,
         onSuccess: () => {
-            showSuccessToast("Signed up successfully");
+            showSuccessToast("Created succefully");
             setIsSignUpOpen(false);
             setIsSignInOpen(true);
             form.reset();
+            if (options?.onSuccessExtra) options.onSuccessExtra();
         },
         onError: (error: { message: string }) => {
             if (error.message === "User with this email already exists") {
                 form.setError("email", {
                     type: "manual",
-                    message: error.message,
+                    message: v("userExists"),
                 });
             } else {
                 form.setError("root", {

@@ -2,13 +2,14 @@ import { TSignUpSchema } from "../schema/validations/validation";
 
 export const authService = {
     signUp: async (data: TSignUpSchema) => {
-        const { email, fullName, password } = data;
+        const { email, firstName, lastName, password } = data;
         const response = await fetch("/api/user/signup", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 email: email.trim().toLowerCase(),
-                fullName,
+                firstName,
+                lastName,
                 password,
                 role: "USER",
             }),

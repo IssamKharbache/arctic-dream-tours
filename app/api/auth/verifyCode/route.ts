@@ -38,11 +38,6 @@ export async function POST(request: Request) {
             );
         }
 
-        // Optionally delete the used verification record
-        await db.emailVerification.deleteMany({
-            where: { email },
-        });
-
         return NextResponse.json({ success: true });
     } catch (error) {
         console.error(error);

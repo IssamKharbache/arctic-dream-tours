@@ -1,13 +1,13 @@
 import { db } from "@/lib/database/db";
 import { NextResponse } from "next/server";
 import { hash } from "bcryptjs";
-import { signUpSchema } from "@/lib/schema/validations/validation";
 import { ZodError } from "zod";
 
 export const POST = async (req: Request) => {
     try {
         const body = await req.json();
-        const { fullName, email, password, role } = signUpSchema.parse(body);
+        const { firstName, lastName, email, password, role } = body;
+
         //check if email already exists
         const existingUserByEmail = await db.user.findUnique({
             where: {
@@ -31,7 +31,8 @@ export const POST = async (req: Request) => {
         const newUser = await db.user.create({
             data: {
                 email,
-                fullName,
+                firstName,
+                lastName,
                 role,
                 password: hashedPassword,
                 isEmailVerified: true,
@@ -39,6 +40,11 @@ export const POST = async (req: Request) => {
         });
 
         const { password: newUserPassword, ...user } = newUser;
+        //deleting the email verification data after the sign up
+        await db.emailVerification.deleteMany({
+            where: { email },
+        });
+
         return NextResponse.json(
             {
                 data: user,

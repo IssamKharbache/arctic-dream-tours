@@ -27,11 +27,17 @@ const AuthDropDownMenu = () => {
             </DropdownMenuTrigger>
 
             <DropdownMenuContent className="mr-3 min-w-[180px]">
-                <DropdownMenuLabel className="text-center">
-                    {t("myProfile")}
+                <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                        <p className="text-sm font-medium leading-none text-gray-900 dark:text-gray-100">
+                            {session?.user.lastName} {session?.user.firstName}
+                        </p>
+                        <p className="text-xs leading-none text-gray-500 dark:text-gray-400">
+                            {session?.user.email}
+                        </p>
+                    </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-
                 <DropdownMenuItem
                     onClick={() => router.push("/account")}
                     className="cursor-pointer"

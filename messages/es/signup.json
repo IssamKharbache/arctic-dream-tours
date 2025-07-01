@@ -1,0 +1,29 @@
+{
+    "signup": {
+        "title": "Crear una cuenta",
+        "description": "Introduce tus datos para comenzar",
+        "firstName": "Nombre",
+        "lastName": "Apellido",
+        "email": "Correo electrónico",
+        "password": "Contraseña",
+        "verifyButton": "Verificar",
+        "emailSentMessage": "Correo enviado. Revisa tu bandeja de entrada o carpeta de spam para el código.",
+        "enterVerificationCode": "Introduce el código de verificación",
+        "confirmCodeButton": "Confirmar código",
+        "emailVerifiedMessage": "Correo verificado con éxito ✅",
+        "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+        "signIn": "Iniciar sesión",
+        "createAccountButton": "Crear cuenta"
+    },
+    "validation": {
+        "firstNameRequired": "El nombre es obligatorio",
+        "lastNameRequired": "El apellido es obligatorio",
+        "emailRequired": "El correo es obligatorio",
+        "emailInvalid": "El correo no es válido",
+        "passwordRequired": "La contraseña es obligatoria",
+        "passwordMinLength": "La contraseña debe tener al menos 6 caracteres",
+        "emailNotVerified": "Debes verificar tu correo primero",
+        "rootNetworkError": "Asegúrate de estar conectado a internet e inténtalo de nuevo.",
+        "userExists": "Ya existe un usuario con este correo"
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "signup": {
+        "title": "Ein Konto erstellen",
+        "description": "Geben Sie Ihre Daten ein, um zu starten",
+        "firstName": "Vorname",
+        "lastName": "Nachname",
+        "email": "E-Mail-Adresse",
+        "password": "Passwort",
+        "verifyButton": "Verifizieren",
+        "emailSentMessage": "E-Mail gesendet. Überprüfen Sie Ihren Posteingang oder Spam-Ordner nach dem Code.",
+        "enterVerificationCode": "Verifizierungscode eingeben",
+        "confirmCodeButton": "Code bestätigen",
+        "emailVerifiedMessage": "E-Mail erfolgreich verifiziert ✅",
+        "alreadyHaveAccount": "Haben Sie bereits ein Konto?",
+        "signIn": "Anmelden",
+        "createAccountButton": "Konto erstellen"
+    },
+    "validation": {
+        "firstNameRequired": "Vorname ist erforderlich",
+        "lastNameRequired": "Nachname ist erforderlich",
+        "emailRequired": "E-Mail ist erforderlich",
+        "emailInvalid": "E-Mail ist ungültig",
+        "passwordRequired": "Passwort ist erforderlich",
+        "passwordMinLength": "Passwort muss mindestens 6 Zeichen lang sein",
+        "emailNotVerified": "Sie müssen zuerst Ihre E-Mail verifizieren",
+        "rootNetworkError": "Stellen Sie sicher, dass Sie mit dem Internet verbunden sind, und versuchen Sie es erneut.",
+        "userExists": "Ein Benutzer mit dieser E-Mail existiert bereits"
+    }
+}

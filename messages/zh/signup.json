@@ -1,0 +1,29 @@
+{
+    "signup": {
+        "title": "创建账户",
+        "description": "输入您的详细信息开始使用",
+        "firstName": "名字",
+        "lastName": "姓氏",
+        "email": "电子邮件地址",
+        "password": "密码",
+        "verifyButton": "验证",
+        "emailSentMessage": "邮件已发送。请检查您的收件箱或垃圾邮件文件夹获取验证码。",
+        "enterVerificationCode": "输入验证码",
+        "confirmCodeButton": "确认验证码",
+        "emailVerifiedMessage": "邮箱验证成功 ✅",
+        "alreadyHaveAccount": "已有账户？",
+        "signIn": "登录",
+        "createAccountButton": "创建账户"
+    },
+    "validation": {
+        "firstNameRequired": "名字是必填项",
+        "lastNameRequired": "姓氏是必填项",
+        "emailRequired": "邮箱是必填项",
+        "emailInvalid": "邮箱格式无效",
+        "passwordRequired": "密码是必填项",
+        "passwordMinLength": "密码至少6个字符",
+        "emailNotVerified": "您必须先验证邮箱",
+        "rootNetworkError": "请确保您已连接到互联网并重试。",
+        "userExists": "该邮箱已被注册"
+    }
+}

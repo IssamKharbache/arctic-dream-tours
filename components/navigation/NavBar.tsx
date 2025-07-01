@@ -26,6 +26,8 @@ const menus = [
 const NavBar = () => {
     const t = useTranslations("Navbar");
     const { data: session } = useSession();
+    console.log(session);
+
     const { setIsSignUpOpen, setIsSignInOpen } = useAuthDialogsStore();
     // open the sign up dialog
     const openSignUp = () => {

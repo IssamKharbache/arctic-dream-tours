@@ -3,14 +3,21 @@ import { hasLocale } from "next-intl";
 import { routing } from "./routing";
 
 export default getRequestConfig(async ({ requestLocale }) => {
-    // Typically corresponds to the `[locale]` segment
     const requested = await requestLocale;
     const locale = hasLocale(routing.locales, requested)
         ? requested
         : routing.defaultLocale;
 
+    const [commonMessages, signupMessages] = await Promise.all([
+        import(`@/messages/${locale}/common.json`).then((m) => m.default),
+        import(`@/messages/${locale}/signup.json`).then((m) => m.default),
+    ]);
+
     return {
         locale,
-        messages: (await import(`@/messages/${locale}.json`)).default,
+        messages: {
+            ...commonMessages,
+            ...signupMessages,
+        },
     };
 });

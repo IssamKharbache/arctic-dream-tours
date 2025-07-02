@@ -1,0 +1,23 @@
+{
+    "signin": {
+        "signin": {
+            "title": "Welcome back",
+            "description": "Enter your information to sign in",
+            "email": "Email address",
+            "password": "Password",
+            "rememberMe": "Remember me",
+            "forgotPassword": "Forgot password?",
+            "signInButton": "Sign in",
+            "noAccount": "Don't have an account?",
+            "signUp": "Sign up"
+        },
+        "validation": {
+            "emailInvalid": "Please enter a valid email address.",
+            "passwordRequired": "Password is required."
+        },
+        "errors": {
+            "invalidCredentials": "Your email or password are incorrect.",
+            "genericError": "Something went wrong, try again later."
+        }
+    }
+}

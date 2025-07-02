@@ -8,16 +8,51 @@ export default getRequestConfig(async ({ requestLocale }) => {
         ? requested
         : routing.defaultLocale;
 
-    const [commonMessages, signupMessages] = await Promise.all([
-        import(`@/messages/${locale}/common.json`).then((m) => m.default),
-        import(`@/messages/${locale}/signup.json`).then((m) => m.default),
-    ]);
+    try {
+        const [commonMessages, signupMessages, signinMessages] =
+            await Promise.all([
+                import(`@/messages/${locale}/common.json`)
+                    .then((m) => m.default)
+                    .catch(() => ({})),
+                import(`@/messages/${locale}/signup.json`)
+                    .then((m) => m.default)
+                    .catch(() => ({})),
+                import(`@/messages/${locale}/signin.json`)
+                    .then((m) => m.default)
+                    .catch(() => ({})),
+            ]);
 
-    return {
-        locale,
-        messages: {
-            ...commonMessages,
-            ...signupMessages,
-        },
-    };
+        return {
+            locale,
+            messages: {
+                ...commonMessages,
+                ...signupMessages,
+                ...signinMessages,
+            },
+        };
+    } catch (error) {
+        console.error(`Failed to load messages for locale ${locale}:`, error);
+        // Fallback to default locale
+        const [commonMessages, signupMessages, signinMessages] =
+            await Promise.all([
+                import(`@/messages/${routing.defaultLocale}/common.json`).then(
+                    (m) => m.default,
+                ),
+                import(`@/messages/${routing.defaultLocale}/signup.json`).then(
+                    (m) => m.default,
+                ),
+                import(`@/messages/${routing.defaultLocale}/signin.json`).then(
+                    (m) => m.default,
+                ),
+            ]);
+
+        return {
+            locale: routing.defaultLocale,
+            messages: {
+                ...commonMessages,
+                ...signupMessages,
+                ...signinMessages,
+            },
+        };
+    }
 });

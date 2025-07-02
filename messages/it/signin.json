@@ -1,0 +1,23 @@
+{
+    "signin": {
+        "signin": {
+            "title": "Bentornato",
+            "description": "Inserisci le tue informazioni per accedere",
+            "email": "Indirizzo email",
+            "password": "Password",
+            "rememberMe": "Ricordami",
+            "forgotPassword": "Password dimenticata?",
+            "signInButton": "Accedi",
+            "noAccount": "Non hai un account?",
+            "signUp": "Registrati"
+        },
+        "validation": {
+            "emailInvalid": "Per favore inserisci un indirizzo email valido.",
+            "passwordRequired": "La password è obbligatoria."
+        },
+        "errors": {
+            "invalidCredentials": "La tua email o password sono errate.",
+            "genericError": "Qualcosa è andato storto, riprova più tardi."
+        }
+    }
+}

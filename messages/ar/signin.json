@@ -1,0 +1,23 @@
+{
+    "signin": {
+        "signin": {
+            "title": "مرحبًا بعودتك",
+            "description": "أدخل معلوماتك لتسجيل الدخول",
+            "email": "عنوان البريد الإلكتروني",
+            "password": "كلمة المرور",
+            "rememberMe": "تذكرني",
+            "forgotPassword": "هل نسيت كلمة المرور؟",
+            "signInButton": "تسجيل الدخول",
+            "noAccount": "ليس لديك حساب؟",
+            "signUp": "اشتراك"
+        },
+        "validation": {
+            "emailInvalid": "الرجاء إدخال عنوان بريد إلكتروني صحيح.",
+            "passwordRequired": "كلمة المرور مطلوبة."
+        },
+        "errors": {
+            "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
+            "genericError": "حدث خطأ، يرجى المحاولة مرة أخرى لاحقًا."
+        }
+    }
+}

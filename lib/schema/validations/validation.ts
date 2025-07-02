@@ -9,14 +9,15 @@ export const signUpSchema = (t: (key: string) => string) =>
     });
 // Infer the type from a schema instance:
 export type TSignUpSchema = z.infer<ReturnType<typeof signUpSchema>>;
+export const signInSchema = (v: (key: string) => string) =>
+    z.object({
+        email: z.string().email({
+            message: v("emailInvalid"),
+        }),
+        password: z.string().min(1, {
+            message: v("passwordRequired"),
+        }),
+        rememberMe: z.boolean().optional(), // Add this
+    });
 
-export const signInSchema = z.object({
-    email: z.string().email({
-        message: "Please enter a valid email address.",
-    }),
-    password: z.string().min(1, {
-        message: "Password is required.",
-    }),
-});
-
-export type TSignInSchema = z.infer<typeof signInSchema>;
+export type TSignInSchema = z.infer<ReturnType<typeof signInSchema>>;

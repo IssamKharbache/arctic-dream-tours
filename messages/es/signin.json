@@ -1,0 +1,23 @@
+{
+    "signin": {
+        "signin": {
+            "title": "Bienvenido de nuevo",
+            "description": "Ingresa tu información para iniciar sesión",
+            "email": "Correo electrónico",
+            "password": "Contraseña",
+            "rememberMe": "Recuérdame",
+            "forgotPassword": "¿Olvidaste tu contraseña?",
+            "signInButton": "Iniciar sesión",
+            "noAccount": "¿No tienes una cuenta?",
+            "signUp": "Regístrate"
+        },
+        "validation": {
+            "emailInvalid": "Por favor ingrese un correo electrónico válido.",
+            "passwordRequired": "La contraseña es requerida."
+        },
+        "errors": {
+            "invalidCredentials": "Tu correo electrónico o contraseña son incorrectos.",
+            "genericError": "Algo salió mal, inténtalo más tarde."
+        }
+    }
+}

@@ -4,6 +4,7 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from "bcryptjs";
 import { NextAuthOptions } from "next-auth";
 import { db } from "@/lib/database/db";
+import { cookies } from "next/headers";
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(db),
@@ -20,6 +21,11 @@ export const authOptions: NextAuthOptions = {
                 remember: { label: "Remember me", type: "checkbox" },
             },
             async authorize(credentials) {
+                const remember = credentials?.remember;
+                if (authOptions.session) {
+                    authOptions.session.maxAge =
+                        remember === "yes" ? 30 * 24 * 60 * 60 : 1 * 60;
+                }
                 try {
                     if (!credentials?.email || !credentials?.password) {
                         throw new Error("Email and password are required");

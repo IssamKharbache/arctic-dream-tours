@@ -56,13 +56,12 @@ const SignInForm = () => {
     });
 
     const onSubmit: SubmitHandler<TSignInSchema> = async (data) => {
-        console.log("Form submitted with rememberMe:", data.rememberMe);
         setIsPending(true);
         const signInData = await signIn("credentials", {
             email: data.email.trim().toLowerCase(),
             password: data.password,
             redirect: false,
-            remember: data.rememberMe,
+            remember: data.rememberMe ? "yes" : "no",
         });
 
         if (!signInData?.ok) {

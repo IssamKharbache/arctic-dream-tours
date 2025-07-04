@@ -6,8 +6,11 @@ import { ZodError } from "zod";
 export const POST = async (req: Request) => {
     try {
         const body = await req.json();
-        const { firstName, lastName, email, password, role } = body;
-
+        let { firstName, lastName, email, password, role } = body;
+        //lower casing and trimming the inputs
+        firstName = firstName.trim().toLowerCase();
+        lastName = lastName.trim().toLowerCase();
+        email = email.trim().toLowerCase();
         //check if email already exists
         const existingUserByEmail = await db.user.findUnique({
             where: {

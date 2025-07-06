@@ -94,23 +94,73 @@ const ProfileContent = ({ userData }: ProfileContentProps) => {
         });
     };
 
-    // Handle profile save
-    const handleProfileSave = () => {
+    const handleProfileSave = async () => {
+        // Ensure all fields are strings before trimming
         if (
+            typeof profileData.firstName !== "string" ||
+            typeof profileData.lastName !== "string" ||
+            typeof profileData.email !== "string" ||
             !profileData.firstName.trim() ||
-            !profileData.lastName ||
+            !profileData.lastName.trim() ||
             !profileData.email.trim()
         ) {
             toast("Please fill in all fields");
-            console.log("please fill in all fiels");
             return;
         }
 
-        // Add your profile update logic here
-        console.log("Profile update logic would go here", profileData);
+        const clean = (str: unknown) => {
+            if (typeof str !== "string") return "";
+            return str.trim().toLowerCase();
+        };
+
+        const updatedFirstName =
+            userData.firstName === profileData.firstName
+                ? userData.firstName
+                : clean(profileData.firstName);
+
+        const updatedLastName =
+            userData.lastName === profileData.lastName
+                ? userData.lastName
+                : clean(profileData.lastName);
+
+        const updatedEmail =
+            userData.email === profileData.email
+                ? userData.email
+                : clean(profileData.email);
+
+        try {
+            const res = await fetch(
+                `http://localhost:3000/api/user/updatedata/${userData.id}`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        firstName: updatedFirstName,
+                        lastName: updatedLastName,
+                        email: updatedEmail,
+                        currentPassword: passwordData.currentPassword,
+                        newPassword: passwordData.newPassword,
+                    }),
+                },
+            );
+
+            if (!res.ok) {
+                toast("Failed to update profile.");
+                console.error("Error response: ", res);
+                return;
+            }
+
+            toast("Profile updated successfully.");
+            console.log("Update success: ", res);
+        } catch (error) {
+            toast("An error occurred while updating the profile.");
+            console.error("Update error: ", error);
+        }
+
         setIsEditingProfile(false);
     };
-
     return (
         <div className="grid gap-6 md:grid-cols-2">
             {/* Profile Information */}

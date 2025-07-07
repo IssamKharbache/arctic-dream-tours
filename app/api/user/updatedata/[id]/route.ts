@@ -1,14 +1,12 @@
 import { db } from "@/lib/database/db";
 import { isValidUUID } from "@/lib/user/isValidUUID";
-import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
 export const PUT = async (
     req: NextRequest,
     context: { params: Promise<{ id: string }> },
 ) => {
-    const { firstName, lastName, email, currentPassword, newPassword } =
-        await req.json();
+    const { firstName, lastName, email } = await req.json();
     const id = (await context.params).id;
 
     try {
@@ -29,30 +27,28 @@ export const PUT = async (
             );
         }
 
-        // Compare passwords
-        if (currentPassword) {
-            const isTheSamePassword = await bcrypt.compare(
-                currentPassword,
-                user.password,
-            );
-            if (!isTheSamePassword) {
+        // Check if email is already in use by another user
+        if (email && email.trim().toLowerCase() !== user.email) {
+            const existingUser = await db.user.findUnique({
+                where: { email: email.trim().toLowerCase() },
+            });
+
+            if (existingUser && existingUser.id !== id) {
                 return NextResponse.json(
-                    {
-                        error: "The password provided does not match the user's current password",
-                    },
-                    { status: 401 },
+                    { error: "Email is already in use" },
+                    { status: 409 }, // 409 Conflict
                 );
             }
         }
 
         // Prepare updated data
-        const clean = (str: string) => str.trim().toLowerCase();
-        const updatedFirstName = firstName ? clean(firstName) : user.firstName;
-        const updatedLastName = lastName ? clean(lastName) : user.lastName;
-        const updatedEmail = email ? clean(email) : user.email;
-        const updatedPassword = newPassword
-            ? await bcrypt.hash(newPassword, 10)
-            : user.password;
+        const updatedFirstName = firstName
+            ? firstName.trim().toLowerCase()
+            : user.firstName;
+        const updatedLastName = lastName
+            ? lastName.trim().toLowerCase()
+            : user.lastName;
+        const updatedEmail = email ? email.trim().toLowerCase() : user.email;
 
         // Update user
         const updatedUser = await db.user.update({
@@ -61,7 +57,6 @@ export const PUT = async (
                 firstName: updatedFirstName,
                 lastName: updatedLastName,
                 email: updatedEmail,
-                password: updatedPassword,
             },
         });
 

@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import ProfileContent from "./ProfileContent";
+import ProfileContentSkeleton from "../skeletons/ProfileUpdateSkeleton";
 interface UserData {
     id: string;
     fullName: string;
@@ -35,19 +36,7 @@ const UserProfile = ({ userId }: UserProfileProps) => {
 
     // Loading state
     if (isLoading) {
-        return (
-            <div className="flex items-center justify-center min-h-[400px]">
-                <div className="glass-card p-8 rounded-xl">
-                    <div className="animate-pulse flex space-x-4">
-                        <div className="rounded-full bg-white/20 h-20 w-20"></div>
-                        <div className="flex-1 space-y-2 py-1">
-                            <div className="h-4 bg-white/20 rounded w-3/4"></div>
-                            <div className="h-4 bg-white/20 rounded w-1/2"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
+        return <ProfileContentSkeleton />;
     }
 
     // Error state

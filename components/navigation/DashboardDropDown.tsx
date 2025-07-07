@@ -14,8 +14,6 @@ import Link from "next/link";
 
 const DashboardDropDown = () => {
     const { data: session } = useSession();
-    console.log(session?.user);
-
     return (
         <div className="flex items-center justify-between gap-3">
             {/* User Menu */}
@@ -73,9 +71,10 @@ const DashboardDropDown = () => {
 
 export default DashboardDropDown;
 
-function getInitials(firstName: string | "", lastName: string | ""): string {
-    console.log(firstName, lastName);
-
+function getInitials(
+    firstName: string | undefined,
+    lastName: string | undefined,
+): string {
     if (firstName === "" || lastName === "") {
         return "";
     }

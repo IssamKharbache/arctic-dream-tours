@@ -172,7 +172,7 @@ const ProfileContent = ({ userData }: ProfileContentProps) => {
 
         if (hasError) return;
 
-        const clean = (str: string) => str.trim().toLowerCase();
+        const clean = (str: string) => str.replace(/\s+/g, "");
 
         updateProfileMutation.mutate({
             firstName: clean(profileData.firstName),
@@ -255,10 +255,10 @@ const ProfileContent = ({ userData }: ProfileContentProps) => {
                 <CardHeader>
                     <div className="flex items-center justify-between">
                         <div>
-                            <CardTitle className="text-white flex items-center gap-2">
+                            <CardTitle className="text-gray-800 dark:text-white flex items-center gap-2">
                                 <User className="h-5 w-5" /> Profile Information
                             </CardTitle>
-                            <CardDescription className="text-gray-300">
+                            <CardDescription className="text-gray-500 dark:text-gray-300">
                                 Manage your personal information
                             </CardDescription>
                         </div>
@@ -300,7 +300,10 @@ const ProfileContent = ({ userData }: ProfileContentProps) => {
                 <CardContent className="space-y-4">
                     {["firstName", "lastName", "email"].map((field) => (
                         <div key={field} className="space-y-2">
-                            <Label htmlFor={field} className="text-gray-300">
+                            <Label
+                                htmlFor={field}
+                                className="text-gray-700 dark:text-gray-300"
+                            >
                                 {field === "firstName"
                                     ? "First Name"
                                     : field === "lastName"
@@ -325,7 +328,7 @@ const ProfileContent = ({ userData }: ProfileContentProps) => {
                                                 [field]: e.target.value,
                                             })
                                         }
-                                        className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:bg-white/20 focus:border-blue-400"
+                                        className="bg-white/60 outline-none focus:bg-white/20 focus:border-blue-400"
                                     />
                                     {profileErrors[
                                         field as keyof typeof profileErrors
@@ -340,8 +343,8 @@ const ProfileContent = ({ userData }: ProfileContentProps) => {
                                     )}
                                 </>
                             ) : (
-                                <div className="p-3 bg-white/5 rounded-lg border border-white/10">
-                                    <p className="text-white">
+                                <div className="p-3 bg-white/60 dark:bg-white/5 rounded-lg border border-gray-400 dark:border-white/10">
+                                    <p className="text-gray-700 dark:text-white">
                                         {
                                             profileData[
                                                 field as keyof typeof profileData
@@ -359,10 +362,10 @@ const ProfileContent = ({ userData }: ProfileContentProps) => {
                 <CardHeader>
                     <div className="flex items-center justify-between">
                         <div>
-                            <CardTitle className="text-white flex items-center gap-2">
+                            <CardTitle className="text-gray-800 dark:text-white flex items-center gap-2">
                                 <Lock className="h-5 w-5" /> Security Settings
                             </CardTitle>
-                            <CardDescription className="text-gray-300">
+                            <CardDescription className="text-gray-500 dark:text-gray-300">
                                 Manage your password and security
                             </CardDescription>
                         </div>
@@ -405,11 +408,13 @@ const ProfileContent = ({ userData }: ProfileContentProps) => {
                     {!isEditingPassword ? (
                         <div className="space-y-4">
                             <div className="space-y-2">
-                                <Label className="text-gray-300">
+                                <Label className="text-gray-700 dark:text-gray-300">
                                     Password
                                 </Label>
-                                <div className="p-3 bg-white/5 rounded-lg border border-white/10">
-                                    <p className="text-white">••••••••••••</p>
+                                <div className="p-3 bg-white/5 rounded-lg border border-gray-500 dark:border-white/10">
+                                    <p className="text-gray-600 dark:text-white">
+                                        ••••••••••••
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -422,7 +427,7 @@ const ProfileContent = ({ userData }: ProfileContentProps) => {
                             <div key={field} className="space-y-2">
                                 <Label
                                     htmlFor={field}
-                                    className="text-gray-300"
+                                    className="text-gray-700 dark:text-gray-300"
                                 >
                                     {field === "currentPassword"
                                         ? "Current Password"
@@ -454,7 +459,7 @@ const ProfileContent = ({ userData }: ProfileContentProps) => {
                                                 [field]: e.target.value,
                                             })
                                         }
-                                        className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:bg-white/20 focus:border-blue-400 pr-10"
+                                        className="bg-white/60 outline-none focus:bg-white/20 focus:border-blue-400"
                                         placeholder={
                                             field === "currentPassword"
                                                 ? "Enter current password"

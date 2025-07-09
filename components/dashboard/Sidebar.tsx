@@ -7,7 +7,6 @@ import {
     Ticket,
     TrendingUp,
     Bell,
-    Search,
     Waves,
     Mountain,
 } from "lucide-react";
@@ -99,7 +98,7 @@ export function SideBar() {
         return pathname.startsWith(itemUrl);
     };
     return (
-        <Sidebar className="">
+        <Sidebar>
             <SidebarHeader className="border-b border-white/10 p-5">
                 <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 text-white pulse-glow">
@@ -119,7 +118,7 @@ export function SideBar() {
             <SidebarContent className="p-4">
                 {navigationItems.map((section) => (
                     <SidebarGroup key={section.title} className="mb-6">
-                        <SidebarGroupLabel className="text-gray-600 text-xs font-semibold uppercase tracking-wider mb-3">
+                        <SidebarGroupLabel className="text-gray-400 dark:text-gray-600 text-xs font-semibold uppercase tracking-wider mb-3">
                             {section.title}
                         </SidebarGroupLabel>
                         <SidebarGroupContent>
@@ -129,7 +128,7 @@ export function SideBar() {
                                         <SidebarMenuButton
                                             asChild
                                             isActive={isActive(item.url)}
-                                            className="text-gray-500 dark:text-gray-300 hover:text-black hover:bg-slate-200 dark:hover:bg-black/50 data-[active=true]:bg-gradient-to-r data-[active=true]:from-blue-500/30 data-[active=true]:to-purple-500/30 data-[active=true]:text-black data-[active=true]:border-l-4 data-[active=true]:border-blue-400 rounded-lg p-3 duration-300"
+                                            className="text-gray-700 dark:text-gray-300 hover:text-black hover:bg-slate-200 dark:hover:bg-black/50 data-[active=true]:bg-gradient-to-r data-[active=true]:from-blue-500/30 data-[active=true]:to-purple-500/30 data-[active=true]:text-black data-[active=true]:border-l-4 data-[active=true]:border-blue-400 rounded-lg p-3 duration-300"
                                         >
                                             <Link
                                                 href={item.url}

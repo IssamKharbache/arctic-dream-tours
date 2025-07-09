@@ -7,9 +7,11 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import ProfileContent from "./ProfileContent";
 import ProfileContentSkeleton from "../skeletons/ProfileUpdateSkeleton";
+
 interface UserData {
     id: string;
-    fullName: string;
+    firstName: string;
+    lastName: string;
     email: string;
     role: string;
     isEmailVerified: boolean;
@@ -73,39 +75,41 @@ const UserProfile = ({ userId }: UserProfileProps) => {
         );
     }
 
+    // Generate initials for avatar fallback
+    const initials =
+        `${data.data.firstName.charAt(0)}${data.data.lastName.charAt(0)}`.toUpperCase();
+
     return (
         <div className="max-w-4xl mx-auto space-y-6 animate-fade-in-up">
             {/* Profile Header */}
             <Card className="glass-card hover-glow">
                 <CardHeader className="pb-4">
-                    <div className="flex items-center space-x-6">
+                    <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6">
                         <div className="relative">
                             <Avatar className="h-24 w-24 border-4 border-white/20">
                                 <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white text-2xl">
-                                    {data.data.fullName
-                                        ?.split(" ")
-                                        .map((n) => n[0])
-                                        .join("")
-                                        .toUpperCase() || "U"}
+                                    {initials}
                                 </AvatarFallback>
                             </Avatar>
                         </div>
-                        <div className="flex-1">
-                            <h1 className="text-3xl font-bold text-white mb-2">
-                                {data.data.fullName}
+                        <div className="flex-1 text-center sm:text-left">
+                            <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white mb-2">
+                                {data.data.firstName} {data.data.lastName}
                             </h1>
-                            <p className="text-gray-300 text-lg">
+                            <p className="text-gray-800 dark:text-gray-300 text-base sm:text-lg">
                                 {data.data.email}
                             </p>
-                            <Badge className="mt-2 bg-green-500/20 text-green-400 border-green-500/30">
-                                Active Account
-                            </Badge>
+                            <div className="flex justify-center sm:justify-start mt-2 space-x-2">
+                                <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
+                                    {data.data.role}
+                                </Badge>
+                            </div>
                         </div>
                     </div>
                 </CardHeader>
             </Card>
 
-            {/* Profile Content - Now using the separated component */}
+            {/* Profile Content */}
             <ProfileContent userData={data.data} />
         </div>
     );

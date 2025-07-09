@@ -4,7 +4,6 @@ import { showSuccessToast } from "@/lib/toasts/toasts";
 import { useAuthDialogsStore } from "@/store/zustand/store";
 import { UseFormReturn } from "react-hook-form";
 import { TSignUpSchema } from "@/lib/schema/validations/validation";
-import { useTranslations } from "next-intl";
 
 export const useSignUpMutation = (
     form: UseFormReturn<TSignUpSchema>,
@@ -14,7 +13,6 @@ export const useSignUpMutation = (
     },
 ) => {
     const { setIsSignUpOpen, setIsSignInOpen } = useAuthDialogsStore();
-    const t = useTranslations("signup");
 
     return useMutation({
         mutationFn: authService.signUp,

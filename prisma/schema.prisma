@@ -35,3 +35,39 @@ enum Role {
     ADMIN
     MODERATOR
 }
+
+model Activity {
+    id               String             @id @default(cuid())
+    title            String
+    slug             String             @unique
+    description      String
+    shortDescription String
+    duration         Int
+    adultPrice       Float
+    childPrice       Float?
+    imageUrl         String
+    categories       ActivityCategory[]
+    createdAt        DateTime           @default(now())
+    updatedAt        DateTime           @updatedAt
+
+    @@map("activities")
+}
+
+model Category {
+    id          String             @id @default(cuid())
+    name        String
+    slug        String             @unique // matches your gallery folder name
+    description String?
+    activities  ActivityCategory[]
+
+    @@map("categories")
+}
+
+model ActivityCategory {
+    activity   Activity @relation(fields: [activityId], references: [id])
+    activityId String
+    category   Category @relation(fields: [categoryId], references: [id])
+    categoryId String
+
+    @@id([activityId, categoryId])
+}

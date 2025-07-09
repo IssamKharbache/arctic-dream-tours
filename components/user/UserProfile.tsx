@@ -82,7 +82,7 @@ const UserProfile = ({ userId }: UserProfileProps) => {
     return (
         <div className="max-w-4xl mx-auto space-y-6 animate-fade-in-up">
             {/* Profile Header */}
-            <Card className="glass-card hover-glow">
+            <Card className="hover-glow">
                 <CardHeader className="pb-4">
                     <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6">
                         <div className="relative">

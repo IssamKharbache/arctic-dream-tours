@@ -251,7 +251,7 @@ const ProfileContent = ({ userData }: ProfileContentProps) => {
 
     return (
         <div className="grid gap-6 md:grid-cols-2">
-            <Card className="glass-card">
+            <Card>
                 <CardHeader>
                     <div className="flex items-center justify-between">
                         <div>
@@ -358,7 +358,7 @@ const ProfileContent = ({ userData }: ProfileContentProps) => {
                 </CardContent>
             </Card>
 
-            <Card className="glass-card">
+            <Card>
                 <CardHeader>
                     <div className="flex items-center justify-between">
                         <div>

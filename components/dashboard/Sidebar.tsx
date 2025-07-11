@@ -9,6 +9,7 @@ import {
     Bell,
     Waves,
     Mountain,
+    LayoutGrid,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -64,6 +65,11 @@ const navigationItems = [
                 title: "All activities",
                 url: "/dashboard/activities",
                 icon: Mountain,
+            },
+            {
+                title: "Categories",
+                url: "/dashboard/category",
+                icon: LayoutGrid,
             },
             {
                 title: "Blogs",

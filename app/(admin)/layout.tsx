@@ -19,7 +19,9 @@ export default function AdminLayout({
                 <SidebarInset>
                     <DashboardNavBar />
                     <div className="dashboard-theme">
-                        <main className="flex-1 space-y-4 p-8">{children}</main>
+                        <main className="flex-1 space-y-4 p-8 max-w-7xl mx-auto">
+                            {children}
+                        </main>
                     </div>
                 </SidebarInset>
             </SidebarProvider>

@@ -29,6 +29,7 @@ import { useSendVerificationMail } from "@/app/hooks/useSendVerficationMail";
 import { useSignUpMutation } from "@/app/hooks/useSignUpMutation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
+import { baseUrl } from "@/utils/baseUrl";
 
 export function SignUpForm() {
     //states
@@ -44,6 +45,7 @@ export function SignUpForm() {
     //getting translations
     const t = useTranslations("signup");
     const v = useTranslations("validation");
+
     // Use the factory function with v for validation messages
     const schema = signUpSchema(v);
     //zod form
@@ -111,8 +113,7 @@ export function SignUpForm() {
     const verifyCode = async () => {
         setIsCodeVerifying(true);
         try {
-            const url = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
-            const res = await fetch(`${url}/api/auth/verifyCode`, {
+            const res = await fetch(`${baseUrl}/api/auth/verifyCode`, {
                 method: "POST",
                 body: JSON.stringify({
                     email: form.getValues("email"),

@@ -37,37 +37,49 @@ enum Role {
 }
 
 model Activity {
-    id               String             @id @default(cuid())
-    title            String
-    slug             String             @unique
-    description      String
-    shortDescription String
-    duration         Int
-    adultPrice       Float
-    childPrice       Float?
-    imageUrl         String
-    categories       ActivityCategory[]
-    createdAt        DateTime           @default(now())
-    updatedAt        DateTime           @updatedAt
+    id String @id @default(uuid()) @db.Uuid
+
+    title              String
+    slug               String             @unique
+    description        String
+    shortDescription   String
+    cancellationPolicy String?
+    included           String[]
+    difficulty         ActivityDifficulty
+    bring              String?
+    tags               String[]
+    duration           String
+    meetingPoints      String[]
+    bookingCutoffHours Int?
+    liveTourGuide      Boolean
+    location           String
+    adultPrice         Float
+    childPrice         Float?
+    imageUrl           String
+    galleryImages      String[]
+    categories         Category[]
+    createdAt          DateTime           @default(now())
+    updatedAt          DateTime           @updatedAt
 
     @@map("activities")
 }
 
-model Category {
-    id          String             @id @default(cuid())
-    name        String
-    slug        String             @unique // matches your gallery folder name
-    description String?
-    activities  ActivityCategory[]
-
-    @@map("categories")
+enum ActivityDifficulty {
+    EASY
+    MODERATE
+    HARD
+    EXTREME
 }
 
-model ActivityCategory {
-    activity   Activity @relation(fields: [activityId], references: [id])
-    activityId String
-    category   Category @relation(fields: [categoryId], references: [id])
-    categoryId String
+model Category {
+    id          String     @id @default(uuid()) @db.Uuid
+    name        String
+    slug        String     @unique
+    description String?
+    activities  Activity[]
 
-    @@id([activityId, categoryId])
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("categories")
 }

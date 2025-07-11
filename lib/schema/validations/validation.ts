@@ -21,3 +21,24 @@ export const signInSchema = (v: (key: string) => string) =>
     });
 
 export type TSignInSchema = z.infer<ReturnType<typeof signInSchema>>;
+
+//activity form validations
+export const activityFormSchema = z.object({
+    title: z
+        .string()
+        .min(1, "Title is required")
+        .max(100, "Title must be less than 100 characters"),
+    description: z
+        .string()
+        .min(10, "Description must be at least 10 characters"),
+    shortDescription: z
+        .string()
+        .min(5, "Short description must be at least 5 characters")
+        .max(200, "Short description must be less than 200 characters"),
+    duration: z.string().min(1, "Duration is required"),
+    adultPrice: z.number().min(0, "Adult price must be positive"),
+    childPrice: z.number().min(0, "Child price must be positive").optional(),
+    tags: z.array(z.string()).min(1, "Select at least one tag"),
+});
+
+export type ActivityFormValues = z.infer<typeof activityFormSchema>;

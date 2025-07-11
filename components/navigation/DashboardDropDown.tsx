@@ -9,11 +9,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { LogOut, User } from "lucide-react";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { useUserInfoStore } from "@/store/zustand/store";
+import { useSession } from "next-auth/react";
 
 const DashboardDropDown = () => {
     const { data: session } = useSession();
+    const { firstName, lastName, email } = useUserInfoStore();
     return (
         <div className="flex items-center justify-between gap-3">
             {/* User Menu */}
@@ -25,10 +27,7 @@ const DashboardDropDown = () => {
                     >
                         <Avatar className="h-8 w-8 border-2 border-gray-300 dark:border-gray-700">
                             <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white">
-                                {getInitials(
-                                    session?.user.firstName,
-                                    session?.user.lastName,
-                                )}
+                                {getInitials(firstName, lastName)}
                             </AvatarFallback>
                         </Avatar>
                     </Button>
@@ -41,11 +40,11 @@ const DashboardDropDown = () => {
                 >
                     <DropdownMenuLabel className="font-normal">
                         <div className="flex flex-col space-y-1">
-                            <p className="text-sm font-medium leading-none text-gray-900 dark:text-gray-100">
-                                {session?.user.lastName}
+                            <p className="text-sm font-medium leading-none text-gray-900 dark:text-gray-100 capitalize">
+                                {lastName} {firstName}
                             </p>
                             <p className="text-xs leading-none text-gray-500 dark:text-gray-400">
-                                {session?.user.email}
+                                {email}
                             </p>
                         </div>
                     </DropdownMenuLabel>

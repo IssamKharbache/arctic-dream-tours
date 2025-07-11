@@ -12,6 +12,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { useUserInfoStore } from "@/store/zustand/store";
+import { useSession } from "next-auth/react";
+import { baseUrl } from "@/utils/baseUrl";
 
 interface UserData {
     id: string;
@@ -29,6 +32,7 @@ interface ProfileContentProps {
 
 const ProfileContent = ({ userData }: ProfileContentProps) => {
     const queryClient = useQueryClient();
+    const { update } = useSession();
 
     const [isEditingPassword, setIsEditingPassword] = useState(false);
     const [isEditingProfile, setIsEditingProfile] = useState(false);
@@ -59,7 +63,10 @@ const ProfileContent = ({ userData }: ProfileContentProps) => {
         newPassword: "",
         confirmPassword: "",
     });
+    //
+    const setUserInfo = useUserInfoStore.getState().setUserInfo;
 
+    //update user
     const updateProfileMutation = useMutation({
         mutationFn: async (updatedData: {
             firstName: string;
@@ -67,7 +74,7 @@ const ProfileContent = ({ userData }: ProfileContentProps) => {
             email: string;
         }) => {
             const res = await fetch(
-                `http://localhost:3000/api/user/updatedata/${userData.id}`,
+                `${baseUrl}/api/user/updatedata/${userData.id}`,
                 {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
@@ -87,7 +94,19 @@ const ProfileContent = ({ userData }: ProfileContentProps) => {
 
             return res.json();
         },
-        onSuccess: () => {
+        onSuccess: async (updatedUser) => {
+            const {
+                firstName: updatedFirstName,
+                lastName: updatedLastName,
+                email: updatedEmail,
+            } = updatedUser.data;
+
+            setUserInfo({
+                firstName: updatedFirstName,
+                lastName: updatedLastName,
+                email: updatedEmail,
+            });
+            await update();
             toast.success("Profile updated successfully.");
             setIsEditingProfile(false);
             queryClient.invalidateQueries({ queryKey: ["user", userData.id] });
@@ -112,7 +131,7 @@ const ProfileContent = ({ userData }: ProfileContentProps) => {
             newPassword: string;
         }) => {
             const res = await fetch(
-                `http://localhost:3000/api/user/updatepassword/${userData.id}`,
+                `${baseUrl}/api/user/updatepassword/${userData.id}`,
                 {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },

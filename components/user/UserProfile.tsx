@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import ProfileContent from "./ProfileContent";
 import ProfileContentSkeleton from "../skeletons/ProfileUpdateSkeleton";
+import { baseUrl } from "@/utils/baseUrl";
 
 interface UserData {
     id: string;
@@ -27,13 +28,11 @@ interface UserProfileProps {
 }
 
 const UserProfile = ({ userId }: UserProfileProps) => {
-    const url = process.env.NEXT_PUBLIC_URL;
-
     // Fetching the user data
     const { data, isLoading, error } = useQuery<ApiResponse>({
         queryKey: ["user", userId],
         queryFn: () =>
-            getData<ApiResponse>(`${url}/api/user/getdata/${userId}`),
+            getData<ApiResponse>(`${baseUrl}/api/user/getdata/${userId}`),
     });
 
     // Loading state

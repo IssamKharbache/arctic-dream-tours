@@ -1,10 +1,8 @@
-// lib/authOptions.ts
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from "bcryptjs";
 import { NextAuthOptions } from "next-auth";
 import { db } from "@/lib/database/db";
-import { cookies } from "next/headers";
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(db),
@@ -89,6 +87,19 @@ export const authOptions: NextAuthOptions = {
             return token;
         },
         async session({ session, token }) {
+            const user = await db.user.findUnique({
+                where: { id: token.id as string },
+                select: {
+                    id: true,
+                    email: true,
+                    role: true,
+                    isEmailVerified: true,
+                    firstName: true,
+                    lastName: true,
+                },
+            });
+
+            if (!user) return session;
             return {
                 ...session,
                 user: {

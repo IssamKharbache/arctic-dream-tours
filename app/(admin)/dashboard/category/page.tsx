@@ -1,15 +1,13 @@
 import DashboardPagesHeader from "@/components/activities/DashboardPagesHeader";
-import { ActivityForm } from "@/components/activities/form/ActivityForm";
-
 const page = () => {
     return (
         <div className="max-w-4xl mx-auto">
             <DashboardPagesHeader
-                title="Activities"
-                link="/dashboard/activities/add"
-                linkTitle="Add activity"
+                title="Categories"
+                link="/dashboard/category/add"
+                linkTitle="Add Category"
             />
-            <ActivityForm />
+            <div>Category data here</div>
         </div>
     );
 };

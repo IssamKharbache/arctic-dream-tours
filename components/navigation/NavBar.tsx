@@ -5,8 +5,8 @@ import { Link } from "@/i18n/navigation";
 import React from "react";
 import { Button } from "../ui/button";
 import AuthDropDownMenu from "../auth/AuthDropDownMenu";
-import { useAuthDialogsStore } from "@/store/zustand/store";
 import { useTranslations } from "next-intl";
+import { useAuthDialogsStore } from "@/store/zustand/authStore";
 
 const menus = [
     {

@@ -10,8 +10,8 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { LogOut, User } from "lucide-react";
 import Link from "next/link";
-import { useUserInfoStore } from "@/store/zustand/store";
 import { useSession } from "next-auth/react";
+import { useUserInfoStore } from "@/store/zustand/userStore";
 
 const DashboardDropDown = () => {
     const { data: session } = useSession();

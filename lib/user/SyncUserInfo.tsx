@@ -1,7 +1,7 @@
 // components/SyncUserInfo.tsx
 import { useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { useUserInfoStore } from "@/store/zustand/store";
+import { useUserInfoStore } from "@/store/zustand/userStore";
 
 const SyncUserInfo = () => {
     const { data: session } = useSession();

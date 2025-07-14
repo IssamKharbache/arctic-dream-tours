@@ -1,9 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { Search } from "lucide-react";
-
-import { Input } from "@/components/ui/input";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
 import ThemeSwitcher from "../themes/ThemeSwitcher";
@@ -21,15 +18,6 @@ export function DashboardNavBar() {
                 </div>
                 {/* left side */}
                 <div className="flex items-center gap-5">
-                    <div className="flex-1 max-w-md">
-                        <div className="relative">
-                            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-                            <Input
-                                placeholder="Search activities, bookings..."
-                                className="pl-10  text-white placeholder:text-gray-400 focus:bg-white/20 focus:border-blue-400"
-                            />
-                        </div>
-                    </div>
                     <ThemeSwitcher />
                     <DashboardDropDown />
                 </div>

@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { authService } from "@/lib/api/auth";
 import { showSuccessToast } from "@/lib/toasts/toasts";
-import { useAuthDialogsStore } from "@/store/zustand/store";
 import { UseFormReturn } from "react-hook-form";
 import { TSignUpSchema } from "@/lib/schema/validations/validation";
+import { useAuthDialogsStore } from "@/store/zustand/authStore";
 
 export const useSignUpMutation = (
     form: UseFormReturn<TSignUpSchema>,

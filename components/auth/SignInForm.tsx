@@ -28,9 +28,9 @@ import {
     DialogHeader,
 } from "../ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
-import { useAuthDialogsStore } from "@/store/zustand/store";
 import { showSuccessToast } from "@/lib/toasts/toasts";
 import { useTranslations } from "next-intl";
+import { useAuthDialogsStore } from "@/store/zustand/authStore";
 
 const SignInForm = () => {
     const t = useTranslations("signin.signin");

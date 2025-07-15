@@ -4,6 +4,14 @@ import { baseUrl } from "@/utils/baseUrl";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import { Category } from "@prisma/client";
+import { CategoryEditDialog } from "@/components/activities/form/dialogs/CategoryEditDialog";
+
+type SimpleCategory = {
+    id: string;
+    name: string;
+    description?: string;
+    slug: string;
+};
 const page = async () => {
     const res = await getData<{ data: Category[] }>(
         `${baseUrl}/api/category/get-all`,
@@ -17,6 +25,8 @@ const page = async () => {
                 linkTitle="Add Category"
             />
             <DataTable columns={columns} data={categories} />
+
+            <CategoryEditDialog categories={categories} />
         </div>
     );
 };

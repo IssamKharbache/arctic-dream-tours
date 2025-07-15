@@ -16,7 +16,6 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Eye, EyeOff, Loader2, Lock, Mail, User2 } from "lucide-react";
 import LoadingButton from "../loaders/LoadingButton";
-import { useAuthDialogsStore } from "@/store/zustand/store";
 import {
     Dialog,
     DialogContent,
@@ -30,6 +29,7 @@ import { useSignUpMutation } from "@/app/hooks/useSignUpMutation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { baseUrl } from "@/utils/baseUrl";
+import { useAuthDialogsStore } from "@/store/zustand/authStore";
 
 export function SignUpForm() {
     //states

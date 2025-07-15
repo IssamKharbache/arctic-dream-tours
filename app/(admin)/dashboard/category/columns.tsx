@@ -22,11 +22,11 @@ export const columns: ColumnDef<Category>[] = [
         id: "actions",
         header: "Actions",
         cell: ({ row }) => {
-            const id = row.original.id;
+            const category = row.original;
             return (
                 <ActionsDropDown
-                    deleteEndpoint={`/category/delete/${id}`}
-                    editEndpoint="/dashabord"
+                    id={category.id}
+                    deleteEndpoint={`category/delete/${category.id}`}
                 />
             );
         },

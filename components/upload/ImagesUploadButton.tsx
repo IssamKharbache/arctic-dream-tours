@@ -47,7 +47,7 @@ const ImagesUploadButton = ({
                 <UploadDropzone
                     appearance={{
                         container:
-                            "border-2 border-dashed border-gray-300 dark:border-gray-600 p-6 rounded-lg bg-gray-50 dark:bg-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors duration-200",
+                            "border-2 border-dashed border-gray-300 dark:border-gray-600 p-6 rounded-lg bg-gray-50 dark:bg-sidebar hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors duration-200",
                         label: "text-sm font-medium text-gray-700 dark:text-gray-300",
                         uploadIcon: "text-blue-500 dark:text-blue-400",
                         allowedContent:

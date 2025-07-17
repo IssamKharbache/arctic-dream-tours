@@ -1,10 +1,10 @@
-// app/api/activities/route.ts
 import { NextResponse } from "next/server";
 import { activityFormSchema } from "@/lib/schema/validations/validation";
 import { getServerSession } from "next-auth";
 import { z } from "zod";
 import { authOptions } from "@/lib/auth/authOptions";
 import { db } from "@/lib/database/db";
+import { generateSlug } from "@/utils/generateSlug";
 
 // Extended schema with imageUrl
 const apiActivitySchema = activityFormSchema.extend({
@@ -13,15 +13,14 @@ const apiActivitySchema = activityFormSchema.extend({
 
 export async function POST(request: Request) {
     try {
-        // 1. Authenticate the request
-        // const session = await getServerSession(authOptions);
-        // if (!session) {
-        //     return NextResponse.json(
-        //         { error: "Unauthorized" },
-        //         { status: 401 },
-        //     );
-        // }
-
+        //1. Authenticate the request
+        const session = await getServerSession(authOptions);
+        if (!session) {
+            return NextResponse.json(
+                { error: "Unauthorized" },
+                { status: 401 },
+            );
+        }
         // 2. Validate the request body with extended schema
         const body = await request.json();
         const validation = apiActivitySchema.safeParse(body);
@@ -49,17 +48,11 @@ export async function POST(request: Request) {
             meetingPoints,
             bookingCutoffHours,
             liveTourGuide,
-            imageUrl, // Now properly validated
+            imageUrl,
         } = validation.data;
 
+        const slug = generateSlug(title);
         // 3. Generate slug and check for duplicates
-        const slug = title
-            .toLowerCase()
-            .replace(/[^a-z0-9\s-]/g, "")
-            .replace(/\s+/g, "-")
-            .replace(/-+/g, "-")
-            .trim();
-
         const existingActivity = await db.activity.findUnique({
             where: { slug },
         });
@@ -95,7 +88,7 @@ export async function POST(request: Request) {
                 bookingCutoffHours:
                     bookingCutoffHours === 0 ? null : bookingCutoffHours,
                 liveTourGuide,
-                imageUrl, // Now guaranteed to be present
+                imageUrl,
             },
         });
 

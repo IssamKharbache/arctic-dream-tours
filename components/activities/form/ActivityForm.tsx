@@ -10,7 +10,14 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { Form } from "@/components/ui/form";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
 import { Loader2, Plus } from "lucide-react";
 import {
@@ -30,6 +37,7 @@ import {
     ActivityTags,
 } from "@/components/activities/form/index";
 import { baseUrl } from "@/utils/baseUrl";
+import { Textarea } from "@/components/ui/textarea";
 
 export function ActivityForm() {
     const [image, setImage] = useState("");
@@ -137,7 +145,26 @@ export function ActivityForm() {
 
                         <ActivityPolicies form={form} />
                         <Separator />
-
+                        {/* What to Bring remains the same */}
+                        <FormField
+                            control={form.control}
+                            name="bring"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>
+                                        What to Bring (Optional)
+                                    </FormLabel>
+                                    <FormControl>
+                                        <Textarea
+                                            placeholder="List items participants should bring (comfortable shoes, water bottle, etc.)"
+                                            className="min-h-[80px]"
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
                         <ActivityTags form={form} />
 
                         <ImagesUploadButton

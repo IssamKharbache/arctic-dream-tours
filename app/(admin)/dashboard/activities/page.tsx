@@ -1,24 +1,24 @@
 import DashboardPagesHeader from "@/components/activities/DashboardPagesHeader";
-import { ActivityForm } from "@/components/activities/form/ActivityForm";
 import { getData } from "@/lib/getData";
 import { baseUrl } from "@/utils/baseUrl";
 import { Activity } from "@prisma/client";
+import { DataTable } from "./data-table";
+import { columns } from "./columns";
 
 const page = async () => {
     const res = await getData<{ data: Activity[] }>(
         `${baseUrl}/api/activity/get-all`,
     );
-    const activity = res.data;
-    console.log(activity);
+    const activities = res.data;
 
     return (
-        <div className="max-w-4xl mx-auto">
+        <div>
             <DashboardPagesHeader
                 title="Activities"
                 link="/dashboard/activities/add"
                 linkTitle="Add activity"
             />
-            <ActivityForm />
+            <DataTable columns={columns} data={activities} />
         </div>
     );
 };

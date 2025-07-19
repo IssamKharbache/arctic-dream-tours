@@ -1,3 +1,4 @@
+import { AuthModalTrigger } from "@/components/auth/dialogs/AuthModalHandler";
 import SignInDialog from "@/components/auth/dialogs/SignInDialog";
 import SignupDialog from "@/components/auth/dialogs/SignupDialog";
 import LocaleSwitcher from "@/components/navigation/LocaleSwitcher";
@@ -11,6 +12,7 @@ export default function ClientLayout({
     return (
         <div>
             <NavBar />
+            <AuthModalTrigger />
             <SignupDialog />
             <SignInDialog />
             {children}

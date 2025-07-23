@@ -1,232 +1,18 @@
 "use client";
+import {
+    ShieldOff,
+    Lock,
+    AlertTriangle,
+    Shield,
+    Home,
+    ArrowLeft,
+    HelpCircle,
+    AlertCircle,
+} from "lucide-react";
 
-import { ArrowLeft, Home, Coffee } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-
-const BoredPersonIllustration = () => {
-    return (
-        <div className="relative w-64 h-64 mx-auto mb-8">
-            <svg viewBox="0 0 200 200" className="w-full h-full">
-                {/* Desk */}
-                <rect
-                    x="20"
-                    y="140"
-                    width="160"
-                    height="8"
-                    fill="#e5e7eb"
-                    rx="4"
-                />
-
-                {/* Chair */}
-                <rect
-                    x="85"
-                    y="120"
-                    width="30"
-                    height="40"
-                    fill="#d1d5db"
-                    rx="4"
-                />
-                <rect
-                    x="80"
-                    y="115"
-                    width="40"
-                    height="8"
-                    fill="#d1d5db"
-                    rx="4"
-                />
-
-                {/* Person Body */}
-                <ellipse cx="100" cy="130" rx="20" ry="25" fill="#f3f4f6" />
-
-                {/* Person Head */}
-                <circle cx="100" cy="90" r="18" fill="#fef3c7" />
-
-                {/* Hair */}
-                <path
-                    d="M82 85 Q100 70 118 85 Q115 75 100 75 Q85 75 82 85"
-                    fill="#92400e"
-                />
-
-                {/* Eyes (blinking animation) */}
-                <g className="animate-blink">
-                    <circle cx="94" cy="88" r="2" fill="#374151" />
-                    <circle cx="106" cy="88" r="2" fill="#374151" />
-                </g>
-
-                {/* Mouth (bored expression) */}
-                <path
-                    d="M95 98 Q100 95 105 98"
-                    stroke="#6b7280"
-                    strokeWidth="1.5"
-                    fill="none"
-                    strokeLinecap="round"
-                />
-
-                {/* Arms */}
-                <g className="animate-sway">
-                    {/* Left arm */}
-                    <ellipse
-                        cx="78"
-                        cy="115"
-                        rx="8"
-                        ry="20"
-                        fill="#fef3c7"
-                        transform="rotate(-20 78 115)"
-                    />
-                    {/* Right arm */}
-                    <ellipse
-                        cx="122"
-                        cy="115"
-                        rx="8"
-                        ry="20"
-                        fill="#fef3c7"
-                        transform="rotate(20 122 115)"
-                    />
-                </g>
-
-                {/* Hands on desk */}
-                <circle
-                    cx="75"
-                    cy="140"
-                    r="6"
-                    fill="#fef3c7"
-                    className="animate-tap"
-                />
-                <circle
-                    cx="125"
-                    cy="140"
-                    r="6"
-                    fill="#fef3c7"
-                    className="animate-tap-delay"
-                />
-
-                {/* Computer/laptop */}
-                <rect
-                    x="90"
-                    y="135"
-                    width="20"
-                    height="12"
-                    fill="#374151"
-                    rx="1"
-                />
-                <rect
-                    x="91"
-                    y="136"
-                    width="18"
-                    height="8"
-                    fill="#1f2937"
-                    rx="1"
-                />
-
-                {/* Thought bubble */}
-                <g className="animate-float">
-                    <circle
-                        cx="140"
-                        cy="60"
-                        r="12"
-                        fill="#f9fafb"
-                        stroke="#e5e7eb"
-                        strokeWidth="1"
-                    />
-                    <circle
-                        cx="130"
-                        cy="75"
-                        r="4"
-                        fill="#f9fafb"
-                        stroke="#e5e7eb"
-                        strokeWidth="1"
-                    />
-                    <circle
-                        cx="125"
-                        cy="82"
-                        r="2"
-                        fill="#f9fafb"
-                        stroke="#e5e7eb"
-                        strokeWidth="1"
-                    />
-                    <text
-                        x="140"
-                        y="65"
-                        textAnchor="middle"
-                        fontSize="16"
-                        fill="#9ca3af"
-                    >
-                        ?
-                    </text>
-                </g>
-            </svg>
-
-            {/* CSS Animations */}
-            <style jsx>{`
-                @keyframes blink {
-                    0%,
-                    90%,
-                    100% {
-                        transform: scaleY(1);
-                    }
-                    95% {
-                        transform: scaleY(0.1);
-                    }
-                }
-
-                @keyframes sway {
-                    0%,
-                    100% {
-                        transform: rotate(0deg);
-                    }
-                    50% {
-                        transform: rotate(2deg);
-                    }
-                }
-
-                @keyframes tap {
-                    0%,
-                    50%,
-                    100% {
-                        transform: translateY(0);
-                    }
-                    25% {
-                        transform: translateY(-2px);
-                    }
-                }
-
-                @keyframes float {
-                    0%,
-                    100% {
-                        transform: translateY(0px);
-                    }
-                    50% {
-                        transform: translateY(-8px);
-                    }
-                }
-
-                .animate-blink {
-                    animation: blink 4s infinite;
-                }
-
-                .animate-sway {
-                    animation: sway 3s ease-in-out infinite;
-                    transform-origin: center bottom;
-                }
-
-                .animate-tap {
-                    animation: tap 2s ease-in-out infinite;
-                }
-
-                .animate-tap-delay {
-                    animation: tap 2s ease-in-out infinite;
-                    animation-delay: 1s;
-                }
-
-                .animate-float {
-                    animation: float 2s ease-in-out infinite;
-                }
-            `}</style>
-        </div>
-    );
-};
 
 const page = () => {
     const [mounted, setMounted] = useState(false);
@@ -236,82 +22,85 @@ const page = () => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 relative">
-            {/* Subtle background pattern */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(0,0,0,0.05)_1px,transparent_0)] bg-[size:20px_20px]"></div>
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 relative overflow-hidden">
+            {/* Animated background elements */}
+            <div className="absolute inset-0 overflow-hidden">
+                <div className="absolute -left-20 -top-20 w-96 h-96 bg-red-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+                <div className="absolute -right-20 -bottom-20 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+                <div className="absolute -right-20 top-1/3 w-96 h-96 bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+            </div>
+
+            {/* Security shield decoration */}
+            <div className="absolute top-1/4 right-1/4 opacity-5">
+                <ShieldOff className="w-[400px] h-[400px] text-gray-300" />
+            </div>
 
             {/* Main Content */}
             <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
                 <div
-                    className={`w-full max-w-2xl transition-all duration-1000 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                    className={`w-full max-w-2xl transition-all duration-700 ease-out ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                 >
-                    {/* Main Card */}
-                    <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl p-12 shadow-xl">
-                        {/* Bored Person Illustration */}
-                        <BoredPersonIllustration />
+                    {/* Glassmorphism Card */}
+                    <div className="bg-white/80 backdrop-blur-lg border border-gray-200/50 rounded-2xl p-12 shadow-2xl">
+                        {/* Status Illustration */}
+                        <div className="flex justify-center mb-8">
+                            <div className="relative">
+                                <div className="absolute -inset-4 bg-red-100 rounded-full opacity-60 animate-pulse"></div>
+                                <div className="relative bg-red-500 p-6 rounded-full text-white">
+                                    <Lock className="w-12 h-12" />
+                                </div>
+                            </div>
+                        </div>
 
                         {/* Status and Title */}
                         <div className="text-center mb-8">
-                            <div className="mb-6">
-                                <span className="text-7xl font-bold text-gray-800 tracking-tight">
-                                    401
-                                </span>
-                            </div>
-
-                            <h1 className="text-3xl font-bold text-gray-900 mb-4">
-                                Access Denied
+                            <h1 className="text-4xl font-bold text-gray-900 mb-3">
+                                Access Restricted
                             </h1>
 
-                            <div className="flex items-center justify-center gap-2 text-gray-600 mb-6">
-                                <Coffee className="w-5 h-5" />
-                                <span className="text-lg">
-                                    {
-                                        "Looks like you're not supposed to be here"
-                                    }
+                            <div className="flex items-center justify-center gap-3 text-gray-600 mb-6">
+                                <AlertTriangle className="w-5 h-5 text-yellow-500" />
+                                <span className="text-lg font-medium">
+                                    Unauthorized Access Attempt
                                 </span>
                             </div>
 
-                            <p className="text-gray-600 leading-relaxed max-w-md mx-auto text-lg">
-                                {
-                                    "This page is off-limits. You'll need the right permissions to access this content. Maybe grab a coffee while you figure this out?"
-                                }
+                            <p className="text-gray-600 leading-relaxed max-w-md mx-auto text-lg mb-6">
+                                You don't have permission to view this page.
+                                This incident has been logged for security
+                                purposes.
                             </p>
+
+                            <div className="inline-flex items-center px-4 py-2 bg-gray-100 rounded-full text-sm font-medium text-gray-700">
+                                <Shield className="w-4 h-4 mr-2" />
+                                Error Code: 403_FORBIDDEN
+                            </div>
                         </div>
 
                         {/* Action Buttons */}
-                        <div className="space-y-4 max-w-md mx-auto">
-                            <div className="flex gap-3">
-                                <Button
-                                    variant="outline"
-                                    asChild
-                                    className="flex-1 h-11 border-gray-300 text-gray-700 hover:bg-gray-50 rounded-xl transition-all duration-200 hover:scale-[1.02] bg-transparent"
+                        <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                            <Button
+                                asChild
+                                variant="outline"
+                                className="h-12 px-6 rounded-xl border-gray-300 hover:bg-gray-50 transition-all flex-1"
+                            >
+                                <Link
+                                    href="/"
+                                    className="flex items-center justify-center gap-2"
                                 >
-                                    <Link
-                                        href="/"
-                                        className="flex items-center justify-center gap-2"
-                                    >
-                                        <Home className="w-4 h-4" />
-                                        Home
-                                    </Link>
-                                </Button>
+                                    <Home className="w-5 h-5" />
+                                    Return Home
+                                </Link>
+                            </Button>
 
-                                <Button
-                                    variant="outline"
-                                    onClick={() => window.history.back()}
-                                    className="flex-1 h-11 border-gray-300 text-gray-700 hover:bg-gray-50 rounded-xl transition-all duration-200 hover:scale-[1.02]"
-                                >
-                                    <ArrowLeft className="w-4 h-4 mr-2" />
-                                    Go Back
-                                </Button>
-                            </div>
-                        </div>
-
-                        {/* Help Text */}
-                        <div className="text-center mt-8">
-                            <p className="text-gray-500 text-sm">
-                                Need help? Contact support or check your
-                                permissions
-                            </p>
+                            <Button
+                                variant="outline"
+                                onClick={() => window.history.back()}
+                                className="h-12 px-6 rounded-xl border-gray-300 hover:bg-gray-50 transition-all flex-1"
+                            >
+                                <ArrowLeft className="w-5 h-5 mr-2" />
+                                Go Back
+                            </Button>
                         </div>
                     </div>
                 </div>

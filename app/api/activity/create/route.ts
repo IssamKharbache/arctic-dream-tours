@@ -9,6 +9,7 @@ import { generateSlug } from "@/utils/generateSlug";
 // Extended schema with imageUrl
 const apiActivitySchema = activityFormSchema.extend({
     imageUrl: z.string().url("Valid image URL is required").min(1),
+    imageKey: z.string().min(1, "Image key is required").min(1),
 });
 
 export async function POST(request: Request) {
@@ -49,6 +50,7 @@ export async function POST(request: Request) {
             bookingCutoffHours,
             liveTourGuide,
             imageUrl,
+            imageKey,
         } = validation.data;
 
         const slug = generateSlug(title);
@@ -89,6 +91,7 @@ export async function POST(request: Request) {
                     bookingCutoffHours === 0 ? null : bookingCutoffHours,
                 liveTourGuide,
                 imageUrl,
+                imageKey,
             },
         });
 

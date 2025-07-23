@@ -25,6 +25,7 @@ export const columns: ColumnDef<Category>[] = [
             const category = row.original;
             return (
                 <ActionsDropDown
+                    name="Category"
                     id={category.id}
                     deleteEndpoint={`category/delete/${category.id}`}
                 />

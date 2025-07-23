@@ -21,8 +21,11 @@ export const authOptions: NextAuthOptions = {
             async authorize(credentials) {
                 const remember = credentials?.remember;
                 if (authOptions.session) {
-                    authOptions.session.maxAge =
-                        remember === "yes" ? 30 * 24 * 60 * 60 : 1 * 60;
+                    if (remember === "yes") {
+                        authOptions.session.maxAge = 30 * 24 * 60 * 60;
+                    } else {
+                        authOptions.session.maxAge = 1 * 24 * 60 * 60;
+                    }
                 }
                 try {
                     if (!credentials?.email || !credentials?.password) {

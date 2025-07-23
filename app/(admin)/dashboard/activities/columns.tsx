@@ -39,11 +39,12 @@ export const columns: ColumnDef<Activity>[] = [
         id: "actions",
         header: "Actions",
         cell: ({ row }) => {
-            const category = row.original;
+            const activity = row.original;
             return (
                 <ActionsDropDown
-                    id={category.id}
-                    deleteEndpoint={`category/delete/${category.id}`}
+                    name="Activity"
+                    id={activity.id}
+                    deleteEndpoint={`activity/delete/${activity.id}`}
                 />
             );
         },

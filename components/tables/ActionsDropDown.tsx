@@ -16,8 +16,9 @@ import { useEditDialogStore } from "@/store/zustand/editDialogStore";
 interface TableActionsProps {
     deleteEndpoint?: string;
     id: string;
+    name: string;
 }
-const ActionsDropDown = ({ deleteEndpoint, id }: TableActionsProps) => {
+const ActionsDropDown = ({ deleteEndpoint, id, name }: TableActionsProps) => {
     const { openDialog } = useEditDialogStore();
 
     return (
@@ -37,7 +38,7 @@ const ActionsDropDown = ({ deleteEndpoint, id }: TableActionsProps) => {
                     <DropdownMenuItem className="py-4 px-4">
                         <DeleteActionButton
                             endpoint={`${baseUrl}/api/${deleteEndpoint}`}
-                            title={`Category`}
+                            title={name}
                         />
                     </DropdownMenuItem>
                 )}

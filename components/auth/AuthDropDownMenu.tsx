@@ -11,13 +11,11 @@ import {
 import { MenuIcon, User2 } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "../ui/button";
-import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 const AuthDropDownMenu = () => {
     const { data: session } = useSession();
-    const router = useRouter();
     const t = useTranslations("Navbar");
 
     return (
@@ -38,26 +36,17 @@ const AuthDropDownMenu = () => {
                     </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem
-                    onClick={() => router.push("/account")}
-                    className="cursor-pointer"
-                >
+                <DropdownMenuItem className="cursor-pointer">
                     {t("account")}
                 </DropdownMenuItem>
 
-                <DropdownMenuItem
-                    onClick={() => router.push("/bookings")}
-                    className="cursor-pointer"
-                >
+                <DropdownMenuItem className="cursor-pointer">
                     {t("bookings")}
                 </DropdownMenuItem>
 
                 {session?.user.role === "ADMIN" && (
-                    <Link href="/dashboard">
-                        <DropdownMenuItem
-                            onClick={() => router.push("/dashboard")}
-                            className="cursor-pointer"
-                        >
+                    <Link locale="false" href="/dashboard">
+                        <DropdownMenuItem className="cursor-pointer">
                             {t("dashboard")}
                         </DropdownMenuItem>
                     </Link>

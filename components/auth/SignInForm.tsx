@@ -28,7 +28,7 @@ import {
     DialogHeader,
 } from "../ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
-import { showSuccessToast } from "@/lib/toasts/toasts";
+import { showErrorToast, showSuccessToast } from "@/lib/toasts/toasts";
 import { useTranslations } from "next-intl";
 import { useAuthDialogsStore } from "@/store/zustand/authStore";
 
@@ -67,6 +67,7 @@ const SignInForm = () => {
         if (!signInData?.ok) {
             setSignError("");
             if (signInData?.status === 401) {
+                showErrorToast(e("invalidCredentials"));
                 setSignError(e("invalidCredentials"));
             } else {
                 setSignError(e("genericError"));
@@ -108,7 +109,7 @@ const SignInForm = () => {
                     </div>
 
                     {signInError && (
-                        <p className="bg-red-500 text-white text-center rounded py-1 font-semibold">
+                        <p className="bg-red-500 text-white text-sm text-center rounded py-1 font-semibold">
                             {signInError}
                         </p>
                     )}

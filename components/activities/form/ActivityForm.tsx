@@ -38,12 +38,15 @@ import {
 } from "@/components/activities/form/index";
 import { baseUrl } from "@/utils/baseUrl";
 import { Textarea } from "@/components/ui/textarea";
+import { useRouter } from "next/navigation";
+import { showInfoToast } from "@/lib/toasts/toasts";
 
 export function ActivityForm() {
     const [image, setImage] = useState("");
     const [isImageUploading, setIsImageUploading] = useState(false);
     const [imageKey, setImageKey] = useState("");
 
+    const router = useRouter();
     const form = useForm<ActivityFormValues>({
         resolver: zodResolver(activityFormSchema),
         defaultValues: {
@@ -69,21 +72,27 @@ export function ActivityForm() {
 
     const { mutate, isPending } = useMutation({
         mutationFn: async (data: ActivityPayload) => {
+            if (image === "" || imageKey === "") {
+                showInfoToast("Please provide an image for the activity");
+            }
             const res = await fetch(`${baseUrl}/api/activity/create`, {
                 method: "POST",
                 body: JSON.stringify(data),
                 headers: { "Content-Type": "application/json" },
             });
-
             if (!res.ok) {
                 const error = await res.json();
                 console.log(error);
+                throw new Error("Make sure you provide everything needed");
             }
-            return;
         },
         onSuccess: () => {
+            router.push("/dashboard/activities");
             toast.success("Activity created successfully!");
             form.reset();
+            setImage("");
+            setImageKey("");
+            setIsImageUploading(false);
             queryClient.invalidateQueries({ queryKey: ["activities"] });
         },
         onError: (error: Error) => {
@@ -92,12 +101,16 @@ export function ActivityForm() {
         },
     });
 
-    type ActivityPayload = ActivityFormValues & { imageUrl: string };
+    type ActivityPayload = ActivityFormValues & {
+        imageUrl: string;
+        imageKey: string;
+    };
 
     const onSubmit = (data: ActivityFormValues) => {
         const fullData: ActivityPayload = {
             ...data,
             imageUrl: image,
+            imageKey: imageKey,
             childPrice: data.childPrice,
             bookingCutoffHours:
                 data.bookingCutoffHours === 0

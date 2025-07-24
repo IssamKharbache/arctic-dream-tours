@@ -7,10 +7,10 @@ import {
     FormDescription,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { MapPin } from "lucide-react";
 import { UseFormReturn } from "react-hook-form";
 import { ActivityFormValues } from "@/lib/schema/validations/validation";
+import RichEditorText from "@/components/editor/RichTextEditor";
 
 interface ActivityBasicInfoProps {
     form: UseFormReturn<ActivityFormValues>;
@@ -87,11 +87,12 @@ export function ActivityBasicInfo({ form }: ActivityBasicInfoProps) {
                 render={({ field }) => (
                     <FormItem>
                         <FormLabel>Full Description</FormLabel>
+
                         <FormControl>
-                            <Textarea
-                                placeholder="Detailed description of the activity"
-                                className="min-h-[120px]"
-                                {...field}
+                            <RichEditorText
+                                content={field.value}
+                                onChange={field.onChange}
+                                placeholder="Activity description ..."
                             />
                         </FormControl>
                         <FormDescription>

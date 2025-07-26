@@ -50,6 +50,7 @@ model Activity {
     duration           String
     meetingPoints      String[]
     bookingCutoffHours Int?
+    seasonType         SeasonType
     liveTourGuide      Boolean
     location           String
     adultPrice         Float
@@ -65,4 +66,8 @@ enum ActivityDifficulty {
     MODERATE
     HARD
     EXTREME
+}
+enum SeasonType {
+    WINTER
+    SUMMER
 }

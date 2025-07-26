@@ -35,6 +35,7 @@ export const activityFormSchema = z.object({
     childPrice: z.number().min(0, "Child price must be positive"), // Updated
     tags: z.array(z.string()).min(1, "At least one tag is required"),
     difficulty: z.enum(["EASY", "MODERATE", "HARD", "EXTREME"]),
+    seasonType: z.enum(["SUMMER", "WINTER"]),
     cancellationPolicy: z.string().optional(),
     bring: z.string().optional(),
     included: z

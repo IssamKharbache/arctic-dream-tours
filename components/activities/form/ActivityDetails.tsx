@@ -19,6 +19,18 @@ import { Clock, Users } from "lucide-react";
 import { UseFormReturn } from "react-hook-form";
 import { ActivityFormValues } from "@/lib/schema/validations/validation";
 
+const seasonTypes = [
+    {
+        value: "WINTER",
+        label: "Winter",
+        description: "Activities suitable for winter",
+    },
+    {
+        value: "SUMMER",
+        label: "Summer",
+        description: "Activities suitable for summer",
+    },
+];
 const difficultyOptions = [
     { value: "EASY", label: "Easy", description: "Suitable for beginners" },
     {
@@ -71,6 +83,43 @@ export function ActivityDetails({ form }: ActivityDetailsProps) {
                     )}
                 />
 
+                <FormField
+                    control={form.control}
+                    name="seasonType"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Season</FormLabel>
+                            <Select
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                            >
+                                <FormControl>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select season" />
+                                    </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                    {seasonTypes.map((option) => (
+                                        <SelectItem
+                                            key={option.value}
+                                            value={option.value}
+                                        >
+                                            <div className="flex flex-col">
+                                                <span className="font-medium">
+                                                    {option.label}
+                                                </span>
+                                                <span className="text-xs text-muted-foreground">
+                                                    {option.description}
+                                                </span>
+                                            </div>
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
                 <FormField
                     control={form.control}
                     name="difficulty"

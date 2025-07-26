@@ -1,21 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@font-face {
-    font-family: "Cal Sans";
-    src: url("../public/fonts/CalSans-Regular.ttf");
-    font-weight: 600;
-    font-style: normal;
-    font-display: swap;
-}
-
-body {
-    font-family: var(--font-geist-sans), sans-serif;
-}
-.font-heading {
-    font-family: "Cal Sans", sans-serif;
-}
-
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

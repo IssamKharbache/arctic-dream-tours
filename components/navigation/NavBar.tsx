@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 import AuthDropDownMenu from "../auth/AuthDropDownMenu";
 import { useTranslations } from "next-intl";
 import { useAuthDialogsStore } from "@/store/zustand/authStore";
+import Image from "next/image";
 
 const menus = [
     {
@@ -40,17 +41,24 @@ const NavBar = () => {
     };
 
     return (
-        <nav className="">
-            <div className="px-4 sm:px-6 lg:px-8 py-6 flex items-center justify-between">
+        <nav className="max-w-[1700px] mx-auto">
+            <div className="px-4 sm:px-6  py-5 flex items-center justify-between">
                 {/* logo */}
                 <div>
-                    <h1>Arctik</h1>
+                    <Image
+                        src="/logoArctic.png"
+                        alt="Logo"
+                        width={400}
+                        height={400}
+                        className="w-full h-16"
+                    />
                 </div>
 
                 {/* middle menu */}
                 <div className="flex items-center gap-5">
                     {menus.map((menu, idx) => (
                         <Link
+                            className="font-semibold hover:text-primary hover:text-prima duration-300"
                             key={idx}
                             href={menu.href as "/" | "/about" | "/contact"}
                         >
@@ -61,20 +69,15 @@ const NavBar = () => {
 
                 {/* right menu */}
                 <div className="flex items-center gap-4">
+                    <Button>Book now</Button>
                     {session ? (
                         <AuthDropDownMenu />
                     ) : (
                         <>
                             <Button
-                                onClick={openSignUp}
+                                onClick={openSignIn}
                                 variant="outline"
                                 className="py-3 rounded-2xl"
-                            >
-                                {t("signUp")}
-                            </Button>
-                            <Button
-                                onClick={openSignIn}
-                                className="rounded-2xl"
                             >
                                 {t("logIn")}
                             </Button>

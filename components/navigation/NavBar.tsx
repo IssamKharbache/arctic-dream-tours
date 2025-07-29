@@ -56,7 +56,9 @@ const NavBar = () => {
                 {/* logo */}
                 <div>
                     <Image
-                        src={scrolled ? "/logoArctic.png" : "/logoArctic.png"}
+                        src={
+                            scrolled ? "/logoArctic.png" : "/arcticLogoDark.png"
+                        }
                         alt="Logo"
                         width={400}
                         height={400}

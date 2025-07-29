@@ -2,7 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import { Link } from "@/i18n/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import AuthDropDownMenu from "../auth/AuthDropDownMenu";
 import { useTranslations } from "next-intl";
@@ -28,25 +28,35 @@ const NavBar = () => {
     const t = useTranslations("Navbar");
     const { data: session } = useSession();
     const { setIsSignUpOpen, setIsSignInOpen } = useAuthDialogsStore();
-    // open the sign up dialog
-    const openSignUp = () => {
-        setIsSignUpOpen(true);
-        setIsSignInOpen(false);
-    };
+    const [scrolled, setScrolled] = useState(false);
 
-    // open the sign in dialog
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 50) {
+                setScrolled(true);
+            } else {
+                setScrolled(false);
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
     const openSignIn = () => {
         setIsSignUpOpen(false);
         setIsSignInOpen(true);
     };
 
     return (
-        <nav className="max-w-[1700px] mx-auto">
-            <div className="px-4 sm:px-6  py-5 flex items-center justify-between">
+        <nav
+            className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? "bg-white shadow-md py-3" : "bg-transparent py-5"}`}
+        >
+            <div className="max-w-[1700px] mx-auto px-4 sm:px-6 flex items-center justify-between">
                 {/* logo */}
                 <div>
                     <Image
-                        src="/logoArctic.png"
+                        src={scrolled ? "/logoArctic.png" : "/logoArctic.png"}
                         alt="Logo"
                         width={400}
                         height={400}
@@ -58,7 +68,7 @@ const NavBar = () => {
                 <div className="flex items-center gap-5">
                     {menus.map((menu, idx) => (
                         <Link
-                            className="font-semibold hover:text-primary hover:text-prima duration-300"
+                            className={`font-semibold hover:text-primary duration-300 ${scrolled ? "text-gray-800" : "text-white"}`}
                             key={idx}
                             href={menu.href as "/" | "/about" | "/contact"}
                         >
@@ -69,15 +79,23 @@ const NavBar = () => {
 
                 {/* right menu */}
                 <div className="flex items-center gap-4">
-                    <Button>Book now</Button>
+                    <Button
+                        className={
+                            scrolled
+                                ? ""
+                                : "bg-white/20 hover:bg-white/30 text-white"
+                        }
+                    >
+                        {t("bookNow")}
+                    </Button>
                     {session ? (
                         <AuthDropDownMenu />
                     ) : (
                         <>
                             <Button
                                 onClick={openSignIn}
-                                variant="outline"
-                                className="py-3 rounded-2xl"
+                                variant={scrolled ? "outline" : "ghost"}
+                                className={`py-3 rounded-2xl ${scrolled ? "" : "text-white hover:bg-white/10"}`}
                             >
                                 {t("logIn")}
                             </Button>

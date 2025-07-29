@@ -1,31 +1,4 @@
 {
-    "signup": {
-        "title": "إنشاء حساب",
-        "description": "أدخل بياناتك للبدء",
-        "firstName": "الاسم الأول",
-        "lastName": "اسم العائلة",
-        "email": "البريد الإلكتروني",
-        "password": "كلمة المرور",
-        "verifyButton": "تحقق",
-        "emailSentMessage": "تم إرسال البريد الإلكتروني. تحقق من صندوق الوارد أو مجلد البريد العشوائي للرمز.",
-        "enterVerificationCode": "أدخل رمز التحقق",
-        "confirmCodeButton": "تأكيد الرمز",
-        "emailVerifiedMessage": "تم التحقق من البريد الإلكتروني بنجاح ✅",
-        "alreadyHaveAccount": "هل لديك حساب بالفعل؟",
-        "signIn": "تسجيل الدخول",
-        "createAccountButton": "إنشاء حساب"
-    },
-    "validation": {
-        "firstNameRequired": "الاسم الأول مطلوب",
-        "lastNameRequired": "اسم العائلة مطلوب",
-        "emailRequired": "البريد الإلكتروني مطلوب",
-        "emailInvalid": "البريد الإلكتروني غير صالح",
-        "passwordRequired": "كلمة المرور مطلوبة",
-        "passwordMinLength": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
-        "emailNotVerified": "يجب عليك التحقق من بريدك الإلكتروني أولاً",
-        "rootNetworkError": "تأكد من اتصالك بالإنترنت وحاول مرة أخرى.",
-        "userExists": "يوجد مستخدم بهذا البريد الإلكتروني بالفعل"
-    },
     "Navbar": {
         "home": "الرئيسية",
         "about": "معلومات عنا",
@@ -36,7 +9,8 @@
         "dashboard": "لوحة التحكم",
         "logout": "تسجيل الخروج",
         "signUp": "إنشاء حساب",
-        "logIn": "تسجيل الدخول"
+        "logIn": "تسجيل الدخول",
+        "bookNow": "احجز الآن"
     },
     "HomePage": {
         "header": "هذه هي الصفحة الرئيسية!",

@@ -93,11 +93,10 @@ const SignInForm = () => {
 
     return (
         <Dialog open={isSignInOpen} onOpenChange={handleOpenChange}>
-            <DialogHeader>
-                <DialogTitle></DialogTitle>
-                <DialogDescription></DialogDescription>
-            </DialogHeader>
             <DialogContent>
+                <DialogHeader className="sr-only">
+                    <DialogTitle>Sign In</DialogTitle>
+                </DialogHeader>
                 <div className="mx-auto w-full max-w-lg space-y-6 p-10 rounded-lg">
                     <div className="text-center">
                         <h1 className="text-3xl font-bold font-heading">

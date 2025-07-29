@@ -9,7 +9,8 @@
         "dashboard": "Tableau de bord",
         "logout": "Se déconnecter",
         "signUp": "S'inscrire",
-        "logIn": "Se connecter"
+        "logIn": "Se connecter",
+        "bookNow": "Réserver maintenant"
     },
     "HomePage": {
         "header": "Ceci est la page d'accueil !",

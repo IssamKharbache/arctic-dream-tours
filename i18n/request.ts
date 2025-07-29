@@ -9,7 +9,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
         : routing.defaultLocale;
 
     try {
-        const [commonMessages, signupMessages, signinMessages] =
+        const [commonMessages, signupMessages, signinMessages, heroMessages] =
             await Promise.all([
                 import(`@/messages/${locale}/common.json`)
                     .then((m) => m.default)
@@ -20,6 +20,9 @@ export default getRequestConfig(async ({ requestLocale }) => {
                 import(`@/messages/${locale}/signin.json`)
                     .then((m) => m.default)
                     .catch(() => ({})),
+                import(`@/messages/${locale}/hero.json`)
+                    .then((m) => m.default)
+                    .catch(() => ({})),
             ]);
 
         return {
@@ -28,12 +31,13 @@ export default getRequestConfig(async ({ requestLocale }) => {
                 ...commonMessages,
                 ...signupMessages,
                 ...signinMessages,
+                ...heroMessages,
             },
         };
     } catch (error) {
         console.error(`Failed to load messages for locale ${locale}:`, error);
         // Fallback to default locale
-        const [commonMessages, signupMessages, signinMessages] =
+        const [commonMessages, signupMessages, signinMessages, heroMessages] =
             await Promise.all([
                 import(`@/messages/${routing.defaultLocale}/common.json`).then(
                     (m) => m.default,
@@ -44,6 +48,9 @@ export default getRequestConfig(async ({ requestLocale }) => {
                 import(`@/messages/${routing.defaultLocale}/signin.json`).then(
                     (m) => m.default,
                 ),
+                import(`@/messages/${routing.defaultLocale}/hero.json`).then(
+                    (m) => m.default,
+                ),
             ]);
 
         return {
@@ -52,6 +59,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
                 ...commonMessages,
                 ...signupMessages,
                 ...signinMessages,
+                ...heroMessages,
             },
         };
     }

@@ -9,7 +9,8 @@
         "dashboard": "ダッシュボード",
         "logout": "ログアウト",
         "signUp": "サインアップ",
-        "logIn": "ログイン"
+        "logIn": "ログイン",
+        "bookNow": "今すぐ予約"
     },
     "HomePage": {
         "header": "这是主页！",

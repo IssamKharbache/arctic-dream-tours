@@ -16,13 +16,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Eye, EyeOff, Loader2, Lock, Mail, User2 } from "lucide-react";
 import LoadingButton from "../loaders/LoadingButton";
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-} from "../ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { useSendVerificationMail } from "@/app/hooks/useSendVerficationMail";
 import { useSignUpMutation } from "@/app/hooks/useSignUpMutation";
@@ -101,7 +95,10 @@ export function SignUpForm() {
             });
             return;
         }
+
         createUser(data);
+        setEmailSent(false);
+        setIsEmailVerified(false);
     });
     //
     const handleOpenChange = () => setIsSignUpOpen(!isSignupOpen);
@@ -143,10 +140,9 @@ export function SignUpForm() {
 
     return (
         <Dialog onOpenChange={handleOpenChange} open={isSignupOpen}>
-            <DialogTitle></DialogTitle>
             <DialogContent>
-                <DialogHeader>
-                    <DialogDescription>{t("description")}</DialogDescription>
+                <DialogHeader className="sr-only">
+                    <DialogTitle>Sign up</DialogTitle>
                 </DialogHeader>
                 <div className="mx-auto w-full max-w-lg space-y-6 p-10 rounded-lg">
                     <div className="text-center">

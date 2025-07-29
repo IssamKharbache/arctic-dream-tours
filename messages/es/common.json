@@ -9,7 +9,8 @@
         "dashboard": "Panel de control",
         "logout": "Cerrar sesión",
         "signUp": "Registrarse",
-        "logIn": "Iniciar sesión"
+        "logIn": "Iniciar sesión",
+        "bookNow": "Reservar ahora"
     },
     "HomePage": {
         "header": "¡Esta es la página principal!",

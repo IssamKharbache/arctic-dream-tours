@@ -1,8 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-
 @custom-variant dark (&:is(.dark *));
-
 @theme inline {
     --color-background: var(--background);
     --color-foreground: var(--foreground);
@@ -45,7 +43,7 @@
 
 :root {
     --primary: #003d68;
-    --custom-primary-hover: #95b4aa;
+    --custom-primary-hover: #003d75;
     --custom-white: #fffdf8;
     --custom-green-boreal: #a8e6cf;
     --radius: 0.625rem;

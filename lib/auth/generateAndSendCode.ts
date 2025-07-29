@@ -1,9 +1,9 @@
 import { db } from "../database/db";
-import { sendVerificationEmail } from "@/lib/auth/email"; // your nodemailer send function
+import { sendVerificationEmail } from "@/lib/auth/email";
 
 export async function generateAndSendVerificationCode(email: string) {
-    // Generate 6-digit code as string
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    // Generate cryptographically secure 6-digit code
+    const code = await generateSecureCode();
 
     // Set expiration (10 minutes from now)
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
@@ -14,6 +14,20 @@ export async function generateAndSendVerificationCode(email: string) {
         update: { code, expiresAt },
         create: { email, code, expiresAt },
     });
-    //send the email with the code
+
+    // Send the email with the code
     await sendVerificationEmail(email, code);
+}
+
+async function generateSecureCode(): Promise<string> {
+    // Create a typed array to hold the random values
+    const randomValues = new Uint32Array(1);
+
+    // Get cryptographically secure random values
+    crypto.getRandomValues(randomValues);
+
+    // Generate a 6-digit code (000000-999999)
+    const code = ((randomValues[0] % 900000) + 100000).toString();
+
+    return code;
 }

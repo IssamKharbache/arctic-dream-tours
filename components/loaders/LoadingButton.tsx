@@ -17,7 +17,7 @@ const LoadingButton = ({
         <button
             className={cn(
                 loading && "opacity-70",
-                "flex w-full cursor-pointer items-center gap-4 justify-center bg-black hover:bg-black/80 duration-300 py-2 font-semibold rounded-sm",
+                "flex w-full cursor-pointer items-center gap-4 justify-center bg-primary hover:bg-primary/90 duration-300 py-2 font-semibold rounded-sm",
                 className,
             )}
         >

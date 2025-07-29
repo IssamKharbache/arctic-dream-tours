@@ -3,7 +3,7 @@ import HeroSection from "@/components/hero/HeroSection";
 
 const HomePage = () => {
     return (
-        <div className="min-h-screen bg-white">
+        <div>
             {/* Hero Section */}
             <HeroSection />
             {/* Footer */}

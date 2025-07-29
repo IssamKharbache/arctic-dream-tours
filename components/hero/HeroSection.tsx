@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence, Variants } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 const heroSlides = [
     {
@@ -28,46 +28,62 @@ const heroSlides = [
 
 export default function HeroSection() {
     const [current, setCurrent] = useState(0);
-    const [initialLoad, setInitialLoad] = useState(true);
+    const [direction, setDirection] = useState(1);
 
     useEffect(() => {
         const interval = setInterval(() => {
+            setDirection(1);
             setCurrent((prev) => (prev + 1) % heroSlides.length);
         }, 5000);
         return () => clearInterval(interval);
     }, []);
 
-    useEffect(() => {
-        const timer = setTimeout(() => setInitialLoad(false), 1000);
-        return () => clearTimeout(timer);
-    }, []);
-
     const goToSlide = (index: number) => {
+        setDirection(index > current ? 1 : -1);
         setCurrent(index);
     };
 
+    // Slide animation variants
     const slideVariants: Variants = {
-        enter: { x: "100%", opacity: 1 },
+        enter: (direction: number) => ({
+            x: direction > 0 ? "100%" : "-100%",
+            opacity: 1,
+        }),
         center: { x: 0, opacity: 1 },
-        exit: { x: "-100%", opacity: 1 },
+        exit: (direction: number) => ({
+            x: direction > 0 ? "-100%" : "100%",
+            opacity: 1,
+        }),
     };
 
+    // Text animation variants
     const textVariants: Variants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: {
+        initial: { opacity: 0, y: 20 },
+        animate: {
             opacity: 1,
             y: 0,
-            transition: { duration: 0.6, ease: "easeOut" },
+            transition: {
+                duration: 0.8,
+                ease: [0.16, 1, 0.3, 1],
+            },
+        },
+        exit: {
+            opacity: 0,
+            y: -20,
+            transition: {
+                duration: 0.6,
+            },
         },
     };
 
     const slide = heroSlides[current];
 
     return (
-        <section className="relative h-screen flex items-center justify-center text-white overflow-hidden">
-            <AnimatePresence initial={false}>
+        <section className="relative h-screen w-full overflow-hidden">
+            <AnimatePresence custom={direction} initial={false}>
                 <motion.div
                     key={current}
+                    custom={direction}
                     variants={slideVariants}
                     initial="enter"
                     animate="center"
@@ -86,50 +102,62 @@ export default function HeroSection() {
                 </motion.div>
             </AnimatePresence>
 
-            <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
-                <motion.div
-                    initial={initialLoad ? "hidden" : false}
-                    animate="visible"
-                    variants={textVariants}
-                >
-                    <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
-                        {slide.title}
-                    </h1>
-                </motion.div>
-
-                <motion.div
-                    initial={initialLoad ? "hidden" : false}
-                    animate="visible"
-                    variants={textVariants}
-                    transition={{ delay: 0.2 }}
-                >
-                    <p className="text-xl  md:text-2xl mb-8 font-normal opacity-90">
-                        {slide.description}
-                    </p>
-                </motion.div>
-
-                <motion.div
-                    initial={initialLoad ? "hidden" : false}
-                    animate="visible"
-                    variants={textVariants}
-                    transition={{ delay: 0.4 }}
-                    className="mb-12"
-                >
-                    <Button
-                        size="lg"
-                        className="bg-white hover:bg-slate-200 text-[#003d68] px-8 py-4 text-lg duration-300"
+            <div className="relative z-10 h-full flex flex-col justify-center items-center text-center max-w-4xl mx-auto px-4">
+                <AnimatePresence mode="wait" custom={direction}>
+                    <motion.div
+                        key={`title-${current}`}
+                        custom={direction}
+                        variants={textVariants}
+                        initial="initial"
+                        animate="animate"
+                        exit="exit"
+                        className="will-change-transform"
                     >
-                        Start Your Arctic Journey
-                    </Button>
-                </motion.div>
+                        <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight text-white">
+                            {slide.title}
+                        </h1>
+                    </motion.div>
+                </AnimatePresence>
+
+                <AnimatePresence mode="wait" custom={direction}>
+                    <motion.div
+                        key={`desc-${current}`}
+                        custom={direction}
+                        variants={textVariants}
+                        initial="initial"
+                        animate="animate"
+                        exit="exit"
+                        transition={{ delay: 0.1 }}
+                        className="will-change-transform"
+                    >
+                        <p className="text-xl md:text-2xl mb-8 font-normal opacity-90 text-white">
+                            {slide.description}
+                        </p>
+                    </motion.div>
+                </AnimatePresence>
+
+                <AnimatePresence mode="wait" custom={direction}>
+                    <motion.div
+                        key={`button-${current}`}
+                        custom={direction}
+                        variants={textVariants}
+                        initial="initial"
+                        animate="animate"
+                        exit="exit"
+                        transition={{ delay: 0.2 }}
+                        className="mb-12 will-change-transform"
+                    ></motion.div>
+                </AnimatePresence>
 
                 <div className="flex justify-center gap-2 mt-4">
                     {heroSlides.map((_, index) => (
                         <button
                             key={index}
                             onClick={() => goToSlide(index)}
-                            className={`w-3 h-3 transition-colors ${
-                                current === index ? "bg-white" : "bg-white/50"
+                            className={`w-3 h-3 hover:cursor-pointer transition-colors rounded-full ${
+                                current === index
+                                    ? "bg-white/70 scale-125"
+                                    : "bg-white/40"
                             }`}
                             aria-label={`Go to slide ${index + 1}`}
                         />

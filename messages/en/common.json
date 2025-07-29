@@ -9,7 +9,8 @@
         "dashboard": "Dashboard",
         "logout": "Log out",
         "signUp": "Sign up",
-        "logIn": "Log in"
+        "logIn": "Log in",
+        "bookNow": "Book now"
     },
     "HomePage": {
         "header": "This is the home page !",

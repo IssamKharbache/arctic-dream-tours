@@ -9,7 +9,7 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <body>
+            <body className="h-full min-h-screen">
                 <Providers>
                     <Toaster position="top-right" />
                     {children}

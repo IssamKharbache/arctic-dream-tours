@@ -9,7 +9,8 @@
         "dashboard": "Dashboard",
         "logout": "Disconnettersi",
         "signUp": "Registrati",
-        "logIn": "Accedi"
+        "logIn": "Accedi",
+        "bookNow": "Prenota ora"
     },
     "HomePage": {
         "header": "Questa è la pagina iniziale!",

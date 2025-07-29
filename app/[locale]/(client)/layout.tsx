@@ -5,11 +5,6 @@ import CookieBanner from "@/components/main/CookieBanner";
 import LocaleSwitcher from "@/components/navigation/LocaleSwitcher";
 import NavBar from "@/components/navigation/NavBar";
 
-import { Quicksand } from "next/font/google";
-const quickSand = Quicksand({
-    subsets: ["latin"],
-    display: "swap",
-});
 export default function ClientLayout({
     children,
 }: Readonly<{

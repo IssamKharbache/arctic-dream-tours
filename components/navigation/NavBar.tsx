@@ -54,7 +54,7 @@ const NavBar = () => {
         >
             <div className="max-w-[1700px] mx-auto px-4 sm:px-6 flex items-center justify-between">
                 {/* logo */}
-                <div>
+                <Link href="/">
                     <Image
                         src={
                             scrolled ? "/logoArctic.png" : "/arcticLogoDark.png"
@@ -64,7 +64,7 @@ const NavBar = () => {
                         height={400}
                         className="w-full h-16"
                     />
-                </div>
+                </Link>
 
                 {/* middle menu */}
                 <div className="flex items-center gap-5">

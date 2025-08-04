@@ -1,4 +1,4 @@
-import { Activity } from "@/app/[locale]/(client)/page";
+import { Activity } from "@/types/activity";
 import { ActivityCard } from "./ActivityCard";
 
 interface ActivitiesSectionProps {

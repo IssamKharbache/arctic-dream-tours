@@ -1,36 +1,12 @@
 import { ActivitiesSection } from "@/components/activities/ActivitySection";
 import Footer from "@/components/footer/Footer";
 import HeroSection from "@/components/hero/HeroSection";
+import Gallery from "@/components/main/Gallery";
 import { WhyChooseUs } from "@/components/main/WhyChooseUs";
 import { getData } from "@/lib/getData";
+import { Activity } from "@/types/activity";
 import { baseUrl } from "@/utils/baseUrl";
 
-type SeasonType = "SUMMER" | "WINTER" | "ALL";
-
-export interface Activity {
-    id: string;
-    title: string;
-    slug: string;
-    description: string;
-    shortDescription: string;
-    cancellationPolicy: string;
-    included: string[];
-    difficulty: "EASY" | "MODERATE" | "HARD";
-    bring: string;
-    tags: string[];
-    duration: string;
-    meetingPoints: string[];
-    bookingCutoffHours: number;
-    liveTourGuide: boolean;
-    location: string;
-    adultPrice: number;
-    childPrice: number;
-    imageUrl: string;
-    imageKey: string;
-    createdAt: string;
-    updatedAt: string;
-    seasonType?: SeasonType;
-}
 const HomePage = async () => {
     const res = await getData<{ data: Activity[] }>(
         `${baseUrl}/api/activity/get-all`,
@@ -63,6 +39,8 @@ const HomePage = async () => {
             />
             {/* why choose us*/}
             <WhyChooseUs />
+            {/* Gallery */}
+            <Gallery />
             {/* Footer */}
             <Footer />
         </div>

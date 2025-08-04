@@ -2,8 +2,8 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MapPin, Snowflake, Sun, ClockIcon, Mountain } from "lucide-react";
-import { Activity } from "@/app/[locale]/(client)/page";
 import Link from "next/link";
+import { Activity } from "@/types/activity";
 
 interface ActivityCardProps {
     activity: Activity;

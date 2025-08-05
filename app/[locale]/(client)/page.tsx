@@ -24,7 +24,6 @@ const HomePage = async () => {
             {/* Hero Section */}
             <HeroSection />
             {/* activities cards Section */}
-
             {/* Winter Activities Section */}
             <ActivitiesSection
                 title="Winter Wonderland"

@@ -2,8 +2,8 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MapPin, Snowflake, Sun, ClockIcon, Mountain } from "lucide-react";
-import Link from "next/link";
 import { Activity } from "@/types/activity";
+import { Link } from "@/i18n/navigation";
 
 interface ActivityCardProps {
     activity: Activity;
@@ -19,15 +19,17 @@ export function ActivityCard({ activity }: ActivityCardProps) {
     return (
         <div className="p-5 rounded-2xl bg-primary/10 hover:bg-primary/20  hover:-rotate-1 hover:-translate-y-1 transition-transform duration-300 ease-in-out">
             <div className="relative h-48 w-full">
-                <Image
-                    src={
-                        activity.imageUrl ||
-                        `/placeholder.svg?height=200&width=400&query=${activity.seasonType === "WINTER" ? "winter activity in Finland snow" : "summer activity in Finland nature"}`
-                    }
-                    alt={activity.title}
-                    fill
-                    className="object-cover rounded-2xl "
-                />
+                <Link href={`/activity/${activity.slug}`}>
+                    <Image
+                        src={
+                            activity.imageUrl ||
+                            `/placeholder.svg?height=200&width=400&query=${activity.seasonType === "WINTER" ? "winter activity in Finland snow" : "summer activity in Finland nature"}`
+                        }
+                        alt={activity.title}
+                        fill
+                        className="object-cover rounded-2xl "
+                    />
+                </Link>
                 <div className="absolute top-3 right-3">
                     <Badge className={`${seasonColor} flex items-center gap-1`}>
                         {SeasonIcon && <SeasonIcon className="h-3 w-3" />}
@@ -45,11 +47,11 @@ export function ActivityCard({ activity }: ActivityCardProps) {
                     <p>{formatActivityDifficulty(activity.difficulty)}</p>
                 </div>
             </div>
-            <div className="p-5">
+            <Link href={`/activity/${activity.slug}`} className="p-5">
                 <p className="text-2xl text-center font-bold capitalize">
                     {activity.title}
                 </p>
-            </div>
+            </Link>
             <div className="p-2">
                 <p className="text-md text-center font-normal capitalize text-slate-500">
                     {activity.shortDescription}

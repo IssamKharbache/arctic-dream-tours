@@ -1,5 +1,6 @@
 import { Activity } from "@/types/activity";
 import { ActivityCard } from "./ActivityCard";
+import Link from "next/link";
 
 interface ActivitiesSectionProps {
     title: string;

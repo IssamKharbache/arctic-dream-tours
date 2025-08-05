@@ -34,6 +34,7 @@
         "@tiptap/react": "^3.0.7",
         "@tiptap/starter-kit": "^3.0.7",
         "@uploadthing/react": "^7.3.2",
+        "arktik-dream": "link:",
         "axios": "^1.10.0",
         "bcryptjs": "^3.0.2",
         "class-variance-authority": "^0.7.1",

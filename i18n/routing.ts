@@ -25,6 +25,16 @@ export const routing = defineRouting({
             it: "/chi-siamo",
             es: "/sobre-nosotros",
         },
+        "/activity/:slug": {
+            en: "/activity/:slug",
+            fr: "/activite/:slug",
+            de: "/aktivitat/:slug",
+            ar: "/نشاط/:slug",
+            zh: "/活动/:slug",
+            ja: "/アクティビティ/:slug",
+            it: "/attivita/:slug",
+            es: "/actividad/:slug",
+        },
         "/": {
             en: "/",
             fr: "/",

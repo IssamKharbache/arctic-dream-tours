@@ -5,31 +5,28 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useTranslations } from "next-intl";
 
-const heroSlides = [
-    {
-        title: "Discover Unforgettable Adventures in Finland",
-        description:
-            "Explore the beauty of Finland with curated activities designed for unforgettable memories.",
-        imageUrl: "/hero/hero1.jpg",
-    },
-    {
-        title: "From Arrival to Adventure — We've Got You Covered",
-        description:
-            "We help you plan, arrive, and dive into the best Finnish experiences without worry.",
-        imageUrl: "/hero/hero2.jpg",
-    },
-    {
-        title: "Activities That Create Lasting Memories",
-        description:
-            "Enjoy authentic and memorable activities backed by our trusted local expertise.",
-        imageUrl: "/hero/hero3.jpg",
-    },
-];
-
 export default function HeroSection() {
     const [current, setCurrent] = useState(0);
     const [direction, setDirection] = useState(1);
 
+    const t = useTranslations("hero");
+    const heroSlides = [
+        {
+            title: t("slides.0.title"),
+            description: t("slides.0.description"),
+            imageUrl: "/hero/hero1.jpg",
+        },
+        {
+            title: t("slides.1.title"),
+            description: t("slides.1.description"),
+            imageUrl: "/hero/hero2.jpg",
+        },
+        {
+            title: t("slides.2.title"),
+            description: t("slides.2.description"),
+            imageUrl: "/hero/hero3.jpg",
+        },
+    ];
     useEffect(() => {
         const interval = setInterval(() => {
             setDirection(1);

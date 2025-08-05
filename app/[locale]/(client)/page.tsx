@@ -24,12 +24,6 @@ const HomePage = async () => {
             {/* Hero Section */}
             <HeroSection />
             {/* activities cards Section */}
-            {/* Summer Activities Section */}
-            <ActivitiesSection
-                title="Summer Adventures"
-                description="Experience the magic of Finnish summer with midnight sun, pristine lakes, and endless outdoor activities."
-                activities={summerActivities}
-            />
 
             {/* Winter Activities Section */}
             <ActivitiesSection
@@ -37,6 +31,13 @@ const HomePage = async () => {
                 description="Discover the enchanting Finnish winter with northern lights, snow-covered landscapes, and unique Arctic experiences."
                 activities={winterActivities}
             />
+            {/* Summer Activities Section */}
+            <ActivitiesSection
+                title="Summer Adventures"
+                description="Experience the magic of Finnish summer with midnight sun, pristine lakes, and endless outdoor activities."
+                activities={summerActivities}
+            />
+
             {/* why choose us*/}
             <WhyChooseUs />
             {/* Gallery */}

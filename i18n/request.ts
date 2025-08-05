@@ -31,7 +31,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
                 ...commonMessages,
                 ...signupMessages,
                 ...signinMessages,
-                ...heroMessages,
+                hero: heroMessages,
             },
         };
     } catch (error) {
@@ -59,7 +59,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
                 ...commonMessages,
                 ...signupMessages,
                 ...signinMessages,
-                ...heroMessages,
+                hero: heroMessages,
             },
         };
     }

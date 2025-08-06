@@ -24,15 +24,14 @@ export type TSignInSchema = z.infer<ReturnType<typeof signInSchema>>;
 
 //activity form validations
 
-// Enhanced schema to match your Prisma model
-export const activityFormSchema = z.object({
+export const baseActivitySchema = z.object({
     title: z.string().min(1, "Title is required"),
     description: z.string().min(1, "Description is required"),
     shortDescription: z.string().min(1, "Short description is required"),
     location: z.string().min(1, "Location is required"),
     duration: z.string().min(1, "Duration is required"),
     adultPrice: z.number().min(0, "Adult price must be positive"),
-    childPrice: z.number().min(0, "Child price must be positive"), // Updated
+    childPrice: z.number().min(0, "Child price must be positive"),
     tags: z.array(z.string()).min(1, "At least one tag is required"),
     difficulty: z.enum(["EASY", "MODERATE", "HARD", "EXTREME"]),
     seasonType: z.enum(["SUMMER", "WINTER"]),
@@ -52,8 +51,27 @@ export const activityFormSchema = z.object({
             }),
         )
         .min(1, "At least one meeting point is required"),
-    bookingCutoffHours: z.number().min(1).optional().or(z.literal(0)), // Updated
+    bookingCutoffHours: z.number().min(1).optional().or(z.literal(0)),
     liveTourGuide: z.boolean(),
+    startDate: z.coerce.date({
+        required_error: "Start date is required",
+    }),
+    endDate: z.coerce.date({
+        required_error: "End date is required",
+    }),
+    // Add these new fields
 });
+export const activityFormSchema = baseActivitySchema.refine(
+    (data) => data.endDate > data.startDate,
+    {
+        message: "End date must be after start date",
+        path: ["endDate"],
+    },
+);
 
+// Then extend it for the API
+const apiActivitySchema = baseActivitySchema.extend({
+    imageUrl: z.string().url("Valid image URL is required").min(1),
+    imageKey: z.string().min(1, "Image key is required"),
+});
 export type ActivityFormValues = z.infer<typeof activityFormSchema>;

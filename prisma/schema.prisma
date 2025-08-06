@@ -1,74 +1,76 @@
 generator client {
-  provider = "prisma-client-js"
-  output   = "../node_modules/.prisma/client"
+    provider = "prisma-client-js"
+    output   = "../node_modules/.prisma/client"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
 model User {
-  id              String   @id @default(uuid()) @db.Uuid
-  email           String   @unique
-  password        String
-  createdAt       DateTime @default(now())
-  isEmailVerified Boolean  @default(false)
-  role            Role     @default(USER)
-  updatedAt       DateTime @updatedAt
-  firstName       String
-  lastName        String
+    id              String   @id @default(uuid()) @db.Uuid
+    email           String   @unique
+    password        String
+    createdAt       DateTime @default(now())
+    isEmailVerified Boolean  @default(false)
+    role            Role     @default(USER)
+    updatedAt       DateTime @updatedAt
+    firstName       String
+    lastName        String
 }
 
 model EmailVerification {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  code      String
-  expiresAt DateTime
-  createdAt DateTime @default(now())
+    id        String   @id @default(uuid())
+    email     String   @unique
+    code      String
+    expiresAt DateTime
+    createdAt DateTime @default(now())
 
-  @@index([email])
+    @@index([email])
 }
 
 model Activity {
-  id                 String             @id @default(uuid()) @db.Uuid
-  title              String
-  slug               String             @unique
-  description        String
-  shortDescription   String
-  cancellationPolicy String?
-  included           String[]
-  difficulty         ActivityDifficulty
-  bring              String?
-  tags               String[]
-  duration           String
-  meetingPoints      String[]
-  bookingCutoffHours Int?
-  liveTourGuide      Boolean
-  location           String
-  adultPrice         Float
-  childPrice         Float?
-  imageUrl           String
-  createdAt          DateTime           @default(now())
-  updatedAt          DateTime           @updatedAt
-  imageKey           String
-  seasonType         SeasonType
+    id                 String             @id @default(uuid()) @db.Uuid
+    title              String
+    slug               String             @unique
+    description        String
+    shortDescription   String
+    cancellationPolicy String?
+    included           String[]
+    difficulty         ActivityDifficulty
+    bring              String?
+    tags               String[]
+    duration           String
+    meetingPoints      String[]
+    bookingCutoffHours Int?
+    liveTourGuide      Boolean
+    location           String
+    adultPrice         Float
+    childPrice         Float?
+    imageUrl           String
+    createdAt          DateTime           @default(now())
+    updatedAt          DateTime           @updatedAt
+    imageKey           String
+    seasonType         SeasonType
+    startDate          DateTime
+    endDate            DateTime
 }
 
 enum Role {
-  USER
-  ADMIN
-  MODERATOR
+    USER
+    ADMIN
+    MODERATOR
 }
 
 enum ActivityDifficulty {
-  EASY
-  MODERATE
-  HARD
-  EXTREME
+    EASY
+    MODERATE
+    HARD
+    EXTREME
 }
 
 enum SeasonType {
-  WINTER
-  SUMMER
+    WINTER
+    SUMMER
 }

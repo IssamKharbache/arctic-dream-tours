@@ -40,6 +40,7 @@ import { baseUrl } from "@/utils/baseUrl";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
 import { showInfoToast } from "@/lib/toasts/toasts";
+import { ActivityAvailability } from "@/components/dates/DateRangePicker";
 
 export function ActivityForm() {
     const [image, setImage] = useState("");
@@ -65,6 +66,8 @@ export function ActivityForm() {
             meetingPoints: [{ value: "" }],
             bookingCutoffHours: 0,
             liveTourGuide: false,
+            startDate: undefined,
+            endDate: undefined,
         },
     });
 
@@ -120,6 +123,8 @@ export function ActivityForm() {
             bring: data.bring?.trim() || undefined,
             included: data.included,
             meetingPoints: data.meetingPoints,
+            startDate: data.startDate,
+            endDate: data.endDate,
         };
         mutate(fullData);
     };
@@ -150,6 +155,7 @@ export function ActivityForm() {
                         <ActivityPricing form={form} />
                         <Separator />
 
+                        <ActivityAvailability form={form} />
                         <ActivityIncluded form={form} />
                         <Separator />
 

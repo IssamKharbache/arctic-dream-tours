@@ -1,5 +1,4 @@
 import { ActivitiesSection } from "@/components/activities/ActivitySection";
-import Footer from "@/components/footer/Footer";
 import HeroSection from "@/components/hero/HeroSection";
 import Gallery from "@/components/main/Gallery";
 import { WhyChooseUs } from "@/components/main/WhyChooseUs";
@@ -41,8 +40,6 @@ const HomePage = async () => {
             <WhyChooseUs />
             {/* Gallery */}
             <Gallery />
-            {/* Footer */}
-            <Footer />
         </div>
     );
 };

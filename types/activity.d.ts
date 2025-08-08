@@ -20,6 +20,8 @@ export interface Activity {
     childPrice: number;
     imageUrl: string;
     imageKey: string;
+    startDate: Date;
+    endDate: Date;
     createdAt: string;
     updatedAt: string;
     seasonType?: SeasonType;

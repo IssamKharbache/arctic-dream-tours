@@ -1,14 +1,23 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
+import DatePicker from "react-datepicker";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CalendarDays, Users, MapPin, Clock, Minus, Plus } from "lucide-react";
+import {
+    CalendarDays,
+    Users,
+    MapPin,
+    Clock,
+    Minus,
+    Plus,
+    ChevronLeft,
+    ChevronRight,
+} from "lucide-react";
 import { Activity } from "@/types/activity";
 import { format, isWithinInterval } from "date-fns";
-
+import "react-datepicker/dist/react-datepicker.css";
 interface ActivityBookingProps {
     activity: Activity;
 }
@@ -49,7 +58,33 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
         // Here you would typically send this to your booking API
         alert("Booking functionality would be implemented here!");
     };
-
+    const renderCustomHeader = ({
+        date,
+        decreaseMonth,
+        increaseMonth,
+        prevMonthButtonDisabled,
+        nextMonthButtonDisabled,
+    }: any) => (
+        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 w-full">
+            <button
+                onClick={decreaseMonth}
+                disabled={prevMonthButtonDisabled}
+                className="p-2 rounded-full hover:bg-primary/10 transition-colors disabled:opacity-30"
+            >
+                <ChevronLeft className="w-5 h-5 text-primary" />
+            </button>
+            <span className="text-lg font-semibold text-primary">
+                {format(date, "MMMM yyyy")}
+            </span>
+            <button
+                onClick={increaseMonth}
+                disabled={nextMonthButtonDisabled}
+                className="p-2 rounded-full hover:bg-primary/10 transition-colors disabled:opacity-30"
+            >
+                <ChevronRight className="w-5 h-5 text-primary" />
+            </button>
+        </div>
+    );
     return (
         <Card className="w-full">
             <CardHeader>
@@ -63,49 +98,49 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
             <CardContent className="space-y-6">
                 {/* Date Selection */}
                 <div>
-                    <h3 className="font-semibold mb-3 flex items-center gap-2">
-                        <CalendarDays className="w-4 h-4" />
-                        Select Date
-                    </h3>
-                    <div className="border rounded-lg p-4 w-full">
-                        <Calendar
-                            mode="single"
-                            selected={selectedDate}
-                            onSelect={setSelectedDate}
-                            disabled={(date) =>
-                                !isDateAvailable(date) || date < new Date()
-                            }
-                            className="w-full"
-                            classNames={{
-                                months: "w-full",
-                                month: "w-full space-y-4",
-                                caption:
-                                    "flex justify-center items-center relative pt-1",
-                                caption_label: "text-sm font-medium",
-                                nav: "flex items-center gap-1",
-                                nav_button:
-                                    "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
-                                nav_button_previous: "absolute left-1",
-                                nav_button_next: "absolute right-1",
-                                table: "w-full border-collapse space-y-1",
-                                head_row: "flex",
-                                head_cell:
-                                    "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
-                                row: "flex w-full mt-2",
-                                cell: "text-center text-sm p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
-                                day: "h-9 w-9 p-0 font-normal aria-selected:opacity-100",
-                                day_selected:
-                                    "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
-                                day_today: "bg-accent text-accent-foreground",
-                                day_outside: "text-muted-foreground opacity-50",
-                                day_disabled:
-                                    "text-muted-foreground opacity-50",
-                                day_range_middle:
-                                    "aria-selected:bg-accent aria-selected:text-accent-foreground",
-                                day_hidden: "invisible",
-                            }}
-                        />
+                    <div className="space-y-4">
+                        <h3 className="font-semibold text-lg flex items-center gap-3 text-gray-800">
+                            <CalendarDays className="w-5 h-5 text-primary" />
+                            Select Your Date
+                        </h3>
+                        <div className="border border-gray-200 rounded-lg p-4 bg-white w-full">
+                            <DatePicker
+                                selected={selectedDate}
+                                onChange={(date) =>
+                                    date && setSelectedDate(date)
+                                }
+                                filterDate={(date) =>
+                                    isDateAvailable(date) && date >= new Date()
+                                }
+                                inline
+                                renderCustomHeader={renderCustomHeader}
+                                calendarClassName="w-full min-w-full bg-white" // Added min-w-full
+                                dayClassName={(date) => {
+                                    const base =
+                                        "mx-auto flex items-center justify-center rounded-full w-10 h-10 transition-colors";
+                                    if (
+                                        date.getTime() ===
+                                        selectedDate?.getTime()
+                                    ) {
+                                        return `${base} bg-primary text-primary-foreground shadow-md`;
+                                    }
+                                    if (
+                                        date < new Date() ||
+                                        !isDateAvailable(date)
+                                    ) {
+                                        return `${base} text-gray-400 cursor-not-allowed`;
+                                    }
+                                    return `${base} text-gray-700 hover:bg-primary/10 hover:text-primary`;
+                                }}
+                                weekDayClassName={() =>
+                                    "text-gray-500 text-sm font-medium py-3"
+                                }
+                                formatWeekDay={(day) => day.substring(0, 3)}
+                                wrapperClassName="w-full" // Added wrapper class
+                            />
+                        </div>
                     </div>
+
                     {selectedDate && (
                         <div className="mt-3 p-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">
                             <p className="text-blue-800 font-medium">

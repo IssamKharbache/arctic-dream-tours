@@ -360,3 +360,29 @@
         margin: 2rem 0;
     }
 }
+
+.react-datepicker {
+    width: 80% !important;
+    font-family: inherit !important;
+}
+
+.react-datepicker__month-container {
+    width: 100% !important;
+}
+
+.react-datepicker__day-names,
+.react-datepicker__week {
+    display: flex;
+    justify-content: space-between;
+    width: 100% !important;
+    padding: 10px;
+}
+
+.react-datepicker__day {
+    flex: 1;
+    max-width: calc(100% / 10);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}

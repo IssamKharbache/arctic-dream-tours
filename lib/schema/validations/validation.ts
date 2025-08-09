@@ -75,3 +75,14 @@ const apiActivitySchema = baseActivitySchema.extend({
     imageKey: z.string().min(1, "Image key is required"),
 });
 export type ActivityFormValues = z.infer<typeof activityFormSchema>;
+
+export const bookingSchema = z.object({
+    activityId: z.string().min(1),
+    date: z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?Z?$/, {
+        message: "Must be ISO date string format",
+    }),
+    adults: z.number().min(1).max(20),
+    children: z.number().min(0).max(10),
+    customerEmail: z.string().email(),
+    customerPhone: z.string().min(6).optional(),
+});

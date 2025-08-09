@@ -114,7 +114,7 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                                 }
                                 inline
                                 renderCustomHeader={renderCustomHeader}
-                                calendarClassName="w-full min-w-full bg-white" // Added min-w-full
+                                calendarClassName="w-full min-w-full bg-white"
                                 dayClassName={(date) => {
                                     const base =
                                         "mx-auto flex items-center justify-center rounded-full w-10 h-10 transition-colors";
@@ -389,19 +389,6 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                                     </p>
                                 </div>
                             </div>
-
-                            {/* Ticket Footer */}
-                            <div className="bg-gray-50 px-6 py-4 border-t">
-                                <div className="flex items-center justify-between text-xs text-gray-500">
-                                    <span>
-                                        🎫 Keep this ticket for your records
-                                    </span>
-                                    <span>
-                                        Issued:{" "}
-                                        {format(new Date(), "MMM dd, HH:mm")}
-                                    </span>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 )}
@@ -416,21 +403,6 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                         ? `Book Now - $${totalPrice}`
                         : "Select Date to Continue"}
                 </Button>
-
-                {/* Additional Info */}
-                <div className="text-xs text-gray-500 space-y-1">
-                    <p>
-                        • Free cancellation up to {activity.bookingCutoffHours}{" "}
-                        hours before
-                    </p>
-                    <p>
-                        •{" "}
-                        {activity.liveTourGuide
-                            ? "Live tour guide included"
-                            : "Self-guided experience"}
-                    </p>
-                    <p>• Difficulty level: {activity.difficulty}</p>
-                </div>
             </CardContent>
         </Card>
     );

@@ -55,6 +55,24 @@ model Activity {
     seasonType         SeasonType
     startDate          DateTime
     endDate            DateTime
+
+    booking Booking[]
+}
+
+model Booking {
+    id            String   @id @default(uuid()) @db.Uuid
+    activityId    String   @db.Uuid
+    activity      Activity @relation(fields: [activityId], references: [id])
+    date          DateTime
+    adults        Int      @default(1)
+    children      Int      @default(0)
+    totalPrice    Float
+    customerEmail String
+    customerPhone String?
+    createdAt     DateTime @default(now())
+
+    @@index([activityId])
+    @@index([date])
 }
 
 enum Role {

@@ -40,9 +40,8 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
         return adults * activity.adultPrice + children * activity.childPrice;
     }, [adults, children, activity.adultPrice, activity.childPrice]);
 
-    const handleBooking = () => {
+    const handleBooking = async () => {
         if (!selectedDate) return;
-
         const bookingData = {
             activityId: activity.id,
             date: selectedDate,
@@ -53,10 +52,17 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
             location: activity.location,
             duration: activity.duration,
         };
-
         console.log("Booking data:", bookingData);
         // Here you would typically send this to your booking API
-        alert("Booking functionality would be implemented here!");
+        try {
+            const res = await fetch("http://localhost:3000/api/booking", {
+                method: "POST",
+                body: JSON.stringify(bookingData),
+            });
+            console.log(res);
+        } catch (error) {
+            console.log(error);
+        }
     };
     const renderCustomHeader = ({
         date,

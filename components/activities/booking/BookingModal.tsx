@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
@@ -10,93 +9,79 @@ import {
     DialogDescription,
     DialogFooter,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { useBookingDialogStore } from "@/store/zustand/bookingDialogStore";
+import CustomerDetails from "./CustomerDetails";
 
-interface BookingModalProps {
-    activityId: string;
-    onRequestBooking: (formData: BookingFormData) => void;
-    onPayOnline: (formData: BookingFormData) => void;
-}
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import {
+    BookingCustomerFormData,
+    customerDetailsSchema,
+} from "@/lib/schema/validations/validation";
+import BookingSummary from "./BookingSummary";
+import BookingStepsBar from "./BookingStepsBar";
 
-export interface BookingFormData {
-    customerEmail: string;
-    customerPhone?: string;
-}
+export function BookingModal() {
+    const { openDialog, setOpenDialog, setStep, step } =
+        useBookingDialogStore();
 
-export function BookingModal({
-    activityId,
-    onRequestBooking,
-    onPayOnline,
-}: BookingModalProps) {
-    const [open, setOpen] = useState(false);
-    const [form, setForm] = useState<BookingFormData>({
-        customerEmail: "",
-        customerPhone: "",
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<BookingCustomerFormData>({
+        resolver: zodResolver(customerDetailsSchema),
+        defaultValues: {
+            firstName: "",
+            lastName: "",
+            email: "",
+            phone: "",
+        },
     });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setForm((prev) => ({ ...prev, [name]: value }));
-    };
-
-    const handleRequestBooking = () => {
-        onRequestBooking({ ...form });
-        setOpen(false);
-    };
-
-    const handlePayOnline = () => {
-        onPayOnline({ ...form });
-        setOpen(false);
+    const onSubmit = (data: BookingCustomerFormData) => {
+        localStorage.setItem("customerData", JSON.stringify(data));
+        setStep(2);
     };
 
     return (
         <>
-            <Button onClick={() => setOpen(true)}>Book Now</Button>
-
-            <Dialog open={open} onOpenChange={setOpen}>
-                <DialogContent>
+            <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+                <DialogContent className="min-w-[70vw] h-[90vh]  rounded-none focus:outline-none">
                     <DialogHeader>
+                        <BookingStepsBar step={step} />
                         <DialogTitle>Complete Your Booking</DialogTitle>
                         <DialogDescription>
-                            Enter your details to proceed.
+                            {step === 1
+                                ? "Enter your contact details to proceed."
+                                : "Review your booking and proceed to payment."}
                         </DialogDescription>
                     </DialogHeader>
-
-                    <div className="space-y-4">
-                        <div>
-                            <Label htmlFor="customerEmail">Email Address</Label>
-                            <Input
-                                id="customerEmail"
-                                name="customerEmail"
-                                type="email"
-                                placeholder="you@example.com"
-                                value={form.customerEmail}
-                                onChange={handleChange}
+                    {step === 1 ? (
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <CustomerDetails
+                                register={register}
+                                errors={errors}
                             />
-                        </div>
-
-                        <div>
-                            <Label htmlFor="customerPhone">Phone Number</Label>
-                            <Input
-                                id="customerPhone"
-                                name="customerPhone"
-                                placeholder="+358 40 123 4567"
-                                value={form.customerPhone}
-                                onChange={handleChange}
-                            />
-                        </div>
-                    </div>
-
-                    <DialogFooter className="gap-2">
-                        <Button
-                            variant="secondary"
-                            onClick={handleRequestBooking}
-                        >
-                            Request Booking
-                        </Button>
-                        <Button onClick={handlePayOnline}>Pay Online</Button>
-                    </DialogFooter>
+                            <DialogFooter className="gap-2">
+                                <Button
+                                    type="submit"
+                                    className="rounded-sm px-9"
+                                >
+                                    Continue
+                                </Button>
+                            </DialogFooter>
+                        </form>
+                    ) : (
+                        <BookingSummary
+                            onBack={() => setStep(1)}
+                            onConfirm={() => {
+                                // Final submit logic here
+                                alert("Booking confirmed!");
+                                setOpenDialog(false);
+                            }}
+                        />
+                    )}
                 </DialogContent>
             </Dialog>
         </>

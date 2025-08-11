@@ -69,11 +69,6 @@ export const activityFormSchema = baseActivitySchema.refine(
     },
 );
 
-// Then extend it for the API
-const apiActivitySchema = baseActivitySchema.extend({
-    imageUrl: z.string().url("Valid image URL is required").min(1),
-    imageKey: z.string().min(1, "Image key is required"),
-});
 export type ActivityFormValues = z.infer<typeof activityFormSchema>;
 
 export const bookingSchema = z.object({
@@ -86,3 +81,14 @@ export const bookingSchema = z.object({
     customerEmail: z.string().email(),
     customerPhone: z.string().min(6).optional(),
 });
+export const customerDetailsSchema = z.object({
+    firstName: z.string().min(1, "First name is required"),
+    lastName: z.string().min(1, "Last name is required"),
+    email: z.string().email("Invalid email address"),
+    phone: z
+        .string()
+        .min(6, "Phone number must be at least 6 characters")
+        .max(20, "Phone number is too long"),
+});
+
+export type BookingCustomerFormData = z.infer<typeof customerDetailsSchema>;

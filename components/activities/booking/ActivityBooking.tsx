@@ -18,6 +18,8 @@ import {
 import { Activity } from "@/types/activity";
 import { format, isWithinInterval } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
+import { useBookingDialogStore } from "@/store/zustand/bookingDialogStore";
+import { BookingModal } from "./BookingModal";
 interface ActivityBookingProps {
     activity: Activity;
 }
@@ -27,6 +29,7 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
     const [adults, setAdults] = useState(1);
     const [children, setChildren] = useState(0);
 
+    const { setOpenDialog } = useBookingDialogStore();
     // Check if date is available
     const isDateAvailable = (date: Date) => {
         return isWithinInterval(date, {
@@ -51,18 +54,11 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
             activityTitle: activity.title,
             location: activity.location,
             duration: activity.duration,
+            imageUrl: activity.imageUrl,
         };
-        console.log("Booking data:", bookingData);
-        // Here you would typically send this to your booking API
-        try {
-            const res = await fetch("http://localhost:3000/api/booking", {
-                method: "POST",
-                body: JSON.stringify(bookingData),
-            });
-            console.log(res);
-        } catch (error) {
-            console.log(error);
-        }
+
+        localStorage.setItem("bookingDetails", JSON.stringify(bookingData));
+        setOpenDialog(true);
     };
     const renderCustomHeader = ({
         date,
@@ -399,16 +395,9 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                     </div>
                 )}
 
+                <Button onClick={handleBooking}>Book Now</Button>
                 {/* Book Button */}
-                <Button
-                    className="w-full h-12 text-lg font-semibold"
-                    onClick={handleBooking}
-                    disabled={!selectedDate}
-                >
-                    {selectedDate
-                        ? `Book Now - $${totalPrice}`
-                        : "Select Date to Continue"}
-                </Button>
+                <BookingModal />
             </CardContent>
         </Card>
     );

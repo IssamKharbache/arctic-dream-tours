@@ -16,8 +16,8 @@ const page = async ({ params }: PageProps) => {
     const activity = res.data;
 
     return (
-        <div className="min-h-screen bg-gray-50">
-            <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="min-h-screen bg-gray-50 p-10">
+            <div className="max-w-7xl mx-auto px-4 py-8 mt-10">
                 <div className="grid lg:grid-cols-2 gap-8">
                     {/* Activity Details */}
                     <div className="space-y-6">

@@ -9,21 +9,29 @@ export default getRequestConfig(async ({ requestLocale }) => {
         : routing.defaultLocale;
 
     try {
-        const [commonMessages, signupMessages, signinMessages, heroMessages] =
-            await Promise.all([
-                import(`@/messages/${locale}/common.json`)
-                    .then((m) => m.default)
-                    .catch(() => ({})),
-                import(`@/messages/${locale}/signup.json`)
-                    .then((m) => m.default)
-                    .catch(() => ({})),
-                import(`@/messages/${locale}/signin.json`)
-                    .then((m) => m.default)
-                    .catch(() => ({})),
-                import(`@/messages/${locale}/hero.json`)
-                    .then((m) => m.default)
-                    .catch(() => ({})),
-            ]);
+        const [
+            commonMessages,
+            signupMessages,
+            signinMessages,
+            heroMessages,
+            privacyMessages,
+        ] = await Promise.all([
+            import(`@/messages/${locale}/common.json`)
+                .then((m) => m.default)
+                .catch(() => ({})),
+            import(`@/messages/${locale}/signup.json`)
+                .then((m) => m.default)
+                .catch(() => ({})),
+            import(`@/messages/${locale}/signin.json`)
+                .then((m) => m.default)
+                .catch(() => ({})),
+            import(`@/messages/${locale}/hero.json`)
+                .then((m) => m.default)
+                .catch(() => ({})),
+            import(`@/messages/${locale}/privacy.json`)
+                .then((m) => m.default)
+                .catch(() => ({})),
+        ]);
 
         return {
             locale,
@@ -32,26 +40,36 @@ export default getRequestConfig(async ({ requestLocale }) => {
                 ...signupMessages,
                 ...signinMessages,
                 hero: heroMessages,
+                privacy: privacyMessages,
             },
         };
     } catch (error) {
         console.error(`Failed to load messages for locale ${locale}:`, error);
-        // Fallback to default locale
-        const [commonMessages, signupMessages, signinMessages, heroMessages] =
-            await Promise.all([
-                import(`@/messages/${routing.defaultLocale}/common.json`).then(
-                    (m) => m.default,
-                ),
-                import(`@/messages/${routing.defaultLocale}/signup.json`).then(
-                    (m) => m.default,
-                ),
-                import(`@/messages/${routing.defaultLocale}/signin.json`).then(
-                    (m) => m.default,
-                ),
-                import(`@/messages/${routing.defaultLocale}/hero.json`).then(
-                    (m) => m.default,
-                ),
-            ]);
+
+        // fallback to default locale
+        const [
+            commonMessages,
+            signupMessages,
+            signinMessages,
+            heroMessages,
+            privacyMessages,
+        ] = await Promise.all([
+            import(`@/messages/${routing.defaultLocale}/common.json`).then(
+                (m) => m.default,
+            ),
+            import(`@/messages/${routing.defaultLocale}/signup.json`).then(
+                (m) => m.default,
+            ),
+            import(`@/messages/${routing.defaultLocale}/signin.json`).then(
+                (m) => m.default,
+            ),
+            import(`@/messages/${routing.defaultLocale}/hero.json`).then(
+                (m) => m.default,
+            ),
+            import(`@/messages/${routing.defaultLocale}/privacy.json`).then(
+                (m) => m.default,
+            ),
+        ]);
 
         return {
             locale: routing.defaultLocale,
@@ -60,6 +78,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
                 ...signupMessages,
                 ...signinMessages,
                 hero: heroMessages,
+                privacy: privacyMessages,
             },
         };
     }

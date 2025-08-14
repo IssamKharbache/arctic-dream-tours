@@ -11,18 +11,9 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 const menus = [
-    {
-        key: "home",
-        href: "/",
-    },
-    {
-        key: "about",
-        href: "/about",
-    },
-    {
-        key: "contact",
-        href: "/contact",
-    },
+    { key: "home", href: "/" },
+    { key: "about", href: "/about" },
+    { key: "contact", href: "/contact" },
 ];
 
 const NavBar = () => {
@@ -32,51 +23,59 @@ const NavBar = () => {
 
     const [scrolled, setScrolled] = useState(false);
     const [isActivityPage, setIsActivityPage] = useState(false);
+    const [isPrivacyPage, setIsPrivacyPage] = useState(false);
     const [hasMounted, setHasMounted] = useState(false);
+
+    const pathName = usePathname();
+    const localePath = pathName?.split("/")[1] ?? "";
+    const routeWithoutLocale = pathName.replace(`/${localePath}`, "") || "/";
 
     useEffect(() => {
         setHasMounted(true);
     }, []);
-    const pathName = usePathname();
-    const localePath = pathName?.split("/")[1] ?? "";
-    const routeWithoutLocale = pathName.replace(`/${localePath}`, "") || "/";
 
     useEffect(() => {
         const handleScroll = () => {
             setScrolled(window.scrollY > 50);
         };
 
-        // Strip the locale prefix before checking
+        // Check if current page is activity page
         setIsActivityPage(
             /^\/(activity|activite|aktivitat|نشاط|活动|アクティビティ|attivita|actividad)(\/|$)/.test(
                 routeWithoutLocale,
             ),
         );
 
+        // Check if current page is privacy-policy page
+        setIsPrivacyPage(/^\/privacy-policy(\/|$)/.test(routeWithoutLocale));
+
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, [routeWithoutLocale]);
+
     const openSignIn = () => {
         setIsSignUpOpen(false);
         setIsSignInOpen(true);
     };
+
     if (!hasMounted) return null;
+
+    // Determine navbar styles
+    const navbarClasses =
+        isActivityPage || isPrivacyPage || scrolled
+            ? "bg-white text-gray-900 shadow-md py-3"
+            : "bg-transparent text-white py-5";
+
     return (
         <nav
-            className={`fixed w-full z-50 transition-all duration-300 ${
-                isActivityPage
-                    ? "bg-white text-gray-900 shadow-md py-3"
-                    : scrolled
-                      ? "bg-white text-gray-900 shadow-md py-3"
-                      : "bg-transparent text-white py-5"
-            }`}
+            className={`fixed w-full z-50 transition-all duration-300 ${navbarClasses}`}
         >
             <div className="max-w-[1700px] mx-auto px-4 sm:px-6 flex items-center justify-between">
-                {/* logo */}
+                {/* Logo */}
                 <Link href="/">
                     <Image
                         src={
-                            isActivityPage || scrolled
+                            isActivityPage || isPrivacyPage || scrolled
                                 ? "/logoArctic.png"
                                 : "/arcticLogoDark.png"
                         }
@@ -87,12 +86,12 @@ const NavBar = () => {
                     />
                 </Link>
 
-                {/* middle menu */}
+                {/* Middle Menu */}
                 <div className="flex items-center gap-5">
                     {menus.map((menu, idx) => (
                         <Link
                             className={`font-semibold hover:text-primary duration-300 ${
-                                isActivityPage || scrolled
+                                isActivityPage || isPrivacyPage || scrolled
                                     ? "text-gray-800"
                                     : "text-white"
                             }`}
@@ -104,11 +103,11 @@ const NavBar = () => {
                     ))}
                 </div>
 
-                {/* right menu */}
+                {/* Right Menu */}
                 <div className="flex items-center gap-4">
                     <Button
                         className={
-                            isActivityPage || scrolled
+                            isActivityPage || isPrivacyPage || scrolled
                                 ? ""
                                 : "bg-white/20 hover:bg-white/30 text-white"
                         }
@@ -118,23 +117,17 @@ const NavBar = () => {
                     {session ? (
                         <AuthDropDownMenu />
                     ) : (
-                        <>
-                            <Button
-                                onClick={openSignIn}
-                                variant={
-                                    isActivityPage || scrolled
-                                        ? "outline"
-                                        : "ghost"
-                                }
-                                className={`py-3 rounded-2xl ${
-                                    isActivityPage || scrolled
-                                        ? ""
-                                        : "text-white hover:bg-white/10"
-                                }`}
-                            >
-                                {t("logIn")}
-                            </Button>
-                        </>
+                        <Button
+                            onClick={openSignIn}
+                            variant={
+                                isActivityPage || isPrivacyPage || scrolled
+                                    ? "outline"
+                                    : "ghost"
+                            }
+                            className={`py-3 rounded-2xl ${isActivityPage || isPrivacyPage || scrolled ? "" : "text-white hover:bg-white/10"}`}
+                        >
+                            {t("logIn")}
+                        </Button>
                     )}
                 </div>
             </div>

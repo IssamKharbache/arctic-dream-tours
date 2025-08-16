@@ -59,7 +59,16 @@ export const baseActivitySchema = z.object({
     endDate: z.coerce.date({
         required_error: "End date is required",
     }),
-    // Add these new fields
+    departureHours: z
+        .array(
+            z
+                .string()
+                .regex(
+                    /^([0-1]\d|2[0-3]):([0-5]\d)$/,
+                    "Must be a valid time (HH:mm)",
+                ),
+        )
+        .min(1, "At least one departure hour is required"),
 });
 export const activityFormSchema = baseActivitySchema.refine(
     (data) => data.endDate > data.startDate,

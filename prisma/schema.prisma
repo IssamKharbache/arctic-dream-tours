@@ -56,7 +56,8 @@ model Activity {
     startDate          DateTime
     endDate            DateTime
 
-    booking Booking[]
+    departureHour String[]
+    booking       Booking[]
 }
 
 model Booking {

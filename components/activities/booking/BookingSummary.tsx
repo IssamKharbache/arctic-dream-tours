@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, Clock, MapPin, Users } from "lucide-react";
 import Image from "next/image";
+import { isoToNormalDate } from "@/utils/isoToNormalDate";
 
 interface BookingSummaryData {
     firstName: string;
@@ -61,7 +62,7 @@ const BookingSummary: React.FC<{
                     <CardContent className="flex p-0">
                         <div className="flex ">
                             {/* Left side - Activity image */}
-                            <div className="w-32 h-32 flex-shrink-0">
+                            <div className="w-80 h-80 flex-shrink-0">
                                 <Image
                                     width={450}
                                     height={450}
@@ -103,7 +104,11 @@ const BookingSummary: React.FC<{
                                             <span className="font-medium">
                                                 Departure
                                             </span>
-                                            <span>{bookingData.date}</span>
+                                            <span>
+                                                {isoToNormalDate(
+                                                    bookingData.date,
+                                                )}
+                                            </span>
                                         </div>
                                     )}
 

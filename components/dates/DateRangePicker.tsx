@@ -17,7 +17,7 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 import { format } from "date-fns";
-import { UseFormReturn } from "react-hook-form";
+import { useFieldArray, UseFormReturn } from "react-hook-form";
 import { ActivityFormValues } from "@/lib/schema/validations/validation";
 
 interface ActivityAvailabilityProps {
@@ -26,7 +26,6 @@ interface ActivityAvailabilityProps {
 
 export function ActivityAvailability({ form }: ActivityAvailabilityProps) {
     const { control } = form;
-
     return (
         <div className="space-y-8">
             <h3 className="text-lg font-medium">Activity Availability</h3>

@@ -68,6 +68,7 @@ export function ActivityForm() {
             liveTourGuide: false,
             startDate: undefined,
             endDate: undefined,
+            departureHours: [""],
         },
     });
 

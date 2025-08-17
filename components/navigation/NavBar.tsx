@@ -22,8 +22,6 @@ const NavBar = () => {
     const { setIsSignUpOpen, setIsSignInOpen } = useAuthDialogsStore();
 
     const [scrolled, setScrolled] = useState(false);
-    const [isActivityPage, setIsActivityPage] = useState(false);
-    const [isPrivacyPage, setIsPrivacyPage] = useState(false);
     const [hasMounted, setHasMounted] = useState(false);
 
     const pathName = usePathname();
@@ -38,20 +36,9 @@ const NavBar = () => {
         const handleScroll = () => {
             setScrolled(window.scrollY > 50);
         };
-
-        // Check if current page is activity page
-        setIsActivityPage(
-            /^\/(activity|activite|aktivitat|نشاط|活动|アクティビティ|attivita|actividad)(\/|$)/.test(
-                routeWithoutLocale,
-            ),
-        );
-
-        // Check if current page is privacy-policy page
-        setIsPrivacyPage(/^\/privacy-policy(\/|$)/.test(routeWithoutLocale));
-
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
-    }, [routeWithoutLocale]);
+    }, []);
 
     const openSignIn = () => {
         setIsSignUpOpen(false);
@@ -60,11 +47,17 @@ const NavBar = () => {
 
     if (!hasMounted) return null;
 
+    // Check if not the home page
+    const isNotHomePage = routeWithoutLocale !== "/";
+
     // Determine navbar styles
     const navbarClasses =
-        isActivityPage || isPrivacyPage || scrolled
+        isNotHomePage || scrolled
             ? "bg-white text-gray-900 shadow-md py-3"
             : "bg-transparent text-white py-5";
+
+    const logoSrc =
+        isNotHomePage || scrolled ? "/logoArctic.png" : "/arcticLogoDark.png";
 
     return (
         <nav
@@ -74,11 +67,7 @@ const NavBar = () => {
                 {/* Logo */}
                 <Link href="/">
                     <Image
-                        src={
-                            isActivityPage || isPrivacyPage || scrolled
-                                ? "/logoArctic.png"
-                                : "/arcticLogoDark.png"
-                        }
+                        src={logoSrc}
                         alt="Logo"
                         width={400}
                         height={400}
@@ -90,11 +79,7 @@ const NavBar = () => {
                 <div className="flex items-center gap-5">
                     {menus.map((menu, idx) => (
                         <Link
-                            className={`font-semibold hover:text-primary duration-300 ${
-                                isActivityPage || isPrivacyPage || scrolled
-                                    ? "text-gray-800"
-                                    : "text-white"
-                            }`}
+                            className={`font-semibold hover:text-primary duration-300 ${isNotHomePage || scrolled ? "text-gray-800" : "text-white"}`}
                             key={idx}
                             href={menu.href as "/" | "/about" | "/contact"}
                         >
@@ -107,7 +92,7 @@ const NavBar = () => {
                 <div className="flex items-center gap-4">
                     <Button
                         className={
-                            isActivityPage || isPrivacyPage || scrolled
+                            isNotHomePage || scrolled
                                 ? ""
                                 : "bg-white/20 hover:bg-white/30 text-white"
                         }
@@ -120,11 +105,9 @@ const NavBar = () => {
                         <Button
                             onClick={openSignIn}
                             variant={
-                                isActivityPage || isPrivacyPage || scrolled
-                                    ? "outline"
-                                    : "ghost"
+                                isNotHomePage || scrolled ? "outline" : "ghost"
                             }
-                            className={`py-3 rounded-2xl ${isActivityPage || isPrivacyPage || scrolled ? "" : "text-white hover:bg-white/10"}`}
+                            className={`py-3 rounded-2xl ${isNotHomePage || scrolled ? "" : "text-white hover:bg-white/10"}`}
                         >
                             {t("logIn")}
                         </Button>

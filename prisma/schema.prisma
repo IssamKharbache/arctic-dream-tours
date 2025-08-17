@@ -56,7 +56,7 @@ model Activity {
     startDate          DateTime
     endDate            DateTime
 
-    departureHour String[]
+    departureHours String[]
     booking       Booking[]
 }
 
@@ -68,6 +68,7 @@ model Booking {
     adults     Int      @default(1)
     children   Int      @default(0)
     totalPrice Float
+    bookingRef String @unique
     firstName  String
     lastName   String
     email      String

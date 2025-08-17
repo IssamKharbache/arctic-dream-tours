@@ -68,7 +68,7 @@ export function ActivityForm() {
             liveTourGuide: false,
             startDate: undefined,
             endDate: undefined,
-            departureHours: [""],
+            departureHours: [{ value: "" }],
         },
     });
 
@@ -126,7 +126,10 @@ export function ActivityForm() {
             meetingPoints: data.meetingPoints,
             startDate: data.startDate,
             endDate: data.endDate,
+            departureHours: data.departureHours,
         };
+        console.log(fullData);
+
         mutate(fullData);
     };
 

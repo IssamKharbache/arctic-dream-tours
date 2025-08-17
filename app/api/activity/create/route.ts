@@ -69,6 +69,11 @@ export async function POST(request: Request) {
                 meetingPoints: (data.meetingPoints as Array<{ value: string }>)
                     .filter((point) => point.value.trim() !== "")
                     .map((point) => point.value),
+                departureHours: (
+                    data.departureHours as Array<{ value: string }>
+                )
+                    .filter((hour) => hour.value.trim() !== "")
+                    .map((hour) => hour.value),
                 bring: data.bring || null,
                 bookingCutoffHours:
                     data.bookingCutoffHours === 0

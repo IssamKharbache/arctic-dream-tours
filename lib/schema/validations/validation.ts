@@ -59,16 +59,9 @@ export const baseActivitySchema = z.object({
     endDate: z.coerce.date({
         required_error: "End date is required",
     }),
-    departureHours: z
-        .array(
-            z
-                .string()
-                .regex(
-                    /^([0-1]\d|2[0-3]):([0-5]\d)$/,
-                    "Must be a valid time (HH:mm)",
-                ),
-        )
-        .min(1, "At least one departure hour is required"),
+    departureHours: z.array(
+        z.object({ value: z.string().min(1, "Hour required") }),
+    ),
 });
 export const activityFormSchema = baseActivitySchema.refine(
     (data) => data.endDate > data.startDate,
@@ -87,8 +80,7 @@ export const bookingSchema = z.object({
     }),
     adults: z.number().min(1).max(20),
     children: z.number().min(0).max(10),
-    customerEmail: z.string().email(),
-    customerPhone: z.string().min(6).optional(),
+    bookingRef: z.string().min(1),
 });
 export const customerDetailsSchema = z.object({
     firstName: z.string().min(1, "First name is required"),

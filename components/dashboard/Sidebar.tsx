@@ -67,11 +67,6 @@ const navigationItems = [
                 icon: Mountain,
             },
             {
-                title: "Categories",
-                url: "/dashboard/category",
-                icon: LayoutGrid,
-            },
-            {
                 title: "Blogs",
                 url: "/dashboard/blogs",
                 icon: Waves,

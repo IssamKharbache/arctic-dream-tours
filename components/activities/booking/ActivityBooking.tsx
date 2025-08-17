@@ -45,6 +45,8 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
 
     const handleBooking = async () => {
         if (!selectedDate) return;
+        const bookingRef = `${activity.id.slice(0, 8).toUpperCase()}-${generateBookingReference()}`;
+
         const bookingData = {
             activityId: activity.id,
             date: selectedDate,
@@ -55,6 +57,7 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
             location: activity.location,
             duration: activity.duration,
             imageUrl: activity.imageUrl,
+            bookingRef,
         };
 
         localStorage.setItem("bookingDetails", JSON.stringify(bookingData));
@@ -402,3 +405,9 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
         </Card>
     );
 }
+
+export const generateBookingReference = () => {
+    // Format: first 8 chars of activity ID + 4 random uppercase letters/numbers
+    const randomPart = Math.random().toString(36).substring(2, 6).toUpperCase();
+    return randomPart;
+};

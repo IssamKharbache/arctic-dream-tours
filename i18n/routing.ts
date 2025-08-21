@@ -35,6 +35,16 @@ export const routing = defineRouting({
             it: "/attivita/:slug",
             es: "/actividad/:slug",
         },
+        "/booking/success/:id": {
+            en: "/booking/success/:id",
+            fr: "/reservation/succes/:id",
+            de: "/buchung/erfolg/:id",
+            ar: "/الحجز/نجاح/:id",
+            zh: "/预订/成功/:id",
+            ja: "/予約/成功/:id",
+            it: "/prenotazione/successo/:id",
+            es: "/reserva/exito/:id",
+        },
         "/": {
             en: "/",
             fr: "/",

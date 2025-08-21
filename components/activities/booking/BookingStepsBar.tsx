@@ -18,7 +18,7 @@ export default function BookingStepsBar({ step }: BookingStepsBarProps) {
                     <div
                         className="absolute top-5 left-10 h-0.5 bg-gray-200 -z-10"
                         style={{
-                            width: "calc(100% - 80px)", // full distance between first and last icon centers
+                            width: "calc(100% - 80px)",
                         }}
                     ></div>
 
@@ -34,7 +34,7 @@ export default function BookingStepsBar({ step }: BookingStepsBarProps) {
                                       : "0%",
                         }}
                     ></div>
-                    {steps.map((s, idx) => {
+                    {steps.map((s) => {
                         const Icon = s.icon;
                         const isCompleted = step > s.id;
                         const isActive = step === s.id;

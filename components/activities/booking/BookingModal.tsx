@@ -36,6 +36,8 @@ export function BookingModal() {
             lastName: "",
             email: "",
             phone: "",
+            pickUpLocation: "",
+            dropOffLocation: "",
         },
     });
 
@@ -63,7 +65,7 @@ export function BookingModal() {
                                 register={register}
                                 errors={errors}
                             />
-                            <DialogFooter className="gap-2">
+                            <DialogFooter className="gap-2 mt-5">
                                 <Button
                                     type="submit"
                                     className="rounded-sm px-9"
@@ -73,14 +75,7 @@ export function BookingModal() {
                             </DialogFooter>
                         </form>
                     ) : (
-                        <BookingSummary
-                            onBack={() => setStep(1)}
-                            onConfirm={() => {
-                                // Final submit logic here
-                                alert("Booking confirmed!");
-                                setOpenDialog(false);
-                            }}
-                        />
+                        <BookingSummary onBack={() => setStep(1)} />
                     )}
                 </DialogContent>
             </Dialog>

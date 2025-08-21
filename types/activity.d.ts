@@ -13,11 +13,13 @@ export interface Activity {
     tags: string[];
     duration: string;
     meetingPoints: string[];
+    departureHours: string[];
     bookingCutoffHours: number;
     liveTourGuide: boolean;
     location: string;
     adultPrice: number;
     childPrice: number;
+    privateTourPrice: number;
     imageUrl: string;
     imageKey: string;
     startDate: Date;

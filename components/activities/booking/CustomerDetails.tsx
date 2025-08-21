@@ -89,6 +89,41 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = ({
                     )}
                 </div>
             </div>
+            <div className="flex items-center p-5 gap-5 justify-center w-full">
+                <div className="w-full">
+                    <Label htmlFor="customerPickUp" className="mb-4 block">
+                        Pick up location
+                    </Label>
+                    <Input
+                        id="customerEmail"
+                        {...register("pickUpLocation")}
+                        placeholder="type your pick up location"
+                        className="w-full"
+                    />
+                    {errors.pickUpLocation && (
+                        <p className="text-red-500 text-sm">
+                            {errors.pickUpLocation.message}
+                        </p>
+                    )}
+                </div>
+
+                <div className="w-full">
+                    <Label className="mb-4 block" htmlFor="customerPhone">
+                        Drop off location
+                    </Label>
+                    <Input
+                        id="customerDropoff"
+                        {...register("dropOffLocation")}
+                        placeholder="Type your drop off location"
+                        className="w-full"
+                    />
+                    {errors.dropOffLocation && (
+                        <p className="text-red-500 text-sm">
+                            {errors.dropOffLocation.message}
+                        </p>
+                    )}
+                </div>
+            </div>
         </div>
     );
 };

@@ -47,7 +47,9 @@ model Activity {
     liveTourGuide      Boolean
     location           String
     adultPrice         Float
-    childPrice         Float?
+    childPrice         Float
+    privateTourPrice   Float
+    
     imageUrl           String
     createdAt          DateTime           @default(now())
     updatedAt          DateTime           @updatedAt
@@ -55,6 +57,8 @@ model Activity {
     seasonType         SeasonType
     startDate          DateTime
     endDate            DateTime
+
+
 
     departureHours String[]
     booking       Booking[]
@@ -73,6 +77,10 @@ model Booking {
     lastName   String
     email      String
     phone      String
+    departureHour String
+    pickUpLocation String
+    dropOffLocation String
+    isPrivate Boolean @default(false)
     createdAt  DateTime @default(now())
 
     @@index([activityId])

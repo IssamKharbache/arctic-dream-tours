@@ -6,35 +6,39 @@ import Image from "next/image";
 import { isoToNormalDate } from "@/utils/isoToNormalDate";
 import { baseUrl } from "@/utils/baseUrl";
 import { useBookingDialogStore } from "@/store/zustand/bookingDialogStore";
-import { useRouter } from "next/navigation";
-
+import { useRouter } from "@/i18n/navigation";
 interface BookingSummaryData {
     firstName: string;
     lastName: string;
     email: string;
     phone: string;
-    activityId: string; // add activityId to send to API
+    activityId: string;
     activityTitle?: string;
     location?: string;
-    date?: string; // ISO string
+    date?: string;
     duration?: string;
     adults?: number;
     children?: number;
     totalPrice?: number;
     imageUrl: string;
     bookingRef: string;
+    pickUpLocation: string;
+    dropOffLocation: string;
+    departureHour: string;
+    isPrivateTour: boolean;
 }
 
 const BookingSummary: React.FC<{
     onBack?: () => void;
 }> = ({ onBack }) => {
+    const router = useRouter();
+
     const [bookingData, setBookingData] = useState<BookingSummaryData | null>(
         null,
     );
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { setOpenDialog, setStep } = useBookingDialogStore();
 
-    const router = useRouter();
     useEffect(() => {
         const customerData = JSON.parse(
             localStorage.getItem("customerData") || "{}",
@@ -55,28 +59,25 @@ const BookingSummary: React.FC<{
         );
     }
 
-    console.log(bookingData);
-
     const handleConfirmBooking = async () => {
-        if (
-            !bookingData.activityId ||
-            !bookingData.date ||
-            !bookingData.adults
-        ) {
-            alert("Missing required booking information");
-            return;
-        }
+        if (!bookingData) return;
 
         const payload = {
             activityId: bookingData.activityId,
-            date: bookingData.date,
-            adults: bookingData.adults,
-            children: bookingData.children || 0,
-            email: bookingData.email,
-            phone: bookingData.phone || "",
+            date: bookingData.date!,
+            adults: bookingData.adults ?? 1,
+            children: bookingData.children ?? 0,
+            bookingRef: bookingData.bookingRef,
+            departureHour: bookingData.departureHour ?? "",
+            isPrivate: bookingData.isPrivateTour ?? false, // ✅ fix key name
+
+            // Customer details
             firstName: bookingData.firstName,
             lastName: bookingData.lastName,
-            bookingRef: bookingData.bookingRef,
+            email: bookingData.email,
+            phone: bookingData.phone,
+            pickUpLocation: bookingData.pickUpLocation,
+            dropOffLocation: bookingData.dropOffLocation,
         };
 
         try {
@@ -87,23 +88,19 @@ const BookingSummary: React.FC<{
                 body: JSON.stringify(payload),
             });
 
-            if (!res.ok) {
-                const err = await res.json();
-                console.log(err);
+            const data = await res.json();
 
-                alert(`Booking failed: ${err.message || "Unknown error"}`);
+            if (!res.ok) {
+                console.error(data);
+                alert(`Booking failed: ${data.message || "Unknown error"}`);
                 return;
             }
 
-            alert("Booking confirmed!");
             setStep(0);
             localStorage.removeItem("customerData");
             localStorage.removeItem("bookingDetails");
-
             setOpenDialog(false);
-            const data = await res.json();
-            const bookingID = data.data.id;
-            router.push(`/booking/success/${bookingID}`);
+            router.push(`/booking/success/${data.data.id}` as any);
         } catch (error) {
             console.error(error);
             alert("An error occurred while creating the booking");

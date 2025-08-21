@@ -58,6 +58,7 @@ export function ActivityForm() {
             duration: "",
             adultPrice: 0,
             childPrice: 0,
+            privateTourPrice: 0,
             tags: [],
             difficulty: "EASY",
             cancellationPolicy: "",
@@ -128,8 +129,6 @@ export function ActivityForm() {
             endDate: data.endDate,
             departureHours: data.departureHours,
         };
-        console.log(fullData);
-
         mutate(fullData);
     };
 

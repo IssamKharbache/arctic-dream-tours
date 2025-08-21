@@ -32,6 +32,7 @@ export const baseActivitySchema = z.object({
     duration: z.string().min(1, "Duration is required"),
     adultPrice: z.number().min(0, "Adult price must be positive"),
     childPrice: z.number().min(0, "Child price must be positive"),
+    privateTourPrice: z.number().min(0, "Child price must be positive"),
     tags: z.array(z.string()).min(1, "At least one tag is required"),
     difficulty: z.enum(["EASY", "MODERATE", "HARD", "EXTREME"]),
     seasonType: z.enum(["SUMMER", "WINTER"]),
@@ -73,6 +74,8 @@ export const activityFormSchema = baseActivitySchema.refine(
 
 export type ActivityFormValues = z.infer<typeof activityFormSchema>;
 
+import { z } from "zod";
+
 export const bookingSchema = z.object({
     activityId: z.string().min(1),
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?Z?$/, {
@@ -81,7 +84,10 @@ export const bookingSchema = z.object({
     adults: z.number().min(1).max(20),
     children: z.number().min(0).max(10),
     bookingRef: z.string().min(1),
+    departureHour: z.string().min(1),
+    isPrivate: z.boolean().default(false), // ✅ matches backend field
 });
+
 export const customerDetailsSchema = z.object({
     firstName: z.string().min(1, "First name is required"),
     lastName: z.string().min(1, "Last name is required"),
@@ -90,6 +96,9 @@ export const customerDetailsSchema = z.object({
         .string()
         .min(6, "Phone number must be at least 6 characters")
         .max(20, "Phone number is too long"),
+    pickUpLocation: z.string().min(1, "Pick up location is required"),
+    dropOffLocation: z.string().min(1, "Drop off location is required"),
 });
 
+export type BookingFormData = z.infer<typeof bookingSchema>;
 export type BookingCustomerFormData = z.infer<typeof customerDetailsSchema>;

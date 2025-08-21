@@ -9,8 +9,16 @@ export const POST = async (req: Request) => {
     try {
         const body = await req.json();
 
-        // Validate booking info
-        const bookingValidation = bookingSchema.safeParse(body);
+        // Extract booking fields
+        const bookingValidation = bookingSchema.safeParse({
+            activityId: body.activityId,
+            date: body.date,
+            adults: body.adults,
+            children: body.children,
+            bookingRef: body.bookingRef,
+            departureHour: body.departureHour,
+            isPrivate: body.isPrivate,
+        });
         if (!bookingValidation.success) {
             return NextResponse.json(
                 {
@@ -20,10 +28,16 @@ export const POST = async (req: Request) => {
                 { status: 400 },
             );
         }
-        const bookingData = bookingValidation.data;
 
-        // Validate customer info
-        const customerValidation = customerDetailsSchema.safeParse(body);
+        // Extract customer fields
+        const customerValidation = customerDetailsSchema.safeParse({
+            firstName: body.firstName,
+            lastName: body.lastName,
+            email: body.email,
+            phone: body.phone,
+            pickUpLocation: body.pickUpLocation,
+            dropOffLocation: body.dropOffLocation,
+        });
         if (!customerValidation.success) {
             return NextResponse.json(
                 {
@@ -33,10 +47,10 @@ export const POST = async (req: Request) => {
                 { status: 400 },
             );
         }
+
+        const bookingData = bookingValidation.data;
         const customerData = customerValidation.data;
 
-        // Compute total price if you have activity price
-        // Optionally, you can fetch activity price from db.activity
         const activity = await db.activity.findUnique({
             where: { id: bookingData.activityId },
         });
@@ -53,16 +67,10 @@ export const POST = async (req: Request) => {
 
         const newBooking = await db.booking.create({
             data: {
-                activityId: bookingData.activityId,
+                ...bookingData,
+                ...customerData,
                 date: new Date(bookingData.date),
-                adults: bookingData.adults,
-                children: bookingData.children,
                 totalPrice,
-                firstName: customerData.firstName,
-                lastName: customerData.lastName,
-                email: customerData.email,
-                phone: customerData.phone,
-                bookingRef: bookingData.bookingRef,
             },
         });
 

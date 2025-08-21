@@ -14,12 +14,14 @@ import {
     Plus,
     ChevronLeft,
     ChevronRight,
+    Crown,
 } from "lucide-react";
-import { Activity } from "@/types/activity";
+import type { Activity } from "@/types/activity";
 import { format, isWithinInterval } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
 import { useBookingDialogStore } from "@/store/zustand/bookingDialogStore";
 import { BookingModal } from "./BookingModal";
+
 interface ActivityBookingProps {
     activity: Activity;
 }
@@ -28,9 +30,13 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
     const [selectedDate, setSelectedDate] = useState<Date | undefined>();
     const [adults, setAdults] = useState(1);
     const [children, setChildren] = useState(0);
+    const [isPrivateTour, setIsPrivateTour] = useState(false);
+    const [selectedDepartureHour, setSelectedDepartureHour] = useState<
+        string | undefined
+    >();
 
     const { setOpenDialog } = useBookingDialogStore();
-    // Check if date is available
+
     const isDateAvailable = (date: Date) => {
         return isWithinInterval(date, {
             start: new Date(activity.startDate),
@@ -38,13 +44,24 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
         });
     };
 
-    // Calculate total price
+    const totalGroupSize = adults + children;
+
     const totalPrice = useMemo(() => {
+        if (isPrivateTour && activity.privateTourPrice) {
+            return activity.privateTourPrice;
+        }
         return adults * activity.adultPrice + children * activity.childPrice;
-    }, [adults, children, activity.adultPrice, activity.childPrice]);
+    }, [
+        adults,
+        children,
+        activity.adultPrice,
+        activity.childPrice,
+        isPrivateTour,
+        activity.privateTourPrice,
+    ]);
 
     const handleBooking = async () => {
-        if (!selectedDate) return;
+        if (!selectedDate || !selectedDepartureHour) return;
         const bookingRef = `${activity.id.slice(0, 8).toUpperCase()}-${generateBookingReference()}`;
 
         const bookingData = {
@@ -58,11 +75,21 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
             duration: activity.duration,
             imageUrl: activity.imageUrl,
             bookingRef,
+            isPrivateTour,
+            departureHour: selectedDepartureHour,
         };
 
         localStorage.setItem("bookingDetails", JSON.stringify(bookingData));
         setOpenDialog(true);
     };
+
+    const handleDateChange = (date: Date | null) => {
+        if (date) {
+            setSelectedDate(date);
+            setSelectedDepartureHour(undefined);
+        }
+    };
+
     const renderCustomHeader = ({
         date,
         decreaseMonth,
@@ -90,17 +117,52 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
             </button>
         </div>
     );
+
     return (
         <Card className="w-full">
             <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                     <span>Book Your Experience</span>
                     <Badge variant="secondary" className="text-lg font-bold">
-                        From ${activity.adultPrice}
+                        From $
+                        {isPrivateTour && activity.privateTourPrice
+                            ? activity.privateTourPrice
+                            : activity.adultPrice}
                     </Badge>
                 </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
+                {activity.privateTourPrice && (
+                    <div className="border rounded-lg p-4 bg-gradient-to-r from-amber-50 to-orange-50 border-amber-200">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <Crown className="w-5 h-5 text-amber-600" />
+                                <div>
+                                    <h3 className="font-semibold text-amber-900">
+                                        Private Tour Experience
+                                    </h3>
+                                    <p className="text-sm text-amber-700">
+                                        Exclusive private tour for your group -
+                                        ${activity.privateTourPrice} total
+                                    </p>
+                                </div>
+                            </div>
+                            <Button
+                                variant={isPrivateTour ? "default" : "outline"}
+                                size="sm"
+                                onClick={() => setIsPrivateTour(!isPrivateTour)}
+                                className={
+                                    isPrivateTour
+                                        ? "bg-amber-600 hover:bg-amber-700"
+                                        : "border-amber-300 text-amber-700 hover:bg-amber-100"
+                                }
+                            >
+                                {isPrivateTour ? "Selected" : "Select"}
+                            </Button>
+                        </div>
+                    </div>
+                )}
+
                 {/* Date Selection */}
                 <div>
                     <div className="space-y-4">
@@ -111,9 +173,7 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                         <div className="border border-gray-200 rounded-lg p-4 bg-white w-full">
                             <DatePicker
                                 selected={selectedDate}
-                                onChange={(date) =>
-                                    date && setSelectedDate(date)
-                                }
+                                onChange={handleDateChange}
                                 filterDate={(date) =>
                                     isDateAvailable(date) && date >= new Date()
                                 }
@@ -141,7 +201,7 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                                     "text-gray-500 text-sm font-medium py-3"
                                 }
                                 formatWeekDay={(day) => day.substring(0, 3)}
-                                wrapperClassName="w-full" // Added wrapper class
+                                wrapperClassName="w-full"
                             />
                         </div>
                     </div>
@@ -152,26 +212,106 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                                 📅 {format(selectedDate, "EEEE, MMMM do, yyyy")}
                             </p>
                             <p className="text-blue-600 text-sm mt-1">
-                                💰 ${activity.adultPrice} per adult • $
-                                {activity.childPrice} per child
+                                {isPrivateTour && activity.privateTourPrice ? (
+                                    <>
+                                        🏆 Private Tour: $
+                                        {activity.privateTourPrice} total
+                                    </>
+                                ) : (
+                                    <>
+                                        💰 ${activity.adultPrice} per adult • $
+                                        {activity.childPrice} per child
+                                    </>
+                                )}
                             </p>
                         </div>
                     )}
                 </div>
 
+                {/* Departure Hours Selection */}
+                {selectedDate &&
+                    activity.departureHours &&
+                    activity.departureHours.length > 0 && (
+                        <div>
+                            <h3 className="font-semibold text-lg flex items-center gap-3 text-gray-800 mb-4">
+                                <Clock className="w-5 h-5 text-primary" />
+                                Select Departure Time
+                            </h3>
+                            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                {activity.departureHours.map((hour) => (
+                                    <Button
+                                        key={hour}
+                                        variant={
+                                            selectedDepartureHour === hour
+                                                ? "default"
+                                                : "outline"
+                                        }
+                                        onClick={() =>
+                                            setSelectedDepartureHour(hour)
+                                        }
+                                        className={`p-3 h-auto ${
+                                            selectedDepartureHour === hour
+                                                ? "bg-primary text-primary-foreground"
+                                                : "hover:bg-primary/10"
+                                        }`}
+                                    >
+                                        <div className="text-center">
+                                            <div className="font-semibold">
+                                                {hour}
+                                            </div>
+                                            <div className="text-xs opacity-75">
+                                                Departure
+                                            </div>
+                                        </div>
+                                    </Button>
+                                ))}
+                            </div>
+                            {selectedDepartureHour && (
+                                <div className="mt-3 p-3 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-200">
+                                    <p className="text-green-800 font-medium">
+                                        🕐 Departure: {selectedDepartureHour}
+                                    </p>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
                 {/* Guest Selection */}
                 <div>
                     <h3 className="font-semibold mb-3 flex items-center gap-2">
                         <Users className="w-4 h-4" />
-                        Guests
+                        {isPrivateTour ? "Group Size (1-8 people)" : "Guests"}
                     </h3>
+                    {isPrivateTour && (
+                        <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                            <p className="text-sm text-amber-700 mb-2">
+                                Private tour pricing includes your entire group
+                                (up to 8 people total).
+                            </p>
+                            <div className="flex items-center gap-2">
+                                <span className="text-sm font-medium text-amber-900">
+                                    Current group size: {totalGroupSize}/8
+                                </span>
+                                <div className="flex-1 bg-amber-200 rounded-full h-2">
+                                    <div
+                                        className="bg-amber-600 h-2 rounded-full transition-all duration-300"
+                                        style={{
+                                            width: `${(totalGroupSize / 8) * 100}%`,
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    )}
                     <div className="space-y-4">
                         {/* Adults */}
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="font-medium">Adults</p>
                                 <p className="text-sm text-gray-500">
-                                    ${activity.adultPrice} per person
+                                    {isPrivateTour
+                                        ? "Included in private tour price"
+                                        : `$${activity.adultPrice} per person`}
                                 </p>
                             </div>
                             <div className="flex items-center gap-3">
@@ -192,6 +332,9 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                                     variant="outline"
                                     size="sm"
                                     onClick={() => setAdults(adults + 1)}
+                                    disabled={
+                                        isPrivateTour && totalGroupSize >= 8
+                                    }
                                 >
                                     <Plus className="w-4 h-4" />
                                 </Button>
@@ -203,7 +346,9 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                             <div>
                                 <p className="font-medium">Children</p>
                                 <p className="text-sm text-gray-500">
-                                    ${activity.childPrice} per child
+                                    {isPrivateTour
+                                        ? "Included in private tour price"
+                                        : `$${activity.childPrice} per child`}
                                 </p>
                             </div>
                             <div className="flex items-center gap-3">
@@ -224,6 +369,9 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                                     variant="outline"
                                     size="sm"
                                     onClick={() => setChildren(children + 1)}
+                                    disabled={
+                                        isPrivateTour && totalGroupSize >= 8
+                                    }
                                 >
                                     <Plus className="w-4 h-4" />
                                 </Button>
@@ -238,13 +386,22 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                         {/* Ticket */}
                         <div className="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-dashed border-gray-300">
                             {/* Ticket Header */}
-                            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4">
+                            <div
+                                className={`text-white p-4 ${isPrivateTour ? "bg-gradient-to-r from-amber-600 to-orange-600" : "bg-gradient-to-r from-blue-600 to-indigo-600"}`}
+                            >
                                 <div className="flex items-center justify-between">
                                     <div>
-                                        <h3 className="font-bold text-lg">
-                                            ACTIVITY TICKET
+                                        <h3 className="font-bold text-lg flex items-center gap-2">
+                                            {isPrivateTour && (
+                                                <Crown className="w-5 h-5" />
+                                            )}
+                                            {isPrivateTour
+                                                ? "PRIVATE TOUR TICKET"
+                                                : "ACTIVITY TICKET"}
                                         </h3>
-                                        <p className="text-blue-100 text-sm">
+                                        <p
+                                            className={`text-sm ${isPrivateTour ? "text-amber-100" : "text-blue-100"}`}
+                                        >
                                             Booking Confirmation
                                         </p>
                                     </div>
@@ -252,19 +409,14 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                                         <p className="text-2xl font-bold">
                                             ${totalPrice}
                                         </p>
-                                        <p className="text-blue-100 text-sm">
-                                            Total Price
+                                        <p
+                                            className={`text-sm ${isPrivateTour ? "text-amber-100" : "text-blue-100"}`}
+                                        >
+                                            {isPrivateTour
+                                                ? "Private Tour Price"
+                                                : "Total Price"}
                                         </p>
                                     </div>
-                                </div>
-                            </div>
-
-                            {/* Perforated Line */}
-                            <div className="relative h-6 bg-gray-50">
-                                <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-6 h-6 bg-white rounded-full border-2 border-gray-300 -ml-3"></div>
-                                <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-6 h-6 bg-white rounded-full border-2 border-gray-300 -mr-3"></div>
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                    <div className="w-full border-t-2 border-dashed border-gray-300"></div>
                                 </div>
                             </div>
 
@@ -305,11 +457,14 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                                     </div>
                                     <div>
                                         <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold">
-                                            Duration
+                                            {selectedDepartureHour
+                                                ? "Departure"
+                                                : "Duration"}
                                         </p>
                                         <p className="font-medium text-gray-900 flex items-center gap-1">
                                             <Clock className="w-3 h-3" />
-                                            {activity.duration}
+                                            {selectedDepartureHour ||
+                                                activity.duration}
                                         </p>
                                     </div>
                                 </div>
@@ -320,7 +475,9 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                                         Passengers
                                     </p>
                                     <div className="flex items-center gap-4">
-                                        <div className="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg">
+                                        <div
+                                            className={`flex items-center gap-2 px-3 py-2 rounded-lg ${isPrivateTour ? "bg-amber-50 border border-amber-200" : "bg-gray-50"}`}
+                                        >
                                             <Users className="w-4 h-4 text-gray-600" />
                                             <span className="font-medium">
                                                 {adults} Adult
@@ -328,11 +485,21 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                                             </span>
                                         </div>
                                         {children > 0 && (
-                                            <div className="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg">
+                                            <div
+                                                className={`flex items-center gap-2 px-3 py-2 rounded-lg ${isPrivateTour ? "bg-amber-50 border border-amber-200" : "bg-gray-50"}`}
+                                            >
                                                 <Users className="w-4 h-4 text-gray-600" />
                                                 <span className="font-medium">
                                                     {children} Child
                                                     {children > 1 ? "ren" : ""}
+                                                </span>
+                                            </div>
+                                        )}
+                                        {isPrivateTour && (
+                                            <div className="flex items-center gap-2 bg-amber-100 px-3 py-2 rounded-lg border border-amber-300">
+                                                <Crown className="w-4 h-4 text-amber-600" />
+                                                <span className="font-medium text-amber-900">
+                                                    Private Tour
                                                 </span>
                                             </div>
                                         )}
@@ -345,27 +512,47 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                                         Price Breakdown
                                     </p>
                                     <div className="space-y-2">
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-sm text-gray-600">
-                                                Adults ({adults} × $
-                                                {activity.adultPrice})
-                                            </span>
-                                            <span className="font-medium">
-                                                ${adults * activity.adultPrice}
-                                            </span>
-                                        </div>
-                                        {children > 0 && (
+                                        {isPrivateTour ? (
                                             <div className="flex justify-between items-center">
-                                                <span className="text-sm text-gray-600">
-                                                    Children ({children} × $
-                                                    {activity.childPrice})
+                                                <span className="text-sm text-gray-600 flex items-center gap-2">
+                                                    <Crown className="w-4 h-4 text-amber-600" />
+                                                    Private Tour (Fixed Price)
                                                 </span>
                                                 <span className="font-medium">
-                                                    $
-                                                    {children *
-                                                        activity.childPrice}
+                                                    ${activity.privateTourPrice}
                                                 </span>
                                             </div>
+                                        ) : (
+                                            <>
+                                                <div className="flex justify-between items-center">
+                                                    <span className="text-sm text-gray-600">
+                                                        Adults ({adults} × $
+                                                        {activity.adultPrice})
+                                                    </span>
+                                                    <span className="font-medium">
+                                                        $
+                                                        {adults *
+                                                            activity.adultPrice}
+                                                    </span>
+                                                </div>
+                                                {children > 0 && (
+                                                    <div className="flex justify-between items-center">
+                                                        <span className="text-sm text-gray-600">
+                                                            Children ({children}{" "}
+                                                            × $
+                                                            {
+                                                                activity.childPrice
+                                                            }
+                                                            )
+                                                        </span>
+                                                        <span className="font-medium">
+                                                            $
+                                                            {children *
+                                                                activity.childPrice}
+                                                        </span>
+                                                    </div>
+                                                )}
+                                            </>
                                         )}
                                         <div className="border-t pt-2 mt-2">
                                             <div className="flex justify-between items-center">
@@ -379,27 +566,23 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                                         </div>
                                     </div>
                                 </div>
-
-                                {/* Booking Reference */}
-                                <div className="bg-gray-50 rounded-lg p-3 border-l-4 border-blue-500">
-                                    <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold">
-                                        Booking Reference
-                                    </p>
-                                    <p className="font-mono font-bold text-gray-900 text-lg">
-                                        {activity.id.slice(0, 8).toUpperCase()}-
-                                        {Math.random()
-                                            .toString(36)
-                                            .substr(2, 4)
-                                            .toUpperCase()}
-                                    </p>
-                                </div>
                             </div>
                         </div>
                     </div>
                 )}
 
-                <Button onClick={handleBooking}>Book Now</Button>
-                {/* Book Button */}
+                {/* Book Now Button */}
+                <Button
+                    onClick={handleBooking}
+                    disabled={!selectedDate || !selectedDepartureHour}
+                    className="w-full"
+                >
+                    {!selectedDate
+                        ? "Select Date First"
+                        : !selectedDepartureHour
+                          ? "Select Departure Time"
+                          : "Book Now"}
+                </Button>
                 <BookingModal />
             </CardContent>
         </Card>
@@ -407,7 +590,6 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
 }
 
 export const generateBookingReference = () => {
-    // Format: first 8 chars of activity ID + 4 random uppercase letters/numbers
     const randomPart = Math.random().toString(36).substring(2, 6).toUpperCase();
     return randomPart;
 };

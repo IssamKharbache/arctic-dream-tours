@@ -15,7 +15,7 @@ import CustomerDetails from "./CustomerDetails";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
-    BookingCustomerFormData,
+    type BookingCustomerFormData,
     customerDetailsSchema,
 } from "@/lib/schema/validations/validation";
 import BookingSummary from "./BookingSummary";
@@ -29,6 +29,8 @@ export function BookingModal() {
         register,
         handleSubmit,
         formState: { errors },
+        setValue,
+        watch,
     } = useForm<BookingCustomerFormData>({
         resolver: zodResolver(customerDetailsSchema),
         defaultValues: {
@@ -36,8 +38,8 @@ export function BookingModal() {
             lastName: "",
             email: "",
             phone: "",
-            pickUpLocation: "",
-            dropOffLocation: "",
+            pickUpLocation: "I don't need pick up",
+            dropOffLocation: "I don't need drop off",
         },
     });
 
@@ -49,8 +51,8 @@ export function BookingModal() {
     return (
         <>
             <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-                <DialogContent className="min-w-[70vw] h-[90vh]  rounded-none focus:outline-none">
-                    <DialogHeader>
+                <DialogContent className="min-w-[70vw] h-[90vh] flex flex-col rounded-none focus:outline-none">
+                    <DialogHeader className="flex-shrink-0">
                         <BookingStepsBar step={step} />
                         <DialogTitle>Complete Your Booking</DialogTitle>
                         <DialogDescription>
@@ -59,24 +61,30 @@ export function BookingModal() {
                                 : "Review your booking and proceed to payment."}
                         </DialogDescription>
                     </DialogHeader>
-                    {step === 1 ? (
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <CustomerDetails
-                                register={register}
-                                errors={errors}
-                            />
-                            <DialogFooter className="gap-2 mt-5">
-                                <Button
-                                    type="submit"
-                                    className="rounded-sm px-9"
-                                >
-                                    Continue
-                                </Button>
-                            </DialogFooter>
-                        </form>
-                    ) : (
-                        <BookingSummary onBack={() => setStep(1)} />
-                    )}
+
+                    {/* Scrollable content */}
+                    <div className="flex-1 overflow-y-auto pr-2">
+                        {step === 1 ? (
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                <CustomerDetails
+                                    register={register}
+                                    errors={errors}
+                                    setValue={setValue}
+                                    watch={watch}
+                                />
+                                <DialogFooter className="gap-2 mt-5">
+                                    <Button
+                                        type="submit"
+                                        className="rounded-sm px-9"
+                                    >
+                                        Continue
+                                    </Button>
+                                </DialogFooter>
+                            </form>
+                        ) : (
+                            <BookingSummary onBack={() => setStep(1)} />
+                        )}
+                    </div>
                 </DialogContent>
             </Dialog>
         </>

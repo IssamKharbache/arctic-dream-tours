@@ -77,6 +77,7 @@ model Booking {
     lastName   String
     email      String
     phone      String
+    status Booking_Status @default(PENDING)
     departureHour String
     pickUpLocation String
     dropOffLocation String
@@ -85,6 +86,16 @@ model Booking {
 
     @@index([activityId])
     @@index([date])
+}
+
+model Emails {
+ id         String   @id @default(uuid()) @db.Uuid
+ email String
+ fullName String
+ phoneNumber String
+ message String
+ createdAt  DateTime @default(now())
+ updatedAt  DateTime @default(now())
 }
 
 enum Role {
@@ -103,4 +114,9 @@ enum ActivityDifficulty {
 enum SeasonType {
     WINTER
     SUMMER
+}
+
+enum Booking_Status {
+    PENDING
+    PAID
 }

@@ -9,6 +9,8 @@ import { useTranslations } from "next-intl";
 import { useAuthDialogsStore } from "@/store/zustand/authStore";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { Menu, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const menus = [
     { key: "home", href: "/" },
@@ -23,6 +25,7 @@ const NavBar = () => {
 
     const [scrolled, setScrolled] = useState(false);
     const [hasMounted, setHasMounted] = useState(false);
+    const [mobileOpen, setMobileOpen] = useState(false);
 
     const pathName = usePathname();
     const localePath = pathName?.split("/")[1] ?? "";
@@ -47,10 +50,7 @@ const NavBar = () => {
 
     if (!hasMounted) return null;
 
-    // Check if not the home page
     const isNotHomePage = routeWithoutLocale !== "/";
-
-    // Determine navbar styles
     const navbarClasses =
         isNotHomePage || scrolled
             ? "bg-white text-gray-900 shadow-md py-3"
@@ -75,11 +75,15 @@ const NavBar = () => {
                     />
                 </Link>
 
-                {/* Middle Menu */}
-                <div className="flex items-center gap-5">
+                {/* Desktop Menu */}
+                <div className="hidden md:flex items-center gap-5">
                     {menus.map((menu, idx) => (
                         <Link
-                            className={`font-semibold hover:text-primary duration-300 ${isNotHomePage || scrolled ? "text-gray-800" : "text-white"}`}
+                            className={`font-semibold hover:text-primary duration-300 ${
+                                isNotHomePage || scrolled
+                                    ? "text-gray-800"
+                                    : "text-white"
+                            }`}
                             key={idx}
                             href={menu.href as "/" | "/about" | "/contact"}
                         >
@@ -88,8 +92,8 @@ const NavBar = () => {
                     ))}
                 </div>
 
-                {/* Right Menu */}
-                <div className="flex items-center gap-4">
+                {/* Desktop Right Menu */}
+                <div className="hidden md:flex items-center gap-4">
                     <Button
                         className={
                             isNotHomePage || scrolled
@@ -107,13 +111,63 @@ const NavBar = () => {
                             variant={
                                 isNotHomePage || scrolled ? "outline" : "ghost"
                             }
-                            className={`py-3 rounded-2xl ${isNotHomePage || scrolled ? "" : "text-white hover:bg-white/10"}`}
+                            className={`py-3 rounded-2xl ${
+                                isNotHomePage || scrolled
+                                    ? ""
+                                    : "text-white hover:bg-white/10"
+                            }`}
                         >
                             {t("logIn")}
                         </Button>
                     )}
                 </div>
+
+                {/* Mobile Hamburger */}
+                <div className="md:hidden flex items-center">
+                    <button onClick={() => setMobileOpen(!mobileOpen)}>
+                        {mobileOpen ? <X size={28} /> : <Menu size={28} />}
+                    </button>
+                </div>
             </div>
+
+            {/* Animated Mobile Menu */}
+            <AnimatePresence>
+                {mobileOpen && (
+                    <motion.div
+                        initial={{ y: -20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: -20, opacity: 0 }}
+                        transition={{ duration: 0.25, ease: "easeInOut" }}
+                        className="md:hidden absolute top-full left-0 w-full bg-white shadow-lg py-4 px-6 flex flex-col gap-4"
+                    >
+                        {menus.map((menu, idx) => (
+                            <Link
+                                key={idx}
+                                href={menu.href as "/" | "/about" | "/contact"}
+                                className="font-semibold text-gray-800 hover:text-primary"
+                                onClick={() => setMobileOpen(false)}
+                            >
+                                {t(menu.key)}
+                            </Link>
+                        ))}
+                        <Button className="w-full">{t("bookNow")}</Button>
+                        {session ? (
+                            <AuthDropDownMenu />
+                        ) : (
+                            <Button
+                                onClick={() => {
+                                    openSignIn();
+                                    setMobileOpen(false);
+                                }}
+                                variant="outline"
+                                className="w-full"
+                            >
+                                {t("logIn")}
+                            </Button>
+                        )}
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </nav>
     );
 };

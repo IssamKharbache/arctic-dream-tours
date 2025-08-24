@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -97,8 +96,8 @@ const ContactPage = () => {
             />
             <div className="absolute inset-0 bg-gradient-to-br from-blue-900/60 via-blue-800/40 to-slate-900/80" />
 
-            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16">
-                <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start mt-12 sm:mt-24">
+            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16 ">
+                <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start mt-24 ">
                     {/* Left Column */}
                     <div className="w-full lg:w-1/2 space-y-6 sm:space-y-8">
                         <div>
@@ -109,8 +108,9 @@ const ContactPage = () => {
                                 We're Here to Help
                             </h2>
                             <p className="text-base sm:text-lg lg:text-xl text-blue-100 mb-6 sm:mb-8 leading-relaxed drop-shadow-sm">
-                                Got questions or need assistance? Reach out to us
-                                using the form below or via the contact details provided.
+                                Got questions or need assistance? Reach out to
+                                us using the form below or via the contact
+                                details provided.
                             </p>
                         </div>
 
@@ -275,9 +275,10 @@ const ContactPage = () => {
                                                 </FormControl>
                                                 <div className="space-y-1 leading-none">
                                                     <FormLabel className="text-xs sm:text-sm text-blue-100 leading-relaxed cursor-pointer">
-                                                        I agree to the Privacy Policy
-                                                        and understand my data will
-                                                        be used to follow up on this
+                                                        I agree to the Privacy
+                                                        Policy and understand my
+                                                        data will be used to
+                                                        follow up on this
                                                         message
                                                     </FormLabel>
                                                     <FormMessage />

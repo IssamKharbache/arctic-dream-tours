@@ -1,0 +1,28 @@
+{
+    "title": "Kontaktieren Sie uns!",
+    "subtitle": "Wir sind hier, um zu helfen",
+    "description": "Haben Sie Fragen oder benötigen Sie Unterstützung? Kontaktieren Sie uns über das Formular unten oder über die angegebenen Kontaktdaten.",
+    "emailUs": "Schreiben Sie uns eine E-Mail",
+    "callUs": "Rufen Sie uns an",
+    "sendUsMessage": "Senden Sie uns eine Nachricht",
+    "responseTime": "Wir melden uns innerhalb von 24 Stunden bei Ihnen",
+    "fullName": "Vollständiger Name",
+    "fullNamePlaceholder": "Geben Sie Ihren vollständigen Namen ein",
+    "email": "E-Mail",
+    "emailPlaceholder": "your@email.com",
+    "phoneNumber": "Telefonnummer",
+    "phoneNumberPlaceholder": "+358 40 1234567",
+    "message": "Nachricht",
+    "messagePlaceholder": "Teilen Sie uns mit, wie wir Ihnen bei Ihrem Arktis-Abenteuer helfen können...",
+    "privacyPolicy": "Ich stimme der Datenschutzerklärung zu und verstehe, dass meine Daten zur Beantwortung dieser Nachricht verwendet werden",
+    "sending": "Senden...",
+    "sendMessage": "Nachricht senden",
+    "successMessage": "Vielen Dank! Wir haben Ihre Nachricht erhalten.",
+    "errorMessage": "Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es erneut.",
+    "validation": {
+        "fullNameMin": "Der vollständige Name muss mindestens 2 Zeichen lang sein",
+        "emailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+        "messageMin": "Die Nachricht muss mindestens 10 Zeichen lang sein",
+        "privacyPolicyRequired": "Sie müssen der Datenschutzerklärung zustimmen"
+    }
+}

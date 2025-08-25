@@ -1,0 +1,28 @@
+{
+    "title": "お問い合わせ",
+    "subtitle": "私たちはお手伝いします",
+    "description": "質問やサポートが必要ですか？以下のフォームまたは記載された連絡先からご連絡ください。",
+    "emailUs": "メールでお問い合わせ",
+    "callUs": "お電話でお問い合わせ",
+    "sendUsMessage": "メッセージを送る",
+    "responseTime": "24時間以内にご返信いたします",
+    "fullName": "氏名",
+    "fullNamePlaceholder": "氏名を入力してください",
+    "email": "メールアドレス",
+    "emailPlaceholder": "your@email.com",
+    "phoneNumber": "電話番号",
+    "phoneNumberPlaceholder": "+358 40 1234567",
+    "message": "メッセージ",
+    "messagePlaceholder": "北極冒険についてどのようにお手伝いできるかお知らせください...",
+    "privacyPolicy": "プライバシーポリシーに同意し、このメッセージへの返信に私のデータが使用されることを理解します",
+    "sending": "送信中...",
+    "sendMessage": "メッセージを送信",
+    "successMessage": "ありがとうございます！メッセージを受け取りました。",
+    "errorMessage": "メッセージの送信に失敗しました。もう一度お試しください。",
+    "validation": {
+        "fullNameMin": "氏名は2文字以上で入力してください",
+        "emailInvalid": "有効なメールアドレスを入力してください",
+        "messageMin": "メッセージは10文字以上で入力してください",
+        "privacyPolicyRequired": "プライバシーポリシーに同意する必要があります"
+    }
+}

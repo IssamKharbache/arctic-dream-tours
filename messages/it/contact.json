@@ -1,0 +1,28 @@
+{
+    "title": "Mettiti in contatto!",
+    "subtitle": "Siamo qui per aiutarti",
+    "description": "Hai domande o bisogno di assistenza? Contattaci utilizzando il modulo qui sotto o i dettagli forniti.",
+    "emailUs": "Scrivici un'e-mail",
+    "callUs": "Chiamaci",
+    "sendUsMessage": "Inviaci un messaggio",
+    "responseTime": "Ti risponderemo entro 24 ore",
+    "fullName": "Nome completo",
+    "fullNamePlaceholder": "Inserisci il tuo nome completo",
+    "email": "E-mail",
+    "emailPlaceholder": "tuo@email.com",
+    "phoneNumber": "Numero di telefono",
+    "phoneNumberPlaceholder": "+358 40 1234567",
+    "message": "Messaggio",
+    "messagePlaceholder": "Dicci come possiamo aiutarti con la tua avventura artica...",
+    "privacyPolicy": "Accetto l'informativa sulla privacy e comprendo che i miei dati saranno utilizzati per rispondere a questo messaggio",
+    "sending": "Invio...",
+    "sendMessage": "Invia messaggio",
+    "successMessage": "Grazie! Abbiamo ricevuto il tuo messaggio.",
+    "errorMessage": "Invio del messaggio non riuscito. Riprova.",
+    "validation": {
+        "fullNameMin": "Il nome completo deve contenere almeno 2 caratteri",
+        "emailInvalid": "Inserisci un indirizzo e-mail valido",
+        "messageMin": "Il messaggio deve contenere almeno 10 caratteri",
+        "privacyPolicyRequired": "Devi accettare l'informativa sulla privacy"
+    }
+}

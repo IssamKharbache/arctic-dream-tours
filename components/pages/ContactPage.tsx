@@ -21,15 +21,19 @@ import { toast } from "sonner";
 import { baseUrl } from "@/utils/baseUrl";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 const contactFormSchema = z.object({
-    fullName: z.string().min(2, "Full name must be at least 2 characters"),
-    email: z.string().email("Please enter a valid email address"),
+    fullName: z.string().min(2, "contact.validation.fullNameMin"),
+    email: z.string().email("contact.validation.emailInvalid"),
     phoneNumber: z.string().optional(),
-    message: z.string().min(10, "Message must be at least 10 characters"),
+    message: z.string().min(10, "contact.validation.messageMin"),
     privacyPolicy: z
         .boolean()
-        .refine((val) => val === true, "You must agree to the privacy policy"),
+        .refine(
+            (val) => val === true,
+            "contact.validation.privacyPolicyRequired",
+        ),
 });
 
 type ContactFormData = z.infer<typeof contactFormSchema>;
@@ -37,9 +41,7 @@ type ContactFormData = z.infer<typeof contactFormSchema>;
 const submitContactForm = async (data: ContactFormData) => {
     const response = await fetch(`${baseUrl}/api/emails/create`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
     });
 
@@ -51,6 +53,8 @@ const submitContactForm = async (data: ContactFormData) => {
 };
 
 const ContactPage = () => {
+    const t = useTranslations("contact");
+
     const form = useForm<ContactFormData>({
         resolver: zodResolver(contactFormSchema),
         defaultValues: {
@@ -68,16 +72,15 @@ const ContactPage = () => {
     const contactMutation = useMutation({
         mutationFn: submitContactForm,
         onSuccess: () => {
-            setConfirmation("Thank you! We have received your message.");
+            setConfirmation(t("successMessage"));
             setErrorMessage(null);
-            toast.success("Message sent successfully!");
+            toast.success(t("successMessage"));
             form.reset();
         },
-        onError: (error: any) => {
-            setErrorMessage("Failed to send message. Please try again.");
+        onError: () => {
+            setErrorMessage(t("errorMessage"));
             setConfirmation(null);
-            toast.error("Failed to send message. Please try again.");
-            console.error("Contact form error:", error);
+            toast.error(t("errorMessage"));
         },
     });
 
@@ -87,6 +90,7 @@ const ContactPage = () => {
 
     return (
         <div className="min-h-screen relative">
+            {/* Background */}
             <div
                 className="absolute inset-0 bg-cover bg-center bg-no-repeat"
                 style={{
@@ -96,49 +100,48 @@ const ContactPage = () => {
             />
             <div className="absolute inset-0 bg-gradient-to-br from-blue-900/60 via-blue-800/40 to-slate-900/80" />
 
-            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16 ">
-                <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start mt-24 ">
+            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16">
+                <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start mt-24">
                     {/* Left Column */}
                     <div className="w-full lg:w-1/2 space-y-6 sm:space-y-8">
                         <div>
                             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 drop-shadow-lg">
-                                Get In Touch!
+                                {t("title")}
                             </h1>
                             <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-blue-200 mb-4 sm:mb-6 drop-shadow-md">
-                                We're Here to Help
+                                {t("subtitle")}
                             </h2>
                             <p className="text-base sm:text-lg lg:text-xl text-blue-100 mb-6 sm:mb-8 leading-relaxed drop-shadow-sm">
-                                Got questions or need assistance? Reach out to
-                                us using the form below or via the contact
-                                details provided.
+                                {t("description")}
                             </p>
                         </div>
 
+                        {/* Email & Phone */}
                         <div className="space-y-4 sm:space-y-6">
-                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 bg-white/10 rounded-lg p-3 sm:p-4 border border-white/20 backdrop-blur-sm">
                                 <div className="bg-blue-500 p-2 sm:p-3 rounded-full flex-shrink-0">
                                     <Mail className="text-white" size={20} />
                                 </div>
                                 <div className="min-w-0 flex-1">
                                     <p className="text-blue-100 text-xs sm:text-sm font-medium">
-                                        Email Us
+                                        {t("emailUs")}
                                     </p>
                                     <a
                                         href="mailto:Arcticdreamtours@gmail.com"
-                                        className="text-sm sm:text-lg lg:text-xl font-semibold text-white hover:text-blue-200 transition-colors break-all"
+                                        className="text-sm sm:text-lg lg:text-xl font-semibold text-white hover:text-blue-200 break-all transition-colors"
                                     >
                                         Arcticdreamtours@gmail.com
                                     </a>
                                 </div>
                             </div>
 
-                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 bg-white/10 rounded-lg p-3 sm:p-4 border border-white/20 backdrop-blur-sm">
                                 <div className="bg-blue-500 p-2 sm:p-3 rounded-full flex-shrink-0">
                                     <Phone className="text-white" size={20} />
                                 </div>
                                 <div className="min-w-0 flex-1">
                                     <p className="text-blue-100 text-xs sm:text-sm font-medium">
-                                        Call Us
+                                        {t("callUs")}
                                     </p>
                                     <p className="text-sm sm:text-lg lg:text-xl font-semibold text-white">
                                         +358 40 0408538
@@ -148,20 +151,20 @@ const ContactPage = () => {
                         </div>
                     </div>
 
-                    {/* Right Column (Form) */}
+                    {/* Right Column */}
                     <div className="w-full lg:w-1/2">
                         <motion.div
                             initial={{ opacity: 0, scale: 0.95, y: 20 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
-                            transition={{ duration: 0.4, ease: "easeOut" }}
+                            transition={{ duration: 0.4 }}
                             className="bg-white/10 backdrop-blur-md p-6 sm:p-8 lg:p-10 rounded-2xl shadow-2xl border border-white/20"
                         >
                             <div className="mb-6 sm:mb-8">
                                 <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
-                                    Send us a Message
+                                    {t("sendUsMessage")}
                                 </h3>
                                 <p className="text-sm sm:text-base text-blue-100">
-                                    We'll get back to you within 24 hours
+                                    {t("responseTime")}
                                 </p>
                             </div>
 
@@ -177,13 +180,15 @@ const ContactPage = () => {
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel className="text-xs sm:text-sm font-semibold text-blue-100 uppercase tracking-wide">
-                                                    Full Name
+                                                    {t("fullName")}
                                                 </FormLabel>
                                                 <FormControl>
                                                     <Input
-                                                        placeholder="Enter your full name"
-                                                        className="border border-white/30 placeholder:text-white/70 focus:border-blue-400 focus:ring-2 focus:ring-blue-300 rounded-lg py-2 sm:py-3 text-base sm:text-lg text-white bg-white/5 transition-all"
+                                                        placeholder={t(
+                                                            "fullNamePlaceholder",
+                                                        )}
                                                         {...field}
+                                                        className="border border-white/30 placeholder:text-white/70 bg-white/5 text-white rounded-lg py-2 sm:py-3 text-base sm:text-lg"
                                                     />
                                                 </FormControl>
                                                 <FormMessage />
@@ -199,14 +204,16 @@ const ContactPage = () => {
                                             render={({ field }) => (
                                                 <FormItem className="flex-1">
                                                     <FormLabel className="text-xs sm:text-sm font-semibold text-blue-100 uppercase tracking-wide">
-                                                        Email
+                                                        {t("email")}
                                                     </FormLabel>
                                                     <FormControl>
                                                         <Input
                                                             type="email"
-                                                            placeholder="your@email.com"
-                                                            className="border border-white/30 placeholder:text-white/70 focus:border-blue-400 focus:ring-2 focus:ring-blue-300 rounded-lg py-2 sm:py-3 text-base sm:text-lg text-white bg-white/5 transition-all"
+                                                            placeholder={t(
+                                                                "emailPlaceholder",
+                                                            )}
                                                             {...field}
+                                                            className="border border-white/30 placeholder:text-white/70 bg-white/5 text-white rounded-lg py-2 sm:py-3 text-base sm:text-lg"
                                                         />
                                                     </FormControl>
                                                     <FormMessage />
@@ -220,14 +227,16 @@ const ContactPage = () => {
                                             render={({ field }) => (
                                                 <FormItem className="flex-1">
                                                     <FormLabel className="text-xs sm:text-sm font-semibold text-blue-100 uppercase tracking-wide">
-                                                        Phone Number
+                                                        {t("phoneNumber")}
                                                     </FormLabel>
                                                     <FormControl>
                                                         <Input
                                                             type="tel"
-                                                            placeholder="+358 40 1234567"
-                                                            className="border border-white/30 placeholder:text-white/70 focus:border-blue-400 focus:ring-2 focus:ring-blue-300 rounded-lg py-2 sm:py-3 text-base sm:text-lg text-white bg-white/5 transition-all"
+                                                            placeholder={t(
+                                                                "phoneNumberPlaceholder",
+                                                            )}
                                                             {...field}
+                                                            className="border border-white/30 placeholder:text-white/70 bg-white/5 text-white rounded-lg py-2 sm:py-3 text-base sm:text-lg"
                                                         />
                                                     </FormControl>
                                                     <FormMessage />
@@ -243,14 +252,16 @@ const ContactPage = () => {
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel className="text-xs sm:text-sm font-semibold text-blue-100 uppercase tracking-wide">
-                                                    Message
+                                                    {t("message")}
                                                 </FormLabel>
                                                 <FormControl>
                                                     <Textarea
                                                         rows={4}
-                                                        placeholder="Tell us how we can help you with your Arctic adventure..."
-                                                        className="border border-white/30 placeholder:text-white/70 focus:border-blue-400 focus:ring-2 focus:ring-blue-300 rounded-lg text-base sm:text-lg text-white bg-white/5 transition-all resize-none"
+                                                        placeholder={t(
+                                                            "messagePlaceholder",
+                                                        )}
                                                         {...field}
+                                                        className="border border-white/30 placeholder:text-white/70 bg-white/5 text-white rounded-lg text-base sm:text-lg resize-none"
                                                     />
                                                 </FormControl>
                                                 <FormMessage />
@@ -263,23 +274,19 @@ const ContactPage = () => {
                                         control={form.control}
                                         name="privacyPolicy"
                                         render={({ field }) => (
-                                            <FormItem className="flex flex-row items-start space-x-3 space-y-0 p-3 sm:p-4 bg-white/10 rounded-lg border border-white/30">
+                                            <FormItem className="flex flex-row items-start space-x-3 p-3 sm:p-4 bg-white/10 rounded-lg border border-white/30">
                                                 <FormControl>
                                                     <Checkbox
                                                         checked={field.value}
                                                         onCheckedChange={
                                                             field.onChange
                                                         }
-                                                        className="border border-white/40 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600 mt-0.5"
+                                                        className="border border-white/40 data-[state=checked]:bg-blue-600"
                                                     />
                                                 </FormControl>
-                                                <div className="space-y-1 leading-none">
-                                                    <FormLabel className="text-xs sm:text-sm text-blue-100 leading-relaxed cursor-pointer">
-                                                        I agree to the Privacy
-                                                        Policy and understand my
-                                                        data will be used to
-                                                        follow up on this
-                                                        message
+                                                <div className="space-y-1">
+                                                    <FormLabel className="text-xs sm:text-sm text-blue-100 cursor-pointer">
+                                                        {t("privacyPolicy")}
                                                     </FormLabel>
                                                     <FormMessage />
                                                 </div>
@@ -287,19 +294,19 @@ const ContactPage = () => {
                                         )}
                                     />
 
-                                    {/* Submit Button */}
+                                    {/* Submit */}
                                     <Button
                                         type="submit"
                                         disabled={contactMutation.isPending}
-                                        className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 disabled:cursor-not-allowed text-white py-3 sm:py-4 text-base sm:text-lg font-bold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center gap-2"
+                                        className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-3 sm:py-4 text-base sm:text-lg font-bold rounded-lg shadow-lg flex items-center justify-center gap-2"
                                     >
                                         <Send className="h-4 w-4 sm:h-5 sm:w-5" />
                                         {contactMutation.isPending
-                                            ? "Sending..."
-                                            : "Send Message"}
+                                            ? t("sending")
+                                            : t("sendMessage")}
                                     </Button>
 
-                                    {/* Inline Confirmation / Error */}
+                                    {/* Status */}
                                     {confirmation && (
                                         <p className="text-green-400 font-semibold mt-2 text-center">
                                             {confirmation}

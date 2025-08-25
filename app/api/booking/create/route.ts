@@ -4,9 +4,12 @@ import {
     bookingSchema,
     customerDetailsSchema,
 } from "@/lib/schema/validations/validation";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth/authOptions";
 
 export const POST = async (req: Request) => {
     try {
+        const session = await getServerSession(authOptions);
         const body = await req.json();
 
         // Extract booking fields
@@ -71,6 +74,7 @@ export const POST = async (req: Request) => {
                 ...customerData,
                 date: new Date(bookingData.date),
                 totalPrice,
+                userId: session?.user?.id,
             },
         });
 

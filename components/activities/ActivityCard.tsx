@@ -19,7 +19,7 @@ export function ActivityCard({ activity }: ActivityCardProps) {
     return (
         <div className="p-5 rounded-2xl bg-primary/10 hover:bg-primary/20  hover:-rotate-1 hover:-translate-y-1 transition-transform duration-300 ease-in-out">
             <div className="relative h-48 w-full">
-                <Link href={`/activity/${activity.slug}`}>
+                <Link href={`/activity/${activity.slug}` as any}>
                     <Image
                         src={
                             activity.imageUrl ||
@@ -47,7 +47,7 @@ export function ActivityCard({ activity }: ActivityCardProps) {
                     <p>{formatActivityDifficulty(activity.difficulty)}</p>
                 </div>
             </div>
-            <Link href={`/activity/${activity.slug}`} className="p-5">
+            <Link href={`/activity/${activity.slug}` as any} className="p-5">
                 <p className="text-2xl text-center font-bold capitalize">
                     {activity.title}
                 </p>
@@ -77,14 +77,10 @@ export function ActivityCard({ activity }: ActivityCardProps) {
                     </span>
                 </div>
                 <div className="flex items-center gap-5">
-                    <Button className="ml-auto rounded-full hover:scale-105">
-                        Book Now
-                    </Button>
-                    <Link
-                        href="/activity/details"
-                        className="text-muted-foreground hover:scale-105 hover:text-black"
-                    >
-                        Learn more
+                    <Link href={`/activity/${activity.slug}` as any}>
+                        <Button className="ml-auto rounded-full hover:scale-105">
+                            Book Now
+                        </Button>
                     </Link>
                 </div>
             </div>

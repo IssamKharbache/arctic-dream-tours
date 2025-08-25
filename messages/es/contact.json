@@ -1,0 +1,28 @@
+{
+    "title": "¡Ponte en contacto!",
+    "subtitle": "Estamos aquí para ayudarte",
+    "description": "¿Tienes preguntas o necesitas ayuda? Contáctanos usando el formulario a continuación o mediante los datos de contacto proporcionados.",
+    "emailUs": "Envíanos un correo electrónico",
+    "callUs": "Llámanos",
+    "sendUsMessage": "Envíanos un mensaje",
+    "responseTime": "Te responderemos en un plazo de 24 horas",
+    "fullName": "Nombre completo",
+    "fullNamePlaceholder": "Introduce tu nombre completo",
+    "email": "Correo electrónico",
+    "emailPlaceholder": "your@email.com",
+    "phoneNumber": "Número de teléfono",
+    "phoneNumberPlaceholder": "+358 40 1234567",
+    "message": "Mensaje",
+    "messagePlaceholder": "Cuéntanos cómo podemos ayudarte con tu aventura en el Ártico...",
+    "privacyPolicy": "Acepto la Política de Privacidad y entiendo que mis datos se utilizarán para dar seguimiento a este mensaje",
+    "sending": "Enviando...",
+    "sendMessage": "Enviar mensaje",
+    "successMessage": "¡Gracias! Hemos recibido tu mensaje.",
+    "errorMessage": "No se pudo enviar el mensaje. Por favor, inténtalo de nuevo.",
+    "validation": {
+        "fullNameMin": "El nombre completo debe tener al menos 2 caracteres",
+        "emailInvalid": "Por favor, introduce una dirección de correo electrónico válida",
+        "messageMin": "El mensaje debe tener al menos 10 caracteres",
+        "privacyPolicyRequired": "Debes aceptar la política de privacidad"
+    }
+}

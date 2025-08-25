@@ -10,14 +10,15 @@ datasource db {
 
 model User {
     id              String   @id @default(uuid()) @db.Uuid
-    email           String   @unique
-    password        String
-    createdAt       DateTime @default(now())
-    isEmailVerified Boolean  @default(false)
-    role            Role     @default(USER)
-    updatedAt       DateTime @updatedAt
     firstName       String
     lastName        String
+    email           String   @unique
+    password        String
+    isEmailVerified Boolean  @default(false)
+    role            Role     @default(USER)
+    createdAt       DateTime @default(now())
+    updatedAt       DateTime @updatedAt
+    bookings        Booking[]
 }
 
 model EmailVerification {
@@ -72,20 +73,25 @@ model Booking {
     adults     Int      @default(1)
     children   Int      @default(0)
     totalPrice Float
-    bookingRef String @unique
+    bookingRef String   @unique
     firstName  String
     lastName   String
     email      String
     phone      String
-    status Booking_Status @default(PENDING)
+    status     Booking_Status @default(PENDING)
     departureHour String
     pickUpLocation String
     dropOffLocation String
-    isPrivate Boolean @default(false)
+    isPrivate  Boolean @default(false)
     createdAt  DateTime @default(now())
+
+    // Optional link to User
+    userId String?   @db.Uuid
+    user   User?     @relation(fields: [userId], references: [id])
 
     @@index([activityId])
     @@index([date])
+    @@index([userId])
 }
 
 model Emails {

@@ -1,0 +1,28 @@
+{
+    "title": "联系我们！",
+    "subtitle": "我们随时为您提供帮助",
+    "description": "有问题或需要帮助吗？请通过以下表单或提供的联系方式与我们联系。",
+    "emailUs": "给我们发邮件",
+    "callUs": "给我们打电话",
+    "sendUsMessage": "发送消息给我们",
+    "responseTime": "我们会在24小时内回复您",
+    "fullName": "全名",
+    "fullNamePlaceholder": "请输入您的全名",
+    "email": "电子邮箱",
+    "emailPlaceholder": "your@email.com",
+    "phoneNumber": "电话号码",
+    "phoneNumberPlaceholder": "+358 40 1234567",
+    "message": "留言",
+    "messagePlaceholder": "告诉我们如何帮助您完成北极探险...",
+    "privacyPolicy": "我同意隐私政策，并理解我的数据将用于回复此消息",
+    "sending": "发送中...",
+    "sendMessage": "发送消息",
+    "successMessage": "谢谢！我们已收到您的消息。",
+    "errorMessage": "发送消息失败。请重试。",
+    "validation": {
+        "fullNameMin": "全名至少需要2个字符",
+        "emailInvalid": "请输入有效的电子邮箱地址",
+        "messageMin": "留言至少需要10个字符",
+        "privacyPolicyRequired": "您必须同意隐私政策"
+    }
+}

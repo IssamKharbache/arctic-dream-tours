@@ -1,0 +1,28 @@
+{
+    "title": "Get In Touch!",
+    "subtitle": "We're Here to Help",
+    "description": "Got questions or need assistance? Reach out to us using the form below or via the contact details provided.",
+    "emailUs": "Email Us",
+    "callUs": "Call Us",
+    "sendUsMessage": "Send us a Message",
+    "responseTime": "We'll get back to you within 24 hours",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Enter your full name",
+    "email": "Email",
+    "emailPlaceholder": "your@email.com",
+    "phoneNumber": "Phone Number",
+    "phoneNumberPlaceholder": "+358 40 1234567",
+    "message": "Message",
+    "messagePlaceholder": "Tell us how we can help you with your Arctic adventure...",
+    "privacyPolicy": "I agree to the Privacy Policy and understand my data will be used to follow up on this message",
+    "sending": "Sending...",
+    "sendMessage": "Send Message",
+    "successMessage": "Thank you! We have received your message.",
+    "errorMessage": "Failed to send message. Please try again.",
+    "validation": {
+        "fullNameMin": "Full name must be at least 2 characters",
+        "emailInvalid": "Please enter a valid email address",
+        "messageMin": "Message must be at least 10 characters",
+        "privacyPolicyRequired": "You must agree to the privacy policy"
+    }
+}

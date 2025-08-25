@@ -1,0 +1,28 @@
+{
+    "title": "Contactez-nous !",
+    "subtitle": "Nous sommes là pour vous aider",
+    "description": "Vous avez des questions ou besoin d'aide ? Contactez-nous via le formulaire ci-dessous ou les coordonnées fournies.",
+    "emailUs": "Envoyez-nous un e-mail",
+    "callUs": "Appelez-nous",
+    "sendUsMessage": "Envoyez-nous un message",
+    "responseTime": "Nous vous répondrons sous 24 heures",
+    "fullName": "Nom complet",
+    "fullNamePlaceholder": "Entrez votre nom complet",
+    "email": "E-mail",
+    "emailPlaceholder": "votre@email.com",
+    "phoneNumber": "Numéro de téléphone",
+    "phoneNumberPlaceholder": "+358 40 1234567",
+    "message": "Message",
+    "messagePlaceholder": "Dites-nous comment nous pouvons vous aider pour votre aventure en Arctique...",
+    "privacyPolicy": "J'accepte la politique de confidentialité et comprends que mes données seront utilisées pour répondre à ce message",
+    "sending": "Envoi...",
+    "sendMessage": "Envoyer le message",
+    "successMessage": "Merci ! Nous avons bien reçu votre message.",
+    "errorMessage": "Échec de l'envoi du message. Veuillez réessayer.",
+    "validation": {
+        "fullNameMin": "Le nom complet doit contenir au moins 2 caractères",
+        "emailInvalid": "Veuillez entrer une adresse e-mail valide",
+        "messageMin": "Le message doit contenir au moins 10 caractères",
+        "privacyPolicyRequired": "Vous devez accepter la politique de confidentialité"
+    }
+}

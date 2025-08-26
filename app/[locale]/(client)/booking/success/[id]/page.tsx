@@ -42,22 +42,24 @@ interface BookingData {
     totalPrice: number;
     activity: Activity;
     bookingRef: string;
+    status: string;
 }
 
 const fetchBooking = async (bookingId: string) => {
     const res = await fetch(`${baseUrl}/api/booking/get/${bookingId}`);
     if (!res.ok) throw new Error("Booking not found");
     const data = await res.json();
+
     return data.booking as BookingData;
 };
 
 /* --------------------------- Sub Components --------------------------- */
 
-const SuccessHeader = ({ bookingRef }: { bookingRef: string }) => {
+const SuccessHeader = ({ booking }: { booking: BookingData }) => {
     const [copied, setCopied] = useState(false);
 
     const handleCopy = async () => {
-        await navigator.clipboard.writeText(bookingRef);
+        await navigator.clipboard.writeText(booking.bookingRef);
         setCopied(true);
         setTimeout(() => setCopied(false), 5000);
     };
@@ -68,18 +70,21 @@ const SuccessHeader = ({ bookingRef }: { bookingRef: string }) => {
                 <CheckCircle className="w-12 h-12 text-green-600" />
             </div>
             <h1 className="text-4xl font-bold text-gray-900 mb-2">
-                Booking Confirmed!
+                {booking.status === "PENDING"
+                    ? "Booking requested successfully"
+                    : "Booking confirmed"}
             </h1>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Thank you for your booking. We've sent a confirmation email with
-                all the details.
+                {booking.status === "PENDING"
+                    ? "We have received your booking request. Our team will contact you shortly and provide you with our bank details to complete the payment."
+                    : "Your booking has been confirmed and a confirmation email has been sent to your inbox."}
             </p>
             <Badge
                 variant="secondary"
                 className="gap-5 mt-4 px-4 py-3 text-md font-medium"
             >
                 Booking reference :{" "}
-                <p className="font-semibold">#{bookingRef}</p>
+                <p className="font-semibold">#{booking.bookingRef}</p>
                 <button
                     onClick={handleCopy}
                     disabled={copied}
@@ -111,8 +116,10 @@ const ActivityDetails = ({ booking }: { booking: BookingData }) => (
                         </div>
                     )}
                 </div>
-                <Badge className="bg-green-100 text-green-800 border-green-200">
-                    Confirmed
+                <Badge
+                    className={`${booking.status === "PENDING" ? "bg-yellow-400 text-black" : "bg-green-100 text-green-800 border-green-200"}`}
+                >
+                    {booking.status === "PENDING" ? "Pending" : "Confirmed"}
                 </Badge>
             </div>
 
@@ -176,10 +183,12 @@ const CustomerInfo = ({ booking }: { booking: BookingData }) => (
                     </p>
                 </div>
                 <div>
-                    <p className="text-sm text-gray-500 mb-1">Email Address</p>
+                    <p className="text-sm ml-2 text-gray-500 mb-1">
+                        Email Address
+                    </p>
                     <div className="flex items-center">
                         <Mail className="w-4 h-4 text-gray-400 mr-2" />
-                        <p className="font-medium text-gray-900">
+                        <p className="font-semibold text-gray-900">
                             {booking.email}
                         </p>
                     </div>
@@ -248,7 +257,7 @@ const BookingSuccessPage = () => {
     return (
         <div className="min-h-screen pt-24 bg-gradient-to-br from-green-50 via-blue-50 to-purple-50">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <SuccessHeader bookingRef={booking.bookingRef} />
+                <SuccessHeader booking={booking} />
 
                 <div className="grid lg:grid-cols-3 gap-8">
                     <div className="lg:col-span-2 space-y-6">

@@ -31,7 +31,6 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = ({
     register,
     errors,
     setValue,
-    watch,
 }) => {
     const [pickupType, setPickupType] = useState<string>("");
     const [dropoffType, setDropoffType] = useState<string>("");
@@ -65,7 +64,7 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = ({
     return (
         <div>
             {/* First row */}
-            <div className="flex items-center p-5 gap-5 justify-center w-full">
+            <div className="flex flex-col md:flex-row items-center p-5 gap-5 justify-center w-full">
                 <div className="w-full">
                     <Label htmlFor="fname" className="mb-4 block">
                         First name
@@ -102,7 +101,7 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = ({
             </div>
 
             {/* Second row */}
-            <div className="flex items-center p-5 gap-5 justify-center w-full">
+            <div className="flex flex-col md:flex-row items-center p-5 gap-5 justify-center w-full">
                 <div className="w-full">
                     <Label htmlFor="customerEmail" className="mb-4 block">
                         Email Address
@@ -138,7 +137,7 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = ({
                 </div>
             </div>
 
-            <div className="flex items-start p-5 gap-5 justify-center w-full">
+            <div className="flex flex-col md:flex-row items-start p-5 gap-5 justify-center w-full">
                 <div className="w-full">
                     <Label htmlFor="pickupSelect" className="mb-4 block">
                         Pick up location

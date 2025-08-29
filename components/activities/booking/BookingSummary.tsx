@@ -39,6 +39,7 @@ const BookingSummary: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const router = useRouter();
   useEffect(() => {
     const customerData = JSON.parse(
       localStorage.getItem("customerData") || "{}"
@@ -52,8 +53,6 @@ const BookingSummary: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
   if (!bookingData) {
     return <p className="text-center text-gray-500">No booking data found.</p>;
   }
-
-  console.log(bookingData);
 
   const payload = {
     activityId: bookingData.activityId,
@@ -72,7 +71,7 @@ const BookingSummary: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
     dropOffLocation: bookingData.dropOffLocation,
   };
 
-  const handleRequestBooking = async () => {
+  const handleRequestBooking = async (type: string) => {
     try {
       setIsSubmitting(true);
       const res = await fetch(`${baseUrl}/api/booking/create`, {
@@ -83,9 +82,15 @@ const BookingSummary: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
       const data = await res.json();
       if (!res.ok) {
         alert(`Booking failed: ${data.message || "Unknown error"}`);
-        return null; // Important: return null if failed
+        return null;
       }
-      return data.data; // return the created booking object
+      if (type === "request") {
+        router.push(
+          `/booking/request/success/${data.data.id}?token=${data.data.accessToken}` as any
+        );
+      }
+
+      return data.data;
     } catch (error) {
       console.error(error);
       alert("An error occurred while creating the booking");
@@ -193,7 +198,7 @@ const BookingSummary: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
         )}
         <div className="flex gap-3">
           <Button
-            onClick={handleRequestBooking}
+            onClick={() => handleRequestBooking("request")}
             className="flex-1 sm:flex-none bg-yellow-500 hover:bg-yellow-600"
             disabled={isSubmitting}
           >

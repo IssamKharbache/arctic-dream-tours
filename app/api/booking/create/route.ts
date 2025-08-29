@@ -6,11 +6,15 @@ import {
 } from "@/lib/schema/validations/validation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/authOptions";
+import { generateAccessToken } from "@/utils/tokens";
+import { sendBookingEmail } from "@/lib/auth/sendBookingEmail";
 
 export const POST = async (req: Request) => {
   try {
     const session = await getServerSession(authOptions);
     const body = await req.json();
+
+    const accessToken = generateAccessToken();
 
     // Extract booking fields
     const bookingValidation = bookingSchema.safeParse({
@@ -74,11 +78,43 @@ export const POST = async (req: Request) => {
       data: {
         ...bookingData,
         ...customerData,
+        accessToken,
         date: new Date(bookingData.date),
         totalPrice,
         userId: session?.user?.id,
+        status: "PENDING", // Ensure status is set
+      },
+      include: {
+        activity: true, // Include activity details for email
       },
     });
+
+    // Send booking confirmation email
+    try {
+      await sendBookingEmail({
+        bookingRef: newBooking.bookingRef,
+        customerName: `${newBooking.firstName} ${newBooking.lastName}`,
+        customerEmail: newBooking.email,
+        activityName: activity.title,
+        date: new Date(newBooking.date).toLocaleDateString("en-US", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
+        time: newBooking.departureHour,
+        adults: newBooking.adults,
+        children: newBooking.children,
+        totalPrice: newBooking.totalPrice,
+        pickUpLocation: newBooking.pickUpLocation,
+        dropOffLocation: newBooking.dropOffLocation,
+        isPrivate: newBooking.isPrivate,
+        status: newBooking.status,
+      });
+    } catch (emailError) {
+      console.error("Failed to send booking email:", emailError);
+      // Don't fail the booking creation if email fails
+    }
 
     return NextResponse.json(
       { message: "Booking created successfully", data: newBooking },

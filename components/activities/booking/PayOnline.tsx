@@ -42,20 +42,20 @@ const PayOnline = ({
   onBookingRequest,
 }: {
   booking: BookingSummaryData;
-  onBookingRequest: () => Promise<CreatedBooking | null>;
+  onBookingRequest: (type: string) => Promise<CreatedBooking | null>;
 }) => {
   const stripePromise = loadStripe(
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ""
   );
   const fetchClientSecret = useCallback(async () => {
     try {
-      const newBooking = await onBookingRequest();
+      const newBooking = await onBookingRequest("payment");
       if (!newBooking) throw new Error("Booking creation failed");
 
       const response = await fetch("/api/payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: newBooking.id }), // ✅ send correct format
+        body: JSON.stringify({ id: newBooking.id }),
       });
 
       const data = await response.json();

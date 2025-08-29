@@ -30,6 +30,7 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
   const [adults, setAdults] = useState(1);
   const [children, setChildren] = useState(0);
+  const [infants, setInfants] = useState(0);
   const [isPrivateTour, setIsPrivateTour] = useState(false);
   const [selectedDepartureHour, setSelectedDepartureHour] = useState<
     string | undefined
@@ -69,6 +70,7 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
       date: selectedDate,
       adults,
       children,
+      infants,
       totalPrice,
       activityTitle: activity.title,
       location: activity.location,
@@ -290,7 +292,10 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
             {/* Adults */}
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-medium">Adults</p>
+                <div className="flex items-center gap-2">
+                  <p className="font-medium">Adults</p>
+                  <p className="text-sm text-gray-500">(Age 14 - 99)</p>
+                </div>
                 <p className="text-sm text-gray-500">
                   {isPrivateTour
                     ? "Included in private tour price"
@@ -321,7 +326,10 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
             {/* Children */}
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-medium">Children</p>
+                <div className="flex items-center gap-2">
+                  <p className="font-medium">Children</p>
+                  <p className="text-sm text-gray-500">(Age 4 - 13)</p>
+                </div>
                 <p className="text-sm text-gray-500">
                   {isPrivateTour
                     ? "Included in private tour price"
@@ -343,6 +351,38 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                   size="sm"
                   onClick={() => setChildren(children + 1)}
                   disabled={isPrivateTour && totalGroupSize >= 8}
+                >
+                  <Plus className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+            {/* Infants */}
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="flex items-center gap-2">
+                  <p className="font-medium">Infants</p>
+                  <p className="text-sm text-gray-500">(Age 0 - 3)</p>
+                </div>
+                <p className="text-sm text-gray-500">
+                  {isPrivateTour
+                    ? "Included in private tour price"
+                    : `$0 per Infant`}
+                </p>
+              </div>
+              <div className="flex items-center gap-3">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setInfants(Math.max(0, children - 1))}
+                  disabled={infants <= 0}
+                >
+                  <Minus className="w-4 h-4" />
+                </Button>
+                <span className="w-8 text-center font-medium">{infants}</span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setInfants(infants + 1)}
                 >
                   <Plus className="w-4 h-4" />
                 </Button>

@@ -23,6 +23,7 @@ export interface BookingSummaryData {
   duration?: string;
   adults?: number;
   children?: number;
+  infants?: number;
   totalPrice?: number;
   imageUrl: string;
   bookingRef: string;
@@ -33,12 +34,10 @@ export interface BookingSummaryData {
 }
 
 const BookingSummary: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
-  const router = useRouter();
   const [bookingData, setBookingData] = useState<BookingSummaryData | null>(
     null
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { setOpenDialog, setStep } = useBookingDialogStore();
 
   useEffect(() => {
     const customerData = JSON.parse(
@@ -54,11 +53,14 @@ const BookingSummary: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
     return <p className="text-center text-gray-500">No booking data found.</p>;
   }
 
+  console.log(bookingData);
+
   const payload = {
     activityId: bookingData.activityId,
     date: bookingData.date!,
     adults: bookingData.adults ?? 1,
     children: bookingData.children ?? 0,
+    infants: bookingData.infants ?? 0,
     bookingRef: bookingData.bookingRef,
     departureHour: bookingData.departureHour ?? "",
     isPrivate: bookingData.isPrivateTour ?? false,

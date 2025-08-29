@@ -1,19 +1,27 @@
-import React from "react";
+import SuccessfullPayment from "@/components/activities/booking/SuccessfullPayment";
 import { stripe } from "@/utils/stripe";
 import { redirect } from "next/navigation";
 
 const page = async ({
+  params,
   searchParams,
 }: {
+  params: { id: string };
   searchParams: { session_id: string };
 }) => {
   const sessionId = (await searchParams).session_id;
+  const bookingId = (await params).id;
+
   if (!sessionId) {
     redirect("/");
   }
   const session = await getSession(sessionId);
   if (!session) {
-    return <h1>Invalid stripe session</h1>;
+    return (
+      <h1 className="min-h-screen bg-red-500 text-shadow-teal-50">
+        Invalid stripe session
+      </h1>
+    );
   }
   if (session?.status === "expired") {
     return <h1>Your session is expired</h1>;
@@ -21,11 +29,8 @@ const page = async ({
   if (session.status === "open") {
     return <h1>Your payment is in progress</h1>;
   }
-  return (
-    <div className="min-h-screen pt-28 flex items-start justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-green-300">
-      Your payment was completed successfully
-    </div>
-  );
+
+  return <SuccessfullPayment bookingId={bookingId} />;
 };
 
 export default page;

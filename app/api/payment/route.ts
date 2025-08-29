@@ -1,6 +1,8 @@
+// Update your payment API
 import { db } from "@/lib/database/db";
 import { baseUrl } from "@/utils/baseUrl";
 import { stripe } from "@/utils/stripe";
+import { generateAccessToken } from "@/utils/tokens";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (request: NextRequest) => {
@@ -11,14 +13,20 @@ export const POST = async (request: NextRequest) => {
         id: data.id,
       },
     });
+
     if (!booking) {
-      return NextResponse.json(
-        { error: "Activity not found " },
-        {
-          status: 400,
-        }
-      );
+      return NextResponse.json({ error: "Booking not found" }, { status: 400 });
     }
+
+    // Generate access token for this booking
+    const accessToken = generateAccessToken();
+
+    // Update booking with access token
+    await db.booking.update({
+      where: { id: booking.id },
+      data: { accessToken },
+    });
+
     const session = await stripe.checkout.sessions.create({
       ui_mode: "embedded",
       line_items: [
@@ -37,9 +45,8 @@ export const POST = async (request: NextRequest) => {
       payment_method_types: ["card"],
       mode: "payment",
       automatic_tax: { enabled: true },
-      return_url: `${baseUrl}/en/booking/success?session_id={CHECKOUT_SESSION_ID}`,
+      return_url: `${baseUrl}/en/booking/success/${booking.id}?session_id={CHECKOUT_SESSION_ID}&token=${accessToken}`,
     });
-    console.log("client secret : ", session.client_secret);
 
     return NextResponse.json({
       id: session.id,
@@ -47,12 +54,9 @@ export const POST = async (request: NextRequest) => {
     });
   } catch (error) {
     console.log(error);
-
     return NextResponse.json(
-      { error: "error here buddy" },
-      {
-        status: 500,
-      }
+      { error: "Payment session creation failed" },
+      { status: 500 }
     );
   }
 };

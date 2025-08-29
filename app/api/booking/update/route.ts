@@ -1,7 +1,7 @@
 import { db } from "@/lib/database/db";
 import { NextRequest, NextResponse } from "next/server";
 
-export const POST = async (req: NextRequest) => {
+export const PATCH = async (req: NextRequest) => {
   try {
     const { bookingId } = await req.json();
     if (!bookingId) {

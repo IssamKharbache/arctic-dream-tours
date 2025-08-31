@@ -1,0 +1,87 @@
+// utils/gallerySlides.ts
+export const slides = [
+  {
+    id: 1,
+    src: "/gallery/1.jpeg",
+    alt: "Gallery image 1",
+    title: "Gallery Image 1",
+  },
+  {
+    id: 2,
+    src: "/gallery/2.jpeg",
+    alt: "Gallery image 2",
+    title: "Gallery Image 2",
+  },
+  {
+    id: 3,
+    src: "/gallery/3.jpeg",
+    alt: "Gallery image 3",
+    title: "Gallery Image 3",
+  },
+  {
+    id: 4,
+    src: "/gallery/4.jpeg",
+    alt: "Gallery image 4",
+    title: "Gallery Image 4",
+  },
+  {
+    id: 5,
+    src: "/gallery/5.jpeg",
+    alt: "Gallery image 5",
+    title: "Gallery Image 5",
+  },
+  {
+    id: 6,
+    src: "/gallery/6.jpeg",
+    alt: "Gallery image 6",
+    title: "Gallery Image 6",
+  },
+  {
+    id: 7,
+    src: "/gallery/7.jpeg",
+    alt: "Gallery image 7",
+    title: "Gallery Image 7",
+  },
+  {
+    id: 8,
+    src: "/gallery/8.jpeg",
+    alt: "Gallery image 8",
+    title: "Gallery Image 8",
+  },
+  {
+    id: 9,
+    src: "/gallery/9.jpeg",
+    alt: "Gallery image 9",
+    title: "Gallery Image 9",
+  },
+  {
+    id: 10,
+    src: "/gallery/10.jpeg",
+    alt: "Gallery image 10",
+    title: "Gallery Image 10",
+  },
+  {
+    id: 11,
+    src: "/gallery/11.jpeg",
+    alt: "Gallery image 11",
+    title: "Gallery Image 11",
+  },
+  {
+    id: 12,
+    src: "/gallery/12.jpeg",
+    alt: "Gallery image 12",
+    title: "Gallery Image 12",
+  },
+  {
+    id: 13,
+    src: "/gallery/13.jpeg",
+    alt: "Gallery image 13",
+    title: "Gallery Image 13",
+  },
+  {
+    id: 14,
+    src: "/gallery/14.jpeg",
+    alt: "Gallery image 14",
+    title: "Gallery Image 14",
+  },
+];

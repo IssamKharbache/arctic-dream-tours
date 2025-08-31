@@ -100,32 +100,6 @@ const BookingSummary: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
     }
   };
 
-  const handleStripePayment = async () => {
-    try {
-      setIsSubmitting(true);
-      const res = await fetch(
-        `${baseUrl}/api/payment/create-checkout-session`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        }
-      );
-      const data = await res.json();
-      if (!res.ok) {
-        alert(data.message || "Payment initiation failed");
-        return;
-      }
-      // Redirect to Stripe
-      window.location.href = data.url;
-    } catch (error) {
-      console.error(error);
-      alert("An error occurred while starting the payment process");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
     <div className="p-4 sm:p-6">
       <h2 className="text-2xl font-bold mb-6 text-center">Booking Summary</h2>

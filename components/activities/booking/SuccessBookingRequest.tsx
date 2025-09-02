@@ -547,10 +547,11 @@ const SuccessBookingRequest = ({ bookingId }: SuccessBookingRequestProps) => {
                     />
                   </div>
                   <span>
-                    You'll receive a confirmation email with payment
-                    instructions once your booking is confirmed.
+                    We will provide you with our banking details so you can
+                    proceed with the payment.
                   </span>
                 </li>
+
                 <li className="flex items-start">
                   <div
                     className={`rounded-full p-1 mr-3 mt-0.5 ${statusStyles.iconBg}`}
@@ -562,44 +563,6 @@ const SuccessBookingRequest = ({ bookingId }: SuccessBookingRequestProps) => {
                   <span>
                     Have your booking reference (#{data.bookingRef}) ready when
                     contacting us.
-                  </span>
-                </li>
-              </>
-            ) : data.status === "CONFIRMED" ? (
-              <>
-                <li className="flex items-start">
-                  <div
-                    className={`rounded-full p-1 mr-3 mt-0.5 ${statusStyles.iconBg}`}
-                  >
-                    <CheckCircle
-                      className={`h-4 w-4 ${statusStyles.iconColor}`}
-                    />
-                  </div>
-                  <span>
-                    Your booking has been confirmed. Please proceed with payment
-                    to secure your reservation.
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <div
-                    className={`rounded-full p-1 mr-3 mt-0.5 ${statusStyles.iconBg}`}
-                  >
-                    <CheckCircle
-                      className={`h-4 w-4 ${statusStyles.iconColor}`}
-                    />
-                  </div>
-                  <span>You will receive payment instructions via email.</span>
-                </li>
-                <li className="flex items-start">
-                  <div
-                    className={`rounded-full p-1 mr-3 mt-0.5 ${statusStyles.iconBg}`}
-                  >
-                    <CheckCircle
-                      className={`h-4 w-4 ${statusStyles.iconColor}`}
-                    />
-                  </div>
-                  <span>
-                    Your reservation will be held for 24 hours pending payment.
                   </span>
                 </li>
               </>

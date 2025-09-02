@@ -1,4 +1,5 @@
 // Update your payment API
+import { sendBookingEmail } from "@/lib/auth/sendBookingEmail";
 import { db } from "@/lib/database/db";
 import { baseUrl } from "@/utils/baseUrl";
 import { stripe } from "@/utils/stripe";
@@ -11,6 +12,9 @@ export const POST = async (request: NextRequest) => {
     const booking = await db.booking.findUnique({
       where: {
         id: data.id,
+      },
+      include: {
+        activity: true,
       },
     });
 

@@ -81,11 +81,7 @@ const PayOnline = ({
         <EmbeddedCheckoutProvider stripe={stripePromise} options={options}>
           <EmbeddedCheckout className="max-h-[80dvh] overflow-y-auto" />
         </EmbeddedCheckoutProvider>
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button variant="outline">Cancel Payment</Button>
-          </DialogClose>
-        </DialogFooter>
+        <DialogFooter></DialogFooter>
       </DialogContent>
     </Dialog>
   );

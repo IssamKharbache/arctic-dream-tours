@@ -4,14 +4,17 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const PATCH = async (req: NextRequest) => {
   try {
-    const { bookingId } = await req.json();
+    const { bookingId, status } = await req.json();
     if (!bookingId) {
       return NextResponse.json({ error: "Missing bookingId" }, { status: 400 });
     }
 
     const updatedBooking = await db.booking.update({
       where: { id: bookingId },
-      data: { status: "PAID" },
+      data: { status: status },
+      include: {
+        activity: true,
+      },
     });
     // Send confirmation email
     try {
@@ -19,7 +22,7 @@ export const PATCH = async (req: NextRequest) => {
         bookingRef: updatedBooking.bookingRef,
         customerName: `${updatedBooking.firstName} ${updatedBooking.lastName}`,
         customerEmail: updatedBooking.email,
-        activityName: "TEst name",
+        activityName: updatedBooking.activity.title,
         date: new Date(updatedBooking.date).toLocaleDateString("en-US", {
           weekday: "long",
           year: "numeric",

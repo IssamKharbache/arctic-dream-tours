@@ -65,6 +65,16 @@ export const routing = defineRouting({
       it: "/termini-e-condizioni",
       es: "/terminos-y-condiciones",
     },
+    "/activities": {
+      en: "/activities",
+      fr: "/activites",
+      de: "/aktivitaten",
+      ar: "/الأنشطة",
+      zh: "/活动",
+      ja: "/アクティビティ",
+      it: "/attivita",
+      es: "/actividades",
+    },
     "/": {
       en: "/",
       fr: "/",

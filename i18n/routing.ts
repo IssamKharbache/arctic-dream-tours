@@ -55,7 +55,7 @@ export const routing = defineRouting({
       it: "/informativa-sulla-privacy",
       es: "/politica-de-privacidad",
     },
-    "/terms-and-conditions": {
+    "/terms-conditions": {
       en: "/terms-and-conditions",
       fr: "/conditions-generales",
       de: "/allgemeine-geschaeftsbedingungen",

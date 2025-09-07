@@ -1,8 +1,10 @@
 import ActivityBooking from "@/components/activities/booking/ActivityBooking";
+import { LiquidDifficultyIndicator } from "@/components/activities/LiquidDifficultyIndicator";
 import RichTextViewer from "@/components/activities/RichTextViewer";
 import { getData } from "@/lib/getData";
 import { Activity } from "@/types/activity";
 import { baseUrl } from "@/utils/baseUrl";
+import { Clock, MapPin } from "lucide-react";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -36,13 +38,18 @@ const page = async ({ params }: PageProps) => {
                 </p>
                 <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
                   <span className="flex items-center gap-1">
-                    📍 {activity.location}
+                    <MapPin />
+                    {activity.location}
                   </span>
                   <span className="flex items-center gap-1">
-                    ⏱️ {activity.duration}
+                    <Clock />
+                    {activity.duration}
                   </span>
-                  <span className="flex items-center gap-1">
-                    📊 {activity.difficulty}
+                  <span className="flex items-center gap-1 ">
+                    <LiquidDifficultyIndicator
+                      difficulty={activity.difficulty}
+                    />
+                    {activity.difficulty}
                   </span>
                 </div>
                 <div className="text-gray-700 leading-relaxed">

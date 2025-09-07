@@ -77,12 +77,12 @@ const Footer = () => {
                   About Us
                 </Link>
 
-                {/* <Link
-                  href="#"
+                <Link
+                  href="/activities"
                   className="block hover:text-white transition-colors"
                 >
                   Activities
-                </Link> */}
+                </Link>
                 <Link
                   href="/contact"
                   className="block hover:text-white transition-colors"
@@ -96,7 +96,7 @@ const Footer = () => {
                   Privacy Policy
                 </Link>
                 <Link
-                  href="/terms-and-conditions"
+                  href="/terms-conditions"
                   className="block hover:text-white transition-colors"
                 >
                   Terms and conditions

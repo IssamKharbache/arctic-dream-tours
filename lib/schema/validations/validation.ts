@@ -35,7 +35,7 @@ export const baseActivitySchema = z.object({
   privateTourPrice: z.number().min(0, "Child price must be positive"),
   tags: z.array(z.string()).min(1, "At least one tag is required"),
   difficulty: z.enum(["EASY", "MODERATE", "HARD", "EXTREME"]),
-  seasonType: z.enum(["SUMMER", "WINTER"]),
+  isForChild: z.boolean(),
   cancellationPolicy: z.string().optional(),
   bring: z.string().optional(),
   included: z

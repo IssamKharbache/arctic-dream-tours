@@ -212,8 +212,10 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                   <>🏆 Private Tour: ${activity.privateTourPrice} total</>
                 ) : (
                   <>
-                    💰 ${activity.adultPrice} per adult • ${activity.childPrice}{" "}
-                    per child
+                    💰 ${activity.adultPrice} per adult •
+                    {activity.isForChild &&
+                      `$ ${activity.childPrice} per
+                    child`}
                   </>
                 )}
               </p>
@@ -253,8 +255,9 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
               </div>
               {selectedDepartureHour && (
                 <div className="mt-3 p-3 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-200">
-                  <p className="text-green-800 font-medium">
-                    🕐 Departure: {selectedDepartureHour}
+                  <p className="flex  gap-4 text-green-800 font-medium">
+                    <Clock />
+                    Departure: {selectedDepartureHour}
                   </p>
                 </div>
               )}
@@ -323,71 +326,79 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
               </div>
             </div>
 
-            {/* Children */}
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="flex items-center gap-2">
-                  <p className="font-medium">Children</p>
-                  <p className="text-sm text-gray-500">(Age 4 - 13)</p>
+            {/* Children - Only show if activity.isForChild is true */}
+            {activity.isForChild && (
+              <>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <p className="font-medium">Children</p>
+                      <p className="text-sm text-gray-500">(Age 4 - 13)</p>
+                    </div>
+                    <p className="text-sm text-gray-500">
+                      {isPrivateTour
+                        ? "Included in private tour price"
+                        : `$${activity.childPrice} per child`}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setChildren(Math.max(0, children - 1))}
+                      disabled={children <= 0}
+                    >
+                      <Minus className="w-4 h-4" />
+                    </Button>
+                    <span className="w-8 text-center font-medium">
+                      {children}
+                    </span>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setChildren(children + 1)}
+                      disabled={isPrivateTour && totalGroupSize >= 8}
+                    >
+                      <Plus className="w-4 h-4" />
+                    </Button>
+                  </div>
                 </div>
-                <p className="text-sm text-gray-500">
-                  {isPrivateTour
-                    ? "Included in private tour price"
-                    : `$${activity.childPrice} per child`}
-                </p>
-              </div>
-              <div className="flex items-center gap-3">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setChildren(Math.max(0, children - 1))}
-                  disabled={children <= 0}
-                >
-                  <Minus className="w-4 h-4" />
-                </Button>
-                <span className="w-8 text-center font-medium">{children}</span>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setChildren(children + 1)}
-                  disabled={isPrivateTour && totalGroupSize >= 8}
-                >
-                  <Plus className="w-4 h-4" />
-                </Button>
-              </div>
-            </div>
-            {/* Infants */}
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="flex items-center gap-2">
-                  <p className="font-medium">Infants</p>
-                  <p className="text-sm text-gray-500">(Age 0 - 3)</p>
+                {/* Infants */}
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <p className="font-medium">Infants</p>
+                      <p className="text-sm text-gray-500">(Age 0 - 3)</p>
+                    </div>
+                    <p className="text-sm text-gray-500">
+                      {isPrivateTour
+                        ? "Included in private tour price"
+                        : `$0 per Infant`}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setInfants(Math.max(0, children - 1))}
+                      disabled={infants <= 0}
+                    >
+                      <Minus className="w-4 h-4" />
+                    </Button>
+                    <span className="w-8 text-center font-medium">
+                      {infants}
+                    </span>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setInfants(infants + 1)}
+                    >
+                      <Plus className="w-4 h-4" />
+                    </Button>
+                  </div>
                 </div>
-                <p className="text-sm text-gray-500">
-                  {isPrivateTour
-                    ? "Included in private tour price"
-                    : `$0 per Infant`}
-                </p>
-              </div>
-              <div className="flex items-center gap-3">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setInfants(Math.max(0, children - 1))}
-                  disabled={infants <= 0}
-                >
-                  <Minus className="w-4 h-4" />
-                </Button>
-                <span className="w-8 text-center font-medium">{infants}</span>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setInfants(infants + 1)}
-                >
-                  <Plus className="w-4 h-4" />
-                </Button>
-              </div>
-            </div>
+              </>
+            )}
           </div>
         </div>
 
@@ -483,14 +494,18 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                         {adults > 1 ? "s" : ""}
                       </span>
                     </div>
-                    {children > 0 && (
+                    {/* Only show children if isForChild is true */}
+                    {activity.isForChild && children > 0 && (
                       <div
-                        className={`flex items-center gap-2 px-3 py-2 rounded-lg ${isPrivateTour ? "bg-amber-50 border border-amber-200" : "bg-gray-50"}`}
+                        className={`flex items-center gap-2 px-3 py-2 rounded-lg ${
+                          isPrivateTour
+                            ? "bg-amber-50 border border-amber-200"
+                            : "bg-gray-50"
+                        }`}
                       >
                         <Users className="w-4 h-4 text-gray-600" />
                         <span className="font-medium">
-                          {children} Child
-                          {children > 1 ? "ren" : ""}
+                          {children} Child{children > 1 ? "ren" : ""}
                         </span>
                       </div>
                     )}

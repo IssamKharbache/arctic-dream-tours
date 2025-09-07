@@ -81,7 +81,6 @@ const SuccessfullPayment = ({ bookingId }: SuccessfullPaymentProps) => {
   // 1️⃣ Update booking status to "paid" once on mount
   useEffect(() => {
     if (!bookingId || !accessToken || statusUpdated) return;
-
     const updateBookingStatus = async () => {
       try {
         await axios.patch(`${baseUrl}/api/booking/update`, {

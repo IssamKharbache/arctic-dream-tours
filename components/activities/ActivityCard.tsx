@@ -11,12 +11,6 @@ interface ActivityCardProps {
 }
 
 export function ActivityCard({ activity }: ActivityCardProps) {
-  const SeasonIcon = activity.seasonType === "WINTER" ? Snowflake : Sun;
-  const seasonColor =
-    activity.seasonType === "WINTER"
-      ? "bg-blue-100 text-blue-800"
-      : "bg-orange-100 text-orange-800";
-
   return (
     <div className="p-5 rounded-2xl bg-primary/10 hover:bg-primary/20  hover:-rotate-1 hover:-translate-y-1 transition-transform duration-300 ease-in-out">
       <div className="relative h-48 w-full">
@@ -31,12 +25,6 @@ export function ActivityCard({ activity }: ActivityCardProps) {
             className="object-cover rounded-2xl "
           />
         </Link>
-        <div className="absolute top-3 right-3">
-          <Badge className={`${seasonColor} flex items-center gap-1`}>
-            {SeasonIcon && <SeasonIcon className="h-3 w-3" />}
-            {activity.seasonType}
-          </Badge>
-        </div>
       </div>
       <div className="flex text-gray-500 items-center justify-center gap-5 font-normal py-5 text-sm">
         <div className="flex items-center gap-2">

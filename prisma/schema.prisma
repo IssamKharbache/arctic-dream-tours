@@ -48,16 +48,16 @@ model Activity {
     liveTourGuide      Boolean
     location           String
     adultPrice         Float
-    childPrice         Float
+    childPrice         Float?
     privateTourPrice   Float
+    isForChild         Boolean
 
-    imageUrl   String
-    createdAt  DateTime   @default(now())
-    updatedAt  DateTime   @updatedAt
-    imageKey   String
-    seasonType SeasonType
-    startDate  DateTime
-    endDate    DateTime
+    imageUrl  String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    imageKey  String
+    startDate DateTime
+    endDate   DateTime
 
     departureHours String[]
     booking        Booking[]
@@ -116,11 +116,6 @@ enum ActivityDifficulty {
     MODERATE
     HARD
     EXTREME
-}
-
-enum SeasonType {
-    WINTER
-    SUMMER
 }
 
 enum Booking_Status {

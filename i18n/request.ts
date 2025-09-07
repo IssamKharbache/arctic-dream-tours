@@ -17,6 +17,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
       privacyMessages,
       contactMessages,
       termsMessages,
+      featuresMessages,
     ] = await Promise.all([
       import(`@/messages/${locale}/common.json`)
         .then((m) => m.default)
@@ -39,6 +40,9 @@ export default getRequestConfig(async ({ requestLocale }) => {
       import(`@/messages/${locale}/terms.json`)
         .then((m) => m.default)
         .catch(() => ({})),
+      import(`@/messages/${locale}/features.json`)
+        .then((m) => m.default)
+        .catch(() => ({})),
     ]);
 
     return {
@@ -51,6 +55,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
         privacy: privacyMessages,
         contact: contactMessages,
         terms: termsMessages,
+        features: featuresMessages,
       },
     };
   } catch (error) {
@@ -65,6 +70,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
       privacyMessages,
       contactMessages,
       termsMessages,
+      featuresMessages,
     ] = await Promise.all([
       import(`@/messages/${routing.defaultLocale}/common.json`).then(
         (m) => m.default
@@ -87,6 +93,9 @@ export default getRequestConfig(async ({ requestLocale }) => {
       import(`@/messages/${routing.defaultLocale}/terms.json`).then(
         (m) => m.default
       ),
+      import(`@/messages/${locale}/features.json`)
+        .then((m) => m.default)
+        .catch(() => ({})),
     ]);
 
     return {
@@ -99,6 +108,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
         privacy: privacyMessages,
         contact: contactMessages,
         terms: termsMessages,
+        features: featuresMessages,
       },
     };
   }

@@ -1,10 +1,13 @@
 import SuccessBookingRequest from "@/components/activities/booking/SuccessBookingRequest";
 import React from "react";
 
-const Page = ({ params }: { params: { id: string } }) => {
-  const bookingId = params.id;
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
 
-  return <SuccessBookingRequest bookingId={bookingId} />;
+const Page = async ({ params }: PageProps) => {
+  const { id } = await params;
+  return <SuccessBookingRequest bookingId={id} />;
 };
 
 export default Page;

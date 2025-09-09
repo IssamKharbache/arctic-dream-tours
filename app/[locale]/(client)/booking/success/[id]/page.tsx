@@ -2,13 +2,12 @@ import SuccessfullPayment from "@/components/activities/booking/SuccessfullPayme
 import { stripe } from "@/utils/stripe";
 import { redirect } from "next/navigation";
 
-const page = async ({
-  params,
-  searchParams,
-}: {
-  params: { id: string };
-  searchParams: { session_id: string };
-}) => {
+interface PageProps {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ session_id?: string }>;
+}
+
+const page = async ({ params, searchParams }: PageProps) => {
   const sessionId = (await searchParams).session_id;
   const bookingId = (await params).id;
 

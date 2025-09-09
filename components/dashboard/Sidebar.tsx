@@ -2,14 +2,11 @@
 import {
   MapPin,
   Home,
-  Settings,
   Users,
   Ticket,
   TrendingUp,
-  Bell,
   Waves,
   Mountain,
-  LayoutGrid,
 } from "lucide-react";
 import Link from "next/link";
 

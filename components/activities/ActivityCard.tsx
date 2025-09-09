@@ -1,7 +1,6 @@
 import Image from "next/image";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MapPin, Snowflake, Sun, ClockIcon } from "lucide-react";
+import { MapPin, ClockIcon } from "lucide-react";
 import { Activity } from "@/types/activity";
 import { Link } from "@/i18n/navigation";
 import { LiquidDifficultyIndicator } from "./LiquidDifficultyIndicator";

@@ -17,7 +17,7 @@ export const GET = async () => {
   } catch (error) {
     return NextResponse.json(
       {
-        error: "Unknown error",
+        error,
         message: "An unexpected error occurred",
       },
       {

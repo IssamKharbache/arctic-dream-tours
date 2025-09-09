@@ -82,9 +82,8 @@ const ProfileContent = ({ userData }: ProfileContentProps) => {
       if (!res.ok) {
         const errorResponse = await res.json();
         const error = new Error("Update failed");
-        // @ts-ignore
+        //@ts-expect-error
         error.status = res.status;
-        // @ts-ignore
         error.message = errorResponse.message || "An error occurred";
         throw error;
       }

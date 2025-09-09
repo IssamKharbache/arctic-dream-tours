@@ -1,16 +1,5 @@
 import React, { forwardRef } from "react";
-import {
-  Calendar,
-  Users,
-  MapPin,
-  CreditCard,
-  Clock,
-  User,
-  Mail,
-  Phone,
-  Building,
-  Receipt,
-} from "lucide-react";
+import { Receipt } from "lucide-react";
 import Image from "next/image";
 
 interface PrintableInvoiceProps {

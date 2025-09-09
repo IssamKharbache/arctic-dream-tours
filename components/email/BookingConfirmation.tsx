@@ -10,7 +10,6 @@ import {
   Heading,
   Hr,
   Link,
-  Img,
   Row,
   Column,
 } from "@react-email/components";
@@ -22,7 +21,7 @@ interface BookingConfirmationProps {
   date: string;
   time: string;
   adults: number;
-  children: number;
+  numChildren: number;
   totalPrice: number;
   pickUpLocation: string;
   dropOffLocation: string;
@@ -39,7 +38,7 @@ export const BookingConfirmationEmail = ({
   date,
   time,
   adults,
-  children,
+  numChildren,
   totalPrice,
   pickUpLocation,
   dropOffLocation,
@@ -113,7 +112,7 @@ export const BookingConfirmationEmail = ({
               <Column style={detailColumn}>
                 <Text style={detailLabel}>Participants</Text>
                 <Text style={detailValue}>
-                  {adults} Adults, {children} Children
+                  {adults} Adults, {numChildren} Children
                 </Text>
               </Column>
             </Row>

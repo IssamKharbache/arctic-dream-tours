@@ -227,8 +227,8 @@ const SuccessBookingRequest = ({ bookingId }: SuccessBookingRequestProps) => {
             Access Denied
           </h2>
           <p className="text-slate-600 mb-6">
-            We couldn't retrieve your booking details. This might be because
-            your session expired.
+            We couldn&apos;t retrieve your booking details. This might be
+            because your session expired.
           </p>
           <p className="text-sm text-slate-500 mb-6">
             Please check your email for your booking confirmation or contact

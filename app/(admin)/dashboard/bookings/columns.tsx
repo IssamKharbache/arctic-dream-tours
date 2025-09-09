@@ -1,9 +1,7 @@
 "use client";
 
 import BookingStatusSwitcher from "@/components/activities/booking/BookingStatusSwitcher";
-import ActionsDropDown from "@/components/tables/ActionsDropDown";
 import { BookingWithActivity } from "@/types/activityWithBooking";
-import { Activity, Booking } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 

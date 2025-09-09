@@ -4,20 +4,20 @@ import { useSession } from "next-auth/react";
 import { useUserInfoStore } from "@/store/zustand/userStore";
 
 const SyncUserInfo = () => {
-    const { data: session } = useSession();
-    const setUserInfo = useUserInfoStore((s) => s.setUserInfo);
+  const { data: session } = useSession();
+  const setUserInfo = useUserInfoStore((s) => s.setUserInfo);
 
-    useEffect(() => {
-        if (session?.user) {
-            setUserInfo({
-                firstName: session.user.firstName,
-                lastName: session.user.lastName,
-                email: session.user.email,
-            });
-        }
-    }, [session]);
+  useEffect(() => {
+    if (session?.user) {
+      setUserInfo({
+        firstName: session.user.firstName,
+        lastName: session.user.lastName,
+        email: session.user.email,
+      });
+    }
+  }, [session, setUserInfo]);
 
-    return null;
+  return null;
 };
 
 export default SyncUserInfo;

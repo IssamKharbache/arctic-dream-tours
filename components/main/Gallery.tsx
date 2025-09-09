@@ -16,12 +16,7 @@ import {
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import { slides } from "@/utils/getGalleryImages";
-import {
-  Captions,
-  Download,
-  Fullscreen,
-  Zoom,
-} from "yet-another-react-lightbox/plugins";
+import { Download, Fullscreen, Zoom } from "yet-another-react-lightbox/plugins";
 
 const Gallery = () => {
   const swiperRef = useRef<any>(null);

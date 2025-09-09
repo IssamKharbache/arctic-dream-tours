@@ -6,7 +6,6 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
-  SortingState,
   useReactTable,
 } from "@tanstack/react-table";
 
@@ -20,7 +19,6 @@ import {
 } from "@/components/ui/table";
 import { useDeleleActionButtonStore } from "@/store/zustand/deleteActionButtonStore";
 import { Filter, Loader2 } from "lucide-react";
-import ActionsDropDown from "@/components/tables/ActionsDropDown";
 import { Input } from "@/components/ui/input";
 import React from "react";
 

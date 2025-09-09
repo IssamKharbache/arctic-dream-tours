@@ -1,6 +1,5 @@
 "use client";
 import { Badge } from "@/components/ui/badge";
-import { Snowflake, Sun } from "lucide-react";
 import { ActivityCard } from "@/components/activities/ActivityCard";
 import type { Activity } from "@/types/activity";
 

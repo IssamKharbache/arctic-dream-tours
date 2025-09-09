@@ -7,7 +7,6 @@ import { Calendar, Clock, MapPin, Users } from "lucide-react";
 import Image from "next/image";
 import { isoToNormalDate } from "@/utils/isoToNormalDate";
 import { baseUrl } from "@/utils/baseUrl";
-import { useBookingDialogStore } from "@/store/zustand/bookingDialogStore";
 import { useRouter } from "@/i18n/navigation";
 import PayOnline from "./PayOnline";
 

@@ -5,6 +5,7 @@ import { getData } from "@/lib/getData";
 import { Activity } from "@/types/activity";
 import { baseUrl } from "@/utils/baseUrl";
 import { Clock, MapPin } from "lucide-react";
+import Image from "next/image";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -24,7 +25,9 @@ const page = async ({ params }: PageProps) => {
           {/* Activity Details */}
           <div className="space-y-6">
             <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-              <img
+              <Image
+                width={500}
+                height={500}
                 src={activity.imageUrl || "/placeholder.svg"}
                 alt={activity.title}
                 className="w-full h-64 object-cover"

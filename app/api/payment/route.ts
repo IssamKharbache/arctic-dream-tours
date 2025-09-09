@@ -48,6 +48,7 @@ export const POST = async (request: NextRequest) => {
         bookingRef: bookingData.bookingRef,
         departureHour: bookingData.departureHour,
         totalPrice: bookingData.totalPrice!.toString(),
+        accessToken: accessToken,
       },
       automatic_tax: { enabled: true },
       return_url: `${baseUrl}/en/booking/success?session_id={CHECKOUT_SESSION_ID}`,

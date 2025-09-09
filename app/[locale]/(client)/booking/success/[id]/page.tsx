@@ -1,4 +1,5 @@
 import SuccessfullPayment from "@/components/activities/booking/SuccessfullPayment";
+import { getSession } from "@/lib/stripe/StripeHelpers";
 import { stripe } from "@/utils/stripe";
 import { redirect } from "next/navigation";
 
@@ -33,12 +34,3 @@ const page = async ({ params, searchParams }: PageProps) => {
 };
 
 export default page;
-
-export const getSession = async (sessionId: string) => {
-  try {
-    const session = await stripe.checkout.sessions.retrieve(sessionId);
-    return session;
-  } catch (error) {
-    return null;
-  }
-};

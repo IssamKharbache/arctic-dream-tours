@@ -50,7 +50,7 @@ export const POST = async (request: NextRequest) => {
         totalPrice: bookingData.totalPrice!.toString(),
       },
       automatic_tax: { enabled: true },
-      success_url: `${baseUrl}/en/booking/success?session_id={CHECKOUT_SESSION_ID}`,
+      return_url: `${baseUrl}/en/booking/success?session_id={CHECKOUT_SESSION_ID}`,
     });
 
     return NextResponse.json({

@@ -52,7 +52,7 @@ const PayOnline = ({
       const response = await fetch("/api/payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(booking),
+        body: JSON.stringify({ bookingData: booking }),
       });
 
       const data = await response.json();

@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import DashboardPagesHeader from "@/components/activities/DashboardPagesHeader";
 import { getData } from "@/lib/getData";
 import { baseUrl } from "@/utils/baseUrl";

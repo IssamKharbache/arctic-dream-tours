@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import ActivityBooking from "@/components/activities/booking/ActivityBooking";
 import { LiquidDifficultyIndicator } from "@/components/activities/LiquidDifficultyIndicator";
 import RichTextViewer from "@/components/activities/RichTextViewer";

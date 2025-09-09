@@ -1,0 +1,66 @@
+{
+  "modal": {
+    "title": "Buchen Sie Ihre Reise",
+    "description": {
+      "step1": "Geben Sie Ihre Kontaktdaten ein, um fortzufahren.",
+      "step2": "Überprüfen Sie Ihre Buchung und fahren Sie mit der Zahlung fort."
+    },
+    "continue": "Weiter"
+  },
+  "form": {
+    "firstName": {
+      "label": "Vorname",
+      "placeholder": "Max",
+      "error": "Vorname ist erforderlich"
+    },
+    "lastName": {
+      "label": "Nachname",
+      "placeholder": "Mustermann",
+      "error": "Nachname ist erforderlich"
+    },
+    "email": {
+      "label": "E-Mail-Adresse",
+      "placeholder": "you@example.com",
+      "error": "Ungültige E-Mail-Adresse"
+    },
+    "phone": {
+      "label": "Telefonnummer",
+      "placeholder": "+49 170 1234567",
+      "error": {
+        "min": "Telefonnummer muss mindestens 6 Zeichen haben",
+        "max": "Telefonnummer ist zu lang"
+      }
+    },
+    "pickup": {
+      "label": "Abholort",
+      "placeholderSelect": "Abholoption auswählen",
+      "options": {
+        "noPickup": "Keine Abholung benötigt",
+        "office": "Arctic Dream Tours Büro",
+        "custom": "Eigenen Ort angeben"
+      },
+      "customPlaceholder": "Geben Sie Ihren Abholort ein",
+      "error": "Abholort ist erforderlich"
+    },
+    "dropoff": {
+      "label": "Abgabeort",
+      "placeholderSelect": "Abgabeoption auswählen",
+      "options": {
+        "noDropoff": "Keine Abgabe benötigt",
+        "office": "Arctic Dream Tours Büro",
+        "custom": "Eigenen Ort angeben"
+      },
+      "customPlaceholder": "Geben Sie Ihren Abgabeort ein",
+      "error": "Abgabeort ist erforderlich"
+    }
+  },
+  "steps": {
+    "contactDetails": "Kontaktdaten",
+    "checkout": "Kasse",
+    "status": {
+      "completed": "Abgeschlossen",
+      "current": "Aktuell",
+      "upcoming": "Bevorstehend"
+    }
+  }
+}

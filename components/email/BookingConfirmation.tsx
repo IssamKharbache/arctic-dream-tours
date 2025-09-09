@@ -149,8 +149,6 @@ export const BookingConfirmationEmail = ({
             <Section style={instructions}>
               <Heading style={h3}>What to Expect Next</Heading>
               <Text style={text}>
-                • You will receive a reminder 24 hours before your tour
-                <br />
                 • Please arrive at the pick-up location 15 minutes before
                 departure
                 <br />
@@ -164,7 +162,7 @@ export const BookingConfirmationEmail = ({
               <Text style={text}>
                 • Our team will verify availability within 24 hours
                 <br />
-                • You'll receive a confirmation email with payment instructions
+                • We will contact you with payment instructions
                 <br />
                 • Your booking will be held for 48 hours pending confirmation
                 <br />• For urgent inquiries, contact us at {supportEmail}

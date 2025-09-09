@@ -121,4 +121,5 @@ enum ActivityDifficulty {
 enum Booking_Status {
     PENDING
     PAID
+    CANCELLED
 }

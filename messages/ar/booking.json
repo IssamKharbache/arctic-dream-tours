@@ -1,0 +1,62 @@
+{
+  "modal": {
+    "title": "أكمل حجزك",
+    "description": {
+      "step1": "أدخل بيانات الاتصال الخاصة بك للمتابعة.",
+      "step2": "راجع حجزك وانتقل إلى الدفع."
+    },
+    "continue": "متابعة"
+  },
+  "form": {
+    "firstName": {
+      "label": "الاسم الأول",
+      "placeholder": "أحمد",
+      "error": "الاسم الأول مطلوب"
+    },
+    "lastName": {
+      "label": "اسم العائلة",
+      "placeholder": "محمد",
+      "error": "اسم العائلة مطلوب"
+    },
+    "email": {
+      "label": "البريد الإلكتروني",
+      "placeholder": "you@example.com",
+      "error": "البريد الإلكتروني غير صالح"
+    },
+    "phone": {
+      "label": "رقم الهاتف",
+      "placeholder": "+966 50 123 4567",
+      "error": {
+        "min": "رقم الهاتف يجب أن يكون 6 أحرف على الأقل",
+        "max": "رقم الهاتف طويل جدًا"
+      }
+    },
+    "pickup": {
+      "label": "مكان الاستلام",
+      "placeholderSelect": "اختر خيار الاستلام",
+      "options": {
+        "noPickup": "لا أحتاج للاستلام",
+        "office": "مكتب Arctic Dream Tours",
+        "custom": "حدد موقعك الخاص"
+      },
+      "customPlaceholder": "اكتب مكان الاستلام",
+      "error": "مكان الاستلام مطلوب"
+    },
+    "dropoff": {
+      "label": "مكان التوصيل",
+      "placeholderSelect": "اختر خيار التوصيل",
+      "options": {
+        "noDropoff": "لا أحتاج للتوصيل",
+        "office": "مكتب Arctic Dream Tours",
+        "custom": "حدد موقعك الخاص"
+      },
+      "customPlaceholder": "اكتب مكان التوصيل",
+      "error": "مكان التوصيل مطلوب"
+    }
+  },
+  "steps": {
+    "contactDetails": "بيانات الاتصال",
+    "checkout": "الدفع",
+    "status": { "completed": "تم", "current": "حالي", "upcoming": "قادم" }
+  }
+}

@@ -86,7 +86,7 @@ const SuccessfullPayment = ({ bookingId }: SuccessfullPaymentProps) => {
         await axios.patch(`${baseUrl}/api/booking/update`, {
           bookingId,
           token: accessToken,
-          status: "paid",
+          status: "PAID",
         });
         console.log("Booking status updated to paid");
         setStatusUpdated(true);

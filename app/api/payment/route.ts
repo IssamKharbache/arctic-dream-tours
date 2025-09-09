@@ -1,6 +1,3 @@
-// Update your payment API
-import { sendBookingEmail } from "@/lib/auth/sendBookingEmail";
-import { db } from "@/lib/database/db";
 import { baseUrl } from "@/utils/baseUrl";
 import { stripe } from "@/utils/stripe";
 import { generateAccessToken } from "@/utils/tokens";
@@ -8,39 +5,26 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (request: NextRequest) => {
   try {
-    const data = await request.json();
-    const booking = await db.booking.findUnique({
-      where: {
-        id: data.id,
-      },
-      include: {
-        activity: true,
-      },
-    });
+    const { bookingData } = await request.json();
+    console.log(bookingData);
 
-    if (!booking) {
+    if (!bookingData) {
       return NextResponse.json({ error: "Booking not found" }, { status: 400 });
     }
 
     // Generate access token for this booking
     const accessToken = generateAccessToken();
 
-    // Update booking with access token
-    await db.booking.update({
-      where: { id: booking.id },
-      data: { accessToken },
-    });
-
     const session = await stripe.checkout.sessions.create({
       ui_mode: "embedded",
       line_items: [
         {
           price_data: {
-            unit_amount: booking.totalPrice * 100,
+            unit_amount: bookingData.totalPrice * 100,
             currency: "eur",
             product_data: {
-              name: booking.email,
-              images: [booking.email],
+              name: bookingData.email,
+              images: [bookingData.email],
             },
           },
           quantity: 1,
@@ -48,8 +32,25 @@ export const POST = async (request: NextRequest) => {
       ],
       payment_method_types: ["card"],
       mode: "payment",
+      metadata: {
+        activityId: bookingData.activityId,
+        date: bookingData.date!, // ISO string
+        adults: bookingData.adults?.toString() || "1",
+        children: bookingData.children?.toString() || "0",
+        infants: bookingData.infants?.toString() || "0",
+        firstName: bookingData.firstName,
+        lastName: bookingData.lastName,
+        email: bookingData.email,
+        phone: bookingData.phone,
+        pickUpLocation: bookingData.pickUpLocation,
+        dropOffLocation: bookingData.dropOffLocation,
+        isPrivateTour: bookingData.isPrivateTour ? "true" : "false",
+        bookingRef: bookingData.bookingRef,
+        departureHour: bookingData.departureHour,
+        totalPrice: bookingData.totalPrice!.toString(),
+      },
       automatic_tax: { enabled: true },
-      return_url: `${baseUrl}/en/booking/success/${booking.id}?session_id={CHECKOUT_SESSION_ID}&token=${accessToken}`,
+      success_url: `${baseUrl}/en/booking/success?session_id={CHECKOUT_SESSION_ID}`,
     });
 
     return NextResponse.json({

@@ -49,13 +49,10 @@ const PayOnline = ({
   );
   const fetchClientSecret = useCallback(async () => {
     try {
-      const newBooking = await onBookingRequest("payment");
-      if (!newBooking) throw new Error("Booking creation failed");
-
       const response = await fetch("/api/payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: newBooking.id }),
+        body: JSON.stringify(booking),
       });
 
       const data = await response.json();

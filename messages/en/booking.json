@@ -1,0 +1,66 @@
+{
+  "modal": {
+    "title": "Complete Your Booking",
+    "description": {
+      "step1": "Enter your contact details to proceed.",
+      "step2": "Review your booking and proceed to payment."
+    },
+    "continue": "Continue"
+  },
+  "form": {
+    "firstName": {
+      "label": "First name",
+      "placeholder": "John",
+      "error": "First name is required"
+    },
+    "lastName": {
+      "label": "Last name",
+      "placeholder": "Doe",
+      "error": "Last name is required"
+    },
+    "email": {
+      "label": "Email Address",
+      "placeholder": "you@example.com",
+      "error": "Invalid email address"
+    },
+    "phone": {
+      "label": "Phone Number",
+      "placeholder": "+358 40 123 4567",
+      "error": {
+        "min": "Phone number must be at least 6 characters",
+        "max": "Phone number is too long"
+      }
+    },
+    "pickup": {
+      "label": "Pick up location",
+      "placeholderSelect": "Select pickup option",
+      "options": {
+        "noPickup": "I don't need pick up",
+        "office": "Arctic Dream Tours office",
+        "custom": "Specify my own location"
+      },
+      "customPlaceholder": "Type your pick up location",
+      "error": "Pick up location is required"
+    },
+    "dropoff": {
+      "label": "Drop off location",
+      "placeholderSelect": "Select dropoff option",
+      "options": {
+        "noDropoff": "I don't need drop off",
+        "office": "Arctic Dream Tours office",
+        "custom": "Specify my own location"
+      },
+      "customPlaceholder": "Type your drop off location",
+      "error": "Drop off location is required"
+    }
+  },
+  "steps": {
+    "contactDetails": "Contact Details",
+    "checkout": "Checkout",
+    "status": {
+      "completed": "Completed",
+      "current": "Current",
+      "upcoming": "Upcoming"
+    }
+  }
+}

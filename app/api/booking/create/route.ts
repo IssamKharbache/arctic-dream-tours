@@ -89,6 +89,32 @@ export const POST = async (req: Request) => {
       },
     });
 
+    // Send confirmation email
+    try {
+      await sendBookingEmail({
+        bookingRef: newBooking.bookingRef,
+        customerName: `${newBooking.firstName} ${newBooking.lastName}`,
+        customerEmail: newBooking.email,
+        activityName: newBooking.activity.title,
+        date: new Date(newBooking.date).toLocaleDateString("en-US", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
+        time: newBooking.departureHour,
+        adults: newBooking.adults,
+        children: newBooking.children,
+        totalPrice: newBooking.totalPrice,
+        pickUpLocation: newBooking.pickUpLocation,
+        dropOffLocation: newBooking.dropOffLocation,
+        isPrivate: newBooking.isPrivate,
+        status: newBooking.status,
+      });
+    } catch (emailError) {
+      console.error("Failed to send confirmation email:", emailError);
+    }
+
     return NextResponse.json(
       { message: "Booking created successfully", data: newBooking },
       { status: 201 }

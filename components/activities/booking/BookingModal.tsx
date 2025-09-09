@@ -20,9 +20,11 @@ import {
 } from "@/lib/schema/validations/validation";
 import BookingSummary from "./BookingSummary";
 import BookingStepsBar from "./BookingStepsBar";
+import { useTranslations } from "next-intl";
 
 export function BookingModal() {
   const { openDialog, setOpenDialog, setStep, step } = useBookingDialogStore();
+  const t = useTranslations("booking");
 
   const {
     register,
@@ -52,12 +54,12 @@ export function BookingModal() {
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <DialogContent className="min-w-[70vw] h-[90vh] flex flex-col rounded-none focus:outline-none">
           <DialogHeader className="flex-shrink-0">
-            <BookingStepsBar step={step} />
-            <DialogTitle>Complete Your Booking</DialogTitle>
+            <BookingStepsBar step={step} t={t} />
+            <DialogTitle>{t("modal.title")}</DialogTitle>
             <DialogDescription>
               {step === 1
-                ? "Enter your contact details to proceed."
-                : "Review your booking and proceed to payment."}
+                ? t("modal.description.step1")
+                : t("modal.description.step2")}
             </DialogDescription>
           </DialogHeader>
 
@@ -73,7 +75,7 @@ export function BookingModal() {
                 />
                 <DialogFooter className="gap-2 mt-5">
                   <Button type="submit" className="rounded-sm px-9">
-                    Continue
+                    {t("modal.continue")}
                   </Button>
                 </DialogFooter>
               </form>

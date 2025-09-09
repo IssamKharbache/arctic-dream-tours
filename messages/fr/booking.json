@@ -1,0 +1,66 @@
+{
+  "modal": {
+    "title": "Finalisez votre réservation",
+    "description": {
+      "step1": "Entrez vos coordonnées pour continuer.",
+      "step2": "Vérifiez votre réservation et procédez au paiement."
+    },
+    "continue": "Continuer"
+  },
+  "form": {
+    "firstName": {
+      "label": "Prénom",
+      "placeholder": "Jean",
+      "error": "Le prénom est obligatoire"
+    },
+    "lastName": {
+      "label": "Nom",
+      "placeholder": "Dupont",
+      "error": "Le nom est obligatoire"
+    },
+    "email": {
+      "label": "Adresse e-mail",
+      "placeholder": "vous@example.com",
+      "error": "Adresse e-mail invalide"
+    },
+    "phone": {
+      "label": "Numéro de téléphone",
+      "placeholder": "+33 6 12 34 56 78",
+      "error": {
+        "min": "Le numéro de téléphone doit comporter au moins 6 caractères",
+        "max": "Le numéro de téléphone est trop long"
+      }
+    },
+    "pickup": {
+      "label": "Lieu de prise en charge",
+      "placeholderSelect": "Sélectionnez une option",
+      "options": {
+        "noPickup": "Je n'ai pas besoin de prise en charge",
+        "office": "Bureau Arctic Dream Tours",
+        "custom": "Spécifier mon propre lieu"
+      },
+      "customPlaceholder": "Saisissez votre lieu de prise en charge",
+      "error": "Le lieu de prise en charge est obligatoire"
+    },
+    "dropoff": {
+      "label": "Lieu de dépose",
+      "placeholderSelect": "Sélectionnez une option",
+      "options": {
+        "noDropoff": "Je n'ai pas besoin de dépose",
+        "office": "Bureau Arctic Dream Tours",
+        "custom": "Spécifier mon propre lieu"
+      },
+      "customPlaceholder": "Saisissez votre lieu de dépose",
+      "error": "Le lieu de dépose est obligatoire"
+    }
+  },
+  "steps": {
+    "contactDetails": "Coordonnées",
+    "checkout": "Paiement",
+    "status": {
+      "completed": "Terminé",
+      "current": "Actuel",
+      "upcoming": "À venir"
+    }
+  }
+}

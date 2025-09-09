@@ -71,6 +71,35 @@ const page = async ({ params }: PageProps) => {
               </ul>
             </div>
 
+            {/* Meeting Points */}
+            {activity.meetingPoints && activity.meetingPoints.length > 0 && (
+              <div className="bg-white rounded-lg shadow-sm p-6">
+                <h3 className="text-xl font-semibold mb-4">Meeting Points</h3>
+                <ul className="space-y-2">
+                  {activity.meetingPoints.map((point, index) => (
+                    <li key={index} className="flex items-center gap-2">
+                      <span className="text-blue-500">📍</span>
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {activity.tags && activity.tags.length > 0 && (
+              <div className="bg-white rounded-lg shadow-sm p-6">
+                <h3 className="text-xl font-semibold mb-4">Categories</h3>
+                <div className="flex flex-wrap gap-2">
+                  {activity.tags.map((tag, index) => (
+                    <span
+                      key={index}
+                      className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-sm"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
             {/* What to Bring */}
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h3 className="text-xl font-semibold mb-4">What to Bring</h3>

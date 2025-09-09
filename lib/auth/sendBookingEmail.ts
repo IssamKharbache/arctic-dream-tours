@@ -47,6 +47,4 @@ export const sendBookingEmail = async (bookingData: BookingData) => {
     subject: subject,
     html: html,
   });
-
-  console.log(`✅ Booking email sent to ${bookingData.customerEmail}`);
 };

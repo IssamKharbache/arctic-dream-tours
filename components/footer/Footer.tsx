@@ -14,9 +14,9 @@ const Footer = () => {
                 <Image
                   src={"/arcticLogoDark.png"}
                   alt="Logo"
-                  width={300}
-                  height={300}
-                  className="mb-12"
+                  width={200}
+                  height={200}
+                  className="mb-5"
                 />
               </Link>
               <p className="text-gray-300 mb-4 leading-relaxed">

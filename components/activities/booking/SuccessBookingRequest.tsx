@@ -248,6 +248,31 @@ const SuccessBookingRequest = ({ bookingId }: SuccessBookingRequestProps) => {
   // Get styles based on status
   const statusStyles = getStatusStyles(data.status);
 
+  if (data.status === "CANCELLED") {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-rose-100 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md text-center bg-white rounded-xl shadow-lg p-8">
+          <div className="flex items-center justify-center mb-4">
+            <XCircle className="h-16 w-16 text-red-600" />
+          </div>
+          <h1 className="text-2xl font-bold text-red-800 mb-2">
+            Booking Cancelled
+          </h1>
+          <p className="text-red-600 mb-4">
+            This booking has been cancelled. If you believe this is a mistake,
+            please contact support.
+          </p>
+          <button
+            onClick={() => (window.location.href = "/")}
+            className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-6 rounded-lg transition duration-200"
+          >
+            Return to Home
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   // Format date and time
   const formattedDate = new Date(data.date).toLocaleDateString("en-US", {
     weekday: "long",

@@ -1,0 +1,59 @@
+{
+  "modal": {
+    "title": "完成您的预订",
+    "description": {
+      "step1": "请输入您的联系方式以继续。",
+      "step2": "查看您的预订并进行付款。"
+    },
+    "continue": "继续"
+  },
+  "form": {
+    "firstName": {
+      "label": "名字",
+      "placeholder": "张",
+      "error": "名字为必填项"
+    },
+    "lastName": {
+      "label": "姓氏",
+      "placeholder": "三",
+      "error": "姓氏为必填项"
+    },
+    "email": {
+      "label": "电子邮箱",
+      "placeholder": "you@example.com",
+      "error": "无效的电子邮箱地址"
+    },
+    "phone": {
+      "label": "电话号码",
+      "placeholder": "+86 138 1234 5678",
+      "error": { "min": "电话号码至少需要6位", "max": "电话号码太长" }
+    },
+    "pickup": {
+      "label": "接送地点",
+      "placeholderSelect": "选择接送选项",
+      "options": {
+        "noPickup": "无需接送",
+        "office": "Arctic Dream Tours办公室",
+        "custom": "指定自定义地点"
+      },
+      "customPlaceholder": "输入接送地点",
+      "error": "接送地点为必填项"
+    },
+    "dropoff": {
+      "label": "下车地点",
+      "placeholderSelect": "选择下车选项",
+      "options": {
+        "noDropoff": "无需下车",
+        "office": "Arctic Dream Tours办公室",
+        "custom": "指定自定义地点"
+      },
+      "customPlaceholder": "输入下车地点",
+      "error": "下车地点为必填项"
+    }
+  },
+  "steps": {
+    "contactDetails": "联系信息",
+    "checkout": "结账",
+    "status": { "completed": "已完成", "current": "当前", "upcoming": "即将" }
+  }
+}

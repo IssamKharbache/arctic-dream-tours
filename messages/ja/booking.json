@@ -1,0 +1,62 @@
+{
+  "modal": {
+    "title": "予約を完了する",
+    "description": {
+      "step1": "続行するには連絡先情報を入力してください。",
+      "step2": "予約内容を確認して支払いに進んでください。"
+    },
+    "continue": "続行"
+  },
+  "form": {
+    "firstName": {
+      "label": "名",
+      "placeholder": "太郎",
+      "error": "名は必須です"
+    },
+    "lastName": {
+      "label": "姓",
+      "placeholder": "山田",
+      "error": "姓は必須です"
+    },
+    "email": {
+      "label": "メールアドレス",
+      "placeholder": "you@example.com",
+      "error": "無効なメールアドレスです"
+    },
+    "phone": {
+      "label": "電話番号",
+      "placeholder": "+81 90 1234 5678",
+      "error": {
+        "min": "電話番号は6文字以上である必要があります",
+        "max": "電話番号が長すぎます"
+      }
+    },
+    "pickup": {
+      "label": "ピックアップ場所",
+      "placeholderSelect": "ピックアップオプションを選択",
+      "options": {
+        "noPickup": "ピックアップ不要",
+        "office": "Arctic Dream Toursオフィス",
+        "custom": "自分の場所を指定"
+      },
+      "customPlaceholder": "ピックアップ場所を入力",
+      "error": "ピックアップ場所は必須です"
+    },
+    "dropoff": {
+      "label": "ドロップオフ場所",
+      "placeholderSelect": "ドロップオフオプションを選択",
+      "options": {
+        "noDropoff": "ドロップオフ不要",
+        "office": "Arctic Dream Toursオフィス",
+        "custom": "自分の場所を指定"
+      },
+      "customPlaceholder": "ドロップオフ場所を入力",
+      "error": "ドロップオフ場所は必須です"
+    }
+  },
+  "steps": {
+    "contactDetails": "連絡先情報",
+    "checkout": "支払い",
+    "status": { "completed": "完了", "current": "現在", "upcoming": "今後" }
+  }
+}

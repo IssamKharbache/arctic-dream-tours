@@ -1,0 +1,66 @@
+{
+  "modal": {
+    "title": "Completa la tua prenotazione",
+    "description": {
+      "step1": "Inserisci i tuoi dati di contatto per procedere.",
+      "step2": "Controlla la tua prenotazione e procedi al pagamento."
+    },
+    "continue": "Continua"
+  },
+  "form": {
+    "firstName": {
+      "label": "Nome",
+      "placeholder": "Luca",
+      "error": "Il nome è obbligatorio"
+    },
+    "lastName": {
+      "label": "Cognome",
+      "placeholder": "Rossi",
+      "error": "Il cognome è obbligatorio"
+    },
+    "email": {
+      "label": "Email",
+      "placeholder": "you@example.com",
+      "error": "Indirizzo email non valido"
+    },
+    "phone": {
+      "label": "Numero di telefono",
+      "placeholder": "+39 340 1234567",
+      "error": {
+        "min": "Il numero di telefono deve contenere almeno 6 caratteri",
+        "max": "Il numero di telefono è troppo lungo"
+      }
+    },
+    "pickup": {
+      "label": "Luogo di ritiro",
+      "placeholderSelect": "Seleziona opzione ritiro",
+      "options": {
+        "noPickup": "Non ho bisogno di ritiro",
+        "office": "Ufficio Arctic Dream Tours",
+        "custom": "Specifica la mia posizione"
+      },
+      "customPlaceholder": "Inserisci il luogo di ritiro",
+      "error": "Il luogo di ritiro è obbligatorio"
+    },
+    "dropoff": {
+      "label": "Luogo di riconsegna",
+      "placeholderSelect": "Seleziona opzione riconsegna",
+      "options": {
+        "noDropoff": "Non ho bisogno di riconsegna",
+        "office": "Ufficio Arctic Dream Tours",
+        "custom": "Specifica la mia posizione"
+      },
+      "customPlaceholder": "Inserisci il luogo di riconsegna",
+      "error": "Il luogo di riconsegna è obbligatorio"
+    }
+  },
+  "steps": {
+    "contactDetails": "Dati di contatto",
+    "checkout": "Pagamento",
+    "status": {
+      "completed": "Completato",
+      "current": "Attuale",
+      "upcoming": "Prossimo"
+    }
+  }
+}

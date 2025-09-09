@@ -31,7 +31,7 @@ const accommodations = [
     description:
       "We present exclusive villas nestled in Finland's pristine wilderness with breathtaking mountain views.",
     icon: Mountain,
-    image: "/luxury-villa-finland-mountains-snow-forest.jpg",
+    image: "/premiums/villa.jpg",
     features: ["Private Sauna", "Fireplace", "Mountain Views", "Ski Access"],
   },
   {
@@ -40,7 +40,7 @@ const accommodations = [
     description:
       "We offer access to magical ice hotels where you can sleep under the northern lights - a truly unique Arctic experience.",
     icon: Snowflake,
-    image: "/ice-hotel-finland-northern-lights-arctic.jpg",
+    image: "/premiums/igloo.jpg",
     features: [
       "Ice Sculptures",
       "Northern Lights",
@@ -138,11 +138,11 @@ export default function PremiumServices() {
               >
                 <Card className="h-full bg-card/80 backdrop-blur-sm border-border/50 hover:bg-card/90 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10">
                   <CardContent className="p-0">
-                    <div className="relative overflow-hidden rounded-t-lg">
+                    <div className="relative overflow-hidden">
                       <img
-                        src={accommodation.image || "/placeholder.svg"}
+                        src={accommodation.image}
                         alt={accommodation.title}
-                        className="w-full h-80  object-cover transition-transform duration-500 "
+                        className="w-full h-72  object-cover block rounded-2xl mb-8"
                       />
                       <div className="absolute top-4 left-4 bg-primary/90 backdrop-blur-sm rounded-full p-3">
                         <IconComponent className="h-6 w-6 text-primary-foreground" />

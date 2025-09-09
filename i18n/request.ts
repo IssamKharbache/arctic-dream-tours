@@ -18,6 +18,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
       contactMessages,
       termsMessages,
       featuresMessages,
+      bookingMessages,
     ] = await Promise.all([
       import(`@/messages/${locale}/common.json`)
         .then((m) => m.default)
@@ -43,6 +44,9 @@ export default getRequestConfig(async ({ requestLocale }) => {
       import(`@/messages/${locale}/features.json`)
         .then((m) => m.default)
         .catch(() => ({})),
+      import(`@/messages/${locale}/booking.json`)
+        .then((m) => m.default)
+        .catch(() => ({})),
     ]);
 
     return {
@@ -56,6 +60,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
         contact: contactMessages,
         terms: termsMessages,
         features: featuresMessages,
+        booking: bookingMessages,
       },
     };
   } catch (error) {
@@ -71,6 +76,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
       contactMessages,
       termsMessages,
       featuresMessages,
+      bookingMessages,
     ] = await Promise.all([
       import(`@/messages/${routing.defaultLocale}/common.json`).then(
         (m) => m.default
@@ -96,6 +102,9 @@ export default getRequestConfig(async ({ requestLocale }) => {
       import(`@/messages/${locale}/features.json`)
         .then((m) => m.default)
         .catch(() => ({})),
+      import(`@/messages/${locale}/booking.json`)
+        .then((m) => m.default)
+        .catch(() => ({})),
     ]);
 
     return {
@@ -109,6 +118,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
         contact: contactMessages,
         terms: termsMessages,
         features: featuresMessages,
+        booking: bookingMessages,
       },
     };
   }

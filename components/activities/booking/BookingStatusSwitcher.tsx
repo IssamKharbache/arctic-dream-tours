@@ -22,6 +22,12 @@ const statusConfig = {
     icon: CreditCard,
     label: "Paid",
   },
+  [Booking_Status.CANCELLED]: {
+    color:
+      "bg-red-100 text-red-800 border-red-300 dark:bg-red-900/30 dark:text-red-300 dark:border-red-700",
+    icon: CreditCard, // you can pick a better icon like 'X' if you want
+    label: "Cancelled",
+  },
 };
 
 export default function BookingStatusSwitcher({

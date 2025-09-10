@@ -6,7 +6,6 @@ import { sendBookingEmail } from "@/lib/auth/sendBookingEmail";
 export const POST = async (req: NextRequest) => {
   console.log("Webhook received");
 
-  // Debug: Check if secret is available
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
   console.log("Webhook secret exists:", !!webhookSecret);
 
@@ -27,7 +26,6 @@ export const POST = async (req: NextRequest) => {
   const body = await req.text();
   console.log("Webhook body received, length:", body.length);
 
-  // ✅ ADD THIS CHECK: Validate that body is not empty
   if (!body || body.trim().length === 0) {
     console.error("Empty body received - not a valid Stripe webhook");
     return NextResponse.json({ error: "No body received" }, { status: 400 });
@@ -54,7 +52,7 @@ export const POST = async (req: NextRequest) => {
     );
 
     try {
-      // ✅ ADD DUPLICATE CHECK: Prevent creating the same booking multiple times
+      // Check if booking already exists to prevent duplicates
       const existingBooking = await db.booking.findUnique({
         where: { bookingRef: session.metadata.bookingRef },
       });
@@ -67,7 +65,21 @@ export const POST = async (req: NextRequest) => {
         return NextResponse.json({ received: true }, { status: 200 });
       }
 
-      await db.booking.create({
+      // Get the activity details to include in email
+      const activity = await db.activity.findUnique({
+        where: { id: session.metadata.activityId },
+      });
+
+      if (!activity) {
+        console.error("Activity not found:", session.metadata.activityId);
+        return NextResponse.json(
+          { error: "Activity not found" },
+          { status: 404 }
+        );
+      }
+
+      // Create new booking
+      const newBooking = await db.booking.create({
         data: {
           activityId: session.metadata.activityId,
           date: new Date(session.metadata.date),
@@ -87,31 +99,26 @@ export const POST = async (req: NextRequest) => {
           departureHour: session.metadata.departureHour,
         },
       });
-      try {
-        await sendBookingEmail({
-          bookingRef: session.metadata.bookingRef,
-          customerName: `${session.metadata.firstName} ${session.metadata.lastName}`,
-          customerEmail: session.metadata.email,
-          activityName: session.metadata.activity.title,
-          date: new Date(session.metadata.date).toLocaleDateString("en-US", {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          }),
-          time: session.metadata.departureHour,
-          adults: session.metadata.adults,
-          children: session.metadata.children,
-          totalPrice: session.metadata.totalPrice,
-          pickUpLocation: session.metadata.pickUpLocation,
-          dropOffLocation: session.metadata.dropOffLocation,
-          isPrivate: session.metadata.isPrivateTour,
-          status: "PAID",
-        });
-      } catch (emailError) {
-        console.error("Failed to send confirmation email:", emailError);
-      }
-      console.log("Booking created successfully in database");
+      await sendBookingEmail({
+        bookingRef: newBooking.bookingRef,
+        customerName: `${newBooking.firstName} ${newBooking.lastName}`,
+        customerEmail: newBooking.email,
+        activityName: activity.title,
+        date: new Date(newBooking.date).toLocaleDateString("en-US", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
+        time: newBooking.departureHour,
+        adults: newBooking.adults,
+        children: newBooking.children,
+        totalPrice: newBooking.totalPrice,
+        pickUpLocation: newBooking.pickUpLocation,
+        dropOffLocation: newBooking.dropOffLocation,
+        isPrivate: newBooking.isPrivate,
+        status: "PAID",
+      });
     } catch (error) {
       console.error("Error creating booking:", error);
     }

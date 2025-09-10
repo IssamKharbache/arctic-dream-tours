@@ -9,6 +9,7 @@ import { isoToNormalDate } from "@/utils/isoToNormalDate";
 import { baseUrl } from "@/utils/baseUrl";
 import { useRouter } from "@/i18n/navigation";
 import PayOnline from "./PayOnline";
+import { useBookingDialogStore } from "@/store/zustand/bookingDialogStore";
 
 export interface BookingSummaryData {
   firstName: string;
@@ -37,6 +38,8 @@ const BookingSummary: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
     null
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { setStep } = useBookingDialogStore();
 
   const router = useRouter();
   useEffect(() => {
@@ -84,11 +87,12 @@ const BookingSummary: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
         return null;
       }
       if (type === "request") {
+        setStep(0);
         router.push(
           `/booking/request/success/${data.data.id}?token=${data.data.accessToken}` as any
         );
       }
-
+      setStep(0);
       return data.data;
     } catch (error) {
       console.error(error);

@@ -1,17 +1,17 @@
 {
-    "slides": {
-        "0": {
-            "title": "Scopri avventure indimenticabili in Finlandia",
-            "description": "Esplora la bellezza della Finlandia con attività selezionate per creare ricordi indimenticabili."
-        },
-        "1": {
-            "title": "Dall'arrivo all'avventura — pensiamo a tutto noi",
-            "description": "Ti aiutiamo a pianificare e vivere le migliori esperienze in Finlandia senza preoccupazioni."
-        },
-        "2": {
-            "title": "Attività che lasciano il segno",
-            "description": "Goditi esperienze autentiche grazie alla nostra conoscenza locale."
-        }
+  "slides": {
+    "0": {
+      "title": "Scopri avventure indimenticabili in Finlandia",
+      "description": "Esplora la bellezza della Finlandia con attività selezionate per creare ricordi indimenticabili."
     },
-    "bookNow": "Prenota ora"
+    "1": {
+      "title": "Dall'arrivo all'avventura  pensiamo a tutto noi",
+      "description": "Ti aiutiamo a pianificare e vivere le migliori esperienze in Finlandia senza preoccupazioni."
+    },
+    "2": {
+      "title": "Attività che lasciano il segno",
+      "description": "Goditi esperienze autentiche grazie alla nostra conoscenza locale."
+    }
+  },
+  "bookNow": "Prenota ora"
 }

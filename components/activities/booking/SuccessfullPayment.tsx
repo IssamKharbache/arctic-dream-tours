@@ -49,7 +49,6 @@ interface Booking {
 }
 
 const SuccessfullPayment = ({ bookingRef }: SuccessfullPaymentProps) => {
-  const [accessToken, setAccessToken] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const handlePrint = useReactToPrint({ contentRef });
@@ -61,7 +60,7 @@ const SuccessfullPayment = ({ bookingRef }: SuccessfullPaymentProps) => {
       if (!bookingRef) throw new Error("No booking reference");
 
       const res = await axios.get<{ booking: Booking }>(
-        `${baseUrl}/api/booking/${bookingRef}`
+        `${baseUrl}/api/booking/get/${bookingRef}`
       );
       return res.data.booking;
     },

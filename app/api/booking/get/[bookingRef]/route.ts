@@ -1,12 +1,13 @@
-// app/api/booking/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/database/db";
 
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const bookingRef = searchParams.get("bookingRef");
+export const GET = async (
+  req: NextRequest,
+  context: { params: Promise<{ bookingRef: string }> }
+) => {
+  const ref = (await context.params).bookingRef;
 
-  if (!bookingRef) {
+  if (!ref) {
     return NextResponse.json(
       { error: "Booking reference required" },
       { status: 400 }
@@ -14,7 +15,7 @@ export async function GET(request: NextRequest) {
   }
 
   const booking = await db.booking.findUnique({
-    where: { bookingRef },
+    where: { bookingRef: ref },
     include: { activity: true },
   });
 
@@ -23,4 +24,4 @@ export async function GET(request: NextRequest) {
   }
 
   return NextResponse.json({ booking });
-}
+};

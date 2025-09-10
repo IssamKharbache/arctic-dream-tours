@@ -2,12 +2,12 @@ import SuccessBookingRequest from "@/components/activities/booking/SuccessBookin
 import React from "react";
 
 interface PageProps {
-  params: Promise<{ id: string }>;
+  params: Promise<{ bookingRef: string }>;
 }
 
 const Page = async ({ params }: PageProps) => {
-  const { id } = await params;
-  return <SuccessBookingRequest bookingId={id} />;
+  const { bookingRef } = await params;
+  return <SuccessBookingRequest bookingRef={bookingRef} />;
 };
 
 export default Page;

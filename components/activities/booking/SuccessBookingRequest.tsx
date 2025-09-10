@@ -15,7 +15,6 @@ import {
   Phone,
   Mail,
   Clock,
-  Download,
   Home,
   Copy,
   CheckCircle,
@@ -49,45 +48,25 @@ interface Booking {
 }
 
 interface SuccessBookingRequestProps {
-  bookingId: string;
+  bookingRef: string;
 }
 
-const SuccessBookingRequest = ({ bookingId }: SuccessBookingRequestProps) => {
-  const [accessToken, setAccessToken] = useState<string | null>(null);
+const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
   const [copied, setCopied] = useState(false);
 
   const contentRef = useRef<HTMLDivElement>(null);
-  const handlePrint = useReactToPrint({ contentRef });
-
-  // Get token from URL or localStorage
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const urlParams = new URLSearchParams(window.location.search);
-      const token = urlParams.get("token");
-
-      if (token) {
-        setAccessToken(token);
-        localStorage.setItem(`bookingToken_${bookingId}`, token);
-      } else {
-        const storedToken = localStorage.getItem(`bookingToken_${bookingId}`);
-        if (storedToken) {
-          setAccessToken(storedToken);
-        }
-      }
-    }
-  }, [bookingId]);
 
   // Fetch booking details
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["bookingRequest", bookingId, accessToken],
+    queryKey: ["bookingRequest", bookingRef],
     queryFn: async () => {
-      if (!accessToken) throw new Error("No access token");
+      if (!bookingRef) throw new Error("No booking ref");
       const res = await axios.get<{ booking: Booking }>(
-        `${baseUrl}/api/booking/token?bookingId=${bookingId}&token=${accessToken}`
+        `${baseUrl}/api/booking/get/${bookingRef}`
       );
       return res.data.booking;
     },
-    enabled: !!bookingId && !!accessToken,
+    enabled: !!bookingRef,
     retry: (failureCount, error: any) => {
       // Don't retry if it's an authentication error
       if (error.response?.status === 401 || error.response?.status === 403) {

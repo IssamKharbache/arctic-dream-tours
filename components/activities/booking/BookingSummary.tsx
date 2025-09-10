@@ -88,9 +88,7 @@ const BookingSummary: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
       }
       if (type === "request") {
         setStep(0);
-        router.push(
-          `/booking/request/success/${data.data.id}?token=${data.data.accessToken}` as any
-        );
+        router.push(`/booking/request/success/${data.data.bookingRef}` as any);
       }
       setStep(0);
       return data.data;

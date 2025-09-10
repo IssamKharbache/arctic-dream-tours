@@ -482,13 +482,6 @@ const SuccessBookingRequest = ({ bookingId }: SuccessBookingRequestProps) => {
               </p>
               <div className="flex space-x-4">
                 <button
-                  onClick={() => handlePrint()}
-                  className="px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-700 font-medium hover:bg-slate-50 transition duration-200 text-sm flex items-center"
-                >
-                  <Download size={16} className="mr-1 hidden md:block" />
-                  Download {data.status === "PAID" ? "Invoice" : "Request"}
-                </button>
-                <button
                   onClick={() => (window.location.href = "/")}
                   className={`px-4 py-2 ${statusStyles.buttonBg} border border-transparent rounded-lg text-white font-medium transition duration-200 text-sm flex items-center`}
                 >

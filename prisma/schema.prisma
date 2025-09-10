@@ -88,8 +88,6 @@ model Booking {
     userId String? @db.Uuid
     user   User?   @relation(fields: [userId], references: [id])
 
-    accessToken String? @unique
-
     @@index([activityId])
     @@index([date])
     @@index([userId])

@@ -1,19 +1,14 @@
 import { baseUrl } from "@/utils/baseUrl";
 import { stripe } from "@/utils/stripe";
-import { generateAccessToken } from "@/utils/tokens";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (request: NextRequest) => {
   try {
     const { bookingData } = await request.json();
-    console.log(bookingData);
 
     if (!bookingData) {
       return NextResponse.json({ error: "Booking not found" }, { status: 400 });
     }
-
-    // Generate access token for this booking
-    const accessToken = generateAccessToken();
 
     const session = await stripe.checkout.sessions.create({
       ui_mode: "embedded",
@@ -48,10 +43,9 @@ export const POST = async (request: NextRequest) => {
         bookingRef: bookingData.bookingRef,
         departureHour: bookingData.departureHour,
         totalPrice: bookingData.totalPrice!.toString(),
-        accessToken: accessToken,
       },
       automatic_tax: { enabled: true },
-      return_url: `${baseUrl}/en/booking/success?session_id={CHECKOUT_SESSION_ID}`,
+      return_url: `${baseUrl}/en/booking/success/${encodeURIComponent(bookingData.bookingRef)}?session_id={CHECKOUT_SESSION_ID}`,
     });
 
     return NextResponse.json({

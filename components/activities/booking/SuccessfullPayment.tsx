@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import axios from "axios";
 import { baseUrl } from "@/utils/baseUrl";
 import { useQuery } from "@tanstack/react-query";
@@ -22,7 +22,7 @@ import {
 import PrintableInvoice from "./PrintableInvoice";
 
 interface SuccessfullPaymentProps {
-  bookingId: string;
+  bookingRef: string;
 }
 
 interface Booking {
@@ -48,70 +48,27 @@ interface Booking {
   };
 }
 
-const SuccessfullPayment = ({ bookingId }: SuccessfullPaymentProps) => {
+const SuccessfullPayment = ({ bookingRef }: SuccessfullPaymentProps) => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
-  const [statusUpdated, setStatusUpdated] = useState(false);
-
   const contentRef = useRef<HTMLDivElement>(null);
-
   const handlePrint = useReactToPrint({ contentRef });
 
-  // Extract token from URL
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const urlParams = new URLSearchParams(window.location.search);
-      const token = urlParams.get("token");
-
-      if (token) {
-        setAccessToken(token);
-        // Store token in localStorage for future access
-        localStorage.setItem(`bookingToken_${bookingId}`, token);
-      } else {
-        // Check if we have a token in localStorage
-        const storedToken = localStorage.getItem(`bookingToken_${bookingId}`);
-        if (storedToken) {
-          setAccessToken(storedToken);
-        }
-      }
-    }
-  }, [bookingId]);
-
-  // 1️⃣ Update booking status to "paid" once on mount
-  useEffect(() => {
-    if (!bookingId || !accessToken || statusUpdated) return;
-    const updateBookingStatus = async () => {
-      try {
-        await axios.patch(`${baseUrl}/api/booking/update`, {
-          bookingId,
-          token: accessToken,
-          status: "PAID",
-        });
-        console.log("Booking status updated to paid");
-        setStatusUpdated(true);
-      } catch (error) {
-        console.error("Failed to update booking status:", error);
-      }
-    };
-
-    updateBookingStatus();
-  }, [bookingId, accessToken, statusUpdated]);
-
-  // 2️⃣ Fetch booking details with TanStack Query using token
+  // Fetch booking details using bookingRef
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["booking", bookingId, accessToken],
+    queryKey: ["booking", bookingRef],
     queryFn: async () => {
-      if (!accessToken) throw new Error("No access token");
+      if (!bookingRef) throw new Error("No booking reference");
 
       const res = await axios.get<{ booking: Booking }>(
-        `${baseUrl}/api/booking/token?bookingId=${bookingId}&token=${accessToken}`
+        `${baseUrl}/api/booking/${bookingRef}`
       );
       return res.data.booking;
     },
-    enabled: !!bookingId && !!accessToken,
+    enabled: !!bookingRef,
     retry: (failureCount, error: any) => {
-      // Don't retry if it's an authentication error
-      if (error.response?.status === 401 || error.response?.status === 403) {
+      // Don't retry if booking not found
+      if (error.response?.status === 404) {
         return false;
       }
       return failureCount < 3;
@@ -126,13 +83,13 @@ const SuccessfullPayment = ({ bookingId }: SuccessfullPaymentProps) => {
     });
   };
 
-  // 3️⃣ Handle loading and error states
+  // Handle loading and error states
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 text-slate-800">
         <div className="text-center">
           <Loader2 className="w-12 h-12 animate-spin mx-auto text-indigo-600 mb-4" />
-          <h2 className="text-xl font-semibold">Processing your booking</h2>
+          <h2 className="text-xl font-semibold">Loading your booking</h2>
           <p className="text-slate-600 mt-2">
             Please wait while we retrieve your details...
           </p>
@@ -162,12 +119,16 @@ const SuccessfullPayment = ({ bookingId }: SuccessfullPaymentProps) => {
             </svg>
           </div>
           <h2 className="text-2xl font-bold text-slate-800 mb-2">
-            Access Denied
+            Booking Not Found
           </h2>
           <p className="text-slate-600 mb-6">
-            We couldn&apos;t retrieve your booking details. This might be
-            because your session expired.
+            We couldn't find your booking details. This might be because:
           </p>
+          <ul className="text-sm text-slate-500 mb-6 text-left space-y-2">
+            <li>• The booking reference is incorrect</li>
+            <li>• The booking is still being processed</li>
+            <li>• The payment is still completing</li>
+          </ul>
           <p className="text-sm text-slate-500 mb-6">
             Please check your email for your booking confirmation or contact
             support if you need assistance.
@@ -192,7 +153,6 @@ const SuccessfullPayment = ({ bookingId }: SuccessfullPaymentProps) => {
   });
 
   const formattedTime = data.departureHour;
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8 ">
       <div className="max-w-4xl mx-auto">

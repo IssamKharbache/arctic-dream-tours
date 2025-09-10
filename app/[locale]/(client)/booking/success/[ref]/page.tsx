@@ -1,16 +1,15 @@
 import SuccessfullPayment from "@/components/activities/booking/SuccessfullPayment";
 import { getSession } from "@/lib/stripe/StripeHelpers";
-import { stripe } from "@/utils/stripe";
 import { redirect } from "next/navigation";
 
 interface PageProps {
-  params: Promise<{ id: string }>;
+  params: Promise<{ ref: string }>;
   searchParams: Promise<{ session_id?: string }>;
 }
 
 const page = async ({ params, searchParams }: PageProps) => {
   const sessionId = (await searchParams).session_id;
-  const bookingId = (await params).id;
+  const bookingRef = (await params).ref;
 
   if (!sessionId) {
     redirect("/");
@@ -30,7 +29,7 @@ const page = async ({ params, searchParams }: PageProps) => {
     return <h1>Your payment is in progress</h1>;
   }
 
-  return <SuccessfullPayment bookingId={bookingId} />;
+  return <SuccessfullPayment bookingRef={bookingRef} />;
 };
 
 export default page;

@@ -4,7 +4,7 @@ import { motion, Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Hotel, Home, Mountain, Snowflake } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 const accommodations = [
   {
@@ -180,17 +180,32 @@ export default function PremiumServices() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.8 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
           className="text-center mt-16"
         >
-          <Link href="/contact">
-            <Button
-              size="lg"
-              className="bg-secondary hover:bg-secondary/90 text-secondary-foreground px-8 py-3 text-lg font-medium transition-all duration-200 hover:shadow-xl hover:shadow-secondary/25"
-            >
-              Contact Us
-            </Button>
-          </Link>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.8 }}
+            className="text-center mt-16"
+          >
+            <Link href="/contact">
+              <motion.div
+                whileHover={{
+                  scale: 1.08,
+                }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button
+                  size="lg"
+                  className=" px-10 py-8 text-lg font-medium transition-all rounded-3xl text-white duration-300"
+                >
+                  Contact Us
+                </Button>
+              </motion.div>
+            </Link>
+          </motion.div>
         </motion.div>
       </div>
     </section>

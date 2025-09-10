@@ -1,6 +1,7 @@
 import { stripe } from "@/utils/stripe";
 import { db } from "@/lib/database/db";
 import { NextRequest, NextResponse } from "next/server";
+import { sendBookingEmail } from "@/lib/auth/sendBookingEmail";
 
 export const POST = async (req: NextRequest) => {
   console.log("Webhook received");
@@ -86,6 +87,30 @@ export const POST = async (req: NextRequest) => {
           departureHour: session.metadata.departureHour,
         },
       });
+      try {
+        await sendBookingEmail({
+          bookingRef: session.metadata.bookingRef,
+          customerName: `${session.metadata.firstName} ${session.metadata.lastName}`,
+          customerEmail: session.metadata.email,
+          activityName: session.metadata.activity.title,
+          date: new Date(session.metadata.date).toLocaleDateString("en-US", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          }),
+          time: session.metadata.departureHour,
+          adults: session.metadata.adults,
+          children: session.metadata.children,
+          totalPrice: session.metadata.totalPrice,
+          pickUpLocation: session.metadata.pickUpLocation,
+          dropOffLocation: session.metadata.dropOffLocation,
+          isPrivate: session.metadata.isPrivateTour,
+          status: "PAID",
+        });
+      } catch (emailError) {
+        console.error("Failed to send confirmation email:", emailError);
+      }
       console.log("Booking created successfully in database");
     } catch (error) {
       console.error("Error creating booking:", error);

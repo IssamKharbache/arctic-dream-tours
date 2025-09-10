@@ -6,15 +6,12 @@ import {
 } from "@/lib/schema/validations/validation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/authOptions";
-import { generateAccessToken } from "@/utils/tokens";
 import { sendBookingEmail } from "@/lib/auth/sendBookingEmail";
 
 export const POST = async (req: Request) => {
   try {
     const session = await getServerSession(authOptions);
     const body = await req.json();
-
-    const accessToken = generateAccessToken();
 
     // Extract booking fields
     const bookingValidation = bookingSchema.safeParse({
@@ -78,7 +75,6 @@ export const POST = async (req: Request) => {
       data: {
         ...bookingData,
         ...customerData,
-        accessToken,
         date: new Date(bookingData.date),
         totalPrice,
         userId: session?.user?.id,

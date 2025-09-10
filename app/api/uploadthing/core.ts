@@ -10,7 +10,7 @@ export const ourFileRouter = {
   // Define as many FileRoutes as you like, each with a unique routeSlug
   activityImage: f({
     image: {
-      maxFileSize: "16MB",
+      maxFileSize: "256MB",
       maxFileCount: 1,
     },
   })

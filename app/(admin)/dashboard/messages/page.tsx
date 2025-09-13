@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { getData } from "@/lib/getData";
 import { baseUrl } from "@/utils/baseUrl";
 import { Emails } from "@prisma/client";

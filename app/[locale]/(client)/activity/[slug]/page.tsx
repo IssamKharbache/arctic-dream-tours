@@ -20,7 +20,7 @@ const page = async ({ params }: PageProps) => {
   const activity = res.data;
 
   return (
-    <div className="min-h-screen bg-gray-50 p-10">
+    <div className="min-h-screen bg-gray-50 pt-10">
       <div className="max-w-7xl mx-auto px-4 py-8 mt-10">
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Activity Details */}
@@ -61,7 +61,16 @@ const page = async ({ params }: PageProps) => {
                 </div>
               </div>
             </div>
-
+            <div className="mt-6">
+              <div className="border border-green-300 bg-green-50 dark:bg-green-900/20 dark:border-green-700 rounded-lg p-4 flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                <MapPin className="w-5 h-5 text-green-600 flex-shrink-0" />
+                <div className="flex-1 text-sm sm:text-base text-green-900 dark:text-green-300">
+                  <span className="font-medium">Pick-Up & Drop-Off: </span>
+                  We offer pick-up and drop-off from your location within the
+                  city of the activity.
+                </div>
+              </div>
+            </div>
             {/* What's Included */}
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h3 className="text-xl font-semibold mb-4">What's Included</h3>

@@ -1,9 +1,11 @@
 "use client";
 
+import BookingDetailsDialog from "@/components/activities/booking/BookingDetailsDialog";
 import BookingStatusSwitcher from "@/components/activities/booking/BookingStatusSwitcher";
 import { BookingWithActivity } from "@/types/activityWithBooking";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
+import { useState } from "react";
 
 export const columns: ColumnDef<BookingWithActivity>[] = [
   {
@@ -54,6 +56,30 @@ export const columns: ColumnDef<BookingWithActivity>[] = [
     cell: ({ row }) => {
       const { adults, children, infants } = row.original;
       return `${adults + children + infants}`;
+    },
+  },
+  {
+    id: "actions",
+    header: "Actions",
+    cell: ({ row }) => {
+      const [open, setOpen] = useState(false);
+
+      return (
+        <>
+          <button
+            className="text-primary underline"
+            onClick={() => setOpen(true)}
+          >
+            View Details
+          </button>
+
+          <BookingDetailsDialog
+            booking={row.original}
+            open={open}
+            onOpenChange={setOpen}
+          />
+        </>
+      );
     },
   },
 ];

@@ -1,0 +1,66 @@
+{
+  "hero": {
+    "title": "探索芬兰拉普兰的魔力",
+    "subtitle": "通往真实北极探险和难忘北方体验的门户",
+    "button": "开始你的冒险"
+  },
+  "about": {
+    "heading": "关于我们的芬兰探险旅行社",
+    "paragraph1": "我们成立于芬兰拉普兰的中心地带，是热情的当地人，致力于与来自世界各地的游客分享我们家乡的美丽和文化。",
+    "paragraph2": "无论您是寻求哈士奇雪橇的刺激，传统桑拿的宁静，还是在北极光下入睡的奇妙体验，我们都打造个性化的冒险，让回忆终生难忘。",
+    "stats": {
+      "years": "经验年数",
+      "travelers": "满意的游客",
+      "experiences": "独特体验"
+    },
+    "location": "罗瓦涅米，芬兰"
+  },
+  "experiences": {
+    "heading": "独特的拉普兰体验",
+    "subtitle": "通过我们精心策划的冒险，探索芬兰拉普兰的真实魔力",
+    "items": {
+      "northernLights": {
+        "title": "极光之旅",
+        "description": "在拉普兰原始的自然环境中，与我们的专家导游一起见证神奇的极光。"
+      },
+      "husky": {
+        "title": "哈士奇雪橇",
+        "description": "体验驾驶雪橇穿越雪覆盖的森林，与我们友好的西伯利亚哈士奇一起探险的刺激。"
+      },
+      "reindeer": {
+        "title": "驯鹿邂逅",
+        "description": "与萨米土著人见面，了解他们传统的驯鹿养殖文化。"
+      },
+      "iceHotels": {
+        "title": "冰酒店 & 桑拿",
+        "description": "入住独特的冰雪住宿，体验正宗的芬兰桑拿传统。"
+      }
+    }
+  },
+  "testimonials": {
+    "heading": "游客评价",
+    "subtitle": "真实体验，来自发现拉普兰魔力的探险者",
+    "items": {
+      "sarah": {
+        "name": "Sarah Johnson",
+        "country": "美国",
+        "text": "极光之旅非常神奇！我们的导游非常专业，体验超出了所有预期。"
+      },
+      "marco": {
+        "name": "Marco Rossi",
+        "country": "意大利",
+        "text": "穿越芬兰荒野的哈士奇雪橇是毕生难忘的冒险。强烈推荐这家旅行社！"
+      },
+      "emma": {
+        "name": "Emma Thompson",
+        "country": "英国",
+        "text": "从冰酒店到传统桑拿，每一刻都安排得非常完美。感谢一次难忘的旅行！"
+      }
+    }
+  },
+  "cta": {
+    "heading": "准备好你的拉普兰冒险了吗？",
+    "subtitle": "让我们为你打造一段难忘的芬兰体验",
+    "button": "规划你的行程"
+  }
+}

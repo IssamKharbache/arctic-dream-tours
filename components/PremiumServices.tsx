@@ -5,50 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Hotel, Home, Mountain, Snowflake } from "lucide-react";
 import { Link } from "@/i18n/navigation";
-
-const accommodations = [
-  {
-    id: 1,
-    title: "Luxury Hotels",
-    description:
-      "We showcase Finland's finest luxury hotels with premium amenities and exceptional service for your perfect stay.",
-    icon: Hotel,
-    image: "/premiums/luxuryHotel.jpg",
-    features: ["5-Star Service", "Spa & Wellness", "Fine Dining", "Concierge"],
-  },
-  {
-    id: 2,
-    title: "Private Apartments",
-    description:
-      "We feature the best private apartments with full amenities in the heart of Finnish cities.",
-    icon: Home,
-    image: "/premiums/appartment.jpg",
-    features: ["Full Kitchen", "City Views", "Modern Design", "24/7 Support"],
-  },
-  {
-    id: 3,
-    title: "Villas",
-    description:
-      "We present exclusive villas nestled in Finland's pristine wilderness with breathtaking mountain views.",
-    icon: Mountain,
-    image: "/premiums/villa.jpg",
-    features: ["Private Sauna", "Fireplace", "Mountain Views", "Ski Access"],
-  },
-  {
-    id: 4,
-    title: "Ice Hotels",
-    description:
-      "We offer access to magical ice hotels where you can sleep under the northern lights - a truly unique Arctic experience.",
-    icon: Snowflake,
-    image: "/premiums/igloo.jpg",
-    features: [
-      "Ice Sculptures",
-      "Northern Lights",
-      "Thermal Sleeping Bags",
-      "Ice Bar",
-    ],
-  },
-];
+import { useTranslations } from "next-intl";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -87,6 +44,37 @@ const titleVariants: Variants = {
 };
 
 export default function PremiumServices() {
+  const t = useTranslations("premium");
+
+  // link icons + images with translation keys
+  const accommodations = [
+    {
+      id: "luxuryHotels",
+      icon: Hotel,
+      image: "/premiums/luxuryHotel.jpg",
+    },
+    {
+      id: "privateApartments",
+      icon: Home,
+      image: "/premiums/appartment.jpg",
+    },
+    {
+      id: "villas",
+      icon: Mountain,
+      image: "/premiums/villa.jpg",
+    },
+    {
+      id: "iceHotels",
+      icon: Snowflake,
+      image: "/premiums/igloo.jpg",
+    },
+  ].map((item, idx) => ({
+    ...item,
+    title: t(`accommodations.${item.id}.title`),
+    description: t(`accommodations.${item.id}.description`),
+    features: t.raw(`accommodations.${item.id}.features`) as string[],
+  }));
+
   return (
     <section className="relative py-24 overflow-hidden">
       {/* Background Image with Overlay */}
@@ -100,6 +88,7 @@ export default function PremiumServices() {
       </div>
 
       <div className="relative container mx-auto px-4">
+        {/* Section Title */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -108,15 +97,14 @@ export default function PremiumServices() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 text-balance">
-            Our Premium Services
+            {t("title")}
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto text-pretty">
-            From luxury hotels to magical ice accommodations, we help you
-            discover and connect with extraordinary stays that will transform
-            your Finnish winter adventure into an unforgettable experience.
+            {t("subtitle")}
           </p>
         </motion.div>
 
+        {/* Accommodation Cards */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -142,7 +130,7 @@ export default function PremiumServices() {
                       <img
                         src={accommodation.image}
                         alt={accommodation.title}
-                        className="w-full h-72  object-cover block rounded-2xl mb-8"
+                        className="w-full h-72 object-cover block rounded-2xl mb-8"
                       />
                       <div className="absolute top-4 left-4 bg-primary/90 backdrop-blur-sm rounded-full p-3">
                         <IconComponent className="h-6 w-6 text-primary-foreground" />
@@ -176,6 +164,7 @@ export default function PremiumServices() {
           })}
         </motion.div>
 
+        {/* CTA Button */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -183,29 +172,21 @@ export default function PremiumServices() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-center mt-16"
         >
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            className="text-center mt-16"
-          >
-            <Link href="/contact">
-              <motion.div
-                whileHover={{
-                  scale: 1.08,
-                }}
-                whileTap={{ scale: 0.95 }}
+          <Link href="/contact">
+            <motion.div
+              whileHover={{
+                scale: 1.08,
+              }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button
+                size="lg"
+                className="px-10 py-8 text-lg font-medium transition-all rounded-3xl text-white duration-300"
               >
-                <Button
-                  size="lg"
-                  className=" px-10 py-8 text-lg font-medium transition-all rounded-3xl text-white duration-300"
-                >
-                  Contact Us
-                </Button>
-              </motion.div>
-            </Link>
-          </motion.div>
+                {t("button")}
+              </Button>
+            </motion.div>
+          </Link>
         </motion.div>
       </div>
     </section>

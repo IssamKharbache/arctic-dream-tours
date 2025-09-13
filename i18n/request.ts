@@ -19,6 +19,9 @@ export default getRequestConfig(async ({ requestLocale }) => {
       termsMessages,
       featuresMessages,
       bookingMessages,
+      premiumMessages,
+      galleryMessages,
+      aboutMessages,
     ] = await Promise.all([
       import(`@/messages/${locale}/common.json`)
         .then((m) => m.default)
@@ -47,6 +50,15 @@ export default getRequestConfig(async ({ requestLocale }) => {
       import(`@/messages/${locale}/booking.json`)
         .then((m) => m.default)
         .catch(() => ({})),
+      import(`@/messages/${locale}/premium.json`)
+        .then((m) => m.default)
+        .catch(() => ({})),
+      import(`@/messages/${locale}/gallery.json`)
+        .then((m) => m.default)
+        .catch(() => ({})),
+      import(`@/messages/${locale}/about.json`)
+        .then((m) => m.default)
+        .catch(() => ({})),
     ]);
 
     return {
@@ -61,6 +73,9 @@ export default getRequestConfig(async ({ requestLocale }) => {
         terms: termsMessages,
         features: featuresMessages,
         booking: bookingMessages,
+        premium: premiumMessages,
+        gallery: galleryMessages,
+        about: aboutMessages,
       },
     };
   } catch (error) {
@@ -77,6 +92,9 @@ export default getRequestConfig(async ({ requestLocale }) => {
       termsMessages,
       featuresMessages,
       bookingMessages,
+      premiumMessages,
+      galleryMessages,
+      aboutMessages,
     ] = await Promise.all([
       import(`@/messages/${routing.defaultLocale}/common.json`).then(
         (m) => m.default
@@ -105,6 +123,15 @@ export default getRequestConfig(async ({ requestLocale }) => {
       import(`@/messages/${locale}/booking.json`)
         .then((m) => m.default)
         .catch(() => ({})),
+      import(`@/messages/${locale}/premium.json`)
+        .then((m) => m.default)
+        .catch(() => ({})),
+      import(`@/messages/${locale}/gallery.json`)
+        .then((m) => m.default)
+        .catch(() => ({})),
+      import(`@/messages/${locale}/about.json`)
+        .then((m) => m.default)
+        .catch(() => ({})),
     ]);
 
     return {
@@ -119,6 +146,9 @@ export default getRequestConfig(async ({ requestLocale }) => {
         terms: termsMessages,
         features: featuresMessages,
         booking: bookingMessages,
+        premium: premiumMessages,
+        gallery: galleryMessages,
+        about: aboutMessages,
       },
     };
   }

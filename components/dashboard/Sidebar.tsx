@@ -33,11 +33,11 @@ const navigationItems = [
         url: "/dashboard",
         icon: Home,
       },
-      {
-        title: "Analytics",
-        url: "/dashboard/analytics",
-        icon: TrendingUp,
-      },
+      // {
+      //   title: "Analytics",
+      //   url: "/dashboard/analytics",
+      //   icon: TrendingUp,
+      // },
     ],
   },
   {
@@ -63,11 +63,11 @@ const navigationItems = [
         url: "/dashboard/activities",
         icon: Mountain,
       },
-      {
-        title: "Blogs",
-        url: "/dashboard/blogs",
-        icon: Waves,
-      },
+      // {
+      //   title: "Blogs",
+      //   url: "/dashboard/blogs",
+      //   icon: Waves,
+      // },
     ],
   },
 ];

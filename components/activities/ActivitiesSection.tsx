@@ -1,4 +1,5 @@
 "use client";
+
 import { Badge } from "@/components/ui/badge";
 import { ActivityCard } from "@/components/activities/ActivityCard";
 import type { Activity } from "@/types/activity";
@@ -6,7 +7,6 @@ import type { Activity } from "@/types/activity";
 interface ActivitiesSectionProps {
   title: string;
   description: string;
-  icon: React.ReactNode;
   color: string;
   activities: Activity[];
 }
@@ -14,20 +14,18 @@ interface ActivitiesSectionProps {
 export function ActivitiesSection({
   title,
   description,
-  icon,
-  color,
   activities,
 }: ActivitiesSectionProps) {
   return (
     <section>
       <div className="flex items-center gap-3 mb-8">
         <div className="flex items-center gap-2">
-          <span className={color}>{icon}</span>
           <h2 className="text-3xl font-bold text-foreground">{title}</h2>
         </div>
         <Badge variant="secondary">
           {activities.length}{" "}
-          {activities.length === 1 ? "Activity" : "Activities"}
+          {activities.length === 1 ? "Activity" : "Activities"}{" "}
+          {/* Can translate */}
         </Badge>
       </div>
       <p className="text-muted-foreground mb-8 text-lg">{description}</p>

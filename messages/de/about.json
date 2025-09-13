@@ -1,0 +1,66 @@
+{
+  "hero": {
+    "title": "Entdecke die Magie von Finnisch-Lappland",
+    "subtitle": "Dein Tor zu authentischen arktischen Abenteuern und unvergesslichen Nord-Erlebnissen",
+    "button": "Starte dein Abenteuer"
+  },
+  "about": {
+    "heading": "Über unsere finnische Abenteueragentur",
+    "paragraph1": "Gegründet im Herzen von Finnisch-Lappland, sind wir leidenschaftliche Einheimische, die ihr Leben dem Teilen der unglaublichen Schönheit und Kultur unserer Heimat mit Besuchern aus aller Welt gewidmet haben.",
+    "paragraph2": "Ob du den Nervenkitzel des Husky-Schlittenfahrens, die Ruhe einer traditionellen Sauna oder das Wunder des Schlafens unter dem Nordlicht suchst – wir gestalten personalisierte Abenteuer, die unvergessliche Erinnerungen schaffen.",
+    "stats": {
+      "years": "Erfahrungsjahre",
+      "travelers": "Zufriedene Reisende",
+      "experiences": "Einzigartige Erlebnisse"
+    },
+    "location": "Rovaniemi, Finnland"
+  },
+  "experiences": {
+    "heading": "Einzigartige Lappland-Erlebnisse",
+    "subtitle": "Entdecke die authentische Magie von Finnisch-Lappland durch unsere sorgfältig kuratierten Abenteuer",
+    "items": {
+      "northernLights": {
+        "title": "Nordlicht-Touren",
+        "description": "Erlebe das magische Nordlicht in der unberührten Wildnis Lapplands mit unseren erfahrenen Guides."
+      },
+      "husky": {
+        "title": "Husky-Schlittenfahrten",
+        "description": "Erlebe den Nervenkitzel, mit unseren freundlichen sibirischen Huskys durch schneebedeckte Wälder zu fahren."
+      },
+      "reindeer": {
+        "title": "Rentierbegegnungen",
+        "description": "Triff das indigene Sami-Volk und lerne ihre traditionelle Rentierhaltung kennen."
+      },
+      "iceHotels": {
+        "title": "Eishotels & Saunen",
+        "description": "Übernachte in einzigartigen Eisunterkünften und erlebe authentische finnische Saunatraditionen."
+      }
+    }
+  },
+  "testimonials": {
+    "heading": "Was unsere Reisenden sagen",
+    "subtitle": "Echte Erfahrungen von Abenteurern, die die Magie Lapplands mit uns entdeckt haben",
+    "items": {
+      "sarah": {
+        "name": "Sarah Johnson",
+        "country": "USA",
+        "text": "Die Nordlicht-Tour war absolut magisch! Unser Guide war sehr sachkundig und die Erfahrung übertraf alle Erwartungen."
+      },
+      "marco": {
+        "name": "Marco Rossi",
+        "country": "Italien",
+        "text": "Die Husky-Schlittenfahrt durch die finnische Wildnis war das Abenteuer meines Lebens. Diese Agentur kann ich wärmstens empfehlen!"
+      },
+      "emma": {
+        "name": "Emma Thompson",
+        "country": "Vereinigtes Königreich",
+        "text": "Von Eishotels bis zu traditionellen Saunen – jeder Moment war perfekt organisiert. Danke für eine unvergessliche Reise!"
+      }
+    }
+  },
+  "cta": {
+    "heading": "Bereit für dein Lappland-Abenteuer?",
+    "subtitle": "Lass uns ein unvergessliches finnisches Erlebnis nur für dich gestalten",
+    "button": "Plane deine Reise"
+  }
+}

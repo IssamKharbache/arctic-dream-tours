@@ -1,0 +1,42 @@
+{
+  "title": "Unsere Premium-Dienstleistungen",
+  "subtitle": "Von Luxushotels bis zu magischen Eishotels – wir helfen Ihnen, außergewöhnliche Aufenthalte zu entdecken, die Ihr finnisches Winterabenteuer unvergesslich machen.",
+  "button": "Kontaktieren Sie uns",
+  "accommodations": {
+    "luxuryHotels": {
+      "title": "Luxushotels",
+      "description": "Wir präsentieren Finnlands feinste Luxushotels mit hochwertigen Annehmlichkeiten und außergewöhnlichem Service für Ihren perfekten Aufenthalt.",
+      "features": [
+        "5-Sterne-Service",
+        "Spa & Wellness",
+        "Feine Küche",
+        "Concierge"
+      ]
+    },
+    "privateApartments": {
+      "title": "Private Apartments",
+      "description": "Wir bieten die besten privaten Apartments mit kompletter Ausstattung im Herzen der finnischen Städte.",
+      "features": [
+        "Voll ausgestattete Küche",
+        "Stadtblick",
+        "Modernes Design",
+        "24/7 Support"
+      ]
+    },
+    "villas": {
+      "title": "Villen",
+      "description": "Wir präsentieren exklusive Villen in Finnlands unberührter Natur mit atemberaubendem Bergblick.",
+      "features": ["Privatsauna", "Kamin", "Bergblick", "Ski-Zugang"]
+    },
+    "iceHotels": {
+      "title": "Eishotels",
+      "description": "Wir bieten Zugang zu magischen Eishotels, in denen Sie unter den Nordlichtern schlafen können – ein einzigartiges arktisches Erlebnis.",
+      "features": [
+        "Eisskulpturen",
+        "Nordlichter",
+        "Thermoschlafsäcke",
+        "Eisbar"
+      ]
+    }
+  }
+}

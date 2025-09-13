@@ -1,0 +1,66 @@
+{
+  "hero": {
+    "title": "Scopri la magia della Lapponia finlandese",
+    "subtitle": "La tua porta d'accesso ad autentiche avventure artiche e indimenticabili esperienze del Nord",
+    "button": "Inizia la tua avventura"
+  },
+  "about": {
+    "heading": "La nostra agenzia di avventure finlandesi",
+    "paragraph1": "Fondata nel cuore della Lapponia finlandese, siamo locali appassionati che hanno dedicato la loro vita a condividere l'incredibile bellezza e cultura della nostra terra con visitatori da tutto il mondo.",
+    "paragraph2": "Che tu stia cercando l'emozione delle slitte trainate da husky, la serenità di una sauna tradizionale o la meraviglia di dormire sotto l'Aurora Boreale, creiamo avventure personalizzate che generano ricordi indelebili.",
+    "stats": {
+      "years": "Anni di esperienza",
+      "travelers": "Viaggiatori felici",
+      "experiences": "Esperienze uniche"
+    },
+    "location": "Rovaniemi, Finlandia"
+  },
+  "experiences": {
+    "heading": "Esperienze uniche in Lapponia",
+    "subtitle": "Scopri la magia autentica della Lapponia finlandese attraverso le nostre avventure selezionate con cura",
+    "items": {
+      "northernLights": {
+        "title": "Tour delle Aurore Boreali",
+        "description": "Ammira le magiche aurore boreali nella natura incontaminata della Lapponia con le nostre guide esperte."
+      },
+      "husky": {
+        "title": "Slitte trainate da husky",
+        "description": "Vivi l'emozione di guidare una slitta attraverso foreste innevate con i nostri amichevoli husky siberiani."
+      },
+      "reindeer": {
+        "title": "Incontri con le renne",
+        "description": "Incontra il popolo Sami e scopri la loro cultura tradizionale di allevamento delle renne."
+      },
+      "iceHotels": {
+        "title": "Hotel di ghiaccio & Saune",
+        "description": "Soggiorna in sistemazioni uniche di ghiaccio e vivi le autentiche tradizioni della sauna finlandese."
+      }
+    }
+  },
+  "testimonials": {
+    "heading": "Cosa dicono i nostri viaggiatori",
+    "subtitle": "Esperienze reali di avventurieri che hanno scoperto la magia della Lapponia con noi",
+    "items": {
+      "sarah": {
+        "name": "Sarah Johnson",
+        "country": "Stati Uniti",
+        "text": "Il tour per vedere l'aurora boreale è stato assolutamente magico! La nostra guida era preparata e l'esperienza ha superato ogni aspettativa."
+      },
+      "marco": {
+        "name": "Marco Rossi",
+        "country": "Italia",
+        "text": "Il tour con la slitta trainata da husky attraverso la natura selvaggia finlandese è stata un'avventura unica nella vita. Consiglio vivamente questa agenzia!"
+      },
+      "emma": {
+        "name": "Emma Thompson",
+        "country": "Regno Unito",
+        "text": "Dagli hotel di ghiaccio alle saune tradizionali, ogni momento è stato perfettamente organizzato. Grazie per un viaggio indimenticabile!"
+      }
+    }
+  },
+  "cta": {
+    "heading": "Pronto per la tua avventura in Lapponia?",
+    "subtitle": "Lasciaci creare un'esperienza finlandese indimenticabile, fatta su misura per te",
+    "button": "Pianifica il tuo viaggio"
+  }
+}

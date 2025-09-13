@@ -1,0 +1,47 @@
+{
+  "title": "Nuestros Servicios Premium",
+  "subtitle": "Desde hoteles de lujo hasta mágicos alojamientos de hielo, te ayudamos a descubrir estancias extraordinarias que transformarán tu aventura invernal en Finlandia en una experiencia inolvidable.",
+  "button": "Contáctanos",
+  "accommodations": {
+    "luxuryHotels": {
+      "title": "Hoteles de Lujo",
+      "description": "Presentamos los mejores hoteles de lujo de Finlandia con servicios premium y atención excepcional para tu estancia perfecta.",
+      "features": [
+        "Servicio 5 Estrellas",
+        "Spa & Bienestar",
+        "Alta Cocina",
+        "Conserjería"
+      ]
+    },
+    "privateApartments": {
+      "title": "Apartamentos Privados",
+      "description": "Ofrecemos los mejores apartamentos privados con todas las comodidades en el corazón de las ciudades finlandesas.",
+      "features": [
+        "Cocina Completa",
+        "Vistas a la Ciudad",
+        "Diseño Moderno",
+        "Soporte 24/7"
+      ]
+    },
+    "villas": {
+      "title": "Villas",
+      "description": "Presentamos villas exclusivas situadas en la naturaleza virgen de Finlandia con impresionantes vistas a la montaña.",
+      "features": [
+        "Sauna Privada",
+        "Chimenea",
+        "Vistas a la Montaña",
+        "Acceso a Esquí"
+      ]
+    },
+    "iceHotels": {
+      "title": "Hoteles de Hielo",
+      "description": "Ofrecemos acceso a mágicos hoteles de hielo donde podrás dormir bajo las auroras boreales – una experiencia ártica única.",
+      "features": [
+        "Esculturas de Hielo",
+        "Auroras Boreales",
+        "Sacos de Dormir Térmicos",
+        "Bar de Hielo"
+      ]
+    }
+  }
+}

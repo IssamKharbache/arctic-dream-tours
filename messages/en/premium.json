@@ -1,0 +1,42 @@
+{
+  "title": "Our Premium Services",
+  "subtitle": "From luxury hotels to magical ice accommodations, we help you discover and connect with extraordinary stays that will transform your Finnish winter adventure into an unforgettable experience.",
+  "button": "Contact Us",
+  "accommodations": {
+    "luxuryHotels": {
+      "title": "Luxury Hotels",
+      "description": "We showcase Finland's finest luxury hotels with premium amenities and exceptional service for your perfect stay.",
+      "features": [
+        "5-Star Service",
+        "Spa & Wellness",
+        "Fine Dining",
+        "Concierge"
+      ]
+    },
+    "privateApartments": {
+      "title": "Private Apartments",
+      "description": "We feature the best private apartments with full amenities in the heart of Finnish cities.",
+      "features": [
+        "Full Kitchen",
+        "City Views",
+        "Modern Design",
+        "24/7 Support"
+      ]
+    },
+    "villas": {
+      "title": "Villas",
+      "description": "We present exclusive villas nestled in Finland's pristine wilderness with breathtaking mountain views.",
+      "features": ["Private Sauna", "Fireplace", "Mountain Views", "Ski Access"]
+    },
+    "iceHotels": {
+      "title": "Ice Hotels",
+      "description": "We offer access to magical ice hotels where you can sleep under the northern lights - a truly unique Arctic experience.",
+      "features": [
+        "Ice Sculptures",
+        "Northern Lights",
+        "Thermal Sleeping Bags",
+        "Ice Bar"
+      ]
+    }
+  }
+}

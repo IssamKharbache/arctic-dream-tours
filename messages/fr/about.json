@@ -1,0 +1,66 @@
+{
+  "hero": {
+    "title": "Découvrez la magie de la Laponie finlandaise",
+    "subtitle": "Votre porte d'entrée vers des aventures arctiques authentiques et des expériences inoubliables du Nord",
+    "button": "Commencez votre aventure"
+  },
+  "about": {
+    "heading": "À propos de notre agence d'aventures finlandaises",
+    "paragraph1": "Fondés au cœur de la Laponie finlandaise, nous sommes des habitants passionnés qui ont dédié leur vie à partager la beauté et la culture incroyables de notre pays avec des visiteurs du monde entier.",
+    "paragraph2": "Que vous recherchiez l’adrénaline du traîneau à chiens, la sérénité d’un sauna traditionnel ou l’émerveillement de dormir sous les aurores boréales, nous créons des aventures personnalisées pour des souvenirs inoubliables.",
+    "stats": {
+      "years": "Années d'expérience",
+      "travelers": "Voyageurs heureux",
+      "experiences": "Expériences uniques"
+    },
+    "location": "Rovaniemi, Finlande"
+  },
+  "experiences": {
+    "heading": "Expériences uniques en Laponie",
+    "subtitle": "Découvrez la magie authentique de la Laponie finlandaise à travers nos aventures soigneusement sélectionnées",
+    "items": {
+      "northernLights": {
+        "title": "Excursions Aurores Boréales",
+        "description": "Admirez la magie des aurores boréales dans la nature immaculée de la Laponie avec nos guides experts."
+      },
+      "husky": {
+        "title": "Traîneau à chiens",
+        "description": "Vivez l'excitation de conduire un traîneau à travers les forêts enneigées avec nos huskies sibériens amicaux."
+      },
+      "reindeer": {
+        "title": "Rencontres avec les rennes",
+        "description": "Rencontrez le peuple autochtone Sami et découvrez leur culture traditionnelle d’élevage de rennes."
+      },
+      "iceHotels": {
+        "title": "Hôtels de glace & Saunas",
+        "description": "Séjournez dans des hébergements de glace uniques et découvrez les traditions authentiques du sauna finlandais."
+      }
+    }
+  },
+  "testimonials": {
+    "heading": "Ce que disent nos voyageurs",
+    "subtitle": "Des expériences réelles d’aventuriers ayant découvert la magie de la Laponie avec nous",
+    "items": {
+      "sarah": {
+        "name": "Sarah Johnson",
+        "country": "États-Unis",
+        "text": "L'excursion pour voir les aurores boréales était absolument magique ! Notre guide était très compétent et l'expérience a dépassé toutes nos attentes."
+      },
+      "marco": {
+        "name": "Marco Rossi",
+        "country": "Italie",
+        "text": "Le traîneau à chiens à travers la nature sauvage finlandaise a été l'aventure d'une vie. Je recommande vivement cette agence !"
+      },
+      "emma": {
+        "name": "Emma Thompson",
+        "country": "Royaume-Uni",
+        "text": "Des hôtels de glace aux saunas traditionnels, chaque moment a été parfaitement organisé. Merci pour ce voyage inoubliable !"
+      }
+    }
+  },
+  "cta": {
+    "heading": "Prêt pour votre aventure en Laponie ?",
+    "subtitle": "Laissez-nous créer une expérience finlandaise inoubliable, rien que pour vous",
+    "button": "Planifiez votre voyage"
+  }
+}

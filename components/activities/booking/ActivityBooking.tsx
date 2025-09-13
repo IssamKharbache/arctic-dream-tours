@@ -2,7 +2,6 @@
 
 import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import DatePicker from "react-datepicker";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -17,14 +16,135 @@ import {
   Crown,
 } from "lucide-react";
 import type { Activity } from "@/types/activity";
-import { format, isWithinInterval } from "date-fns";
-import "react-datepicker/dist/react-datepicker.css";
+import {
+  format,
+  isWithinInterval,
+  addMonths,
+  subMonths,
+  startOfMonth,
+  endOfMonth,
+  eachDayOfInterval,
+  isSameMonth,
+  isSameDay,
+} from "date-fns";
 import { useBookingDialogStore } from "@/store/zustand/bookingDialogStore";
 import { BookingModal } from "./BookingModal";
 
 interface ActivityBookingProps {
   activity: Activity;
 }
+
+// Custom Calendar Component
+const CustomCalendar = ({
+  selectedDate,
+  onDateChange,
+  isDateAvailable,
+}: {
+  selectedDate: Date | undefined;
+  onDateChange: (date: Date) => void;
+  isDateAvailable: (date: Date) => boolean;
+}) => {
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+
+  const nextMonth = () => {
+    setCurrentMonth(addMonths(currentMonth, 1));
+  };
+
+  const prevMonth = () => {
+    setCurrentMonth(subMonths(currentMonth, 1));
+  };
+
+  const monthStart = startOfMonth(currentMonth);
+  const monthEnd = endOfMonth(currentMonth);
+  const daysInMonth = eachDayOfInterval({ start: monthStart, end: monthEnd });
+
+  // Group days by week
+  const weeks: Date[][] = [];
+  let week: Date[] = [];
+
+  daysInMonth.forEach((day, index) => {
+    if (index % 7 === 0 && week.length > 0) {
+      weeks.push(week);
+      week = [];
+    }
+    week.push(day);
+  });
+
+  if (week.length > 0) {
+    weeks.push(week);
+  }
+
+  return (
+    <div className="w-full bg-white rounded-lg border border-gray-100 shadow-sm">
+      {/* Calendar Header */}
+      <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 w-full">
+        <button
+          onClick={prevMonth}
+          className="p-2 rounded-full hover:bg-primary/10 transition-colors"
+        >
+          <ChevronLeft className="w-5 h-5 text-primary" />
+        </button>
+        <span className="text-lg font-semibold text-primary">
+          {format(currentMonth, "MMMM yyyy")}
+        </span>
+        <button
+          onClick={nextMonth}
+          className="p-2 rounded-full hover:bg-primary/10 transition-colors"
+        >
+          <ChevronRight className="w-5 h-5 text-primary" />
+        </button>
+      </div>
+
+      {/* Week Days */}
+      <div className="grid grid-cols-7 text-gray-500 text-sm font-medium py-2 px-1">
+        {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
+          <div key={day} className="text-center py-2">
+            {day}
+          </div>
+        ))}
+      </div>
+
+      {/* Calendar Days */}
+      <div className="px-1 py-3 pb-2">
+        {weeks.map((week, weekIndex) => (
+          <div key={weekIndex} className="grid grid-cols-7">
+            {week.map((day, dayIndex) => {
+              const isAvailable = isDateAvailable(day) && day >= new Date();
+              const isSelected = selectedDate && isSameDay(day, selectedDate);
+              const isCurrentMonth = isSameMonth(day, currentMonth);
+
+              const baseClasses =
+                "mx-auto flex items-center justify-center rounded-full w-10 h-10  transition-all duration-200";
+
+              let dayClasses = baseClasses;
+              if (isSelected) {
+                dayClasses += " bg-primary text-primary-foreground shadow-md";
+              } else if (!isAvailable || !isCurrentMonth) {
+                dayClasses += " text-gray-300 cursor-not-allowed";
+              } else {
+                dayClasses +=
+                  " text-gray-700 hover:bg-primary/10 hover:text-primary";
+              }
+
+              return (
+                <button
+                  key={dayIndex}
+                  onClick={() =>
+                    isAvailable && isCurrentMonth && onDateChange(day)
+                  }
+                  disabled={!isAvailable || !isCurrentMonth}
+                  className={dayClasses}
+                >
+                  {format(day, "d")}
+                </button>
+              );
+            })}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export default function ActivityBooking({ activity }: ActivityBookingProps) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
@@ -85,40 +205,10 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
     setOpenDialog(true);
   };
 
-  const handleDateChange = (date: Date | null) => {
-    if (date) {
-      setSelectedDate(date);
-      setSelectedDepartureHour(undefined);
-    }
+  const handleDateChange = (date: Date) => {
+    setSelectedDate(date);
+    setSelectedDepartureHour(undefined);
   };
-
-  const renderCustomHeader = ({
-    date,
-    decreaseMonth,
-    increaseMonth,
-    prevMonthButtonDisabled,
-    nextMonthButtonDisabled,
-  }: any) => (
-    <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 w-full">
-      <button
-        onClick={decreaseMonth}
-        disabled={prevMonthButtonDisabled}
-        className="p-2 rounded-full hover:bg-primary/10 transition-colors disabled:opacity-30"
-      >
-        <ChevronLeft className="w-5 h-5 text-primary" />
-      </button>
-      <span className="text-lg font-semibold text-primary">
-        {format(date, "MMMM yyyy")}
-      </span>
-      <button
-        onClick={increaseMonth}
-        disabled={nextMonthButtonDisabled}
-        className="p-2 rounded-full hover:bg-primary/10 transition-colors disabled:opacity-30"
-      >
-        <ChevronRight className="w-5 h-5 text-primary" />
-      </button>
-    </div>
-  );
 
   return (
     <Card className="w-full">
@@ -165,62 +255,18 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
           </div>
         )}
 
-        {/* Date Selection */}
-        <div>
-          <div className="space-y-4">
-            <h3 className="font-semibold text-lg flex items-center gap-3 text-gray-800">
+        <div className="w-full mt-6 flex justify-center ">
+          <div className="w-full max-w-md p-5 bg-white rounded-xl shadow-md border border-gray-200">
+            <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
               <CalendarDays className="w-5 h-5 text-primary" />
               Select Your Date
             </h3>
-            <div className="border border-gray-200 rounded-lg p-4 bg-white w-full">
-              <DatePicker
-                selected={selectedDate}
-                onChange={handleDateChange}
-                filterDate={(date) =>
-                  isDateAvailable(date) && date >= new Date()
-                }
-                inline
-                renderCustomHeader={renderCustomHeader}
-                calendarClassName="w-full min-w-full bg-white"
-                dayClassName={(date) => {
-                  const base =
-                    "mx-auto flex items-center justify-center rounded-full w-10 h-10 transition-colors";
-                  if (date.getTime() === selectedDate?.getTime()) {
-                    return `${base} bg-primary text-primary-foreground shadow-md`;
-                  }
-                  if (date < new Date() || !isDateAvailable(date)) {
-                    return `${base} text-gray-400 cursor-not-allowed`;
-                  }
-                  return `${base} text-gray-700 hover:bg-primary/10 hover:text-primary`;
-                }}
-                weekDayClassName={() =>
-                  "text-gray-500 text-sm font-medium py-3"
-                }
-                formatWeekDay={(day) => day.substring(0, 3)}
-                wrapperClassName="w-full"
-              />
-            </div>
+            <CustomCalendar
+              selectedDate={selectedDate}
+              onDateChange={handleDateChange}
+              isDateAvailable={isDateAvailable}
+            />
           </div>
-
-          {selectedDate && (
-            <div className="mt-3 p-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">
-              <p className="text-blue-800 font-medium">
-                📅 {format(selectedDate, "EEEE, MMMM do, yyyy")}
-              </p>
-              <p className="text-blue-600 text-sm mt-1">
-                {isPrivateTour && activity.privateTourPrice ? (
-                  <>🏆 Private Tour: ${activity.privateTourPrice} total</>
-                ) : (
-                  <>
-                    💰 ${activity.adultPrice} per adult •
-                    {activity.isForChild &&
-                      `$ ${activity.childPrice} per
-                    child`}
-                  </>
-                )}
-              </p>
-            </div>
-          )}
         </div>
 
         {/* Departure Hours Selection */}
@@ -291,21 +337,22 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
               </div>
             </div>
           )}
+          {/* Guests & Price Section */}
           <div className="space-y-4">
             {/* Adults */}
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="flex items-center gap-2">
+            <div className="flex  sm:items-center justify-between gap-2">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                <div>
                   <p className="font-medium">Adults</p>
                   <p className="text-sm text-gray-500">(Age 14 - 99)</p>
+                  <p className="text-sm text-gray-500">
+                    {isPrivateTour
+                      ? "Included in private tour price"
+                      : `$${activity.adultPrice} per person`}
+                  </p>
                 </div>
-                <p className="text-sm text-gray-500">
-                  {isPrivateTour
-                    ? "Included in private tour price"
-                    : `$${activity.adultPrice} per person`}
-                </p>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
                 <Button
                   variant="outline"
                   size="sm"
@@ -326,79 +373,72 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
               </div>
             </div>
 
-            {/* Children - Only show if activity.isForChild is true */}
+            {/* Children */}
             {activity.isForChild && (
-              <>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <p className="font-medium">Children</p>
-                      <p className="text-sm text-gray-500">(Age 4 - 13)</p>
-                    </div>
-                    <p className="text-sm text-gray-500">
-                      {isPrivateTour
-                        ? "Included in private tour price"
-                        : `$${activity.childPrice} per child`}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setChildren(Math.max(0, children - 1))}
-                      disabled={children <= 0}
-                    >
-                      <Minus className="w-4 h-4" />
-                    </Button>
-                    <span className="w-8 text-center font-medium">
-                      {children}
-                    </span>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setChildren(children + 1)}
-                      disabled={isPrivateTour && totalGroupSize >= 8}
-                    >
-                      <Plus className="w-4 h-4" />
-                    </Button>
-                  </div>
+              <div className="flex   justify-between gap-2">
+                <div>
+                  <p className="font-medium">Children</p>
+                  <p className="text-sm text-gray-500">(Age 4 - 13)</p>
+                  <p className="text-sm text-gray-500">
+                    {isPrivateTour
+                      ? "Included in private tour price"
+                      : `$${activity.childPrice} per child`}
+                  </p>
                 </div>
-                {/* Infants */}
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <p className="font-medium">Infants</p>
-                      <p className="text-sm text-gray-500">(Age 0 - 3)</p>
-                    </div>
-                    <p className="text-sm text-gray-500">
-                      {isPrivateTour
-                        ? "Included in private tour price"
-                        : `$0 per Infant`}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setInfants(Math.max(0, children - 1))}
-                      disabled={infants <= 0}
-                    >
-                      <Minus className="w-4 h-4" />
-                    </Button>
-                    <span className="w-8 text-center font-medium">
-                      {infants}
-                    </span>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setInfants(infants + 1)}
-                    >
-                      <Plus className="w-4 h-4" />
-                    </Button>
-                  </div>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setChildren(Math.max(0, children - 1))}
+                    disabled={children <= 0}
+                  >
+                    <Minus className="w-4 h-4" />
+                  </Button>
+                  <span className="w-8 text-center font-medium">
+                    {children}
+                  </span>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setChildren(children + 1)}
+                    disabled={isPrivateTour && totalGroupSize >= 8}
+                  >
+                    <Plus className="w-4 h-4" />
+                  </Button>
                 </div>
-              </>
+              </div>
             )}
+
+            {/* Infants */}
+            <div className="flex justify-between gap-2">
+              <div>
+                <p className="font-medium">Infants</p>
+                <p className="text-sm text-gray-500">(Age 0 - 3)</p>
+                <p className="text-sm text-gray-500">
+                  {isPrivateTour
+                    ? "Included in private tour price"
+                    : `$0 per Infant`}
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setInfants(Math.max(0, infants - 1))}
+                  disabled={infants <= 0}
+                >
+                  <Minus className="w-4 h-4" />
+                </Button>
+                <span className="w-8 text-center font-medium">{infants}</span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setInfants(infants + 1)}
+                >
+                  <Plus className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
 

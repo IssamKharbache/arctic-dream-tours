@@ -20,8 +20,9 @@ const Footer = () => {
                 />
               </Link>
               <p className="text-gray-300 mb-4 leading-relaxed">
-                Your trusted partner for authentic Finnish experiences. Creating
-                unforgettable Arctic adventures since 2015.
+                Discover the true essence of Finland with our carefully curated
+                Arctic adventures, combining local culture, stunning nature, and
+                memorable experiences.
               </p>
               <div className="flex space-x-4">
                 <a

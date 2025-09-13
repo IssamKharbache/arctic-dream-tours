@@ -1,0 +1,66 @@
+{
+  "hero": {
+    "title": "Discover the Magic of Finnish Lapland",
+    "subtitle": "Your gateway to authentic Arctic adventures and unforgettable Northern experiences",
+    "button": "Start Your Adventure"
+  },
+  "about": {
+    "heading": "About Our Finnish Adventure Agency",
+    "paragraph1": "Founded in the heart of Finnish Lapland, we are passionate locals who have dedicated our lives to sharing the incredible beauty and culture of our homeland with visitors from around the world.",
+    "paragraph2": "Whether you're seeking the thrill of husky sledding, the serenity of a traditional sauna, or the wonder of sleeping under the Aurora Borealis, we craft personalized adventures that create memories to last a lifetime.",
+    "stats": {
+      "years": "Years Experience",
+      "travelers": "Happy Travelers",
+      "experiences": "Unique Experiences"
+    },
+    "location": "Rovaniemi, Finland"
+  },
+  "experiences": {
+    "heading": "Unique Lapland Experiences",
+    "subtitle": "Discover the authentic magic of Finnish Lapland through our carefully curated adventures",
+    "items": {
+      "northernLights": {
+        "title": "Northern Lights Tours",
+        "description": "Witness the magical Aurora Borealis in the pristine wilderness of Lapland with our expert guides."
+      },
+      "husky": {
+        "title": "Husky Sledding",
+        "description": "Experience the thrill of mushing through snow-covered forests with our friendly Siberian huskies."
+      },
+      "reindeer": {
+        "title": "Reindeer Encounters",
+        "description": "Meet the indigenous Sami people and learn about their traditional reindeer herding culture."
+      },
+      "iceHotels": {
+        "title": "Ice Hotels & Saunas",
+        "description": "Stay in unique ice accommodations and experience authentic Finnish sauna traditions."
+      }
+    }
+  },
+  "testimonials": {
+    "heading": "What Our Travelers Say",
+    "subtitle": "Real experiences from adventurers who discovered the magic of Lapland with us",
+    "items": {
+      "sarah": {
+        "name": "Sarah Johnson",
+        "country": "United States",
+        "text": "The Northern Lights tour was absolutely magical! Our guide was knowledgeable and the experience exceeded all expectations."
+      },
+      "marco": {
+        "name": "Marco Rossi",
+        "country": "Italy",
+        "text": "Husky sledding through the Finnish wilderness was the adventure of a lifetime. Highly recommend this agency!"
+      },
+      "emma": {
+        "name": "Emma Thompson",
+        "country": "United Kingdom",
+        "text": "From ice hotels to traditional saunas, every moment was perfectly organized. Thank you for an unforgettable trip!"
+      }
+    }
+  },
+  "cta": {
+    "heading": "Ready for Your Lapland Adventure?",
+    "subtitle": "Let us create an unforgettable Finnish experience tailored just for you",
+    "button": "Plan Your Journey"
+  }
+}

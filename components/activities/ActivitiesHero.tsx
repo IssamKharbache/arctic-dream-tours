@@ -4,7 +4,7 @@ import { MapPin, Calendar } from "lucide-react";
 
 export function ActivitiesHero() {
   return (
-    <section className="relative bg-gradient-to-br from-primary/10 via-background to-accent/5 py-16 ">
+    <section className="relative bg-gradient-to-br from-primary/10 via-background to-accent/5 py-16 bg-primary ">
       <div className="container mx-auto px-4 mt-24">
         <div className="text-center max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 text-balance">

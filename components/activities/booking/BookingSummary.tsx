@@ -86,11 +86,14 @@ const BookingSummary: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
         alert(`Booking failed: ${data.message || "Unknown error"}`);
         return null;
       }
+      setBookingData(null);
+      localStorage.removeItem("customerData");
+      localStorage.removeItem("bookingDetails");
+      setStep(0);
       if (type === "request") {
-        setStep(0);
         router.push(`/booking/request/success/${data.data.bookingRef}` as any);
       }
-      setStep(0);
+
       return data.data;
     } catch (error) {
       console.error(error);

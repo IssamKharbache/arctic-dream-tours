@@ -1,0 +1,66 @@
+{
+  "hero": {
+    "title": "Descubre la magia de Laponia finlandesa",
+    "subtitle": "Tu puerta de entrada a auténticas aventuras árticas y experiencias inolvidables en el Norte",
+    "button": "Comienza tu aventura"
+  },
+  "about": {
+    "heading": "Sobre nuestra agencia de aventuras en Finlandia",
+    "paragraph1": "Fundada en el corazón de Laponia finlandesa, somos locales apasionados que han dedicado sus vidas a compartir la increíble belleza y cultura de nuestra tierra con visitantes de todo el mundo.",
+    "paragraph2": "Ya sea que busques la emoción de los trineos de huskies, la serenidad de una sauna tradicional o la maravilla de dormir bajo la Aurora Boreal, creamos aventuras personalizadas que generan recuerdos para toda la vida.",
+    "stats": {
+      "years": "Años de experiencia",
+      "travelers": "Viajeros felices",
+      "experiences": "Experiencias únicas"
+    },
+    "location": "Rovaniemi, Finlandia"
+  },
+  "experiences": {
+    "heading": "Experiencias únicas en Laponia",
+    "subtitle": "Descubre la auténtica magia de Laponia finlandesa a través de nuestras aventuras cuidadosamente seleccionadas",
+    "items": {
+      "northernLights": {
+        "title": "Tours de Aurora Boreal",
+        "description": "Observa la mágica Aurora Boreal en la naturaleza virgen de Laponia con nuestros guías expertos."
+      },
+      "husky": {
+        "title": "Trineos con huskies",
+        "description": "Experimenta la emoción de recorrer bosques nevados con nuestros amigables huskies siberianos."
+      },
+      "reindeer": {
+        "title": "Encuentros con renos",
+        "description": "Conoce al pueblo indígena Sami y aprende sobre su cultura tradicional de cría de renos."
+      },
+      "iceHotels": {
+        "title": "Hoteles de hielo y saunas",
+        "description": "Alójate en alojamientos únicos de hielo y experimenta auténticas tradiciones finlandesas de sauna."
+      }
+    }
+  },
+  "testimonials": {
+    "heading": "Lo que dicen nuestros viajeros",
+    "subtitle": "Experiencias reales de aventureros que descubrieron la magia de Laponia con nosotros",
+    "items": {
+      "sarah": {
+        "name": "Sarah Johnson",
+        "country": "Estados Unidos",
+        "text": "¡El tour de la Aurora Boreal fue absolutamente mágico! Nuestro guía era muy conocedor y la experiencia superó todas las expectativas."
+      },
+      "marco": {
+        "name": "Marco Rossi",
+        "country": "Italia",
+        "text": "Recorrer la naturaleza finlandesa en trineo con huskies fue la aventura de mi vida. ¡Recomiendo encarecidamente esta agencia!"
+      },
+      "emma": {
+        "name": "Emma Thompson",
+        "country": "Reino Unido",
+        "text": "Desde hoteles de hielo hasta saunas tradicionales, cada momento estuvo perfectamente organizado. ¡Gracias por un viaje inolvidable!"
+      }
+    }
+  },
+  "cta": {
+    "heading": "¿Listo para tu aventura en Laponia?",
+    "subtitle": "Déjanos crear una experiencia finlandesa inolvidable hecha a tu medida",
+    "button": "Planifica tu viaje"
+  }
+}

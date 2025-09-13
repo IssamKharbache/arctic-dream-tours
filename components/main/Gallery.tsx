@@ -17,11 +17,14 @@ import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import { slides } from "@/utils/getGalleryImages";
 import { Download, Fullscreen, Zoom } from "yet-another-react-lightbox/plugins";
+import { useTranslations } from "next-intl";
 
 const Gallery = () => {
   const swiperRef = useRef<any>(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
+
+  const t = useTranslations("gallery");
 
   useEffect(() => {
     if (swiperRef.current) {
@@ -93,11 +96,10 @@ const Gallery = () => {
             {/* Top - Title and Description */}
             <div className="w-full text-center">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                Our Gallery
+                {t("title")}
               </h2>
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed max-w-3xl mx-auto">
-                Discover the breathtaking beauty of Finland through our curated
-                collection of adventure moments captured by our expert guides.
+                {t("description")}
               </p>
             </div>
 
@@ -122,7 +124,7 @@ const Gallery = () => {
                             />
                             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
                               <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white text-lg font-medium bg-transparent bg-opacity-50 px-3 py-1 rounded border">
-                                View Fullscreen
+                                {t("viewFullscreen")}
                               </div>
                             </div>
                           </div>

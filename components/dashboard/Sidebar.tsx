@@ -7,6 +7,7 @@ import {
   TrendingUp,
   Waves,
   Mountain,
+  Mail,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -52,6 +53,16 @@ const navigationItems = [
         title: "Customers",
         url: "/dashboard/customers",
         icon: Users,
+      },
+    ],
+  },
+  {
+    title: "Informations",
+    items: [
+      {
+        title: "All Messages",
+        url: "/dashboard/messages",
+        icon: Mail,
       },
     ],
   },

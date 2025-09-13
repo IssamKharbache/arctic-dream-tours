@@ -77,16 +77,6 @@ export default function PremiumServices() {
 
   return (
     <section className="relative py-24 overflow-hidden">
-      {/* Background Image with Overlay */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `url('/finnish-winter-landscape-aurora-borealis-snow-fore.jpg')`,
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/90 to-background/95" />
-      </div>
-
       <div className="relative container mx-auto px-4">
         {/* Section Title */}
         <motion.div

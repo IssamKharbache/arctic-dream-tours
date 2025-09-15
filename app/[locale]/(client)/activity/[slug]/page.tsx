@@ -2,8 +2,9 @@ export const dynamic = "force-dynamic";
 import ActivityBooking from "@/components/activities/booking/ActivityBooking";
 import { LiquidDifficultyIndicator } from "@/components/activities/LiquidDifficultyIndicator";
 import RichTextViewer from "@/components/activities/RichTextViewer";
+import GalleryDialog from "@/components/GalleryDialog";
 import { getData } from "@/lib/getData";
-import { Activity } from "@/types/activity";
+import type { Activity } from "@/types/activity";
 import { baseUrl } from "@/utils/baseUrl";
 import { Clock, MapPin } from "lucide-react";
 import Image from "next/image";
@@ -26,17 +27,25 @@ const page = async ({ params }: PageProps) => {
           {/* Activity Details */}
           <div className="space-y-6">
             <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-              <Image
-                width={500}
-                height={500}
-                src={activity.imageUrl || "/placeholder.svg"}
-                alt={activity.title}
-                className="w-full h-64 object-cover"
-              />
+              <div className="relative">
+                <Image
+                  width={500}
+                  height={500}
+                  src={activity.imageUrl || "/placeholder.svg"}
+                  alt={activity.title}
+                  className="w-full h-64 object-cover"
+                />
+                <div className="absolute top-4 right-4">
+                  <GalleryDialog />
+                </div>
+              </div>
+
               <div className="p-6">
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                  {activity.title}
-                </h1>
+                <div className="flex items-start justify-between mb-2">
+                  <h1 className="text-3xl font-bold text-gray-900">
+                    {activity.title}
+                  </h1>
+                </div>
                 <p className="text-gray-600 mb-4">
                   {activity.shortDescription}
                 </p>

@@ -147,7 +147,9 @@ const NavBar = () => {
                 {t(menu.key)}
               </Link>
             ))}
-            <Button className="w-full">{t("bookNow")}</Button>
+            <Link href="/activities">
+              <Button className="w-full">{t("bookNow")}</Button>
+            </Link>
             {session ? (
               <AuthDropDownMenu />
             ) : (

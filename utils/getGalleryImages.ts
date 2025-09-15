@@ -84,4 +84,46 @@ export const slides = [
     alt: "Gallery image 14",
     title: "Gallery Image 14",
   },
+  {
+    id: 15,
+    src: "/gallery/15.jpeg",
+    alt: "Gallery image 15",
+    title: "Gallery Image 15",
+  },
+  {
+    id: 16,
+    src: "/gallery/16.jpeg",
+    alt: "Gallery image 16",
+    title: "Gallery Image 16",
+  },
+  {
+    id: 17,
+    src: "/gallery/17.jpeg",
+    alt: "Gallery image 17",
+    title: "Gallery Image 17",
+  },
+  {
+    id: 18,
+    src: "/gallery/18.jpeg",
+    alt: "Gallery image 18",
+    title: "Gallery Image 18",
+  },
+  {
+    id: 19,
+    src: "/gallery/19.jpeg",
+    alt: "Gallery image 19",
+    title: "Gallery Image 19",
+  },
+  {
+    id: 20,
+    src: "/gallery/20.jpeg",
+    alt: "Gallery image 20",
+    title: "Gallery Image 20",
+  },
+  {
+    id: 21,
+    src: "/gallery/21.jpeg",
+    alt: "Gallery image 21",
+    title: "Gallery Image 21",
+  },
 ];

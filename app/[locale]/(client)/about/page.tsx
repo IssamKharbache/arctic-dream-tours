@@ -100,7 +100,7 @@ export default function AboutPage() {
             {t("hero.subtitle")}
           </motion.p>
           <motion.div {...fadeInUp}>
-            <Link href="/contact">
+            <Link href="/activities">
               <Button
                 size="lg"
                 className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg font-semibold rounded-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"

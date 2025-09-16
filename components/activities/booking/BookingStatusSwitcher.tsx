@@ -16,6 +16,12 @@ const statusConfig = {
     icon: Clock,
     label: "Pending",
   },
+  [Booking_Status.CONFIRMED]: {
+    color:
+      "bg-blue-100 text-blue-800 border-blue-300 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700",
+    icon: Check,
+    label: "Confirmed",
+  },
   [Booking_Status.PAID]: {
     color:
       "bg-green-100 text-green-800 border-green-300 dark:bg-green-900/30 dark:text-green-300 dark:border-green-700",

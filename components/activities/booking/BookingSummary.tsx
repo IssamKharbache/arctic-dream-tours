@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, Clock, MapPin, Users } from "lucide-react";
+import { Calendar, Clock, Euro, MapPin, Users } from "lucide-react";
 import Image from "next/image";
 import { isoToNormalDate } from "@/utils/isoToNormalDate";
 import { baseUrl } from "@/utils/baseUrl";
@@ -37,6 +37,8 @@ const BookingSummary: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
   const [bookingData, setBookingData] = useState<BookingSummaryData | null>(
     null
   );
+  console.log(bookingData);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { setStep } = useBookingDialogStore();
@@ -157,6 +159,16 @@ const BookingSummary: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
                   <MapPin className="w-4 h-4" />
                   <span className="font-medium">Location</span>
                   <span>{bookingData.location}</span>
+                </div>
+              )}
+
+              {bookingData.totalPrice && (
+                <div className="flex items-center gap-2">
+                  <Euro className="w-4 h-4" />
+                  <span className="font-medium">Total Price</span>
+                  <span className="font-semibold">
+                    {bookingData.totalPrice}€
+                  </span>
                 </div>
               )}
             </div>

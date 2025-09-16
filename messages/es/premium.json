@@ -1,46 +1,66 @@
 {
-  "title": "Nuestros Servicios Premium",
-  "subtitle": "Desde hoteles de lujo hasta mágicos alojamientos de hielo, te ayudamos a descubrir estancias extraordinarias que transformarán tu aventura invernal en Finlandia en una experiencia inolvidable.",
-  "button": "Contáctanos",
+  "title": "I Nostri Servizi Premium",
+  "subtitle": "Dagli hotel di lusso agli alloggi di ghiaccio magici e ai trasporti premium, forniamo servizi eccezionali che trasformeranno la tua avventura invernale finlandese in un'esperienza indimenticabile.",
+  "button": "Contattaci",
   "accommodations": {
     "luxuryHotels": {
-      "title": "Hoteles de Lujo",
-      "description": "Presentamos los mejores hoteles de lujo de Finlandia con servicios premium y atención excepcional para tu estancia perfecta.",
+      "title": "Hotel di Lusso",
+      "description": "Mostriamo i migliori hotel di lusso della Finlandia con servizi premium e servizio eccezionale per il tuo soggiorno perfetto.",
       "features": [
-        "Servicio 5 Estrellas",
-        "Spa & Bienestar",
-        "Alta Cocina",
-        "Conserjería"
+        "Servizio a 5 Stelle",
+        "Spa e Benessere",
+        "Ristorazione di Alta Cucina",
+        "Concierge"
       ]
     },
     "privateApartments": {
-      "title": "Apartamentos Privados",
-      "description": "Ofrecemos los mejores apartamentos privados con todas las comodidades en el corazón de las ciudades finlandesas.",
+      "title": "Appartamenti Privati",
+      "description": "Presentiamo i migliori appartamenti privati con tutti i comfort nel cuore delle città finlandesi.",
       "features": [
-        "Cocina Completa",
-        "Vistas a la Ciudad",
-        "Diseño Moderno",
-        "Soporte 24/7"
+        "Cucina Completa",
+        "Vista sulla Città",
+        "Design Moderno",
+        "Supporto 24/7"
       ]
     },
     "villas": {
-      "title": "Villas",
-      "description": "Presentamos villas exclusivas situadas en la naturaleza virgen de Finlandia con impresionantes vistas a la montaña.",
+      "title": "Ville",
+      "description": "Presentiamo ville esclusive immerse nella natura incontaminata della Finlandia con viste montane mozzafiato.",
       "features": [
-        "Sauna Privada",
-        "Chimenea",
-        "Vistas a la Montaña",
-        "Acceso a Esquí"
+        "Sauna Privata",
+        "Caminetto",
+        "Viste Montane",
+        "Accesso allo Sci"
       ]
     },
     "iceHotels": {
-      "title": "Hoteles de Hielo",
-      "description": "Ofrecemos acceso a mágicos hoteles de hielo donde podrás dormir bajo las auroras boreales – una experiencia ártica única.",
+      "title": "Hotel di Ghiaccio",
+      "description": "Offriamo accesso a magici hotel di ghiaccio dove puoi dormire sotto l'aurora boreale - un'esperienza artica veramente unica.",
       "features": [
-        "Esculturas de Hielo",
-        "Auroras Boreales",
-        "Sacos de Dormir Térmicos",
-        "Bar de Hielo"
+        "Sculture di Ghiaccio",
+        "Aurora Boreale",
+        "Sacchi a Pelo Termici",
+        "Bar di Ghiaccio"
+      ]
+    },
+    "airportTransfer": {
+      "title": "Trasferimenti Aeroportuali",
+      "description": "Trasferimenti privati di lusso dall'aeroporto al tuo alloggio con autisti professionali.",
+      "features": [
+        "Servizio Meet & Greet",
+        "Veicoli di Lusso",
+        "Monitoraggio Voli",
+        "Disponibilità 24/7"
+      ]
+    },
+    "cityTours": {
+      "title": "Tour Privati della Città",
+      "description": "Tour privati esclusivi all'interno delle città e tra le destinazioni con guide professionali.",
+      "features": [
+        "Itinerari Personalizzati",
+        "Autisti Professionali",
+        "Guide Multilingue",
+        "Servizio Porta a Porta"
       ]
     }
   }

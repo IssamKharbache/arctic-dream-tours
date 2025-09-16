@@ -21,9 +21,9 @@ const PrintableInvoice = forwardRef<HTMLDivElement, PrintableInvoiceProps>(
       data,
       companyInfo = {
         name: "Arctic dream tours",
-        address: "koronakatu 1 c espoo ,Helsinki, Finland",
-        city: "lampelankatu 3 d ,Rovaniemi, Finland",
-        phone: "+34 952 123 456",
+        address: "Piispanristi2 , 02200 espoo , Helsinki, Finland",
+        city: "Lampelankatu 28c3 , Rovaniemi , finland",
+        phone: "+358 4041 21843",
         email: "arcticdreamtours@gmail.com",
         website: "www.arcticdreamtours.com",
       },

@@ -1,21 +1,21 @@
 {
   "title": "Unsere Premium-Dienstleistungen",
-  "subtitle": "Von Luxushotels bis zu magischen Eishotels – wir helfen Ihnen, außergewöhnliche Aufenthalte zu entdecken, die Ihr finnisches Winterabenteuer unvergesslich machen.",
+  "subtitle": "Von Luxushotels über magische Eisunterkünfte bis hin zu Premium-Transport - wir bieten außergewöhnliche Dienstleistungen, die Ihr finnisches Winterabenteuer in ein unvergessliches Erlebnis verwandeln.",
   "button": "Kontaktieren Sie uns",
   "accommodations": {
     "luxuryHotels": {
       "title": "Luxushotels",
-      "description": "Wir präsentieren Finnlands feinste Luxushotels mit hochwertigen Annehmlichkeiten und außergewöhnlichem Service für Ihren perfekten Aufenthalt.",
+      "description": "Wir präsentieren Finnlands feinste Luxushotels mit Premium-Amenities und außergewöhnlichem Service für Ihren perfekten Aufenthalt.",
       "features": [
         "5-Sterne-Service",
         "Spa & Wellness",
         "Feine Küche",
-        "Concierge"
+        "Concierge-Service"
       ]
     },
     "privateApartments": {
       "title": "Private Apartments",
-      "description": "Wir bieten die besten privaten Apartments mit kompletter Ausstattung im Herzen der finnischen Städte.",
+      "description": "Wir bieten die besten privaten Apartments mit voller Ausstattung im Herzen finnischer Städte.",
       "features": [
         "Voll ausgestattete Küche",
         "Stadtblick",
@@ -25,17 +25,37 @@
     },
     "villas": {
       "title": "Villen",
-      "description": "Wir präsentieren exklusive Villen in Finnlands unberührter Natur mit atemberaubendem Bergblick.",
-      "features": ["Privatsauna", "Kamin", "Bergblick", "Ski-Zugang"]
+      "description": "Wir präsentieren exklusive Villen in Finnlands unberührter Wildnis mit atemberaubenden Bergaussichten.",
+      "features": ["Private Sauna", "Kamin", "Bergblick", "Skizugang"]
     },
     "iceHotels": {
       "title": "Eishotels",
-      "description": "Wir bieten Zugang zu magischen Eishotels, in denen Sie unter den Nordlichtern schlafen können – ein einzigartiges arktisches Erlebnis.",
+      "description": "Wir bieten Zugang zu magischen Eishotels, wo Sie unter dem Nordlicht schlafen können - ein wirklich einzigartiges arktisches Erlebnis.",
       "features": [
         "Eisskulpturen",
         "Nordlichter",
-        "Thermoschlafsäcke",
+        "Thermische Schlafsäcke",
         "Eisbar"
+      ]
+    },
+    "airportTransfer": {
+      "title": "Flughafentransfers",
+      "description": "Private Luxustransfers vom Flughafen zu Ihrer Unterkunft mit professionellen Fahrern.",
+      "features": [
+        "Meet & Greet Service",
+        "Luxusfahrzeuge",
+        "Flugüberwachung",
+        "24/7 Verfügbarkeit"
+      ]
+    },
+    "cityTours": {
+      "title": "Private Stadtrundfahrten",
+      "description": "Exklusive private Touren innerhalb von Städten und zwischen Zielen mit professionellen Guides.",
+      "features": [
+        "Maßgeschneiderte Routen",
+        "Professionelle Fahrer",
+        "Mehrsprachige Guides",
+        "Tür-zu-Tür-Service"
       ]
     }
   }

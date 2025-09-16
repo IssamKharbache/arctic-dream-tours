@@ -216,7 +216,7 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
         <CardTitle className="flex items-center justify-between">
           <span>Book Your Experience</span>
           <Badge variant="secondary" className="text-lg font-bold">
-            From $
+            From €
             {isPrivateTour && activity.privateTourPrice
               ? activity.privateTourPrice
               : activity.adultPrice}
@@ -348,7 +348,7 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                   <p className="text-sm text-gray-500">
                     {isPrivateTour
                       ? "Included in private tour price"
-                      : `$${activity.adultPrice} per person`}
+                      : `€${activity.adultPrice} per person`}
                   </p>
                 </div>
               </div>
@@ -382,7 +382,7 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                   <p className="text-sm text-gray-500">
                     {isPrivateTour
                       ? "Included in private tour price"
-                      : `$${activity.childPrice} per child`}
+                      : `€${activity.childPrice} per child`}
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
@@ -417,7 +417,7 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                 <p className="text-sm text-gray-500">
                   {isPrivateTour
                     ? "Included in private tour price"
-                    : `$0 per Infant`}
+                    : `€0 per Infant`}
                 </p>
               </div>
               <div className="flex items-center gap-2">

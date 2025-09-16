@@ -1,6 +1,6 @@
 {
   "title": "Our Premium Services",
-  "subtitle": "From luxury hotels to magical ice accommodations, we help you discover and connect with extraordinary stays that will transform your Finnish winter adventure into an unforgettable experience.",
+  "subtitle": "From luxury hotels to magical ice accommodations and premium transportation, we provide exceptional services that will transform your Finnish winter adventure into an unforgettable experience.",
   "button": "Contact Us",
   "accommodations": {
     "luxuryHotels": {
@@ -36,6 +36,26 @@
         "Northern Lights",
         "Thermal Sleeping Bags",
         "Ice Bar"
+      ]
+    },
+    "airportTransfer": {
+      "title": "Airport Transfers",
+      "description": "Private luxury transfers from the airport to your accommodation with professional drivers.",
+      "features": [
+        "Meet & Greet Service",
+        "Luxury Vehicles",
+        "Flight Monitoring",
+        "24/7 Availability"
+      ]
+    },
+    "cityTours": {
+      "title": "Private City Tours",
+      "description": "Exclusive private tours within cities and between destinations with professional guides.",
+      "features": [
+        "Custom Itineraries",
+        "Professional Drivers",
+        "Multilingual Guides",
+        "Door-to-Door Service"
       ]
     }
   }

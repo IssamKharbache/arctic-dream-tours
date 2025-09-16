@@ -1,46 +1,66 @@
 {
   "title": "I Nostri Servizi Premium",
-  "subtitle": "Dagli hotel di lusso agli alloggi di ghiaccio magici, ti aiutiamo a scoprire soggiorni straordinari che trasformeranno la tua avventura invernale in Finlandia in un’esperienza indimenticabile.",
+  "subtitle": "Dagli hotel di lusso agli alloggi di ghiaccio magici e ai trasporti premium, forniamo servizi eccezionali che trasformeranno la tua avventura invernale finlandese in un'esperienza indimenticabile.",
   "button": "Contattaci",
   "accommodations": {
     "luxuryHotels": {
       "title": "Hotel di Lusso",
-      "description": "Presentiamo i migliori hotel di lusso in Finlandia con servizi esclusivi e un’assistenza eccezionale per il tuo soggiorno perfetto.",
+      "description": "Mostriamo i migliori hotel di lusso della Finlandia con servizi premium e servizio eccezionale per il tuo soggiorno perfetto.",
       "features": [
         "Servizio a 5 Stelle",
-        "Spa & Benessere",
-        "Alta Cucina",
+        "Spa e Benessere",
+        "Ristorazione di Alta Cucina",
         "Concierge"
       ]
     },
     "privateApartments": {
       "title": "Appartamenti Privati",
-      "description": "Proponiamo i migliori appartamenti privati con tutti i comfort nel cuore delle città finlandesi.",
+      "description": "Presentiamo i migliori appartamenti privati con tutti i comfort nel cuore delle città finlandesi.",
       "features": [
         "Cucina Completa",
-        "Vista Città",
+        "Vista sulla Città",
         "Design Moderno",
         "Supporto 24/7"
       ]
     },
     "villas": {
       "title": "Ville",
-      "description": "Presentiamo ville esclusive immerse nella natura incontaminata della Finlandia con viste mozzafiato sulle montagne.",
+      "description": "Presentiamo ville esclusive immerse nella natura incontaminata della Finlandia con viste montane mozzafiato.",
       "features": [
         "Sauna Privata",
         "Caminetto",
-        "Vista Montagna",
-        "Accesso Sci"
+        "Viste Montane",
+        "Accesso allo Sci"
       ]
     },
     "iceHotels": {
       "title": "Hotel di Ghiaccio",
-      "description": "Offriamo l’accesso a magici hotel di ghiaccio dove potrai dormire sotto l’aurora boreale – un’esperienza artica unica.",
+      "description": "Offriamo accesso a magici hotel di ghiaccio dove puoi dormire sotto l'aurora boreale - un'esperienza artica veramente unica.",
       "features": [
         "Sculture di Ghiaccio",
         "Aurora Boreale",
-        "Sacco a Pelo Termico",
+        "Sacchi a Pelo Termici",
         "Bar di Ghiaccio"
+      ]
+    },
+    "airportTransfer": {
+      "title": "Trasferimenti Aeroportuali",
+      "description": "Trasferimenti privati di lusso dall'aeroporto al tuo alloggio con autisti professionali.",
+      "features": [
+        "Servizio Meet & Greet",
+        "Veicoli di Lusso",
+        "Monitoraggio Voli",
+        "Disponibilità 24/7"
+      ]
+    },
+    "cityTours": {
+      "title": "Tour Privati della Città",
+      "description": "Tour privati esclusivi all'interno delle città e tra le destinazioni con guide professionali.",
+      "features": [
+        "Itinerari Personalizzati",
+        "Autisti Professionali",
+        "Guide Multilingue",
+        "Servizio Porta a Porta"
       ]
     }
   }

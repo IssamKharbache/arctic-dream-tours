@@ -132,8 +132,7 @@ const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
           accentColor: "text-blue-600",
           icon: <CheckCircle className="h-8 w-8" />,
           title: "Booking Confirmed!",
-          message:
-            "Your booking has been confirmed. Please proceed with payment.",
+          message: "Your booking has been confirmed.",
         };
       case "CANCELLED":
         return {
@@ -303,7 +302,7 @@ const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
         </div>
 
         {/* Booking Card */}
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div className={`bg-white rounded-xl shadow-lg overflow-hidden`}>
           {/* Card Header */}
           <div className={`${statusStyles.headerBg} px-6 py-4`}>
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center">

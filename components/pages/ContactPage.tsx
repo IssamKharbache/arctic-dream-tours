@@ -23,17 +23,13 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 
-const contactFormSchema = z.object({
-  fullName: z.string().min(2, "contact.validation.fullNameMin"),
-  email: z.string().email("contact.validation.emailInvalid"),
-  phoneNumber: z.string().optional(),
-  message: z.string().min(10, "contact.validation.messageMin"),
-  privacyPolicy: z
-    .boolean()
-    .refine((val) => val === true, "contact.validation.privacyPolicyRequired"),
-});
-
-type ContactFormData = z.infer<typeof contactFormSchema>;
+type ContactFormData = {
+  fullName: string;
+  email: string;
+  phoneNumber?: string;
+  message: string;
+  privacyPolicy: boolean;
+};
 
 const submitContactForm = async (data: ContactFormData) => {
   const response = await fetch(`${baseUrl}/api/emails/create`, {
@@ -51,6 +47,16 @@ const submitContactForm = async (data: ContactFormData) => {
 
 const ContactPage = () => {
   const t = useTranslations("contact");
+
+  const contactFormSchema = z.object({
+    fullName: z.string().min(2, t("validation.fullNameMin")),
+    email: z.string().email(t("validation.emailInvalid")),
+    phoneNumber: z.string().optional(),
+    message: z.string().min(10, t("validation.messageMin")),
+    privacyPolicy: z
+      .boolean()
+      .refine((val) => val === true, t("validation.privacyPolicyRequired")),
+  });
 
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),

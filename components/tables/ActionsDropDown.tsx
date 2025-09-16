@@ -43,7 +43,7 @@ const ActionsDropDown = ({ deleteEndpoint, id, name }: TableActionsProps) => {
                     </DropdownMenuItem>
                 )}
                 <DropdownMenuSeparator />
-                <button className="w-full cursor-pointer">
+                {/* <button className="w-full cursor-pointer">
                     <DropdownMenuItem
                         onClick={() => openDialog(id)}
                         className="flex items-center gap-2 py-4 px-4"
@@ -51,7 +51,7 @@ const ActionsDropDown = ({ deleteEndpoint, id, name }: TableActionsProps) => {
                         <UserPen />
                         <span>Edit</span>
                     </DropdownMenuItem>
-                </button>
+                </button> */}
             </DropdownMenuContent>
         </DropdownMenu>
     );

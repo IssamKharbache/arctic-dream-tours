@@ -82,11 +82,13 @@ const Footer = () => {
               <div className="space-y-3 text-gray-300">
                 <div className="flex items-center">
                   <MapPin className="h-5 w-5 mr-2" />
-                  <span>Rovaniemi, Finland</span>
+                  <span>Lampelankatu 24 c 3 , Rovaniemi Finland</span>
                 </div>
                 <div className="flex items-center">
                   <MapPin className="h-5 w-5 mr-2" />
-                  <span>Helsinki, Finland</span>
+                  <span>
+                    Piispanristi 2 a5 espoo , Helsinki ,02200 Finland.
+                  </span>
                 </div>
                 <div className="flex items-center">
                   <Phone className="h-5 w-5 mr-2" />

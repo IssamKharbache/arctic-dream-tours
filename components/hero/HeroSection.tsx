@@ -25,7 +25,7 @@ export default function HeroSection() {
     {
       title: t("slides.2.title"),
       description: t("slides.2.description"),
-      imageUrl: "/hero/hero3.jpg",
+      imageUrl: "/hero/hero3.jpeg",
     },
   ];
 

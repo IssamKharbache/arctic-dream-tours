@@ -35,7 +35,7 @@ export default function HeroSection() {
     const interval = setInterval(() => {
       setDirection(1);
       setCurrent((prev) => (prev + 1) % heroSlides.length);
-    }, 6000); // Keep the 6-second interval
+    }, 12000); // Keep the 6-second interval
 
     return () => clearInterval(interval);
   }, [heroSlides.length, isAnimating]);
@@ -210,7 +210,7 @@ export default function HeroSection() {
             key={current}
             initial={{ width: 0 }}
             animate={{ width: "100%" }}
-            transition={{ duration: 5.5, ease: "linear" }}
+            transition={{ duration: 12, ease: "linear" }}
             className="h-full bg-white/70"
           />
         </div>

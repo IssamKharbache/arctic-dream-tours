@@ -17,9 +17,7 @@ import { FaWhatsapp } from "react-icons/fa";
 const WHATSAPP_NUMBER = "+358404121843";
 
 const predefinedQuestions = [
-  "I need help with your services",
-  "What are your pricing options?",
-  "How can I get started?",
+  "I need help with the booking",
   "I have a technical question",
   "I want to ask about an activity",
 ];

@@ -4,23 +4,25 @@ import SignupDialog from "@/components/auth/dialogs/SignupDialog";
 import Footer from "@/components/footer/Footer";
 import LocaleSwitcher from "@/components/navigation/LocaleSwitcher";
 import NavBar from "@/components/navigation/NavBar";
+import WhatsAppWidget from "@/components/WhatsAppWidget";
 
 export default function ClientLayout({
-    children,
+  children,
 }: Readonly<{
-    children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-    return (
-        <div>
-            <NavBar />
-            <AuthModalTrigger />
-            <SignupDialog />
-            <SignInDialog />
-            {children}
-            <div className="fixed bottom-4 right-4 z-50">
-                <LocaleSwitcher />
-            </div>
-            <Footer />
-        </div>
-    );
+  return (
+    <div>
+      <NavBar />
+      <AuthModalTrigger />
+      <SignupDialog />
+      <SignInDialog />
+      {children}
+      <div className="fixed bottom-4 right-4 z-50">
+        <LocaleSwitcher />
+      </div>
+      <WhatsAppWidget />
+      <Footer />
+    </div>
+  );
 }

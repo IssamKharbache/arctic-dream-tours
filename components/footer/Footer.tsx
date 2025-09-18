@@ -32,7 +32,7 @@ const Footer = () => {
                 Arctic adventures, combining local culture, stunning nature, and
                 memorable experiences.
               </p>
-              <div className="flex space-x-4 mb-6">
+              {/* <div className="flex space-x-4 mb-6">
                 <a
                   href="#"
                   className="text-gray-300 hover:text-white transition-colors"
@@ -51,7 +51,7 @@ const Footer = () => {
                 >
                   twitter
                 </a>
-              </div>
+              </div> */}
               <div className="mt-6 pt-6 border-t border-gray-700">
                 <div className="flex items-center mb-3">
                   <Shield className="h-5 w-5 text-green-400 mr-2" />

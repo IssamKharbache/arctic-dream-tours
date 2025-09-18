@@ -234,7 +234,7 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                     Private Tour Experience
                   </h3>
                   <p className="text-sm text-amber-700">
-                    Exclusive private tour for your group - $
+                    Exclusive private tour for your group - €
                     {activity.privateTourPrice} total
                   </p>
                 </div>

@@ -21,7 +21,7 @@ interface VerificationEmailProps {
 export const VerificationEmail = ({
   code,
   userEmail,
-  companyName = "Your Company",
+  companyName = "Arctic Dream tours",
   expirationTime = "10 minutes",
 }: VerificationEmailProps) => (
   <Html>
@@ -59,13 +59,13 @@ export const VerificationEmail = ({
 
           <Text style={footerText}>
             Need help? Contact our support team at{" "}
-            <Link href="mailto:support@yourcompany.com" style={link}>
-              support@yourcompany.com
+            <Link href="mailto:arcticdreamtours@gmail.com" style={link}>
+              arcticdreamtours@gmail.com
             </Link>
           </Text>
 
           <Text style={footerText}>
-            © 2024 {companyName}. All rights reserved.
+            © {new Date().getFullYear()} {companyName}. All rights reserved.
           </Text>
         </Section>
       </Container>

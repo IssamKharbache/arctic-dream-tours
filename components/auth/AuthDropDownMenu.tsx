@@ -12,8 +12,8 @@ import { MenuIcon, User2 } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "../ui/button";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
-
+import { Link } from "@/i18n/navigation";
+import NextLink from "next/link";
 const AuthDropDownMenu = () => {
   const { data: session } = useSession();
   const t = useTranslations("Navbar");
@@ -36,20 +36,27 @@ const AuthDropDownMenu = () => {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        {/* <DropdownMenuItem className="cursor-pointer">
-                    {t("account")}
-                </DropdownMenuItem> */}
+        {session ? (
+          <>
+            <Link href={`/user/${session?.user.id}/account` as any}>
+              <DropdownMenuItem className="cursor-pointer">
+                {t("account")}
+              </DropdownMenuItem>
+            </Link>
 
-        {/* <DropdownMenuItem className="cursor-pointer">
-          {t("bookings")}
-        </DropdownMenuItem> */}
-
+            <Link href={`/user/${session?.user.id}/bookings` as any}>
+              <DropdownMenuItem className="cursor-pointer">
+                {t("bookings")}
+              </DropdownMenuItem>
+            </Link>
+          </>
+        ) : null}
         {session?.user.role === "ADMIN" && (
-          <Link locale="false" href="/dashboard">
+          <NextLink locale="false" href="/dashboard">
             <DropdownMenuItem className="cursor-pointer">
               {t("dashboard")}
             </DropdownMenuItem>
-          </Link>
+          </NextLink>
         )}
 
         <DropdownMenuSeparator />

@@ -40,9 +40,9 @@ const AuthDropDownMenu = () => {
                     {t("account")}
                 </DropdownMenuItem> */}
 
-        <DropdownMenuItem className="cursor-pointer">
+        {/* <DropdownMenuItem className="cursor-pointer">
           {t("bookings")}
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
 
         {session?.user.role === "ADMIN" && (
           <Link locale="false" href="/dashboard">

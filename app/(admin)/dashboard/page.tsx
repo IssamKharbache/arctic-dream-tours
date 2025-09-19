@@ -210,7 +210,7 @@ const DashboardHomePage = () => {
                       {booking.firstName} {booking.lastName}
                     </td>
                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
-                      ${booking.totalPrice.toFixed(2)}
+                      €{booking.totalPrice.toFixed(2)}
                     </td>
                     <td className="px-4 py-4 whitespace-nowrap">
                       <span

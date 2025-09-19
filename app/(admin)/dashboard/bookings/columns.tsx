@@ -48,7 +48,7 @@ export const columns: ColumnDef<BookingWithActivity>[] = [
   {
     accessorKey: "totalPrice",
     header: "Total Price",
-    cell: ({ row }) => `$${row.original.totalPrice.toFixed(2)}`,
+    cell: ({ row }) => `€${row.original.totalPrice.toFixed(2)}`,
   },
   {
     accessorKey: "participants",

@@ -8,6 +8,7 @@ import {
   Waves,
   Mountain,
   Mail,
+  FilePenIcon,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -63,6 +64,11 @@ const navigationItems = [
         title: "All Messages",
         url: "/dashboard/messages",
         icon: Mail,
+      },
+      {
+        title: "All Blogs",
+        url: "/dashboard/blogs",
+        icon: FilePenIcon,
       },
     ],
   },

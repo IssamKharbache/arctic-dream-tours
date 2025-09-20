@@ -75,6 +75,16 @@ export const routing = defineRouting({
       it: "/attivita",
       es: "/actividades",
     },
+    "/blogs": {
+      en: "/blogs",
+      fr: "/blogs",
+      de: "/blogs",
+      ar: "/blogs",
+      zh: "/blogs",
+      ja: "/blogs",
+      it: "/blogs",
+      es: "/blogs",
+    },
     "/": {
       en: "/",
       fr: "/",

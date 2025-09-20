@@ -26,12 +26,16 @@ import {
   Calendar,
   DollarSign,
   Users,
+  Eye,
+  MapPin,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { BookingWithActivity } from "@/types/activityWithBooking";
 import { format } from "date-fns";
+import { FaEuroSign } from "react-icons/fa";
+import BookingDetailsDialog from "@/components/activities/booking/BookingDetailsDialog";
 
 interface DataTableProps<TValue> {
   columns: ColumnDef<BookingWithActivity, TValue>[];
@@ -188,77 +192,182 @@ export function DataTable<TValue>({
             <Loader2 className="animate-spin h-6 w-6" />
           </div>
         ) : table.getRowModel().rows?.length ? (
-          table.getRowModel().rows.map((row) => (
-            <div
-              key={row.original.id}
-              className="rounded-lg border border-border/50 bg-card p-4 shadow-sm"
-            >
-              <div className="flex justify-between items-start mb-3">
-                <div>
-                  <h3 className="font-semibold text-lg">
-                    {row.original.activity.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    Ref: {row.original.bookingRef}
-                  </p>
-                </div>
-                <div>
-                  {row.getVisibleCells().map((cell) => {
-                    if (cell.column.id === "status") {
-                      return (
-                        <div key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </div>
-                      );
-                    }
-                    return null;
-                  })}
-                </div>
-              </div>
+          table.getRowModel().rows.map((row) => {
+            const booking = row.original;
+            const totalParticipants =
+              booking.adults + booking.children + booking.infants;
+            const formattedDate = format(new Date(booking.date), "dd MMM yyyy");
 
-              <div className="space-y-2">
-                <div className="flex items-center gap-2 text-sm">
-                  <User className="h-4 w-4 text-muted-foreground" />
-                  <span>
-                    {row.original.firstName} {row.original.lastName}
-                  </span>
+            // Create a state for each booking's dialog
+            const [open, setOpen] = useState(false);
+
+            return (
+              <div
+                key={booking.id}
+                className="rounded-lg border border-border/50 bg-card p-4 shadow-sm"
+              >
+                {/* Header with booking ref and status */}
+                <div className="flex justify-between items-start mb-3">
+                  <div>
+                    <h3 className="font-semibold text-lg">
+                      {booking.activity.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      Ref: {booking.bookingRef}
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    {row.getVisibleCells().map((cell) => {
+                      if (cell.column.id === "status") {
+                        return (
+                          <div key={cell.id}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </div>
+                        );
+                      }
+                      return null;
+                    })}
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {format(new Date(booking.createdAt), "dd MMM yyyy")}
+                    </p>
+                  </div>
                 </div>
 
-                <div className="flex items-center gap-2 text-sm">
+                {/* Client information */}
+                <div className="mb-3 p-2 bg-muted/30 rounded-md">
+                  <div className="flex items-center gap-2 text-sm font-medium mb-1">
+                    <User className="h-4 w-4 text-muted-foreground" />
+                    <span className="capitalize">
+                      {booking.firstName} {booking.lastName}
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
+                    <span>{booking.email}</span>
+                    <span>•</span>
+                    <span>{booking.phone}</span>
+                  </div>
+                </div>
+
+                {/* Date and time */}
+                <div className="flex items-center gap-2 text-sm mb-2">
                   <Calendar className="h-4 w-4 text-muted-foreground" />
                   <span>
-                    {format(new Date(row.original.date), "dd MMM yyyy")} at{" "}
-                    {row.original.departureHour}
+                    {formattedDate} at {booking.departureHour}
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2 text-sm">
-                  <DollarSign className="h-4 w-4 text-muted-foreground" />
-                  <span>${row.original.totalPrice.toFixed(2)}</span>
+                {/* Participants breakdown */}
+                <div className="mb-2">
+                  <div className="flex items-center gap-2 text-sm">
+                    <Users className="h-4 w-4 text-muted-foreground" />
+                    <span className="font-medium">
+                      {totalParticipants} participants
+                    </span>
+                    {booking.isPrivate && (
+                      <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                        Private tour
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex gap-4 text-xs text-muted-foreground mt-1 pl-6">
+                    {booking.adults > 0 && (
+                      <span>{booking.adults} Adult(s)</span>
+                    )}
+                    {booking.children > 0 && (
+                      <span>{booking.children} Child(ren)</span>
+                    )}
+                    {booking.infants > 0 && (
+                      <span>{booking.infants} Infant(s)</span>
+                    )}
+                  </div>
                 </div>
 
-                <div className="flex items-center gap-2 text-sm">
-                  <Users className="h-4 w-4 text-muted-foreground" />
-                  <span>
-                    {row.original.adults +
-                      row.original.children +
-                      row.original.infants}{" "}
-                    participants
-                    {row.original.isPrivate && " • Private tour"}
+                {/* Pricing information */}
+                <div className="flex items-center gap-2 text-sm mb-2">
+                  <FaEuroSign className="h-4 w-4 text-muted-foreground" />
+                  <span className="font-medium">
+                    €{booking.totalPrice.toFixed(2)}
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    (€{booking.activity.adultPrice}/adult, €
+                    {booking.activity.childPrice}/child)
                   </span>
                 </div>
 
-                {row.original.pickUpLocation && (
-                  <div className="text-sm text-muted-foreground">
-                    Pickup: {row.original.pickUpLocation}
+                {/* Pickup/Dropoff information */}
+                {booking.pickUpLocation && (
+                  <div className="text-sm mb-2">
+                    <div className="flex items-start gap-2">
+                      <MapPin className="h-4 w-4 text-muted-foreground mt-0.5" />
+                      <div>
+                        <span className="font-medium">Pickup:</span>{" "}
+                        {booking.pickUpLocation}
+                      </div>
+                    </div>
                   </div>
                 )}
+
+                {booking.dropOffLocation &&
+                  booking.dropOffLocation !== "I don't need drop off" && (
+                    <div className="text-sm mb-2">
+                      <div className="flex items-start gap-2">
+                        <MapPin className="h-4 w-4 text-muted-foreground mt-0.5" />
+                        <div>
+                          <span className="font-medium">Dropoff:</span>{" "}
+                          {booking.dropOffLocation}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                {/* Activity details */}
+                <div className="mt-3 pt-3 border-t border-border/30">
+                  <h4 className="text-xs font-semibold text-muted-foreground mb-1">
+                    Activity Details
+                  </h4>
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div>
+                      <span className="font-medium">Duration:</span>{" "}
+                      {booking.activity.duration}
+                    </div>
+                    <div>
+                      <span className="font-medium">Difficulty:</span>{" "}
+                      {booking.activity.difficulty}
+                    </div>
+                    <div>
+                      <span className="font-medium">Location:</span>{" "}
+                      {booking.activity.location}
+                    </div>
+                    <div>
+                      <span className="font-medium">Live Guide:</span>{" "}
+                      {booking.activity.liveTourGuide ? "Yes" : "No"}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div className="mt-4 flex justify-end gap-2">
+                  <button
+                    className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3 py-2"
+                    onClick={() => setOpen(true)}
+                  >
+                    <Eye className="h-4 w-4 mr-1" />
+                    View Details
+                  </button>
+                </div>
+
+                {/* Booking Details Dialog */}
+                <BookingDetailsDialog
+                  booking={booking}
+                  open={open}
+                  onOpenChange={setOpen}
+                />
               </div>
-            </div>
-          ))
+            );
+          })
         ) : (
           <div className="rounded-lg border border-border/50 bg-card p-6 text-center">
             <div className="flex flex-col items-center justify-center space-y-3">

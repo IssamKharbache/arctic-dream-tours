@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import DashboardPagesHeader from "@/components/activities/DashboardPagesHeader";
 import React from "react";
 import { BlogsTable } from "./data-table";

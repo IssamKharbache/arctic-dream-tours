@@ -36,23 +36,27 @@ import { BookingWithActivity } from "@/types/activityWithBooking";
 import { format } from "date-fns";
 import { FaEuroSign } from "react-icons/fa";
 import BookingDetailsDialog from "@/components/activities/booking/BookingDetailsDialog";
+import { getData } from "@/lib/getData";
+import { baseUrl } from "@/utils/baseUrl";
 
 interface DataTableProps<TValue> {
   columns: ColumnDef<BookingWithActivity, TValue>[];
-  data: BookingWithActivity[];
-  onRefresh?: () => void;
-  isRefreshing?: boolean;
+  initialData: BookingWithActivity[];
 }
 
 export function DataTable<TValue>({
   columns,
-  data,
-  onRefresh,
-  isRefreshing = false,
+  initialData,
 }: DataTableProps<TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  // Create a state for each booking's dialog
+  const [open, setOpen] = useState(false);
+
+  const [data, setData] = useState(initialData);
 
   const table = useReactTable({
     data,
@@ -67,9 +71,17 @@ export function DataTable<TValue>({
 
   const { isLoading } = useDeleleActionButtonStore();
 
-  const handleRefresh = () => {
-    if (onRefresh) {
-      onRefresh();
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    try {
+      const res = await getData<{ data: BookingWithActivity[] }>(
+        `${baseUrl}/api/booking/get-all`
+      );
+      setData(res.data);
+    } catch (error) {
+      console.error("Error refreshing bookings:", error);
+    } finally {
+      setIsRefreshing(false);
     }
   };
 
@@ -92,6 +104,21 @@ export function DataTable<TValue>({
             className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
           />
         </div>
+
+        <Button
+          onClick={handleRefresh}
+          variant="outline"
+          size="sm"
+          disabled={isRefreshing}
+          className="ml-2 flex items-center gap-1"
+        >
+          {isRefreshing ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <RefreshCw className="h-4 w-4" />
+          )}
+          Refresh
+        </Button>
       </div>
 
       <div className="rounded-lg border border-border/50 bg-card shadow-sm hidden md:block">
@@ -197,9 +224,6 @@ export function DataTable<TValue>({
             const totalParticipants =
               booking.adults + booking.children + booking.infants;
             const formattedDate = format(new Date(booking.date), "dd MMM yyyy");
-
-            // Create a state for each booking's dialog
-            const [open, setOpen] = useState(false);
 
             return (
               <div

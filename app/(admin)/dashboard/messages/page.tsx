@@ -22,7 +22,7 @@ const page = async () => {
         </p>
       </div>
 
-      <MessagesTable messages={messages} />
+      <MessagesTable initialMessages={messages} />
     </div>
   );
 };

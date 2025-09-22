@@ -3,21 +3,19 @@ export const dynamic = "force-dynamic";
 import DashboardPagesHeader from "@/components/activities/DashboardPagesHeader";
 import { getData } from "@/lib/getData";
 import { baseUrl } from "@/utils/baseUrl";
+import { User } from "@prisma/client";
 import React from "react";
-import { DataTable } from "./data-table";
 import { columns } from "./columns";
-import { BookingWithActivity } from "@/types/activityWithBooking";
+import { DataTable } from "./data-table";
 
 const page = async () => {
-  const res = await getData<{ data: BookingWithActivity[] }>(
-    `${baseUrl}/api/booking/get-all`
-  );
-  const bookings = res.data;
+  const res = await getData<{ data: User[] }>(`${baseUrl}/api/user/get-all`);
+  const users = res.data;
 
   return (
     <div>
-      <DashboardPagesHeader title="Bookings" />
-      <DataTable columns={columns} initialData={bookings} />
+      <DashboardPagesHeader title="Clients" />
+      <DataTable columns={columns} data={users} />
     </div>
   );
 };

@@ -26,24 +26,54 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Eye, Search, Mail, Phone, Calendar, User } from "lucide-react";
+import {
+  Eye,
+  Search,
+  Mail,
+  Phone,
+  Calendar,
+  User,
+  Loader2,
+  RefreshCw,
+} from "lucide-react";
 import { format } from "date-fns";
 import { Emails } from "@prisma/client";
+import { getData } from "@/lib/getData";
+import { baseUrl } from "@/utils/baseUrl";
 
 interface MessagesTableProps {
-  messages: Emails[];
+  initialMessages: Emails[];
 }
 
-export function MessagesTable({ messages }: MessagesTableProps) {
+export function MessagesTable({ initialMessages }: MessagesTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedMessage, setSelectedMessage] = useState<Emails | null>(null);
+  const [messages, setMessages] = useState(initialMessages);
 
-  const filteredMessages = messages.filter(
-    (message) =>
-      message.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      message.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      message.message.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    try {
+      const res = await getData<{ data: Emails[] }>(
+        `${baseUrl}/api/emails/get-all`
+      );
+      setMessages(res.data);
+    } catch (error) {
+      console.error("Error refreshing bookings:", error);
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
+
+  const filteredMessages =
+    messages &&
+    messages.filter(
+      (message) =>
+        message.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        message.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        message.message.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
   const formatDate = (dateString: Date) => {
     return format(new Date(dateString), "MMM dd, yyyy 'at' HH:mm");
@@ -68,20 +98,6 @@ export function MessagesTable({ messages }: MessagesTableProps) {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{messages.length}</div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Unique Contacts
-            </CardTitle>
-            <User className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {new Set(messages.map((m) => m.email)).size}
-            </div>
           </CardContent>
         </Card>
 
@@ -124,134 +140,156 @@ export function MessagesTable({ messages }: MessagesTableProps) {
               onChange={(e) => setSearchTerm(e.target.value)}
               className="max-w-sm"
             />
+            <Button
+              onClick={handleRefresh}
+              variant="outline"
+              size="sm"
+              disabled={isRefreshing}
+              className="ml-2 flex items-center gap-1"
+            >
+              {isRefreshing ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <RefreshCw className="h-4 w-4" />
+              )}
+              Refresh
+            </Button>
           </div>
 
-          <div className="rounded-md border">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Contact</TableHead>
-                  <TableHead>Message Preview</TableHead>
-                  <TableHead>Phone</TableHead>
-                  <TableHead>Date</TableHead>
-                  <TableHead>Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredMessages.length === 0 ? (
+          {isRefreshing ? (
+            <div className="flex items-center justify-center p-10">
+              <Loader2 className="animate-spin h-6 w-6" />
+            </div>
+          ) : (
+            <div className="rounded-md border">
+              <Table>
+                <TableHeader>
                   <TableRow>
-                    <TableCell colSpan={5} className="text-center py-8">
-                      <div className="text-muted-foreground">
-                        {searchTerm
-                          ? "No messages found matching your search."
-                          : "No messages yet."}
-                      </div>
-                    </TableCell>
+                    <TableHead>Contact</TableHead>
+                    <TableHead>Message Preview</TableHead>
+                    <TableHead>Phone</TableHead>
+                    <TableHead>Date</TableHead>
+                    <TableHead>Actions</TableHead>
                   </TableRow>
-                ) : (
-                  filteredMessages.map((message) => (
-                    <TableRow key={message.id}>
-                      <TableCell>
-                        <div className="space-y-1">
-                          <div className="font-medium">{message.fullName}</div>
-                          <div className="text-sm text-muted-foreground flex items-center gap-1">
-                            <Mail className="h-3 w-3" />
-                            {message.email}
-                          </div>
+                </TableHeader>
+                <TableBody>
+                  {filteredMessages.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={5} className="text-center py-8">
+                        <div className="text-muted-foreground">
+                          {searchTerm
+                            ? "No messages found matching your search."
+                            : "No messages yet."}
                         </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="max-w-xs">
-                          <p className="text-sm">
-                            {truncateMessage(message.message)}
-                          </p>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-1 text-sm">
-                          <Phone className="h-3 w-3" />
-                          {message.phoneNumber}
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="text-sm">
-                          {formatDate(message.createdAt)}
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <Dialog>
-                          <DialogTrigger asChild>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => setSelectedMessage(message)}
-                            >
-                              <Eye className="h-4 w-4 mr-1" />
-                              View
-                            </Button>
-                          </DialogTrigger>
-                          <DialogContent className="max-w-2xl">
-                            <DialogHeader>
-                              <DialogTitle>Message Details</DialogTitle>
-                              <DialogDescription>
-                                Full message from {message.fullName}
-                              </DialogDescription>
-                            </DialogHeader>
-                            <div className="space-y-4">
-                              <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                  <label className="text-sm font-medium">
-                                    Full Name
-                                  </label>
-                                  <p className="text-sm text-muted-foreground">
-                                    {message.fullName}
-                                  </p>
-                                </div>
-                                <div>
-                                  <label className="text-sm font-medium">
-                                    Email
-                                  </label>
-                                  <p className="text-sm text-muted-foreground">
-                                    {message.email}
-                                  </p>
-                                </div>
-                                <div>
-                                  <label className="text-sm font-medium">
-                                    Phone Number
-                                  </label>
-                                  <p className="text-sm text-muted-foreground">
-                                    {message.phoneNumber}
-                                  </p>
-                                </div>
-                                <div>
-                                  <label className="text-sm font-medium">
-                                    Date Received
-                                  </label>
-                                  <p className="text-sm text-muted-foreground">
-                                    {formatDate(message.createdAt)}
-                                  </p>
-                                </div>
-                              </div>
-                              <div>
-                                <label className="text-sm font-medium">
-                                  Message
-                                </label>
-                                <div className="mt-2 p-3 bg-muted rounded-md">
-                                  <p className="text-sm whitespace-pre-wrap">
-                                    {message.message}
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                          </DialogContent>
-                        </Dialog>
                       </TableCell>
                     </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
-          </div>
+                  ) : (
+                    filteredMessages.map((message) => (
+                      <TableRow key={message.id}>
+                        <TableCell>
+                          <div className="space-y-1">
+                            <div className="font-medium">
+                              {message.fullName}
+                            </div>
+                            <div className="text-sm text-muted-foreground flex items-center gap-1">
+                              <Mail className="h-3 w-3" />
+                              {message.email}
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="max-w-xs">
+                            <p className="text-sm">
+                              {truncateMessage(message.message)}
+                            </p>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-1 text-sm">
+                            <Phone className="h-3 w-3" />
+                            {message.phoneNumber}
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="text-sm">
+                            {formatDate(message.createdAt)}
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => setSelectedMessage(message)}
+                              >
+                                <Eye className="h-4 w-4 mr-1" />
+                                View
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent className="max-w-2xl">
+                              <DialogHeader>
+                                <DialogTitle>Message Details</DialogTitle>
+                                <DialogDescription>
+                                  Full message from {message.fullName}
+                                </DialogDescription>
+                              </DialogHeader>
+                              <div className="space-y-4">
+                                <div className="grid grid-cols-2 gap-4">
+                                  <div>
+                                    <label className="text-sm font-medium">
+                                      Full Name
+                                    </label>
+                                    <p className="text-sm text-muted-foreground">
+                                      {message.fullName}
+                                    </p>
+                                  </div>
+                                  <div>
+                                    <label className="text-sm font-medium">
+                                      Email
+                                    </label>
+                                    <p className="text-sm text-muted-foreground">
+                                      {message.email}
+                                    </p>
+                                  </div>
+                                  <div>
+                                    <label className="text-sm font-medium">
+                                      Phone Number
+                                    </label>
+                                    <p className="text-sm text-muted-foreground">
+                                      {message.phoneNumber}
+                                    </p>
+                                  </div>
+                                  <div>
+                                    <label className="text-sm font-medium">
+                                      Date Received
+                                    </label>
+                                    <p className="text-sm text-muted-foreground">
+                                      {formatDate(message.createdAt)}
+                                    </p>
+                                  </div>
+                                </div>
+                                <div>
+                                  <label className="text-sm font-medium">
+                                    Message
+                                  </label>
+                                  <div className="mt-2 p-3 bg-muted rounded-md">
+                                    <p className="text-sm whitespace-pre-wrap">
+                                      {message.message}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </DialogContent>
+                          </Dialog>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>

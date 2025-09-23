@@ -130,10 +130,10 @@ const ContactPage = () => {
                     {t("emailUs")}
                   </p>
                   <a
-                    href="mailto:Arcticdreamtours@gmail.com"
+                    href="mailto:contact@arcticdreamtours.com"
                     className="text-sm sm:text-lg lg:text-xl font-semibold text-white hover:text-blue-200 break-all transition-colors"
                   >
-                    Arcticdreamtours@gmail.com
+                    contact@arcticdreamtours.com
                   </a>
                 </div>
               </div>

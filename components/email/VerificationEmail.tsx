@@ -59,8 +59,8 @@ export const VerificationEmail = ({
 
           <Text style={footerText}>
             Need help? Contact our support team at{" "}
-            <Link href="mailto:arcticdreamtours@gmail.com" style={link}>
-              arcticdreamtours@gmail.com
+            <Link href="mailto:support@arcticdreamtours.com" style={link}>
+              support@arcticdreamtours.com
             </Link>
           </Text>
 

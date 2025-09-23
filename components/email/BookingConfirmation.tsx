@@ -45,7 +45,7 @@ export const BookingConfirmationEmail = ({
   isPrivate,
   status,
   companyName = "Arctic dream tours",
-  supportEmail = "arcticdreamtours@gmail.com",
+  supportEmail = "support@arcticdreamtours.com",
 }: BookingConfirmationProps) => (
   <Html>
     <Head />

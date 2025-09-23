@@ -24,7 +24,7 @@ const PrintableInvoice = forwardRef<HTMLDivElement, PrintableInvoiceProps>(
         address: "Piispanristi2 , 02200 espoo , Helsinki, Finland",
         city: "Lampelankatu 28c3 , Rovaniemi , finland",
         phone: "+358 4041 21843",
-        email: "arcticdreamtours@gmail.com",
+        email: "contact@arcticdreamtours.com",
         website: "www.arcticdreamtours.com",
       },
     },

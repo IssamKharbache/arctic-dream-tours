@@ -98,7 +98,7 @@ const Footer = () => {
                   <Phone className="h-5 w-5 mr-2" />
                   <span>+358 4041 21843</span>
                 </div>
-                <a href="mailto:contact@arcticdreamtour.com">
+                <a href="mailto:contact@arcticdreamtours.com">
                   <div className="flex items-center">
                     <Mail className="h-5 w-5 mr-2" />
                     <span>contact@arcticdreamtours.com</span>

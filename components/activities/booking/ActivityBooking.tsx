@@ -466,7 +466,7 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="text-2xl font-bold">${totalPrice}</p>
+                    <p className="text-2xl font-bold">€{totalPrice}</p>
                     <p
                       className={`text-sm ${isPrivateTour ? "text-amber-100" : "text-blue-100"}`}
                     >

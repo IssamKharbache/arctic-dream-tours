@@ -85,7 +85,7 @@ export function ActivitiesSection({
                 bulletActiveClass: "custom-bullet-active",
               }}
               autoplay={{
-                delay: 5000,
+                delay: 7000,
                 disableOnInteraction: false,
               }}
               loop={true}

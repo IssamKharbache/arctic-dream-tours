@@ -43,7 +43,7 @@ export default function PromoDialog() {
               </div>
 
               <p className="text-white/90 text-base">
-                We'll handle ALL your airport transportation - from airport to
+                We'll handle ALL your airport transportation from airport to
                 hotel and back to airport.
               </p>
 

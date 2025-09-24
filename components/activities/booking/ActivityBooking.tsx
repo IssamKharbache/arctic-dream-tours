@@ -573,7 +573,7 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                           Private Tour (Fixed Price)
                         </span>
                         <span className="font-medium">
-                          ${activity.privateTourPrice}
+                          €{activity.privateTourPrice}
                         </span>
                       </div>
                     ) : (
@@ -583,7 +583,7 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                             Adults ({adults} × ${activity.adultPrice})
                           </span>
                           <span className="font-medium">
-                            ${adults * activity.adultPrice}
+                            €{adults * activity.adultPrice}
                           </span>
                         </div>
                         {children > 0 && (
@@ -592,7 +592,7 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                               Children ({children} × ${activity.childPrice})
                             </span>
                             <span className="font-medium">
-                              ${children * activity.childPrice}
+                              €{children * activity.childPrice}
                             </span>
                           </div>
                         )}
@@ -604,7 +604,7 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
                           Total Amount
                         </span>
                         <span className="font-bold text-xl text-green-600">
-                          ${totalPrice}
+                          €{totalPrice}
                         </span>
                       </div>
                     </div>

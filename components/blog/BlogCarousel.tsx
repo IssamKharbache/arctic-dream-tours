@@ -103,7 +103,7 @@ function BlogCard({ blog }: { blog: BlogData }) {
             <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2">
               {blog.title}
             </h3>
-            <p className="text-sm text-muted-foreground line-clamp-3">
+            <p className="text-sm text-muted-foreground line-clamp-3 min-h-24">
               {getPreview(blog.content)}
             </p>
           </div>

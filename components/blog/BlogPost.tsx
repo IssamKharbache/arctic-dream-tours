@@ -60,7 +60,7 @@ export function BlogPost({ blog }: BlogPostProps) {
 
       {/* Content */}
       <div
-        className={`prose prose-lg prose-invert max-w-none ${inter.className} text-base md:text-xl`}
+        className={`prose prose-lg prose-invert max-w-none tiptap  ${inter.className} `}
       >
         <div
           className="text-foreground leading-relaxed space-y-6"

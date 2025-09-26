@@ -12,6 +12,54 @@ import Image from "next/image";
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
+export async function generateMetadata({ params }: PageProps) {
+  const { slug } = await params;
+  try {
+    const res = await getData<{ data: Activity }>(
+      `${baseUrl}/api/activity/${slug}`
+    );
+    const activity = res.data;
+    return {
+      title: activity.title,
+      description: activity.shortDescription,
+      openGraph: {
+        title: activity.title,
+        description: activity.shortDescription,
+        images: [
+          {
+            url: activity.imageUrl || "",
+            width: 1200,
+            height: 630,
+          },
+        ],
+      },
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      title: "Not found",
+      description: "The page you are looking for does not exist",
+    };
+  }
+}
+
+export async function generateStaticParams() {
+  try {
+    const res = await fetch(`${baseUrl}/api/activity/get-all`);
+    if (!res.ok) {
+      throw new Error(`Fetch failed :${res.statusText}`);
+    }
+    const data = await res.json();
+    const activities: Activity[] = data?.data || [];
+    if (activities.length === 0) return [];
+    return activities.map((activity) => ({
+      slug: activity.slug,
+    }));
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+}
 
 const page = async ({ params }: PageProps) => {
   const { slug } = await params;

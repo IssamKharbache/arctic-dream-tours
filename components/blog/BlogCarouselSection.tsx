@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Blog } from "@prisma/client";
 import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 
 interface BlogCarouselSectionProps {
   blogs: Blog[];
@@ -31,17 +32,17 @@ function formatDate(dateString: string): string {
 }
 
 export function BlogCarouselSection({ blogs }: BlogCarouselSectionProps) {
+  const t = useTranslations("blog");
   return (
     <section className="py-16 bg-background">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-balance">
-            Latest Stories from Lapland
+            {t("title")}
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-            Discover the magic of the Arctic through our collection of stories,
-            adventures, and cultural insights
+            {t("description")}
           </p>
         </div>
 
@@ -91,12 +92,23 @@ export function BlogCarouselSection({ blogs }: BlogCarouselSectionProps) {
                         <p className="text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-3">
                           {stripHtml(blog.content)}
                         </p>
-
+                        {blog.keywords && blog.keywords.length > 0 && (
+                          <div className="flex flex-wrap gap-2 mt-2">
+                            {blog.keywords.map((keyword) => (
+                              <span
+                                key={keyword}
+                                className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full"
+                              >
+                                {keyword}
+                              </span>
+                            ))}
+                          </div>
+                        )}
                         {/* Read More Link */}
                         <Link href={`/blog/${blog.slug}` as any}>
                           <Button
                             variant="ghost"
-                            className="p-0 h-auto text-primary hover:text-primary/80 group/btn"
+                            className="py-3 h-auto text-primary hover:bg-primary hover:text-white group/btn hover:cursor-pointer  mt-8"
                           >
                             Read More
                             <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover/btn:translate-x-1" />
@@ -114,17 +126,17 @@ export function BlogCarouselSection({ blogs }: BlogCarouselSectionProps) {
         </div>
 
         {/* View All Button */}
-        {/* <div className="text-center mt-12">
-          <Link href="/blog">
+        <div className="text-center mt-12">
+          <Link href="/blogs">
             <Button
               size="lg"
               className="bg-primary hover:bg-primary/90 text-primary-foreground"
             >
-              View All Stories
+              View All Blogs
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </Link>
-        </div> */}
+        </div>
       </div>
     </section>
   );

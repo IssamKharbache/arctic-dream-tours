@@ -127,6 +127,7 @@ export function ActivityDetails({ form }: ActivityDetailsProps) {
             <FormLabel>Booking Cutoff Hours (Optional)</FormLabel>
             <FormControl>
               <Input
+                onWheel={(e) => e.currentTarget.blur()}
                 type="number"
                 placeholder="24"
                 value={field.value || ""}

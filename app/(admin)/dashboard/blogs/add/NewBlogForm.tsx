@@ -26,6 +26,8 @@ interface BlogFormData {
 export default function NewBlogForm() {
   const [content, setContent] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [keywords, setKeywords] = useState<string[]>([]);
+  const [keywordInput, setKeywordInput] = useState("");
 
   const router = useRouter();
   const { register, handleSubmit, setValue, watch, reset } =
@@ -67,6 +69,25 @@ export default function NewBlogForm() {
     },
   });
 
+  const addKeyword = () => {
+    const trimmed = keywordInput.trim();
+    if (trimmed && !keywords.includes(trimmed)) {
+      setKeywords([...keywords, trimmed]);
+    }
+    setKeywordInput("");
+  };
+
+  const removeKeyword = (kw: string) => {
+    setKeywords(keywords.filter((k) => k !== kw));
+  };
+
+  const handleKeywordKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" || e.key === ",") {
+      e.preventDefault();
+      addKeyword();
+    }
+  };
+
   const onSubmit = async (data: BlogFormData) => {
     if (!content) {
       toast.error("Content is required");
@@ -85,6 +106,7 @@ export default function NewBlogForm() {
           ...data,
           content,
           coverImage: data.coverImage || null,
+          keywords,
         }),
       });
 
@@ -97,6 +119,8 @@ export default function NewBlogForm() {
       toast.success("Blog post created successfully!");
       router.push("/dashboard/blogs");
       reset();
+      setKeywords([]);
+      setKeywordInput("");
       editor?.commands.setContent("");
       setContent("");
     } catch (error: any) {
@@ -137,6 +161,42 @@ export default function NewBlogForm() {
             className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
             placeholder="https://example.com/image.jpg"
           />
+        </div>
+
+        {/* Keywords */}
+        <div>
+          <label className="block font-semibold mb-2 text-gray-700">
+            Keywords
+          </label>
+          <div className="flex flex-wrap gap-2 mb-2">
+            {keywords.map((kw) => (
+              <span
+                key={kw}
+                className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full flex items-center gap-1"
+              >
+                {kw}
+                <button
+                  type="button"
+                  className="text-blue-500 hover:text-blue-700 font-bold"
+                  onClick={() => removeKeyword(kw)}
+                >
+                  ×
+                </button>
+              </span>
+            ))}
+          </div>
+          <div className="flex gap-2">
+            <Input
+              value={keywordInput}
+              onChange={(e) => setKeywordInput(e.target.value)}
+              onKeyDown={handleKeywordKeyDown}
+              placeholder="Type a keyword and press Enter"
+              className="flex-1 border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+            />
+            <Button type="button" variant="outline" onClick={addKeyword}>
+              Add
+            </Button>
+          </div>
         </div>
 
         {/* Rich Text Editor */}

@@ -25,6 +25,8 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
+import { useTheme } from "next-themes";
 
 const navigationItems = [
   {
@@ -80,11 +82,6 @@ const navigationItems = [
         url: "/dashboard/activities",
         icon: Mountain,
       },
-      // {
-      //   title: "Blogs",
-      //   url: "/dashboard/blogs",
-      //   icon: Waves,
-      // },
     ],
   },
 ];
@@ -97,19 +94,18 @@ export function SideBar() {
     }
     return pathname.startsWith(itemUrl);
   };
+
   return (
     <Sidebar>
       <SidebarHeader className="border-b border-white/10 p-5">
-        <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 text-white pulse-glow">
-            <MapPin className="h-5 w-5" />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-lg font-bold text-black">
-              Arctic dream tours
-            </span>
-            <span className="text-sm text-gray-500">Activity Manager</span>
-          </div>
+        <div className="w-full h-16">
+          <Image
+            src="/logoArctic.png"
+            alt="Arctic Dream Tours Logo"
+            width={400}
+            height={400}
+            className="w-full h-full object-contain"
+          />
         </div>
       </SidebarHeader>
 

@@ -3,9 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
   try {
-    const { title, slug, content, coverImage } = await req.json();
+    const { title, slug, content, coverImage, keywords } = await req.json();
 
-    // Validate required fields
     if (!title || !slug || !content) {
       return NextResponse.json(
         { error: "Title, slug, and content are required" },
@@ -13,11 +12,7 @@ export const POST = async (req: NextRequest) => {
       );
     }
 
-    // Check if a blog with the same slug already exists
-    const existingBlog = await db.blog.findUnique({
-      where: { slug },
-    });
-
+    const existingBlog = await db.blog.findUnique({ where: { slug } });
     if (existingBlog) {
       return NextResponse.json(
         { error: "A blog with this slug already exists" },
@@ -25,13 +20,13 @@ export const POST = async (req: NextRequest) => {
       );
     }
 
-    // Create the new blog post
     const newBlog = await db.blog.create({
       data: {
         title,
         slug,
         content,
         coverImage: coverImage || null,
+        keywords: keywords || [],
       },
     });
 
@@ -40,9 +35,7 @@ export const POST = async (req: NextRequest) => {
         data: newBlog,
         message: "Blog post created successfully",
       },
-      {
-        status: 201,
-      }
+      { status: 201 }
     );
   } catch (error) {
     console.error("[BLOG CREATION ERROR]", error);

@@ -3,6 +3,11 @@ import { baseUrl } from "@/utils/baseUrl";
 import type { Activity } from "@/types/activity";
 import { ActivitiesClient } from "@/components/activities/ActivitiesClient";
 
+export const metadata = {
+  title: "Activities",
+  description:
+    "Explore Lapland adventures with Arctic Dream Tours. Book husky sledding, Northern Lights tours, reindeer safaris, and more.",
+};
 export default async function ActivitiesPage() {
   // Fetch activities on the server
   const res = await fetch(`${baseUrl}/api/activity/get-all`);

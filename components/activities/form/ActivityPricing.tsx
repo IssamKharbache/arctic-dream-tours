@@ -40,6 +40,7 @@ export function ActivityPricing({ form }: ActivityPricingProps) {
                   onChange={(e) =>
                     field.onChange(Number.parseFloat(e.target.value) || 0)
                   }
+                  onWheel={(e) => e.currentTarget.blur()}
                 />
               </FormControl>
               <FormMessage />
@@ -87,6 +88,7 @@ export function ActivityPricing({ form }: ActivityPricingProps) {
                 <FormLabel>Child Price</FormLabel>
                 <FormControl>
                   <Input
+                    onWheel={(e) => e.currentTarget.blur()}
                     type="number"
                     step="0.01"
                     placeholder="0.00"
@@ -113,6 +115,7 @@ export function ActivityPricing({ form }: ActivityPricingProps) {
               <FormLabel>Private Tour Price</FormLabel>
               <FormControl>
                 <Input
+                  onWheel={(e) => e.currentTarget.blur()}
                   type="number"
                   step="0.01"
                   placeholder="0.00"

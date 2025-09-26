@@ -22,6 +22,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
       premiumMessages,
       galleryMessages,
       aboutMessages,
+      blogMessages,
     ] = await Promise.all([
       import(`@/messages/${locale}/common.json`)
         .then((m) => m.default)
@@ -59,6 +60,9 @@ export default getRequestConfig(async ({ requestLocale }) => {
       import(`@/messages/${locale}/about.json`)
         .then((m) => m.default)
         .catch(() => ({})),
+      import(`@/messages/${locale}/blog.json`)
+        .then((m) => m.default)
+        .catch(() => ({})),
     ]);
 
     return {
@@ -76,6 +80,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
         premium: premiumMessages,
         gallery: galleryMessages,
         about: aboutMessages,
+        blog: blogMessages,
       },
     };
   } catch (error) {
@@ -95,6 +100,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
       premiumMessages,
       galleryMessages,
       aboutMessages,
+      blogMessages,
     ] = await Promise.all([
       import(`@/messages/${routing.defaultLocale}/common.json`).then(
         (m) => m.default
@@ -132,6 +138,9 @@ export default getRequestConfig(async ({ requestLocale }) => {
       import(`@/messages/${locale}/about.json`)
         .then((m) => m.default)
         .catch(() => ({})),
+      import(`@/messages/${locale}/blog.json`)
+        .then((m) => m.default)
+        .catch(() => ({})),
     ]);
 
     return {
@@ -149,6 +158,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
         premium: premiumMessages,
         gallery: galleryMessages,
         about: aboutMessages,
+        blog: blogMessages,
       },
     };
   }

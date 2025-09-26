@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -32,7 +33,7 @@ export default function PromoDialog() {
                 <span className="text-white">SPECIAL OFFER! ❄️</span>
               </DialogTitle>
             </DialogHeader>
-
+            <DialogDescription></DialogDescription>
             <div className="text-center space-y-4 mt-6">
               <div className="flex items-center justify-center space-x-2 text-lg">
                 <Plane className="h-6 w-6 text-cyan-200" />

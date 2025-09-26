@@ -147,7 +147,7 @@ const ContactPage = () => {
                     {t("callUs")}
                   </p>
                   <p className="text-sm sm:text-lg lg:text-xl font-semibold text-white">
-                    +358 40 0408538
+                    +350 404 121 843
                   </p>
                 </div>
               </div>

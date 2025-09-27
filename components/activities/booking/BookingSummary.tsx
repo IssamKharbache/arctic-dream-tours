@@ -10,6 +10,7 @@ import { baseUrl } from "@/utils/baseUrl";
 import { useRouter } from "@/i18n/navigation";
 import PayOnline from "./PayOnline";
 import { useBookingDialogStore } from "@/store/zustand/bookingDialogStore";
+import { fbEvent } from "@/lib/fpixel";
 
 export interface BookingSummaryData {
   firstName: string;
@@ -88,14 +89,26 @@ const BookingSummary: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
         alert(`Booking failed: ${data.message || "Unknown error"}`);
         return null;
       }
+
+      if (type === "request") {
+        fbEvent("Lead", {
+          content_name: bookingData?.activityTitle,
+          content_ids: [bookingData?.activityId],
+          content_type: "activity",
+          value: bookingData?.totalPrice,
+          currency: "EUR",
+          num_adults: bookingData?.adults,
+          num_children: bookingData?.children,
+          booking_ref: data.data.bookingRef,
+          travel_date: bookingData?.date,
+          destination: bookingData?.location,
+        });
+        router.push(`/booking/request/success/${data.data.bookingRef}` as any);
+      }
       setBookingData(null);
       localStorage.removeItem("customerData");
       localStorage.removeItem("bookingDetails");
       setStep(0);
-      if (type === "request") {
-        router.push(`/booking/request/success/${data.data.bookingRef}` as any);
-      }
-
       return data.data;
     } catch (error) {
       console.error(error);

@@ -29,6 +29,7 @@ import {
 } from "date-fns";
 import { useBookingDialogStore } from "@/store/zustand/bookingDialogStore";
 import { BookingModal } from "./BookingModal";
+import { fbEvent } from "@/lib/fpixel";
 
 interface ActivityBookingProps {
   activity: Activity;
@@ -204,6 +205,20 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
     localStorage.setItem("bookingDetails", JSON.stringify(bookingData));
     setOpenDialog(true);
   };
+
+  fbEvent("InitiateCheckout", {
+    content_name: activity.title,
+    content_ids: [activity.id],
+    content_type: "product",
+    value: totalPrice,
+    currency: "EUR",
+    num_adults: adults,
+    num_children: children,
+    is_private: isPrivateTour,
+    travel_date: selectedDate,
+    departure_hour: selectedDepartureHour,
+    location: activity.location,
+  });
 
   const handleDateChange = (date: Date) => {
     setSelectedDate(date);

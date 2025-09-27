@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { baseUrl } from "@/utils/baseUrl";
 import { useQuery } from "@tanstack/react-query";
@@ -23,6 +23,7 @@ import {
   CheckCircle,
 } from "lucide-react";
 import PrintableInvoice from "./PrintableInvoice";
+import { fbEvent } from "@/lib/fpixel";
 
 interface SuccessfullPaymentProps {
   bookingRef: string;
@@ -76,6 +77,25 @@ const SuccessfullPayment = ({ bookingRef }: SuccessfullPaymentProps) => {
       return failureCount < 3;
     },
   });
+  useEffect(() => {
+    if (data && data.status === "PAID") {
+      // Fire the Purchase event
+      fbEvent("Purchase", {
+        content_name: data.activity.title,
+        content_ids: [data.activity.id],
+        content_type: "product",
+        value: data.totalPrice,
+        currency: "EUR",
+        num_adults: data.adults,
+        num_children: data.children,
+        booking_ref: data.bookingRef,
+        travel_date: data.date,
+        destination: data.activity.title,
+        duration: data.departureHour,
+        is_private: data.isPrivate,
+      });
+    }
+  }, [data]);
 
   const getStatusStyles = (status: string) => {
     switch (status) {

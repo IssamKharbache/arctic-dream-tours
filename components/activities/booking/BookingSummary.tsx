@@ -38,7 +38,6 @@ const BookingSummary: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
   const [bookingData, setBookingData] = useState<BookingSummaryData | null>(
     null
   );
-  console.log(bookingData);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 

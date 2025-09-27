@@ -83,15 +83,13 @@ const SuccessfullPayment = ({ bookingRef }: SuccessfullPaymentProps) => {
       fbEvent("Purchase", {
         content_name: data.activity.title,
         content_ids: [data.activity.id],
-        content_type: "product",
+        content_type: "activity",
         value: data.totalPrice,
         currency: "EUR",
         num_adults: data.adults,
         num_children: data.children,
         booking_ref: data.bookingRef,
         travel_date: data.date,
-        destination: data.activity.title,
-        duration: data.departureHour,
         is_private: data.isPrivate,
       });
     }

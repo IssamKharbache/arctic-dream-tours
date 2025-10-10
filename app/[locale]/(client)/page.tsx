@@ -27,7 +27,7 @@ const HomePage = async () => {
       />
       {/* why choose us*/}
       <WhyChooseUs />
-      <PremiumServices />
+      {/* <PremiumServices /> */}
       {/* Gallery */}
       <Gallery />
       {/* Blog Carousel Section */}

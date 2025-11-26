@@ -144,4 +144,16 @@ export const slides = [
     alt: "Gallery image 24",
     title: "Gallery Image 24",
   },
+  {
+    id: 25,
+    src: "/gallery/26.jpeg",
+    alt: "Gallery image 24",
+    title: "Gallery Image 24",
+  },
+  {
+    id: 26,
+    src: "/gallery/27.jpeg",
+    alt: "Gallery image 24",
+    title: "Gallery Image 24",
+  },
 ];

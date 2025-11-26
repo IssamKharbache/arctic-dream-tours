@@ -1,197 +1,307 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/effect-coverflow";
-import Swiper from "swiper";
-import {
-  Autoplay,
-  Navigation,
-  Pagination,
-  EffectCoverflow,
-} from "swiper/modules";
+import { useState, useRef, useEffect } from "react";
 import Lightbox from "yet-another-react-lightbox";
+import Download from "yet-another-react-lightbox/plugins/download";
+import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import Video from "yet-another-react-lightbox/plugins/video";
 import "yet-another-react-lightbox/styles.css";
-import { slides } from "@/utils/getGalleryImages";
-import { Download, Fullscreen, Zoom } from "yet-another-react-lightbox/plugins";
-import { useTranslations } from "next-intl";
 
-const Gallery = () => {
-  const swiperRef = useRef<any>(null);
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [photoIndex, setPhotoIndex] = useState(0);
+// Your image slides
+import { slides as imageSlides } from "@/utils/getGalleryImages";
+import { ChevronLeft, ChevronRight, Play } from "lucide-react";
 
-  const t = useTranslations("gallery");
+interface VideoSlide {
+  id: number;
+  src: string;
+  type: "video";
+  width: number;
+  height: number;
+  sources: Array<{ src: string; type: string }>;
+  thumb?: string;
+}
 
+export default function GalleryViewer() {
+  const [videoSlides, setVideoSlides] = useState<VideoSlide[]>([]);
+  const [videoThumbnails, setVideoThumbnails] = useState<{
+    [key: number]: string;
+  }>({});
+  const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({});
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  // ===== Generate video slides =====
   useEffect(() => {
-    if (swiperRef.current) {
-      const swiper = new Swiper(swiperRef.current, {
-        modules: [Navigation, Pagination, Autoplay, EffectCoverflow],
-        slidesPerView: 1.6,
-        spaceBetween: 1,
-        centeredSlides: true,
-        loop: slides.length > 1,
-        autoplay: {
-          delay: 4000,
-          disableOnInteraction: false,
-        },
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true,
-        },
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-        },
-        breakpoints: {
-          640: {
-            slidesPerView: 1.7,
-            spaceBetween: 0,
-          },
-          768: {
-            slidesPerView: 1.8,
-            spaceBetween: 0,
-          },
-          1024: {
-            slidesPerView: 1.9,
-            spaceBetween: 0,
-          },
-        },
-        effect: "coverflow",
-        coverflowEffect: {
-          rotate: 0,
-          stretch: 0,
-          depth: 100,
-          modifier: 2.5,
-          slideShadows: false,
-        },
-        speed: 800,
-      });
-
-      return () => {
-        if (swiper) {
-          swiper.destroy();
-        }
-      };
-    }
+    const slides: VideoSlide[] = Array.from({ length: 6 }, (_, i) => ({
+      id: i + 1,
+      src: `/gallery/video/${i + 1}.mp4`,
+      type: "video",
+      width: 1280,
+      height: 720,
+      sources: [{ src: `/gallery/video/${i + 1}.mp4`, type: "video/mp4" }],
+    }));
+    setVideoSlides(slides);
   }, []);
 
-  const openLightbox = (imageIndex: number) => {
-    setPhotoIndex(imageIndex);
-    setLightboxOpen(true);
+  // ===== Capture first frame of videos =====
+  const captureVideoThumbnail = (
+    videoElement: HTMLVideoElement,
+    videoId: number
+  ) => {
+    if (canvasRef.current) {
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = videoElement.videoWidth;
+      canvas.height = videoElement.videoHeight;
+
+      if (ctx) {
+        ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+        const thumbnailUrl = canvas.toDataURL("image/jpeg");
+        setVideoThumbnails((prev) => ({
+          ...prev,
+          [videoId]: thumbnailUrl,
+        }));
+      }
+    }
   };
 
-  const closeLightbox = () => {
-    setLightboxOpen(false);
+  const handleVideoLoaded = (videoId: number) => {
+    const video = videoRefs.current[videoId];
+    if (video) {
+      // Seek to beginning and capture frame
+      video.currentTime = 0.1; // Small offset to ensure frame is available
+      setTimeout(() => {
+        captureVideoThumbnail(video, videoId);
+      }, 100);
+    }
+  };
+
+  // FINAL merged slides for lightbox
+  const finalSlides = [
+    ...imageSlides.map((img) => ({
+      type: "image" as const,
+      src: img.src,
+      alt: img.alt ?? "",
+    })),
+    ...videoSlides,
+  ];
+
+  const [open, setOpen] = useState(false);
+  const [index, setIndex] = useState(0);
+
+  // Carousel state
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+
+  // Fixed openLightbox function
+  const openLightbox = (slideIndex: number, type: "image" | "video") => {
+    let lightboxIndex;
+
+    if (type === "image") {
+      // For images, the index in the lightbox is the same as the image index
+      lightboxIndex = slideIndex;
+    } else {
+      // For videos, the index in the lightbox is after all images
+      lightboxIndex = imageSlides.length + slideIndex;
+    }
+
+    setIndex(lightboxIndex);
+    setOpen(true);
+  };
+
+  const nextImageSlide = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % imageSlides.length);
+  };
+
+  const prevImageSlide = () => {
+    setCurrentImageIndex(
+      (prev) => (prev - 1 + imageSlides.length) % imageSlides.length
+    );
+  };
+
+  const nextVideoSlide = () => {
+    setCurrentVideoIndex((prev) => (prev + 1) % videoSlides.length);
+  };
+
+  const prevVideoSlide = () => {
+    setCurrentVideoIndex(
+      (prev) => (prev - 1 + videoSlides.length) % videoSlides.length
+    );
   };
 
   return (
-    <>
-      <section className="py-16 px-4 md:px-6 lg:px-8 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col items-center gap-12">
-            {/* Top - Title and Description */}
-            <div className="w-full text-center">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                {t("title")}
-              </h2>
-              <p className="text-lg text-muted-foreground mb-6 leading-relaxed max-w-3xl mx-auto">
-                {t("description")}
-              </p>
-            </div>
+    <div className="space-y-12 p-5">
+      {/* Hidden canvas for thumbnail generation */}
+      <canvas ref={canvasRef} className="hidden" />
 
-            {/* Bottom - Carousel */}
-            <div className="w-full">
-              <div className="relative">
-                <div ref={swiperRef} className="swiper overflow-hidden">
-                  <div className="swiper-wrapper">
-                    {slides.map((image, index) => (
-                      <div key={image.id} className="swiper-slide relative">
-                        <div
-                          className="relative group cursor-pointer overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-all duration-500"
-                          onClick={() => openLightbox(index)}
-                        >
-                          <div className="aspect-[15/12] relative">
-                            <Image
-                              src={image.src}
-                              alt={image.alt}
-                              fill
-                              className="object-cover transition-transform duration-500 group-hover:scale-105"
-                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            />
-                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
-                              <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white text-lg font-medium bg-transparent bg-opacity-50 px-3 py-1 rounded border">
-                                {t("viewFullscreen")}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+      {/* ---------- IMAGE CAROUSEL ---------- */}
+      <section>
+        <h2 className="font-semibold text-2xl  md:text-5xl mb-4 text-center mt-8">
+          Our gallery
+        </h2>
+        <div className="relative  rounded-xl p-4">
+          {/* Main Image Display */}
+          <div className="flex justify-center mb-4">
+            <div className="relative w-full max-w-2xl group">
+              <img
+                src={imageSlides[currentImageIndex]?.src}
+                alt={imageSlides[currentImageIndex]?.alt || ""}
+                onClick={() => openLightbox(currentImageIndex, "image")}
+                className="w-full h-64 sm:h-80 md:h-96 object-cover rounded-lg cursor-pointer shadow-lg transition-all duration-300 group-hover:opacity-90"
+              />
+
+              {/* Hover Overlay */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
+                <div className="bg-black/60 text-white px-4 py-2 rounded-lg font-semibold">
+                  Show Full Screen
                 </div>
-
-                {/* Navigation buttons */}
-                <div className="swiper-button-prev !text-primary !w-12 !h-12 !mt-0 !top-1/2 !-translate-y-1/2 !left-4 !bg-white !rounded-full !shadow-lg after:!text-base after:!font-bold hover:!bg-gray-50 transition-colors z-20"></div>
-                <div className="swiper-button-next !text-primary !w-12 !h-12 !mt-0 !top-1/2 !-translate-y-1/2 !right-4 !bg-white !rounded-full !shadow-lg after:!text-base after:!font-bold hover:!bg-gray-50 transition-colors z-20"></div>
               </div>
+
+              {/* Navigation Arrows */}
+              <button
+                onClick={prevImageSlide}
+                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white h-8 w-8 rounded-full transition-all hover:bg-black/80 flex items-center justify-center"
+              >
+                <ChevronLeft />
+              </button>
+              <button
+                onClick={nextImageSlide}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white h-8 w-8 rounded-full transition-all hover:bg-black/80 flex items-center justify-center"
+              >
+                <ChevronRight />
+              </button>
             </div>
           </div>
+
+          {/* Image Thumbnail Strip */}
+          <div className="flex space-x-2 overflow-x-auto py-2 px-4">
+            {imageSlides.map((img, i) => (
+              <img
+                key={i}
+                src={img.src}
+                alt={img.alt || ""}
+                onClick={() => setCurrentImageIndex(i)}
+                className={`h-16 w-24 object-cover rounded cursor-pointer transition-all ${
+                  i === currentImageIndex
+                    ? "ring-2 ring-blue-500 scale-105"
+                    : "opacity-70 hover:opacity-100"
+                }`}
+              />
+            ))}
+          </div>
         </div>
-
-        <style jsx>{`
-          .swiper-slide {
-            transition: all 0.3s ease;
-          }
-
-          .swiper-slide-active {
-            z-index: 10;
-            transform: scale(1);
-          }
-
-          .swiper-slide:not(.swiper-slide-active) {
-            z-index: 1;
-            transform: scale(0.9);
-            opacity: 0.8;
-          }
-
-          .swiper-slide-prev,
-          .swiper-slide-next {
-            z-index: 5;
-          }
-        `}</style>
       </section>
 
-      {/* Lightbox */}
+      {/* <section>
+        <div className="relative  rounded-xl p-4">
+          <div className="flex justify-center mb-4">
+            <div className="relative w-full max-w-2xl">
+              {videoSlides.map((video) => (
+                <video
+                  key={video.id}
+                  ref={(el) => {
+                    videoRefs.current[video.id] = el;
+                  }}
+                  onLoadedData={() => handleVideoLoaded(video.id)}
+                  onCanPlay={() => handleVideoLoaded(video.id)}
+                  onLoadedMetadata={() => handleVideoLoaded(video.id)}
+                  className="hidden"
+                  preload="auto"
+                  crossOrigin="anonymous"
+                >
+                  <source src={video.src} type="video/mp4" />
+                </video>
+              ))}
+
+              <div
+                onClick={() => openLightbox(currentVideoIndex, "video")}
+                className="relative w-full h-64 sm:h-80 md:h-96 bg-black rounded-lg cursor-pointer group overflow-hidden"
+              >
+                {videoThumbnails[videoSlides[currentVideoIndex]?.id] ? (
+                  <img
+                    src={videoThumbnails[videoSlides[currentVideoIndex]?.id]}
+                    alt={`Video ${videoSlides[currentVideoIndex]?.id}`}
+                    className="w-full h-full object-cover group-hover:opacity-80 transition-opacity duration-300"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gray-800 flex items-center justify-center">
+                    <div className="text-white text-center">
+                      <div className="text-2xl mb-2">Loading thumbnail...</div>
+                      <div className="text-sm">Generating preview</div>
+                    </div>
+                  </div>
+                )}
+
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="bg-black/60 text-white p-4 rounded-full flex items-center gap-2 transition-all   group-hover:scale-110">
+                    <Play className="h-8 w-8" />
+                  </div>
+                </div>
+              </div>
+
+              <button
+                onClick={prevVideoSlide}
+                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white h-8 w-8 rounded-full transition-all hover:bg-black/80 flex items-center justify-center"
+              >
+                <ChevronLeft />
+              </button>
+              <button
+                onClick={nextVideoSlide}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white h-8 w-8 rounded-full transition-all hover:bg-black/80 flex items-center justify-center"
+              >
+                <ChevronRight />
+              </button>
+            </div>
+          </div>
+
+          <div className="flex space-x-2 overflow-x-auto py-2 px-4">
+            {videoSlides.map((video, i) => (
+              <div
+                key={video.id}
+                onClick={() => setCurrentVideoIndex(i)}
+                className={`relative h-16 w-24 rounded cursor-pointer transition-all flex-shrink-0 ${
+                  i === currentVideoIndex
+                    ? "ring-2 ring-blue-500 scale-105"
+                    : "opacity-70 hover:opacity-100"
+                }`}
+              >
+                {videoThumbnails[video.id] ? (
+                  <img
+                    src={videoThumbnails[video.id]}
+                    alt={`Video ${video.id}`}
+                    className="w-full h-full object-cover rounded"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gray-600 rounded flex items-center justify-center">
+                    <div className="text-white text-xs text-center">
+                      Loading
+                    </div>
+                  </div>
+                )}
+
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-white text-sm bg-black/50 rounded-full p-1">
+                    ▶
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section> */}
+
+      {/* ---------- LIGHTBOX ---------- */}
       <Lightbox
-        plugins={[Download, Fullscreen, Zoom]}
-        captions={{
-          showToggle: true,
-          descriptionTextAlign: "end",
-        }}
-        open={lightboxOpen}
-        close={closeLightbox}
-        slides={slides}
-        index={photoIndex}
+        open={open}
+        close={() => setOpen(false)}
+        index={index}
+        slides={finalSlides}
+        plugins={[Download, Fullscreen, Zoom, Video]}
         styles={{
-          container: {
-            backgroundColor: "rgba(0, 0, 0, 0.95)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          },
-          slide: {
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          },
+          container: { backgroundColor: "rgba(0,0,0,0.95)" },
         }}
       />
-    </>
+    </div>
   );
-};
-
-export default Gallery;
+}

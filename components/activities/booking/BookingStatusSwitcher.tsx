@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Loader2, Check, Clock, CreditCard, ChevronDown } from "lucide-react";
-import { Booking_Status } from "@/types/prisma";
+import { Booking_Status } from "@prisma/client";
 
 interface BookingStatusSwitcherProps {
   bookingId: string;

@@ -9,10 +9,10 @@ import { baseUrl } from "@/utils/baseUrl";
 import { Blog } from "@prisma/client";
 
 const HomePage = async () => {
-  const response = await getData<{ data: Blog[] }>(
-    `${baseUrl}/api/blog/get-all`
-  );
-  const blogs = response.data;
+  // const response = await getData<{ data: Blog[] }>(
+  //   `${baseUrl}/api/blog/get-all`
+  // );
+  // const blogs = response.data;
   return (
     <div>
       <PromoDialog />
@@ -30,7 +30,7 @@ const HomePage = async () => {
       {/* Gallery */}
       <Gallery />
       {/* Blog Carousel Section */}
-      {blogs.length > 0 ? <BlogCarouselSection blogs={blogs} /> : null}
+      {/* {blogs.length > 0 ? <BlogCarouselSection blogs={blogs} /> : null} */}
     </div>
   );
 };

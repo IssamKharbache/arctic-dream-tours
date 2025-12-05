@@ -37,9 +37,9 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { format } from "date-fns";
-import { Emails } from "@prisma/client";
 import { getData } from "@/lib/getData";
 import { baseUrl } from "@/utils/baseUrl";
+import { Emails } from "@/types/prisma";
 
 interface MessagesTableProps {
   initialMessages: Emails[];

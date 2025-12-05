@@ -2,8 +2,8 @@ export const dynamic = "force-dynamic";
 
 import { getData } from "@/lib/getData";
 import { baseUrl } from "@/utils/baseUrl";
-import { Emails } from "@prisma/client";
 import { MessagesTable } from "./MessagesTable";
+import { Emails } from "@/types/prisma";
 
 const page = async () => {
   const res = await getData<{ data: Emails[] }>(

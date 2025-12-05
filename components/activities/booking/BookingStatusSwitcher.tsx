@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Booking_Status } from "@prisma/client";
 import { Loader2, Check, Clock, CreditCard, ChevronDown } from "lucide-react";
+import { Booking_Status } from "@/types/prisma";
 
 interface BookingStatusSwitcherProps {
   bookingId: string;

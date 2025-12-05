@@ -4,8 +4,8 @@ import DashboardPagesHeader from "@/components/activities/DashboardPagesHeader";
 import React from "react";
 import { BlogsTable } from "./data-table";
 import { getData } from "@/lib/getData";
-import { Blog } from "@prisma/client";
 import { baseUrl } from "@/utils/baseUrl";
+import { Blog } from "@/types/prisma";
 
 const page = async () => {
   const res = await getData<{ data: Blog[] }>(`${baseUrl}/api/blog/get-all`);

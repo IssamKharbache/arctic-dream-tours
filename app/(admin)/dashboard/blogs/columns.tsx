@@ -1,7 +1,7 @@
 "use client";
 
 import ActionsDropDown from "@/components/tables/ActionsDropDown";
-import { Activity, Blog } from "@prisma/client";
+import { Blog } from "@/types/prisma";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
 export const columns: ColumnDef<Blog>[] = [

@@ -1,6 +1,6 @@
 "use client";
 
-import { User } from "@prisma/client";
+import { User } from "@/types/prisma";
 import { ColumnDef } from "@tanstack/react-table";
 
 export const columns: ColumnDef<User>[] = [

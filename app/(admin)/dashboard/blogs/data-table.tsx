@@ -18,9 +18,9 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-import Image from "next/image";
-import { Blog } from "@prisma/client";
+
 import ActionsDropDown from "@/components/tables/ActionsDropDown";
+import { Blog } from "@/types/prisma";
 
 interface BlogsTableProps {
   blogs: Blog[];

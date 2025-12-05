@@ -1,5 +1,5 @@
 "use client";
-import { ActivityDifficulty } from "@prisma/client";
+import { ActivityDifficulty } from "@/types/prisma";
 import { useEffect, useRef } from "react";
 
 interface LiquidDifficultyIndicatorProps {

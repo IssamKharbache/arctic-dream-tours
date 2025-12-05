@@ -22,8 +22,8 @@ import { useDeleleActionButtonStore } from "@/store/zustand/deleteActionButtonSt
 import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
 
-import { User } from "@prisma/client";
 import { Filter, Loader2 } from "lucide-react";
+import { User } from "@/types/prisma";
 
 interface DataTableProps<TValue> {
   columns: ColumnDef<User, TValue>[];

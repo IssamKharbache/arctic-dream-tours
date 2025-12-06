@@ -1,68 +1,68 @@
 import { PrismaClient } from "@prisma/client";
 
-// For development: reuse client via global
-// For production: module-level singleton (resets per Lambda but works within execution)
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined;
-};
-
-// Create the PrismaClient with optimized settings
 const createPrismaClient = () => {
+  // Force pooler configuration for free tier
+  const databaseUrl = process.env.DATABASE_URL;
+
+  // Ensure it has pooler parameters
+  let url = databaseUrl || "";
+  if (!url.includes("pgbouncer=true")) {
+    console.warn("⚠️ DATABASE_URL missing pgbouncer=true. Add ?pgbouncer=true");
+  }
+  if (!url.includes("pooler.supabase.com")) {
+    console.warn("⚠️ DATABASE_URL not using pooler hostname");
+  }
+
   return new PrismaClient({
-    // Only log errors in production to reduce noise
-    log:
-      process.env.NODE_ENV === "development"
-        ? ["query", "error", "warn"]
-        : ["error"],
-    // Error formatting
-    errorFormat: "minimal",
-    // Add transaction timeouts for serverless
+    datasources: {
+      db: {
+        url: url,
+      },
+    },
+    // Minimal logging for free tier
+    log: ["error"], // Only errors to reduce overhead
+    // Shorter timeouts for free tier
     transactionOptions: {
-      maxWait: 2000,
-      timeout: 5000,
+      maxWait: 1000, // 1 second max wait
+      timeout: 3000, // 3 second timeout
     },
   });
 };
 
-// Different strategy for dev vs prod
-export const prisma = (() => {
-  // In production (Vercel): always create new instance per Lambda execution
-  if (process.env.NODE_ENV === "production") {
-    return createPrismaClient();
-  }
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined;
+};
 
-  // In development: reuse the same client via global
+export const prisma = (() => {
+  // SINGLE instance for entire application lifecycle
   if (!globalForPrisma.prisma) {
     globalForPrisma.prisma = createPrismaClient();
+    console.log("📦 PrismaClient created for Supabase Free Tier");
   }
   return globalForPrisma.prisma;
 })();
 
-// Optional: Add error handling middleware
+// Free tier: Add automatic reconnection
 prisma.$use(async (params, next) => {
   try {
     return await next(params);
-  } catch (error) {
-    // Type guard for error
-    if (error instanceof Error) {
-      console.error("Prisma error:", {
-        model: params.model,
-        action: params.action,
-        error: error.message,
-      });
-    } else {
-      console.error("Unknown Prisma error:", error);
+  } catch (error: any) {
+    // If connection error, try to reconnect once
+    if (
+      error.message?.includes("reach database server") ||
+      error.message?.includes("pooler")
+    ) {
+      console.log("🔄 Attempting to reconnect to database...");
+      await prisma.$disconnect();
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await prisma.$connect();
+
+      // Retry the operation once
+      return await next(params);
     }
     throw error;
   }
 });
-
-// Handle clean shutdown
-if (process.env.NODE_ENV === "development") {
-  process.on("beforeExit", async () => {
-    await prisma.$disconnect();
-  });
-}
 
 export const db = prisma;
 export default prisma;

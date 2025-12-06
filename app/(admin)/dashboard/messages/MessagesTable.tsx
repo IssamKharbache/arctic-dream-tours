@@ -32,7 +32,6 @@ import {
   Mail,
   Phone,
   Calendar,
-  User,
   Loader2,
   RefreshCw,
 } from "lucide-react";

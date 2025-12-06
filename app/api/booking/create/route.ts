@@ -7,6 +7,7 @@ import {
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/authOptions";
 import { sendBookingEmail } from "@/lib/auth/sendBookingEmail";
+import { sendAlertEmail } from "@/lib/auth/sendAlertEmail";
 
 export const POST = async (req: Request) => {
   try {
@@ -109,6 +110,16 @@ export const POST = async (req: Request) => {
       });
     } catch (emailError) {
       console.error("Failed to send confirmation email:", emailError);
+    }
+
+    // SEND ADMIN BOOKING ALERT
+    try {
+      await sendAlertEmail({
+        type: "booking",
+        data: newBooking, // Must include activity (already included)
+      });
+    } catch (err) {
+      console.error("Failed to send admin booking alert:", err);
     }
 
     return NextResponse.json(

@@ -1,0 +1,17 @@
+{
+  "activity": {
+    "buttons": {
+      "bookNow": "احجز الآن"
+    },
+    "labels": {
+      "perPerson": "لكل شخص"
+    },
+    "difficulty": {
+      "EASY": "سهل",
+      "MODERATE": "متوسط",
+      "HARD": "صعب",
+      "EXTREME": "شديد",
+      "UNKNOWN": "غير معروف"
+    }
+  }
+}

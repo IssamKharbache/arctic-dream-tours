@@ -4,12 +4,15 @@ import { MapPin, ClockIcon } from "lucide-react";
 import { Activity } from "@/types/activity";
 import { Link } from "@/i18n/navigation";
 import { LiquidDifficultyIndicator } from "./LiquidDifficultyIndicator";
+import { useTranslations } from "next-intl";
 
 interface ActivityCardProps {
   activity: Activity;
 }
 
 export function ActivityCard({ activity }: ActivityCardProps) {
+  const t = useTranslations("activity");
+
   return (
     <div className="flex flex-col p-5 rounded-2xl bg-primary/10 hover:bg-primary/20 hover:-rotate-1 hover:-translate-y-1 transition-transform duration-300 ease-in-out h-full">
       {/* Image section - fixed height */}
@@ -35,7 +38,7 @@ export function ActivityCard({ activity }: ActivityCardProps) {
         </div>
         <div className="flex items-center gap-2">
           <LiquidDifficultyIndicator difficulty={activity.difficulty} />
-          <p>{formatActivityDifficulty(activity.difficulty)}</p>
+          <p>{t(`difficulty.${activity.difficulty}`)}</p>
         </div>
       </div>
 
@@ -74,12 +77,14 @@ export function ActivityCard({ activity }: ActivityCardProps) {
               €{activity.adultPrice}
             </span>
           )}
-          <span className="text-xs text-muted-foreground">per person</span>
+          <span className="text-xs text-muted-foreground">
+            {t("labels.perPerson")}
+          </span>
         </div>
         <div className="flex items-center gap-5">
           <Link href={`/activity/${activity.slug}` as any}>
             <Button className="ml-auto rounded-full hover:scale-105">
-              Book Now
+              {t("buttons.bookNow")}
             </Button>
           </Link>
         </div>

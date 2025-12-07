@@ -62,5 +62,11 @@
       "current": "Attuale",
       "upcoming": "Prossimo"
     }
+  },
+  "buttons": {
+    "request": "Richiedi prenotazione",
+    "payNow": "Paga ora",
+    "back": "Indietro",
+    "bookingSummary": "Riepilogo Prenotazione"
   }
 }

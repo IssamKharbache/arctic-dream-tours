@@ -62,5 +62,11 @@
       "current": "Aktuell",
       "upcoming": "Bevorstehend"
     }
+  },
+  "buttons": {
+    "request": "Buchung anfragen",
+    "payNow": "Jetzt bezahlen",
+    "back": "Zurück",
+    "bookingSummary": "Buchungsübersicht"
   }
 }

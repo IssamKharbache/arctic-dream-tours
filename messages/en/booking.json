@@ -62,5 +62,11 @@
       "current": "Current",
       "upcoming": "Upcoming"
     }
+  },
+  "buttons": {
+    "request": "Request booking",
+    "payNow": "Pay now",
+    "back": "back",
+    "bookingSummary": "Booking Summary"
   }
 }

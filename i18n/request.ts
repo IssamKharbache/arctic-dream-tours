@@ -23,6 +23,8 @@ export default getRequestConfig(async ({ requestLocale }) => {
       galleryMessages,
       aboutMessages,
       blogMessages,
+      activityMessages,
+      bookingDetailsMessages,
     ] = await Promise.all([
       import(`@/messages/${locale}/common.json`)
         .then((m) => m.default)
@@ -63,6 +65,12 @@ export default getRequestConfig(async ({ requestLocale }) => {
       import(`@/messages/${locale}/blog.json`)
         .then((m) => m.default)
         .catch(() => ({})),
+      import(`@/messages/${locale}/activity.json`)
+        .then((m) => m.default)
+        .catch(() => ({})),
+      import(`@/messages/${locale}/bookingDetails.json`)
+        .then((m) => m.default)
+        .catch(() => ({})),
     ]);
 
     return {
@@ -81,11 +89,12 @@ export default getRequestConfig(async ({ requestLocale }) => {
         gallery: galleryMessages,
         about: aboutMessages,
         blog: blogMessages,
+        ...activityMessages,
+        bookingDetails: bookingDetailsMessages,
       },
     };
   } catch (error) {
     console.error(`Failed to load messages for locale ${locale}:`, error);
-
     // fallback to default locale
     const [
       commonMessages,
@@ -101,6 +110,8 @@ export default getRequestConfig(async ({ requestLocale }) => {
       galleryMessages,
       aboutMessages,
       blogMessages,
+      activityMessages,
+      BookingDetailsMessages,
     ] = await Promise.all([
       import(`@/messages/${routing.defaultLocale}/common.json`).then(
         (m) => m.default
@@ -141,6 +152,12 @@ export default getRequestConfig(async ({ requestLocale }) => {
       import(`@/messages/${locale}/blog.json`)
         .then((m) => m.default)
         .catch(() => ({})),
+      import(`@/messages/${locale}/activity.json`)
+        .then((m) => m.default)
+        .catch(() => ({})),
+      import(`@/messages/${locale}/bookingDetails.json`)
+        .then((m) => m.default)
+        .catch(() => ({})),
     ]);
 
     return {
@@ -159,6 +176,8 @@ export default getRequestConfig(async ({ requestLocale }) => {
         gallery: galleryMessages,
         about: aboutMessages,
         blog: blogMessages,
+        ...activityMessages,
+        bookingDetails: BookingDetailsMessages,
       },
     };
   }

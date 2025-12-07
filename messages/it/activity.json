@@ -1,0 +1,17 @@
+{
+  "activity": {
+    "buttons": {
+      "bookNow": "Prenota ora"
+    },
+    "labels": {
+      "perPerson": "per persona"
+    },
+    "difficulty": {
+      "EASY": "Facile",
+      "MODERATE": "Moderato",
+      "HARD": "Difficile",
+      "EXTREME": "Estremo",
+      "UNKNOWN": "Sconosciuto"
+    }
+  }
+}

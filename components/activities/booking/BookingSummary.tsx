@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, Clock, Euro, MapPin, Users } from "lucide-react";
+import { Calendar, Clock, Euro, Loader2, MapPin, Users } from "lucide-react";
 import Image from "next/image";
 import { isoToNormalDate } from "@/utils/isoToNormalDate";
 import { baseUrl } from "@/utils/baseUrl";
@@ -11,6 +11,7 @@ import { useRouter } from "@/i18n/navigation";
 import PayOnline from "./PayOnline";
 import { useBookingDialogStore } from "@/store/zustand/bookingDialogStore";
 import { fbEvent } from "@/lib/fpixel";
+import { useTranslations } from "next-intl";
 
 export interface BookingSummaryData {
   firstName: string;
@@ -41,7 +42,8 @@ const BookingSummary: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { setStep } = useBookingDialogStore();
+  const { setStep, setOpenDialog } = useBookingDialogStore();
+  const t = useTranslations("booking");
 
   const router = useRouter();
   useEffect(() => {
@@ -107,7 +109,9 @@ const BookingSummary: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
       setBookingData(null);
       localStorage.removeItem("customerData");
       localStorage.removeItem("bookingDetails");
-      setStep(0);
+      setStep(1);
+      setOpenDialog(false);
+      setIsSubmitting(false);
       return data.data;
     } catch (error) {
       console.error(error);
@@ -115,12 +119,19 @@ const BookingSummary: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
       return null;
     } finally {
       setIsSubmitting(false);
+      setOpenDialog(false);
+      setBookingData(null);
+      setStep(1);
+      localStorage.removeItem("customerData");
+      localStorage.removeItem("bookingDetails");
     }
   };
 
   return (
     <div className="p-4 sm:p-6">
-      <h2 className="text-2xl font-bold mb-6 text-center">Booking Summary</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center">
+        {t("buttons.bookingSummary")}
+      </h2>
 
       <Card className="mb-6 overflow-hidden">
         <CardContent className="p-0 flex flex-col sm:flex-row">
@@ -195,7 +206,7 @@ const BookingSummary: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
             onClick={onBack}
             className="flex-1 sm:flex-none bg-transparent"
           >
-            Back
+            {t("buttons.back")}
           </Button>
         )}
         <div className="flex gap-3">
@@ -204,9 +215,14 @@ const BookingSummary: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
             className="flex-1 sm:flex-none bg-yellow-500 hover:bg-yellow-600"
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Submitting..." : "Request Booking"}
+            {isSubmitting ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              t("buttons.request")
+            )}
           </Button>
           <PayOnline
+            text={t("buttons.payNow")}
             booking={bookingData}
             onBookingRequest={handleRequestBooking}
           />

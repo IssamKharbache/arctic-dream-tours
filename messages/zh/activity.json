@@ -1,0 +1,17 @@
+{
+  "activity": {
+    "buttons": {
+      "bookNow": "立即预订"
+    },
+    "labels": {
+      "perPerson": "每人"
+    },
+    "difficulty": {
+      "EASY": "容易",
+      "MODERATE": "中等",
+      "HARD": "困难",
+      "EXTREME": "极限",
+      "UNKNOWN": "未知"
+    }
+  }
+}

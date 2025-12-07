@@ -1,0 +1,17 @@
+{
+  "activity": {
+    "buttons": {
+      "bookNow": "予約する"
+    },
+    "labels": {
+      "perPerson": "1名あたり"
+    },
+    "difficulty": {
+      "EASY": "簡単",
+      "MODERATE": "普通",
+      "HARD": "難しい",
+      "EXTREME": "極めて難しい",
+      "UNKNOWN": "不明"
+    }
+  }
+}

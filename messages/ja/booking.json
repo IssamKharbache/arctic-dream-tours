@@ -58,5 +58,11 @@
     "contactDetails": "連絡先情報",
     "checkout": "支払い",
     "status": { "completed": "完了", "current": "現在", "upcoming": "今後" }
+  },
+  "buttons": {
+    "request": "予約をリクエスト",
+    "payNow": "今すぐ支払う",
+    "back": "戻る",
+    "bookingSummary": "予約サマリー"
   }
 }

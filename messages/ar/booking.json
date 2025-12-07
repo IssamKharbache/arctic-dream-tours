@@ -58,5 +58,11 @@
     "contactDetails": "بيانات الاتصال",
     "checkout": "الدفع",
     "status": { "completed": "تم", "current": "حالي", "upcoming": "قادم" }
+  },
+  "buttons": {
+    "request": "طلب الحجز",
+    "payNow": "ادفع الآن",
+    "back": "رجوع",
+    "bookingSummary": "ملخص الحجز"
   }
 }

@@ -62,5 +62,11 @@
       "current": "Actuel",
       "upcoming": "À venir"
     }
+  },
+  "buttons": {
+    "request": "Demander une réservation",
+    "payNow": "Payer maintenant",
+    "back": "Retour",
+    "bookingSummary": "Résumé de la Réservation"
   }
 }

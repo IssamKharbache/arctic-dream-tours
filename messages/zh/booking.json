@@ -55,5 +55,11 @@
     "contactDetails": "联系信息",
     "checkout": "结账",
     "status": { "completed": "已完成", "current": "当前", "upcoming": "即将" }
+  },
+  "buttons": {
+    "request": "请求预订",
+    "payNow": "立即支付",
+    "back": "返回",
+    "bookingSummary": "预订摘要"
   }
 }

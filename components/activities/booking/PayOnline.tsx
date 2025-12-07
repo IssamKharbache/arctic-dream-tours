@@ -39,9 +39,11 @@ export interface CreatedBooking {
 const PayOnline = ({
   booking,
   onBookingRequest,
+  text,
 }: {
   booking: BookingSummaryData;
   onBookingRequest: (type: string) => Promise<CreatedBooking | null>;
+  text: string;
 }) => {
   const stripePromise = loadStripe(
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ""
@@ -68,7 +70,7 @@ const PayOnline = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Pay now</Button>
+        <Button>{text}</Button>
       </DialogTrigger>
       <DialogContent className="my-4 py-12 xl:max-w-screen-xl z-50">
         <DialogHeader>

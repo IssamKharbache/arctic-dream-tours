@@ -79,9 +79,9 @@ export function BookingModal() {
                   </Button>
                 </DialogFooter>
               </form>
-            ) : (
+            ) : step === 2 ? (
               <BookingSummary onBack={() => setStep(1)} />
-            )}
+            ) : null}
           </div>
         </DialogContent>
       </Dialog>

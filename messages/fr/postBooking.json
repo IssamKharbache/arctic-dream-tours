@@ -1,0 +1,75 @@
+{
+  "bookingSuccess": {
+    "titles": {
+      "bookingDetails": "Détails de la Réservation",
+      "guestInfo": "Informations Client",
+      "locationInfo": "Informations de Localisation",
+      "priceSummary": "Résumé du Prix",
+      "whatsNext": "Que se passe-t-il ensuite ?"
+    },
+    "labels": {
+      "pickup": "Lieu de Prise en Charge",
+      "dropoff": "Lieu de Dépose",
+      "subtotal": "Sous-total :",
+      "taxes": "Taxes et Frais :",
+      "total": "Total :",
+      "bookedOn": "Réservé le",
+      "requestedOn": "Demandé le",
+      "activity": "Activité :",
+      "date": "Date :",
+      "time": "Heure :",
+      "bookingType": "Type de Réservation :"
+    },
+    "buttons": {
+      "backToHome": "Retour à l'Accueil",
+      "returnToHome": "Retourner à l'Accueil",
+      "copyLink": "Copier le Lien",
+      "copied": "Copié !"
+    },
+    "messages": {
+      "saveLink": "Enregistrez ce lien pour accéder à votre réservation plus tard :",
+      "thankYou": "Merci pour votre réservation !",
+      "contactSoon": "Nous vous contacterons dans les 24 heures pour confirmer votre réservation.",
+      "finalPriceNote": "Le prix final sera confirmé après vérification",
+      "privateTour": "Visite Privée",
+      "groupTour": "Visite de Groupe"
+    },
+    "loading": {
+      "title": "Chargement de votre réservation",
+      "message": "Veuillez patienter pendant que nous récupérons vos détails..."
+    },
+    "errors": {
+      "accessDenied": "Accès Refusé",
+      "sessionExpired": "Nous n'avons pas pu récupérer les détails de votre réservation. Cela peut être dû à l'expiration de votre session.",
+      "checkEmail": "Veuillez vérifier votre email pour la confirmation de réservation ou contacter le support si vous avez besoin d'aide.",
+      "cancelledNote": "Si vous pensez qu'il s'agit d'une erreur, veuillez contacter le support."
+    },
+    "statusInstructions": {
+      "paid": {
+        "emailConfirmation": "Vous recevrez un email de confirmation avec tous les détails de votre réservation.",
+        "arriveEarly": "Veuillez arriver au lieu de prise en charge 15 minutes avant l'heure de départ prévue.",
+        "referenceReady": "Ayez votre référence de réservation (#{ref}) prête à présenter à votre arrivée."
+      },
+      "pending": {
+        "reviewRequest": "Notre équipe examinera votre demande et confirmera la disponibilité dans les 24 heures.",
+        "bankingDetails": "Nous vous fournirons nos coordonnées bancaires afin que vous puissiez procéder au paiement.",
+        "contactReference": "Ayez votre référence de réservation (#{ref}) prête lorsque vous nous contactez."
+      },
+      "other": "Veuillez contacter le support pour plus d'informations sur l'état de votre réservation."
+    },
+    "statusTitles": {
+      "paid": "Paiement réussi !",
+      "pending": "Demande de réservation reçue !",
+      "confirmed": "Réservation confirmée !",
+      "cancelled": "Réservation annulée",
+      "default": "Statut de la réservation"
+    },
+    "statusMessages": {
+      "paid": "Votre réservation a été confirmée et payée.",
+      "pending": "Merci pour votre demande de réservation ! Notre équipe l'examinera et vous contactera sous peu avec les détails de confirmation et de paiement.",
+      "confirmed": "Votre réservation a été confirmée.",
+      "cancelled": "Cette réservation a été annulée.",
+      "default": "Statut de votre réservation : {status}"
+    }
+  }
+}

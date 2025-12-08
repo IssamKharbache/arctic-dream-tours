@@ -1,0 +1,75 @@
+{
+  "bookingSuccess": {
+    "titles": {
+      "bookingDetails": "Dettagli Prenotazione",
+      "guestInfo": "Informazioni Ospite",
+      "locationInfo": "Informazioni Posizione",
+      "priceSummary": "Riepilogo Prezzo",
+      "whatsNext": "Cosa succede dopo?"
+    },
+    "labels": {
+      "pickup": "Luogo Ritiro",
+      "dropoff": "Luogo Consegna",
+      "subtotal": "Subtotale:",
+      "taxes": "Tasse e Commissioni:",
+      "total": "Totale:",
+      "bookedOn": "Prenotato il",
+      "requestedOn": "Richiesto il",
+      "activity": "Attività:",
+      "date": "Data:",
+      "time": "Ora:",
+      "bookingType": "Tipo Prenotazione:"
+    },
+    "buttons": {
+      "backToHome": "Torna alla Home",
+      "returnToHome": "Ritorna alla Home",
+      "copyLink": "Copia Link",
+      "copied": "Copiato!"
+    },
+    "messages": {
+      "saveLink": "Salva questo link per accedere alla tua prenotazione in seguito:",
+      "thankYou": "Grazie per la tua prenotazione!",
+      "contactSoon": "Ti contatteremo entro 24 ore per confermare la tua prenotazione.",
+      "finalPriceNote": "Il prezzo finale verrà confermato dopo la revisione",
+      "privateTour": "Tour Privato",
+      "groupTour": "Tour di Gruppo"
+    },
+    "loading": {
+      "title": "Caricamento tua prenotazione",
+      "message": "Attendi mentre recuperiamo i tuoi dettagli..."
+    },
+    "errors": {
+      "accessDenied": "Accesso Negato",
+      "sessionExpired": "Non abbiamo potuto recuperare i dettagli della tua prenotazione. Potrebbe essere perché la tua sessione è scaduta.",
+      "checkEmail": "Controlla la tua email per la conferma della prenotazione o contatta l'assistenza se hai bisogno di aiuto.",
+      "cancelledNote": "Se ritieni che sia un errore, contatta l'assistenza."
+    },
+    "statusInstructions": {
+      "paid": {
+        "emailConfirmation": "Riceverai un'email di conferma con tutti i dettagli della tua prenotazione.",
+        "arriveEarly": "Si prega di arrivare al luogo di ritiro 15 minuti prima dell'orario di partenza programmato.",
+        "referenceReady": "Tieni pronta la tua referenza di prenotazione (#{ref}) da presentare all'arrivo."
+      },
+      "pending": {
+        "reviewRequest": "Il nostro team esaminerà la tua richiesta e confermerà la disponibilità entro 24 ore.",
+        "bankingDetails": "Ti forniremo i nostri dati bancari in modo che tu possa procedere con il pagamento.",
+        "contactReference": "Tieni pronta la tua referenza di prenotazione (#{ref}) quando ci contatti."
+      },
+      "other": "Si prega di contattare il supporto per ulteriori informazioni sullo stato della tua prenotazione."
+    },
+    "statusTitles": {
+      "paid": "Pagamento riuscito!",
+      "pending": "Richiesta di prenotazione ricevuta!",
+      "confirmed": "Prenotazione confermata!",
+      "cancelled": "Prenotazione annullata",
+      "default": "Stato della prenotazione"
+    },
+    "statusMessages": {
+      "paid": "La tua prenotazione è stata confermata e pagata.",
+      "pending": "Grazie per la tua richiesta di prenotazione! Il nostro team la esaminerà e ti contatterà a breve con i dettagli di conferma e pagamento.",
+      "confirmed": "La tua prenotazione è stata confermata.",
+      "cancelled": "Questa prenotazione è stata annullata.",
+      "default": "Stato della tua prenotazione: {status}"
+    }
+  }
+}

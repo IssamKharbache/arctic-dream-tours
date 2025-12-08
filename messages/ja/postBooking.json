@@ -1,0 +1,75 @@
+{
+  "bookingSuccess": {
+    "titles": {
+      "bookingDetails": "予約詳細",
+      "guestInfo": "ゲスト情報",
+      "locationInfo": "場所情報",
+      "priceSummary": "料金概要",
+      "whatsNext": "次のステップ"
+    },
+    "labels": {
+      "pickup": "ピックアップ場所",
+      "dropoff": "ドロップオフ場所",
+      "subtotal": "小計:",
+      "taxes": "税金と手数料:",
+      "total": "合計:",
+      "bookedOn": "予約日",
+      "requestedOn": "リクエスト日",
+      "activity": "アクティビティ:",
+      "date": "日付:",
+      "time": "時間:",
+      "bookingType": "予約タイプ:"
+    },
+    "buttons": {
+      "backToHome": "ホームに戻る",
+      "returnToHome": "ホームに戻る",
+      "copyLink": "リンクをコピー",
+      "copied": "コピーしました！"
+    },
+    "messages": {
+      "saveLink": "後で予約にアクセスするためにこのリンクを保存してください:",
+      "thankYou": "ご予約ありがとうございます！",
+      "contactSoon": "24時間以内にご連絡し、予約を確認いたします。",
+      "finalPriceNote": "最終価格はレビュー後に確定します",
+      "privateTour": "プライベートツアー",
+      "groupTour": "グループツアー"
+    },
+    "loading": {
+      "title": "予約を読み込み中",
+      "message": "詳細を取得中です。お待ちください..."
+    },
+    "errors": {
+      "accessDenied": "アクセスが拒否されました",
+      "sessionExpired": "予約詳細を取得できませんでした。セッションが期限切れになった可能性があります。",
+      "checkEmail": "予約確認メールをご確認いただくか、サポートまでお問い合わせください。",
+      "cancelledNote": "誤りと思われる場合は、サポートまでご連絡ください。"
+    },
+    "statusInstructions": {
+      "paid": {
+        "emailConfirmation": "予約の詳細を記載した確認メールが届きます。",
+        "arriveEarly": "予定の出発時刻の15分前にピックアップ場所にお越しください。",
+        "referenceReady": "到着時に提示できるよう、予約参照番号 (#{ref}) をご用意ください。"
+      },
+      "pending": {
+        "reviewRequest": "当社チームがリクエストを確認し、24時間以内に空き状況を確認いたします。",
+        "bankingDetails": "お支払い手続きに進むための当社の銀行口座情報をご提供いたします。",
+        "contactReference": "お問い合わせの際は、予約参照番号 (#{ref}) をご用意ください。"
+      },
+      "other": "予約状況の詳細については、サポートまでお問い合わせください。"
+    },
+    "statusTitles": {
+      "paid": "お支払い完了！",
+      "pending": "予約リクエスト受領！",
+      "confirmed": "予約確定！",
+      "cancelled": "予約キャンセル",
+      "default": "予約状況"
+    },
+    "statusMessages": {
+      "paid": "ご予約が確定し、お支払いが完了しました。",
+      "pending": "ご予約リクエストありがとうございます！当社チームが確認し、確認とお支払い詳細についてすぐにご連絡いたします。",
+      "confirmed": "ご予約が確定しました。",
+      "cancelled": "この予約はキャンセルされました。",
+      "default": "ご予約の状況: {status}"
+    }
+  }
+}

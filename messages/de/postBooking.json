@@ -1,0 +1,75 @@
+{
+  "bookingSuccess": {
+    "titles": {
+      "bookingDetails": "Buchungsdetails",
+      "guestInfo": "Gastinformationen",
+      "locationInfo": "Standortinformationen",
+      "priceSummary": "Preiszusammenfassung",
+      "whatsNext": "Was passiert als Nächstes?"
+    },
+    "labels": {
+      "pickup": "Abholort",
+      "dropoff": "Absetzort",
+      "subtotal": "Zwischensumme:",
+      "taxes": "Steuern & Gebühren:",
+      "total": "Gesamt:",
+      "bookedOn": "Gebucht am",
+      "requestedOn": "Angefordert am",
+      "activity": "Aktivität:",
+      "date": "Datum:",
+      "time": "Zeit:",
+      "bookingType": "Buchungstyp:"
+    },
+    "buttons": {
+      "backToHome": "Zurück zur Startseite",
+      "returnToHome": "Zur Startseite zurückkehren",
+      "copyLink": "Link kopieren",
+      "copied": "Kopiert!"
+    },
+    "messages": {
+      "saveLink": "Speichern Sie diesen Link, um später auf Ihre Buchung zuzugreifen:",
+      "thankYou": "Vielen Dank für Ihre Buchung!",
+      "contactSoon": "Wir werden Sie innerhalb von 24 Stunden kontaktieren, um Ihre Buchung zu bestätigen.",
+      "finalPriceNote": "Der endgültige Preis wird nach Überprüfung bestätigt",
+      "privateTour": "Privatführung",
+      "groupTour": "Gruppenführung"
+    },
+    "loading": {
+      "title": "Ihre Buchung wird geladen",
+      "message": "Bitte warten Sie, während wir Ihre Details abrufen..."
+    },
+    "errors": {
+      "accessDenied": "Zugriff verweigert",
+      "sessionExpired": "Wir konnten Ihre Buchungsdetails nicht abrufen. Dies könnte daran liegen, dass Ihre Sitzung abgelaufen ist.",
+      "checkEmail": "Bitte überprüfen Sie Ihre E-Mails auf Ihre Buchungsbestätigung oder wenden Sie sich an den Support, wenn Sie Hilfe benötigen.",
+      "cancelledNote": "Wenn Sie glauben, dass dies ein Fehler ist, wenden Sie sich bitte an den Support."
+    },
+    "statusInstructions": {
+      "paid": {
+        "emailConfirmation": "Sie erhalten eine Bestätigungs-E-Mail mit allen Details Ihrer Buchung.",
+        "arriveEarly": "Bitte kommen Sie 15 Minuten vor der geplanten Abfahrtszeit am Abholort an.",
+        "referenceReady": "Halten Sie Ihre Buchungsreferenz (#{ref}) bereit, um sie bei der Ankunft vorzulegen."
+      },
+      "pending": {
+        "reviewRequest": "Unser Team wird Ihre Anfrage überprüfen und innerhalb von 24 Stunden die Verfügbarkeit bestätigen.",
+        "bankingDetails": "Wir werden Ihnen unsere Bankdaten zur Verfügung stellen, damit Sie mit der Zahlung fortfahren können.",
+        "contactReference": "Halten Sie Ihre Buchungsreferenz (#{ref}) bereit, wenn Sie uns kontaktieren."
+      },
+      "other": "Bitte kontaktieren Sie den Support für weitere Informationen zu Ihrem Buchungsstatus."
+    },
+    "statusTitles": {
+      "paid": "Zahlung erfolgreich!",
+      "pending": "Buchungsanfrage erhalten!",
+      "confirmed": "Buchung bestätigt!",
+      "cancelled": "Buchung storniert",
+      "default": "Buchungsstatus"
+    },
+    "statusMessages": {
+      "paid": "Ihre Buchung wurde bestätigt und bezahlt.",
+      "pending": "Vielen Dank für Ihre Buchungsanfrage! Unser Team wird sie prüfen und sich in Kürze mit Bestätigungs- und Zahlungsdetails bei Ihnen melden.",
+      "confirmed": "Ihre Buchung wurde bestätigt.",
+      "cancelled": "Diese Buchung wurde storniert.",
+      "default": "Ihr Buchungsstatus: {status}"
+    }
+  }
+}

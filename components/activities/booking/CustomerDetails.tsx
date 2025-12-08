@@ -31,19 +31,33 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = ({
   register,
   errors,
   setValue,
+  watch,
 }) => {
   const [pickupType, setPickupType] = useState<string>("");
   const [dropoffType, setDropoffType] = useState<string>("");
 
   const t = useTranslations("booking.form");
 
+  // Store original values (not translated)
+  const pickupOptions = {
+    "no-pickup": "I don't need pick up",
+    office: "Pick me up from the office",
+    custom: "", // Will be filled by user input
+  };
+
+  const dropoffOptions = {
+    "no-dropoff": "I don't need drop off",
+    office: "Drop me off at the office",
+    custom: "", // Will be filled by user input
+  };
+
   const handlePickupChange = (value: string) => {
     setPickupType(value);
 
     if (value === "no-pickup") {
-      setValue("pickUpLocation", t("pickup.options.noPickup"));
+      setValue("pickUpLocation", pickupOptions["no-pickup"]);
     } else if (value === "office") {
-      setValue("pickUpLocation", t("pickup.options.office"));
+      setValue("pickUpLocation", pickupOptions["office"]);
     } else if (value === "custom") {
       setValue("pickUpLocation", "");
     }
@@ -53,9 +67,9 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = ({
     setDropoffType(value);
 
     if (value === "no-dropoff") {
-      setValue("dropOffLocation", t("dropoff.options.noDropoff"));
+      setValue("dropOffLocation", dropoffOptions["no-dropoff"]);
     } else if (value === "office") {
-      setValue("dropOffLocation", t("dropoff.options.office"));
+      setValue("dropOffLocation", dropoffOptions["office"]);
     } else if (value === "custom") {
       setValue("dropOffLocation", "");
     }
@@ -64,6 +78,26 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = ({
   const getErrorMessage = (field: keyof BookingCustomerFormData) => {
     const message = errors[field]?.message;
     return message || "";
+  };
+
+  // Get current values for display
+  const currentPickup = watch("pickUpLocation");
+  const currentDropoff = watch("dropOffLocation");
+
+  // Determine which pickup option is selected based on current value
+  const getCurrentPickupValue = () => {
+    if (currentPickup === pickupOptions["no-pickup"]) return "no-pickup";
+    if (currentPickup === pickupOptions["office"]) return "office";
+    if (currentPickup && currentPickup !== "") return "custom";
+    return "";
+  };
+
+  // Determine which dropoff option is selected based on current value
+  const getCurrentDropoffValue = () => {
+    if (currentDropoff === dropoffOptions["no-dropoff"]) return "no-dropoff";
+    if (currentDropoff === dropoffOptions["office"]) return "office";
+    if (currentDropoff && currentDropoff !== "") return "custom";
+    return "";
   };
 
   return (
@@ -144,7 +178,10 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = ({
           <Label htmlFor="pickupSelect" className="mb-4 block">
             {t("pickup.label")}
           </Label>
-          <Select onValueChange={handlePickupChange}>
+          <Select
+            value={getCurrentPickupValue()}
+            onValueChange={handlePickupChange}
+          >
             <SelectTrigger className="w-full">
               <SelectValue placeholder={t("pickup.placeholderSelect")} />
             </SelectTrigger>
@@ -167,6 +204,12 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = ({
                 {...register("pickUpLocation")}
                 placeholder={t("pickup.customPlaceholder")}
                 className="w-full"
+                defaultValue={
+                  currentPickup &&
+                  !Object.values(pickupOptions).includes(currentPickup)
+                    ? currentPickup
+                    : ""
+                }
               />
             </div>
           )}
@@ -180,7 +223,10 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = ({
           <Label htmlFor="dropoffSelect" className="mb-4 block">
             {t("dropoff.label")}
           </Label>
-          <Select onValueChange={handleDropoffChange}>
+          <Select
+            value={getCurrentDropoffValue()}
+            onValueChange={handleDropoffChange}
+          >
             <SelectTrigger className="w-full">
               <SelectValue placeholder={t("dropoff.placeholderSelect")} />
             </SelectTrigger>
@@ -203,6 +249,12 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = ({
                 {...register("dropOffLocation")}
                 placeholder={t("dropoff.customPlaceholder")}
                 className="w-full"
+                defaultValue={
+                  currentDropoff &&
+                  !Object.values(dropoffOptions).includes(currentDropoff)
+                    ? currentDropoff
+                    : ""
+                }
               />
             </div>
           )}

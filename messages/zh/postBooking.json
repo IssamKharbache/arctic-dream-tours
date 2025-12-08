@@ -1,0 +1,75 @@
+{
+  "bookingSuccess": {
+    "titles": {
+      "bookingDetails": "预订详情",
+      "guestInfo": "客人信息",
+      "locationInfo": "位置信息",
+      "priceSummary": "价格摘要",
+      "whatsNext": "接下来会发生什么？"
+    },
+    "labels": {
+      "pickup": "接载地点",
+      "dropoff": "送还地点",
+      "subtotal": "小计：",
+      "taxes": "税费：",
+      "total": "总计：",
+      "bookedOn": "预订于",
+      "requestedOn": "申请于",
+      "activity": "活动：",
+      "date": "日期：",
+      "time": "时间：",
+      "bookingType": "预订类型："
+    },
+    "buttons": {
+      "backToHome": "返回首页",
+      "returnToHome": "返回首页",
+      "copyLink": "复制链接",
+      "copied": "已复制！"
+    },
+    "messages": {
+      "saveLink": "保存此链接以便稍后访问您的预订：",
+      "thankYou": "感谢您的预订！",
+      "contactSoon": "我们将在24小时内与您联系确认您的预订。",
+      "finalPriceNote": "最终价格将在审核后确认",
+      "privateTour": "私人旅行团",
+      "groupTour": "团体旅行团"
+    },
+    "loading": {
+      "title": "正在加载您的预订",
+      "message": "正在获取您的详细信息，请稍候..."
+    },
+    "errors": {
+      "accessDenied": "访问被拒绝",
+      "sessionExpired": "我们无法检索您的预订详情。这可能是因为您的会话已过期。",
+      "checkEmail": "请检查您的电子邮件以获取预订确认，或联系支持人员以获取帮助。",
+      "cancelledNote": "如果您认为这是一个错误，请联系支持人员。"
+    },
+    "statusInstructions": {
+      "paid": {
+        "emailConfirmation": "您将收到一封确认电子邮件，其中包含您预订的所有详细信息。",
+        "arriveEarly": "请在预定出发时间前15分钟到达接载地点。",
+        "referenceReady": "请准备好您的预订参考号 (#{ref})，以便在抵达时出示。"
+      },
+      "pending": {
+        "reviewRequest": "我们的团队将在24小时内审核您的请求并确认可用性。",
+        "bankingDetails": "我们将向您提供我们的银行详细信息，以便您继续进行付款。",
+        "contactReference": "联系我们时，请准备好您的预订参考号 (#{ref})。"
+      },
+      "other": "请联络支援人员以获取有关您预订状态的更多信息。"
+    },
+    "statusTitles": {
+      "paid": "付款成功！",
+      "pending": "已收到预订请求！",
+      "confirmed": "预订已确认！",
+      "cancelled": "预订已取消",
+      "default": "预订状态"
+    },
+    "statusMessages": {
+      "paid": "您的预订已确认并已付款。",
+      "pending": "感谢您的预订请求！我们的团队将审核您的请求，并很快与您联系确认和付款详情。",
+      "confirmed": "您的预订已确认。",
+      "cancelled": "此预订已取消。",
+      "default": "您的预订状态: {status}"
+    }
+  }
+}

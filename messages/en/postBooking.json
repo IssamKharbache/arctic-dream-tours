@@ -1,0 +1,75 @@
+{
+  "bookingSuccess": {
+    "titles": {
+      "bookingDetails": "Booking Details",
+      "guestInfo": "Guest Information",
+      "locationInfo": "Location Information",
+      "priceSummary": "Price Summary",
+      "whatsNext": "What happens next?"
+    },
+    "labels": {
+      "pickup": "Pick-up Location",
+      "dropoff": "Drop-off Location",
+      "subtotal": "Subtotal:",
+      "taxes": "Taxes & Fees:",
+      "total": "Total:",
+      "bookedOn": "Booked on",
+      "requestedOn": "Requested on",
+      "activity": "Activity:",
+      "date": "Date:",
+      "time": "Time:",
+      "bookingType": "Booking Type:"
+    },
+    "buttons": {
+      "backToHome": "Back to Home",
+      "returnToHome": "Return to Home",
+      "copyLink": "Copy Link",
+      "copied": "Copied!"
+    },
+    "messages": {
+      "saveLink": "Save this link to access your booking later:",
+      "thankYou": "Thank you for your booking!",
+      "contactSoon": "We'll contact you within 24 hours to confirm your booking.",
+      "finalPriceNote": "Final price will be confirmed after review",
+      "privateTour": "Private Tour",
+      "groupTour": "Group Tour"
+    },
+    "loading": {
+      "title": "Loading your booking",
+      "message": "Please wait while we retrieve your details..."
+    },
+    "errors": {
+      "accessDenied": "Access Denied",
+      "sessionExpired": "We couldn't retrieve your booking details. This might be because your session expired.",
+      "checkEmail": "Please check your email for your booking confirmation or contact support if you need assistance.",
+      "cancelledNote": "If you believe this is a mistake, please contact support."
+    },
+    "statusInstructions": {
+      "paid": {
+        "emailConfirmation": "You will receive a confirmation email with all the details of your booking.",
+        "arriveEarly": "Please arrive at the pick-up location 15 minutes before the scheduled departure time.",
+        "referenceReady": "Have your booking reference (#{ref}) ready to present upon arrival."
+      },
+      "pending": {
+        "reviewRequest": "Our team will review your request and confirm availability within 24 hours.",
+        "bankingDetails": "We will provide you with our banking details so you can proceed with the payment.",
+        "contactReference": "Have your booking reference (#{ref}) ready when contacting us."
+      },
+      "other": "Please contact support for more information about your booking status."
+    },
+    "statusTitles": {
+      "paid": "Payment Successful!",
+      "pending": "Booking Request Received!",
+      "confirmed": "Booking Confirmed!",
+      "cancelled": "Booking Cancelled",
+      "default": "Booking Status"
+    },
+    "statusMessages": {
+      "paid": "Your booking has been confirmed and paid.",
+      "pending": "Thank you for your booking request! Our team will review it and contact you shortly with confirmation and payment details.",
+      "confirmed": "Your booking has been confirmed.",
+      "cancelled": "This booking has been cancelled.",
+      "default": "Your booking status: {status}"
+    }
+  }
+}

@@ -25,6 +25,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
       blogMessages,
       activityMessages,
       bookingDetailsMessages,
+      postBookingMessages,
     ] = await Promise.all([
       import(`@/messages/${locale}/common.json`)
         .then((m) => m.default)
@@ -71,6 +72,9 @@ export default getRequestConfig(async ({ requestLocale }) => {
       import(`@/messages/${locale}/bookingDetails.json`)
         .then((m) => m.default)
         .catch(() => ({})),
+      import(`@/messages/${locale}/postBooking.json`)
+        .then((m) => m.default)
+        .catch(() => ({})),
     ]);
 
     return {
@@ -91,6 +95,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
         blog: blogMessages,
         ...activityMessages,
         bookingDetails: bookingDetailsMessages,
+        postBooking: postBookingMessages,
       },
     };
   } catch (error) {
@@ -112,6 +117,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
       blogMessages,
       activityMessages,
       BookingDetailsMessages,
+      postBookingMessages,
     ] = await Promise.all([
       import(`@/messages/${routing.defaultLocale}/common.json`).then(
         (m) => m.default
@@ -158,6 +164,9 @@ export default getRequestConfig(async ({ requestLocale }) => {
       import(`@/messages/${locale}/bookingDetails.json`)
         .then((m) => m.default)
         .catch(() => ({})),
+      import(`@/messages/${locale}/postBooking.json`)
+        .then((m) => m.default)
+        .catch(() => ({})),
     ]);
 
     return {
@@ -178,6 +187,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
         blog: blogMessages,
         ...activityMessages,
         bookingDetails: BookingDetailsMessages,
+        postBooking: postBookingMessages,
       },
     };
   }

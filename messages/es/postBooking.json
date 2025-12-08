@@ -1,0 +1,75 @@
+{
+  "bookingSuccess": {
+    "titles": {
+      "bookingDetails": "Detalles de la Reserva",
+      "guestInfo": "Información del Huésped",
+      "locationInfo": "Información de Ubicación",
+      "priceSummary": "Resumen de Precios",
+      "whatsNext": "¿Qué pasa después?"
+    },
+    "labels": {
+      "pickup": "Lugar de Recogida",
+      "dropoff": "Lugar de Devolución",
+      "subtotal": "Subtotal:",
+      "taxes": "Impuestos y Tasas:",
+      "total": "Total:",
+      "bookedOn": "Reservado el",
+      "requestedOn": "Solicitado el",
+      "activity": "Actividad:",
+      "date": "Fecha:",
+      "time": "Hora:",
+      "bookingType": "Tipo de Reserva:"
+    },
+    "buttons": {
+      "backToHome": "Volver al Inicio",
+      "returnToHome": "Regresar al Inicio",
+      "copyLink": "Copiar Enlace",
+      "copied": "¡Copiado!"
+    },
+    "messages": {
+      "saveLink": "Guarde este enlace para acceder a su reserva más tarde:",
+      "thankYou": "¡Gracias por su reserva!",
+      "contactSoon": "Nos pondremos en contacto con usted dentro de las 24 horas para confirmar su reserva.",
+      "finalPriceNote": "El precio final se confirmará después de la revisión",
+      "privateTour": "Tour Privado",
+      "groupTour": "Tour en Grupo"
+    },
+    "loading": {
+      "title": "Cargando su reserva",
+      "message": "Por favor espere mientras recuperamos sus detalles..."
+    },
+    "errors": {
+      "accessDenied": "Acceso Denegado",
+      "sessionExpired": "No pudimos recuperar los detalles de su reserva. Esto podría deberse a que su sesión ha expirado.",
+      "checkEmail": "Por favor revise su correo electrónico para la confirmación de su reserva o contacte al soporte si necesita ayuda.",
+      "cancelledNote": "Si cree que esto es un error, por favor contacte al soporte."
+    },
+    "statusInstructions": {
+      "paid": {
+        "emailConfirmation": "Recibirá un correo electrónico de confirmación con todos los detalles de su reserva.",
+        "arriveEarly": "Por favor, llegue al lugar de recogida 15 minutos antes de la hora de salida programada.",
+        "referenceReady": "Tenga su referencia de reserva (#{ref}) lista para presentar al llegar."
+      },
+      "pending": {
+        "reviewRequest": "Nuestro equipo revisará su solicitud y confirmará la disponibilidad dentro de las 24 horas.",
+        "bankingDetails": "Le proporcionaremos nuestros datos bancarios para que pueda proceder con el pago.",
+        "contactReference": "Tenga su referencia de reserva (#{ref}) lista cuando nos contacte."
+      },
+      "other": "Por favor, contacte al soporte para más información sobre el estado de su reserva."
+    },
+    "statusTitles": {
+      "paid": "¡Pago exitoso!",
+      "pending": "¡Solicitud de reserva recibida!",
+      "confirmed": "¡Reserva confirmada!",
+      "cancelled": "Reserva cancelada",
+      "default": "Estado de la reserva"
+    },
+    "statusMessages": {
+      "paid": "Su reserva ha sido confirmada y pagada.",
+      "pending": "¡Gracias por su solicitud de reserva! Nuestro equipo la revisará y se pondrá en contacto con usted en breve con los detalles de confirmación y pago.",
+      "confirmed": "Su reserva ha sido confirmada.",
+      "cancelled": "Esta reserva ha sido cancelada.",
+      "default": "Estado de su reserva: {status}"
+    }
+  }
+}

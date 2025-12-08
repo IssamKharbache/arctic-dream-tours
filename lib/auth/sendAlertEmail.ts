@@ -115,7 +115,7 @@ export const sendAlertEmail = async ({ type, data }: AlertOptions) => {
   }
 
   await transporter.sendMail({
-    from: process.env.EMAIL_USER,
+    from: `"Arctic dream tours" <${process.env.EMAIL_USER}>`,
     to: process.env.ADMIN_EMAIL,
     subject,
     html,

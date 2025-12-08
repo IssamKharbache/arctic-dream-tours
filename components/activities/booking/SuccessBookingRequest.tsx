@@ -23,6 +23,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import PrintableInvoice from "./PrintableInvoice";
+import { useTranslations } from "next-intl";
 
 interface Booking {
   id: string;
@@ -53,9 +54,8 @@ interface SuccessBookingRequestProps {
 
 const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
   const [copied, setCopied] = useState(false);
-
   const contentRef = useRef<HTMLDivElement>(null);
-
+  const t = useTranslations("postBooking.bookingSuccess");
   // Fetch booking details
   const { data, isLoading, isError } = useQuery({
     queryKey: ["bookingRequest", bookingRef],
@@ -100,8 +100,8 @@ const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
           buttonBg: "bg-green-600 hover:bg-green-700",
           accentColor: "text-green-600",
           icon: <CheckCircle className="h-8 w-8" />,
-          title: "Payment Successful!",
-          message: "Your booking has been confirmed and paid.",
+          title: t("statusTitles.paid"),
+          message: t("statusMessages.paid"),
         };
       case "PENDING":
         return {
@@ -115,9 +115,8 @@ const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
           buttonBg: "bg-amber-600 hover:bg-amber-700",
           accentColor: "text-amber-600",
           icon: <ClockIcon className="h-8 w-8" />,
-          title: "Booking Request Received!",
-          message:
-            "Thank you for your booking request! Our team will review it and contact you shortly with confirmation and payment details.",
+          title: t("statusTitles.pending"),
+          message: t("statusMessages.pending"),
         };
       case "CONFIRMED":
         return {
@@ -131,8 +130,8 @@ const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
           buttonBg: "bg-blue-600 hover:bg-blue-700",
           accentColor: "text-blue-600",
           icon: <CheckCircle className="h-8 w-8" />,
-          title: "Booking Confirmed!",
-          message: "Your booking has been confirmed.",
+          title: t("statusTitles.confirmed"),
+          message: t("statusMessages.confirmed"),
         };
       case "CANCELLED":
         return {
@@ -146,8 +145,8 @@ const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
           buttonBg: "bg-red-600 hover:bg-red-700",
           accentColor: "text-red-600",
           icon: <XCircle className="h-8 w-8" />,
-          title: "Booking Cancelled",
-          message: "This booking has been cancelled.",
+          title: t("statusTitles.cancelled"),
+          message: t("statusMessages.cancelled"),
         };
       default:
         return {
@@ -161,8 +160,8 @@ const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
           buttonBg: "bg-gray-600 hover:bg-gray-700",
           accentColor: "text-gray-600",
           icon: <AlertCircle className="h-8 w-8" />,
-          title: "Booking Status",
-          message: "Your booking status: " + status,
+          title: t("statusTitles.default"),
+          message: t("statusMessages.default", { status }),
         };
     }
   };
@@ -172,10 +171,8 @@ const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-slate-100 text-slate-800">
         <div className="text-center">
           <Loader2 className="w-12 h-12 animate-spin mx-auto text-gray-600 mb-4" />
-          <h2 className="text-xl font-semibold">Loading your booking</h2>
-          <p className="text-slate-600 mt-2">
-            Please wait while we retrieve your details...
-          </p>
+          <h2 className="text-xl font-semibold">{t("loading.title")}</h2>
+          <p className="text-slate-600 mt-2">{t("loading.message")}</p>
         </div>
       </div>
     );
@@ -202,21 +199,17 @@ const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
             </svg>
           </div>
           <h2 className="text-2xl font-bold text-slate-800 mb-2">
-            Access Denied
+            {t("errors.accessDenied")}
           </h2>
-          <p className="text-slate-600 mb-6">
-            We couldn&apos;t retrieve your booking details. This might be
-            because your session expired.
-          </p>
+          <p className="text-slate-600 mb-6">{t("errors.sessionExpired")}</p>
           <p className="text-sm text-slate-500 mb-6">
-            Please check your email for your booking confirmation or contact
-            support if you need assistance.
+            {t("errors.checkEmail")}
           </p>
           <button
             onClick={() => (window.location.href = "/")}
             className="bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-6 rounded-lg transition duration-200"
           >
-            Return to Home
+            {t("buttons.returnToHome")}
           </button>
         </div>
       </div>
@@ -236,15 +229,12 @@ const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
           <h1 className="text-2xl font-bold text-red-800 mb-2">
             Booking Cancelled
           </h1>
-          <p className="text-red-600 mb-4">
-            This booking has been cancelled. If you believe this is a mistake,
-            please contact support.
-          </p>
+          <p className="text-red-600 mb-4">{t("errors.cancelledNote")}</p>
           <button
             onClick={() => (window.location.href = "/")}
             className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-6 rounded-lg transition duration-200"
           >
-            Return to Home
+            {t("buttons.returnToHome")}
           </button>
         </div>
       </div>
@@ -284,7 +274,7 @@ const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
             <p
               className={`text-sm ${statusStyles.statusText} font-medium mb-2`}
             >
-              🔒 Save this link to access your booking later:
+              🔒 {t("messages.saveLink")}
             </p>
             <div className="flex items-center">
               <button
@@ -292,7 +282,7 @@ const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
                 className={`flex items-center text-sm bg-white border ${statusStyles.statusBorder} rounded-l-md py-2 px-3 ${statusStyles.statusText} hover:bg-opacity-50`}
               >
                 <Copy size={16} className="mr-1" />
-                {copied ? "Copied!" : "Copy Link"}
+                {copied ? t("buttons.copied") : t("buttons.copyLink")}
               </button>
               <div className="flex-1 truncate bg-white border border-l-0 border-slate-300 rounded-r-md py-2 px-3 text-sm text-slate-600">
                 {typeof window !== "undefined" ? window.location.href : ""}
@@ -308,7 +298,7 @@ const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
               <div className="mb-4 md:mb-0">
                 <h2 className="text-2xl font-bold text-white">
-                  Booking Details
+                  {t("titles.bookingDetails")}
                 </h2>
                 <p className="text-white text-opacity-90">
                   Reference #{data.bookingRef}
@@ -330,22 +320,28 @@ const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
                   <Calendar
                     className={`w-5 h-5 mr-2 ${statusStyles.accentColor}`}
                   />
-                  Booking Details
+                  {t("titles.bookingDetails")}
                 </h3>
                 <div className="space-y-2">
                   <p>
-                    <span className="font-medium">Activity:</span>{" "}
+                    <span className="font-medium">{t("labels.activity")}</span>{" "}
                     {data.activity.title}
                   </p>
                   <p>
-                    <span className="font-medium">Date:</span> {formattedDate}
+                    <span className="font-medium">{t("labels.date")}</span>{" "}
+                    {formattedDate}
                   </p>
                   <p>
-                    <span className="font-medium">Time:</span> {formattedTime}
+                    <span className="font-medium">{t("labels.time")}</span>{" "}
+                    {formattedTime}
                   </p>
                   <p>
-                    <span className="font-medium">Booking Type:</span>{" "}
-                    {data.isPrivate ? "Private Tour" : "Group Tour"}
+                    <span className="font-medium">
+                      {t("labels.bookingType")}
+                    </span>{" "}
+                    {data.isPrivate
+                      ? t("messages.privateTour")
+                      : t("messages.groupTour")}
                   </p>
                   <div className="flex items-center mt-3">
                     <Users
@@ -363,7 +359,7 @@ const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
                   <User
                     className={`w-5 h-5 mr-2 ${statusStyles.accentColor}`}
                   />
-                  Guest Information
+                  {t("titles.guestInfo")}
                 </h3>
                 <div className="space-y-2">
                   <p className="capitalize">
@@ -391,18 +387,18 @@ const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
                 <MapPin
                   className={`w-5 h-5 mr-2 ${statusStyles.accentColor}`}
                 />
-                Location Information
+                {t("titles.locationInfo")}
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="bg-slate-50 p-4 rounded-lg">
                   <h4 className="font-medium text-slate-700 mb-1">
-                    Pick-up Location
+                    {t("labels.pickup")}
                   </h4>
                   <p className="text-slate-600">{data.pickUpLocation}</p>
                 </div>
                 <div className="bg-slate-50 p-4 rounded-lg">
                   <h4 className="font-medium text-slate-700 mb-1">
-                    Drop-off Location
+                    {t("labels.dropoff")}
                   </h4>
                   <p className="text-slate-600">{data.dropOffLocation}</p>
                 </div>
@@ -415,27 +411,27 @@ const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
                 <CreditCard
                   className={`w-5 h-5 mr-2 ${statusStyles.accentColor}`}
                 />
-                Price Summary
+                {t("titles.priceSummary")}
               </h3>
 
               <div className="bg-slate-50 rounded-lg p-4">
                 <div className="flex justify-between py-2">
-                  <span>Subtotal:</span>
+                  <span>{t("labels.subtotal")}</span>
                   <span>€{data.totalPrice.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between py-2 border-b border-slate-200">
-                  <span>Taxes & Fees:</span>
+                  <span>{t("labels.taxes")}</span>
                   <span>€0.00</span>
                 </div>
                 <div className="flex justify-between pt-3 font-bold text-lg">
-                  <span>Total:</span>
+                  <span>{t("labels.total")}</span>
                   <span className={statusStyles.accentColor}>
                     €{data.totalPrice.toFixed(2)}
                   </span>
                 </div>
                 {data.status === "PENDING" && (
                   <p className="text-sm text-slate-500 mt-2">
-                    Final price will be confirmed after review
+                    {t("messages.finalPriceNote")}
                   </p>
                 )}
               </div>
@@ -443,7 +439,9 @@ const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
               <div className="mt-4 flex items-center text-sm text-slate-500">
                 <Clock className="w-4 h-4 mr-1" />
                 <span>
-                  {data.status === "PAID" ? "Booked" : "Requested"} on{" "}
+                  {data.status === "PAID"
+                    ? t("labels.bookedOn")
+                    : t("labels.requestedOn")}{" "}
                   {new Date(data.createdAt).toLocaleString()}
                 </span>
               </div>
@@ -455,8 +453,8 @@ const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
             <div className="flex flex-col md:flex-row justify-between items-center">
               <p className="text-sm text-slate-600 mb-2 md:mb-0">
                 {data.status === "PAID"
-                  ? "Thank you for your booking!"
-                  : "We'll contact you within 24 hours to confirm your booking."}
+                  ? t("messages.thankYou")
+                  : t("messages.contactSoon")}
               </p>
               <div className="flex space-x-4">
                 <button
@@ -464,7 +462,7 @@ const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
                   className={`px-4 py-2 ${statusStyles.buttonBg} border border-transparent rounded-lg text-white font-medium transition duration-200 text-sm flex items-center`}
                 >
                   <Home size={16} className="mr-1 hidden md:block" />
-                  Back to Home
+                  {t("buttons.backToHome")}
                 </button>
               </div>
             </div>
@@ -474,7 +472,7 @@ const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
         {/* Additional Information */}
         <div className="mt-8 bg-white rounded-xl shadow-lg p-6">
           <h3 className="text-lg font-semibold text-slate-800 mb-4">
-            What happens next?
+            {t("titles.whatsNext")}
           </h3>
           <ul className="space-y-3">
             {data.status === "PAID" ? (
@@ -487,10 +485,17 @@ const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
                       className={`h-4 w-4 ${statusStyles.iconColor}`}
                     />
                   </div>
-                  <span>
-                    You will receive a confirmation email with all the details
-                    of your booking.
-                  </span>
+                  <span>{t("statusInstructions.paid.emailConfirmation")}</span>
+                </li>
+                <li className="flex items-start">
+                  <div
+                    className={`rounded-full p-1 mr-3 mt-0.5 ${statusStyles.iconBg}`}
+                  >
+                    <CheckCircle
+                      className={`h-4 w-4 ${statusStyles.iconColor}`}
+                    />
+                  </div>
+                  <span>{t("statusInstructions.paid.arriveEarly")}</span>
                 </li>
                 <li className="flex items-start">
                   <div
@@ -501,21 +506,9 @@ const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
                     />
                   </div>
                   <span>
-                    Please arrive at the pick-up location 15 minutes before the
-                    scheduled departure time.
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <div
-                    className={`rounded-full p-1 mr-3 mt-0.5 ${statusStyles.iconBg}`}
-                  >
-                    <CheckCircle
-                      className={`h-4 w-4 ${statusStyles.iconColor}`}
-                    />
-                  </div>
-                  <span>
-                    Have your booking reference (#{data.bookingRef}) ready to
-                    present upon arrival.
+                    {t("statusInstructions.paid.referenceReady", {
+                      ref: data.bookingRef,
+                    })}
                   </span>
                 </li>
               </>
@@ -529,10 +522,17 @@ const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
                       className={`h-4 w-4 ${statusStyles.iconColor}`}
                     />
                   </div>
-                  <span>
-                    Our team will review your request and confirm availability
-                    within 24 hours.
-                  </span>
+                  <span>{t("statusInstructions.pending.reviewRequest")}</span>
+                </li>
+                <li className="flex items-start">
+                  <div
+                    className={`rounded-full p-1 mr-3 mt-0.5 ${statusStyles.iconBg}`}
+                  >
+                    <ClockIcon
+                      className={`h-4 w-4 ${statusStyles.iconColor}`}
+                    />
+                  </div>
+                  <span>{t("statusInstructions.pending.bankingDetails")}</span>
                 </li>
                 <li className="flex items-start">
                   <div
@@ -543,22 +543,9 @@ const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
                     />
                   </div>
                   <span>
-                    We will provide you with our banking details so you can
-                    proceed with the payment.
-                  </span>
-                </li>
-
-                <li className="flex items-start">
-                  <div
-                    className={`rounded-full p-1 mr-3 mt-0.5 ${statusStyles.iconBg}`}
-                  >
-                    <ClockIcon
-                      className={`h-4 w-4 ${statusStyles.iconColor}`}
-                    />
-                  </div>
-                  <span>
-                    Have your booking reference (#{data.bookingRef}) ready when
-                    contacting us.
+                    {t("statusInstructions.pending.contactReference", {
+                      ref: data.bookingRef,
+                    })}
                   </span>
                 </li>
               </>
@@ -571,10 +558,7 @@ const SuccessBookingRequest = ({ bookingRef }: SuccessBookingRequestProps) => {
                     className={`h-4 w-4 ${statusStyles.iconColor}`}
                   />
                 </div>
-                <span>
-                  Please contact support for more information about your booking
-                  status.
-                </span>
+                <span>{t("statusInstructions.other")}</span>
               </li>
             )}
           </ul>

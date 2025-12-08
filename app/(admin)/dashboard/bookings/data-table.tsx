@@ -121,7 +121,7 @@ export function DataTable<TValue>({
         </Button>
       </div>
 
-      <div className="rounded-lg border border-border/50 bg-card shadow-sm hidden md:block">
+      <div className="rounded-lg border border-border/50 bg-card shadow-sm hidden md:block overflow-visible">
         {isLoading || isRefreshing ? (
           <div className="flex items-center justify-center p-10">
             <Loader2 className="animate-spin h-6 w-6" />
@@ -138,7 +138,7 @@ export function DataTable<TValue>({
                     return (
                       <TableHead
                         key={header.id}
-                        className="h-24 px-4 text-left align-middle font-semibold text-muted-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]"
+                        className="px-4 text-left align-middle font-semibold text-muted-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]"
                       >
                         {header.isPlaceholder
                           ? null
@@ -158,7 +158,7 @@ export function DataTable<TValue>({
                   <TableRow
                     key={row.original.id}
                     data-state={row.getIsSelected() && "selected"}
-                    className="transition-colors hover:bg-muted/30 data-[state=selected]:bg-muted/50"
+                    className="transition-colors hover:bg-muted/30 data-[state=selected]:bg-muted/50 h-28"
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell

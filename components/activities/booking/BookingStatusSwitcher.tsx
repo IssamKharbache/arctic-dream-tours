@@ -126,9 +126,9 @@ export default function BookingStatusSwitcher({
         />
       </button>
 
-      {/* Custom Dropdown */}
+      {/* Custom Dropdown - NOW OPENING DOWNWARD */}
       {isOpen && (
-        <div className="absolute bottom-full left-0 mb-1 w-max z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg overflow-hidden">
+        <div className="absolute top-full left-0 mt-1 w-max z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg overflow-hidden">
           {Object.values(Booking_Status).map((s) => {
             const OptionIcon = statusConfig[s].icon;
             return (
@@ -136,14 +136,14 @@ export default function BookingStatusSwitcher({
                 key={s}
                 onClick={() => handleChange(s)}
                 className={`
-            w-full px-3 py-2 text-xs text-left flex items-center gap-2
-            transition-colors hover:bg-gray-100 dark:hover:bg-gray-700
-            ${
-              s === status
-                ? "bg-blue-50 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300"
-                : "text-gray-700 dark:text-gray-300"
-            }
-          `}
+                  w-full px-3 py-2 text-xs text-left flex items-center gap-2
+                  transition-colors hover:bg-gray-100 dark:hover:bg-gray-700
+                  ${
+                    s === status
+                      ? "bg-blue-50 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300"
+                      : "text-gray-700 dark:text-gray-300"
+                  }
+                `}
               >
                 <OptionIcon className="h-3.5 w-3.5" />
                 <span>{statusConfig[s].label}</span>

@@ -42,7 +42,8 @@ export const sendBookingEmail = async (bookingData: BookingData) => {
       : `Booking Request Received #${bookingData.bookingRef}`;
 
   await transporter.sendMail({
-    from: process.env.EMAIL_USER,
+    // Change this line - add your brand/company name in quotes
+    from: `"Arctic dream tours" <${process.env.EMAIL_USER}>`,
     to: bookingData.customerEmail,
     subject: subject,
     html: html,

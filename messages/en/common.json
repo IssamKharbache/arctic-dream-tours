@@ -1,22 +1,22 @@
 {
-    "Navbar": {
-        "home": "Home",
-        "about": "About",
-        "contact": "Contact",
-        "myProfile": "My Profile",
-        "account": "Account",
-        "bookings": "Bookings",
-        "dashboard": "Dashboard",
-        "logout": "Log out",
-        "signUp": "Sign up",
-        "logIn": "Log in",
-        "bookNow": "Book now"
+  "Navbar": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "myProfile": "My Profile",
+    "account": "Account",
+    "bookings": "Bookings",
+    "dashboard": "Dashboard",
+    "logout": "Log out",
+    "signUp": "Sign up",
+    "logIn": "Login",
+    "bookNow": "Book now"
+  },
+  "HomePage": {
+    "header": "This is the home page !",
+    "welcome": {
+      "title": "Welcome to the arctic dream tours"
     },
-    "HomePage": {
-        "header": "This is the home page !",
-        "welcome": {
-            "title": "Welcome to the arctic dream tours"
-        },
-        "link": "Go to contact page"
-    }
+    "link": "Go to contact page"
+  }
 }

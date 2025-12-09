@@ -91,14 +91,10 @@ const NavBar = () => {
         </div>
 
         {/* Desktop Right Menu */}
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-4 ">
           <Link href="/activities">
             <Button
-              className={
-                isNotHomePage || scrolled
-                  ? ""
-                  : "bg-white/20 hover:bg-white/30 text-white"
-              }
+              className={`cursor-pointer  ${isNotHomePage || scrolled ? "" : ""}`}
             >
               {t("bookNow")}
             </Button>
@@ -107,15 +103,16 @@ const NavBar = () => {
           {session ? (
             <AuthDropDownMenu />
           ) : (
-            <Button
+            <button
               onClick={openSignIn}
-              variant={isNotHomePage || scrolled ? "outline" : "ghost"}
-              className={`py-3 rounded-2xl ${
-                isNotHomePage || scrolled ? "" : "text-white hover:bg-white/10"
+              className={`py-1 px-7 rounded-2xl cursor-pointer ${
+                isNotHomePage || scrolled
+                  ? "outline-black outline-1 hover:bg-black hover:text-white"
+                  : "outline-white outline-1 text-black hover:bg-white"
               }`}
             >
               {t("logIn")}
-            </Button>
+            </button>
           )}
         </div>
 
@@ -158,7 +155,6 @@ const NavBar = () => {
                   openSignIn();
                   setMobileOpen(false);
                 }}
-                variant="outline"
                 className="w-full"
               >
                 {t("logIn")}

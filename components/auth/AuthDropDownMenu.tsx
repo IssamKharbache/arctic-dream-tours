@@ -20,7 +20,7 @@ const AuthDropDownMenu = () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="outline-none">
+      <DropdownMenuTrigger className="outline-none flex items-end justify-end">
         <Trigger />
       </DropdownMenuTrigger>
 
@@ -77,7 +77,7 @@ export default AuthDropDownMenu;
 
 const Trigger = () => {
   return (
-    <div className="flex  max-w-sm gap-3 rounded-full border py-2 px-4 hover:shadow-lg hover:bg-gray-100 duration-200 cursor-pointer text-black ">
+    <div className="flex items-center justify-center gap-3 rounded-full border py-2 px-4 hover:shadow-lg hover:bg-gray-100 duration-200 cursor-pointer text-black w-full">
       <MenuIcon />
       <User2 />
     </div>

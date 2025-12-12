@@ -167,7 +167,6 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
     const endMonth = activityEnd.getMonth();
     const endDate = activityEnd.getDate();
 
-    // Get the month and day of the date being checked
     const checkMonth = date.getMonth();
     const checkDay = date.getDate();
 

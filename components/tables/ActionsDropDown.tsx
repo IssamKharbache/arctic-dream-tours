@@ -11,14 +11,16 @@ import { MoreHorizontal, UserPen } from "lucide-react";
 import React from "react";
 import DeleteActionButton from "./DeleteActionButton";
 import { baseUrl } from "@/utils/baseUrl";
-import { useEditDialogStore } from "@/store/zustand/editDialogStore";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface TableActionsProps {
   deleteEndpoint?: string;
   id: string;
   name: string;
+  slug: string;
 }
-const ActionsDropDown = ({ deleteEndpoint, name }: TableActionsProps) => {
+const ActionsDropDown = ({ deleteEndpoint, name, slug }: TableActionsProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -41,15 +43,15 @@ const ActionsDropDown = ({ deleteEndpoint, name }: TableActionsProps) => {
           </DropdownMenuItem>
         )}
         <DropdownMenuSeparator />
-        {/* <button className="w-full cursor-pointer">
-                    <DropdownMenuItem
-                        onClick={() => openDialog(id)}
-                        className="flex items-center gap-2 py-4 px-4"
-                    >
-                        <UserPen />
-                        <span>Edit</span>
-                    </DropdownMenuItem>
-                </button> */}
+        <Link
+          href={`/dashboard/activities/modify/${slug}`}
+          className="w-full cursor-pointer hidden md:flex"
+        >
+          <DropdownMenuItem className="flex items-center gap-2 py-4 px-4">
+            <UserPen />
+            <span>Edit</span>
+          </DropdownMenuItem>
+        </Link>
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -40,8 +40,10 @@ export const columns: ColumnDef<Activity>[] = [
     header: "Actions",
     cell: ({ row }) => {
       const activity = row.original;
+
       return (
         <ActionsDropDown
+          slug={activity.slug}
           name="Activity"
           id={activity.id}
           deleteEndpoint={`activity/delete/${activity.id}`}

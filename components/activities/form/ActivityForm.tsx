@@ -41,37 +41,81 @@ import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
 import { showInfoToast } from "@/lib/toasts/toasts";
 import { ActivityAvailability } from "@/components/dates/DateRangePicker";
+import { Activity } from "@prisma/client";
 
-export function ActivityForm() {
-  const [image, setImage] = useState("");
+interface ActivityFormProps {
+  mode: "add" | "edit";
+  initialData?: Activity;
+}
+export function ActivityForm({ mode, initialData }: ActivityFormProps) {
+  const [image, setImage] = useState(
+    mode === "add" ? "" : initialData?.imageUrl,
+  );
   const [isImageUploading, setIsImageUploading] = useState(false);
-  const [imageKey, setImageKey] = useState("");
+  const [imageKey, setImageKey] = useState(
+    mode === "add" ? "" : initialData?.imageKey,
+  );
 
   const router = useRouter();
+
+  const mapActivityToFormValues = (activity: Activity): ActivityFormValues => {
+    return {
+      title: activity.title,
+      description: activity.description,
+      shortDescription: activity.shortDescription,
+      location: activity.location,
+      duration: activity.duration,
+
+      adultPrice: activity.adultPrice,
+      childPrice: activity.childPrice ?? 0,
+      privateTourPrice: activity.privateTourPrice,
+
+      tags: activity.tags,
+      difficulty: activity.difficulty,
+
+      cancellationPolicy: activity.cancellationPolicy ?? "",
+      bring: activity.bring ?? "",
+
+      included: activity.included.map((v) => ({ value: v })),
+      meetingPoints: activity.meetingPoints.map((v) => ({ value: v })),
+      departureHours: activity.departureHours.map((v) => ({ value: v })),
+
+      bookingCutoffHours: activity.bookingCutoffHours ?? undefined,
+      liveTourGuide: activity.liveTourGuide,
+      isForChild: activity.isForChild,
+
+      startDate: activity.startDate,
+      endDate: activity.endDate,
+    };
+  };
+
   const form = useForm<ActivityFormValues>({
     resolver: zodResolver(activityFormSchema),
-    defaultValues: {
-      title: "",
-      description: "",
-      shortDescription: "",
-      location: "",
-      duration: "",
-      adultPrice: 0,
-      childPrice: 0,
-      privateTourPrice: 0,
-      tags: [],
-      difficulty: "EASY",
-      cancellationPolicy: "",
-      included: [{ value: "" }],
-      bring: "",
-      meetingPoints: [{ value: "" }],
-      bookingCutoffHours: 0,
-      liveTourGuide: false,
-      isForChild: false,
-      startDate: undefined,
-      endDate: undefined,
-      departureHours: [{ value: "" }],
-    },
+    defaultValues:
+      mode === "edit" && initialData
+        ? mapActivityToFormValues(initialData)
+        : {
+            title: "",
+            description: "",
+            shortDescription: "",
+            location: "",
+            duration: "",
+            adultPrice: 0,
+            childPrice: undefined,
+            privateTourPrice: 0,
+            tags: [],
+            difficulty: "EASY",
+            cancellationPolicy: "",
+            included: [{ value: "" }],
+            bring: "",
+            meetingPoints: [{ value: "" }],
+            bookingCutoffHours: undefined,
+            liveTourGuide: false,
+            isForChild: false,
+            startDate: undefined,
+            endDate: undefined,
+            departureHours: [{ value: "" }],
+          },
   });
 
   const queryClient = useQueryClient();
@@ -115,8 +159,8 @@ export function ActivityForm() {
   const onSubmit = (data: ActivityFormValues) => {
     const fullData: ActivityPayload = {
       ...data,
-      imageUrl: image,
-      imageKey: imageKey,
+      imageUrl: image ?? "",
+      imageKey: imageKey ?? "",
       childPrice: data.childPrice,
       isForChild: data.isForChild,
       bookingCutoffHours:
@@ -137,10 +181,14 @@ export function ActivityForm() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Plus className="h-5 w-5" />
-          Create New Activity
+          {mode === "add"
+            ? "Create New Activity"
+            : `Edit ${initialData?.title}`}
         </CardTitle>
         <CardDescription>
-          Fill in the details below to create a new activity listing.
+          {mode === "add"
+            ? " Fill in the details below to create a new activity listing."
+            : ""}
         </CardDescription>
       </CardHeader>
       <CardContent>

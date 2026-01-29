@@ -120,16 +120,37 @@ export function ActivityForm({ mode, initialData }: ActivityFormProps) {
 
   const queryClient = useQueryClient();
 
+  const createActivity = async (data: ActivityPayload) => {
+    const res = await fetch(`${baseUrl}/api/activity/create`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
+    });
+    return res;
+  };
+
+  const updateActivity = async (slug: string, data: ActivityPayload) => {
+    if (!slug) {
+      throw new Error("Missing activity slug");
+    }
+
+    const res = await fetch(`${baseUrl}/api/activity/update/${slug}`, {
+      method: "PATCH",
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
+    });
+    return res;
+  };
+
   const { mutate, isPending } = useMutation({
     mutationFn: async (data: ActivityPayload) => {
       if (image === "" || imageKey === "") {
         showInfoToast("Please provide an image for the activity");
       }
-      const res = await fetch(`${baseUrl}/api/activity/create`, {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: { "Content-Type": "application/json" },
-      });
+      const res =
+        mode === "add"
+          ? await createActivity(data)
+          : await updateActivity(initialData?.slug ?? "", data);
       if (!res.ok) {
         const error = await res.json();
         console.log(error);
@@ -254,10 +275,12 @@ export function ActivityForm({ mode, initialData }: ActivityFormProps) {
                 {isPending ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Creating...
+                    {mode === "add" ? "Creating..." : "Updating"}
                   </>
-                ) : (
+                ) : mode === "add" ? (
                   "Create Activity"
+                ) : (
+                  "Update activity"
                 )}
               </Button>
             </div>

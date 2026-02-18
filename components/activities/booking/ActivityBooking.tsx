@@ -155,44 +155,11 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
 
   const { setOpenDialog } = useBookingDialogStore();
   const t = useTranslations("bookingDetails");
-
+  const BOOKING_DEADLINE = new Date("2026-03-09T23:59:59");
   const isDateAvailable = (date: Date) => {
-    const currentDate = new Date();
-    const activityStart = new Date(activity.startDate);
-    const activityEnd = new Date(activity.endDate);
+    const today = new Date();
 
-    // Get the month and day of the activity's date range
-    const startMonth = activityStart.getMonth(); // 0-11
-    const startDate = activityStart.getDate();
-    const endMonth = activityEnd.getMonth();
-    const endDate = activityEnd.getDate();
-
-    const checkMonth = date.getMonth();
-    const checkDay = date.getDate();
-
-    // Check if the date falls within the seasonal pattern
-    if (startMonth <= endMonth) {
-      // Normal range within same year (e.g., Jan-Mar)
-      if (checkMonth < startMonth || checkMonth > endMonth) return false;
-      if (checkMonth === startMonth && checkDay < startDate) return false;
-      if (checkMonth === endMonth && checkDay > endDate) return false;
-    } else {
-      // Cross-year range (e.g., Dec-Mar)
-      // For December-March pattern
-      if (checkMonth >= startMonth) {
-        // December dates
-        if (checkMonth === startMonth && checkDay < startDate) return false;
-      } else if (checkMonth <= endMonth) {
-        // January-March dates
-        if (checkMonth === endMonth && checkDay > endDate) return false;
-      } else {
-        // Months outside Dec-Mar range (Apr-Nov)
-        return false;
-      }
-    }
-
-    // Also check if date is today or in the future
-    return date >= currentDate;
+    return date >= today && date <= BOOKING_DEADLINE;
   };
 
   const totalGroupSize = adults + children;

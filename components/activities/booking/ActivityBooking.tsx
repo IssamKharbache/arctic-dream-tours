@@ -155,6 +155,7 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
 
   const { setOpenDialog } = useBookingDialogStore();
   const t = useTranslations("bookingDetails");
+
   const BOOKING_DEADLINE = new Date("2026-03-09T23:59:59");
   const isDateAvailable = (date: Date) => {
     const today = new Date();

@@ -7,12 +7,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoreHorizontal, UserPen } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 import React from "react";
 import DeleteActionButton from "./DeleteActionButton";
 import { baseUrl } from "@/utils/baseUrl";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 interface TableActionsProps {
   deleteEndpoint?: string;
@@ -43,7 +41,7 @@ const ActionsDropDown = ({ deleteEndpoint, name, slug }: TableActionsProps) => {
           </DropdownMenuItem>
         )}
         <DropdownMenuSeparator />
-        <Link
+        {/* <Link
           href={`/dashboard/activities/modify/${slug}`}
           className="w-full cursor-pointer hidden md:flex"
         >
@@ -51,7 +49,7 @@ const ActionsDropDown = ({ deleteEndpoint, name, slug }: TableActionsProps) => {
             <UserPen />
             <span>Edit</span>
           </DropdownMenuItem>
-        </Link>
+        </Link> */}
       </DropdownMenuContent>
     </DropdownMenu>
   );

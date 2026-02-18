@@ -43,7 +43,6 @@ export const columns: ColumnDef<Activity>[] = [
 
       return (
         <ActionsDropDown
-          slug={activity.slug}
           name="Activity"
           id={activity.id}
           deleteEndpoint={`activity/delete/${activity.id}`}

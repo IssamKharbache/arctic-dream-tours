@@ -16,9 +16,8 @@ interface TableActionsProps {
   deleteEndpoint?: string;
   id: string;
   name: string;
-  slug: string;
 }
-const ActionsDropDown = ({ deleteEndpoint, name, slug }: TableActionsProps) => {
+const ActionsDropDown = ({ deleteEndpoint, name }: TableActionsProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

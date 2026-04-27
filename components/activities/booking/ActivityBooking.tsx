@@ -155,7 +155,7 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
 
   const { setOpenDialog } = useBookingDialogStore();
   const t = useTranslations("bookingDetails");
-
+  //available dates
   const isDateAvailable = (date: Date) => {
     const today = new Date();
 

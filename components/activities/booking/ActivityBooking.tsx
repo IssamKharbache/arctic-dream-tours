@@ -156,11 +156,31 @@ export default function ActivityBooking({ activity }: ActivityBookingProps) {
   const { setOpenDialog } = useBookingDialogStore();
   const t = useTranslations("bookingDetails");
 
-  const BOOKING_DEADLINE = new Date("2026-03-09T23:59:59");
   const isDateAvailable = (date: Date) => {
     const today = new Date();
 
-    return date >= today && date <= BOOKING_DEADLINE;
+    const activityStart = new Date(activity.startDate);
+    const activityEnd = new Date(activity.endDate);
+
+    // Normalize to current year for comparison (month/day only)
+    const normalize = (d: Date) =>
+      new Date(date.getFullYear(), d.getMonth(), d.getDate());
+
+    const normalizedStart = normalize(activityStart);
+    const normalizedEnd = normalize(activityEnd);
+    const normalizedDate = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+    );
+
+    // Handle ranges that wrap around year-end (e.g. Nov–Feb)
+    const inRange =
+      normalizedStart <= normalizedEnd
+        ? normalizedDate >= normalizedStart && normalizedDate <= normalizedEnd
+        : normalizedDate >= normalizedStart || normalizedDate <= normalizedEnd;
+
+    return date >= today && inRange;
   };
 
   const totalGroupSize = adults + children;

@@ -11,6 +11,7 @@ import "yet-another-react-lightbox/styles.css";
 // Your image slides
 import { slides as imageSlides } from "@/utils/getGalleryImages";
 import { ChevronLeft, ChevronRight, Play } from "lucide-react";
+import Image from "next/image";
 
 interface VideoSlide {
   id: number;
@@ -46,7 +47,7 @@ export default function GalleryViewer() {
   // ===== Capture first frame of videos =====
   const captureVideoThumbnail = (
     videoElement: HTMLVideoElement,
-    videoId: number
+    videoId: number,
   ) => {
     if (canvasRef.current) {
       const canvas = canvasRef.current;
@@ -63,17 +64,6 @@ export default function GalleryViewer() {
           [videoId]: thumbnailUrl,
         }));
       }
-    }
-  };
-
-  const handleVideoLoaded = (videoId: number) => {
-    const video = videoRefs.current[videoId];
-    if (video) {
-      // Seek to beginning and capture frame
-      video.currentTime = 0.1; // Small offset to ensure frame is available
-      setTimeout(() => {
-        captureVideoThumbnail(video, videoId);
-      }, 100);
     }
   };
 
@@ -116,17 +106,7 @@ export default function GalleryViewer() {
 
   const prevImageSlide = () => {
     setCurrentImageIndex(
-      (prev) => (prev - 1 + imageSlides.length) % imageSlides.length
-    );
-  };
-
-  const nextVideoSlide = () => {
-    setCurrentVideoIndex((prev) => (prev + 1) % videoSlides.length);
-  };
-
-  const prevVideoSlide = () => {
-    setCurrentVideoIndex(
-      (prev) => (prev - 1 + videoSlides.length) % videoSlides.length
+      (prev) => (prev - 1 + imageSlides.length) % imageSlides.length,
     );
   };
 
@@ -144,9 +124,12 @@ export default function GalleryViewer() {
           {/* Main Image Display */}
           <div className="flex justify-center mb-4">
             <div className="relative w-full max-w-2xl group">
-              <img
+              <Image
                 src={imageSlides[currentImageIndex]?.src}
                 alt={imageSlides[currentImageIndex]?.alt || ""}
+                width={1200}
+                height={800}
+                sizes="(max-width: 768px) 100vw, 768px"
                 onClick={() => openLightbox(currentImageIndex, "image")}
                 className="w-full h-64 sm:h-80 md:h-96 object-cover rounded-lg cursor-pointer shadow-lg transition-all duration-300 group-hover:opacity-90"
               />
@@ -177,10 +160,13 @@ export default function GalleryViewer() {
           {/* Image Thumbnail Strip */}
           <div className="flex space-x-2 overflow-x-auto py-2 px-4">
             {imageSlides.map((img, i) => (
-              <img
+              <Image
                 key={i}
                 src={img.src}
                 alt={img.alt || ""}
+                width={96}
+                height={64}
+                sizes="96px"
                 onClick={() => setCurrentImageIndex(i)}
                 className={`h-16 w-24 object-cover rounded cursor-pointer transition-all ${
                   i === currentImageIndex
@@ -192,104 +178,6 @@ export default function GalleryViewer() {
           </div>
         </div>
       </section>
-
-      {/* <section>
-        <div className="relative  rounded-xl p-4">
-          <div className="flex justify-center mb-4">
-            <div className="relative w-full max-w-2xl">
-              {videoSlides.map((video) => (
-                <video
-                  key={video.id}
-                  ref={(el) => {
-                    videoRefs.current[video.id] = el;
-                  }}
-                  onLoadedData={() => handleVideoLoaded(video.id)}
-                  onCanPlay={() => handleVideoLoaded(video.id)}
-                  onLoadedMetadata={() => handleVideoLoaded(video.id)}
-                  className="hidden"
-                  preload="auto"
-                  crossOrigin="anonymous"
-                >
-                  <source src={video.src} type="video/mp4" />
-                </video>
-              ))}
-
-              <div
-                onClick={() => openLightbox(currentVideoIndex, "video")}
-                className="relative w-full h-64 sm:h-80 md:h-96 bg-black rounded-lg cursor-pointer group overflow-hidden"
-              >
-                {videoThumbnails[videoSlides[currentVideoIndex]?.id] ? (
-                  <img
-                    src={videoThumbnails[videoSlides[currentVideoIndex]?.id]}
-                    alt={`Video ${videoSlides[currentVideoIndex]?.id}`}
-                    className="w-full h-full object-cover group-hover:opacity-80 transition-opacity duration-300"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-gray-800 flex items-center justify-center">
-                    <div className="text-white text-center">
-                      <div className="text-2xl mb-2">Loading thumbnail...</div>
-                      <div className="text-sm">Generating preview</div>
-                    </div>
-                  </div>
-                )}
-
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="bg-black/60 text-white p-4 rounded-full flex items-center gap-2 transition-all   group-hover:scale-110">
-                    <Play className="h-8 w-8" />
-                  </div>
-                </div>
-              </div>
-
-              <button
-                onClick={prevVideoSlide}
-                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white h-8 w-8 rounded-full transition-all hover:bg-black/80 flex items-center justify-center"
-              >
-                <ChevronLeft />
-              </button>
-              <button
-                onClick={nextVideoSlide}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white h-8 w-8 rounded-full transition-all hover:bg-black/80 flex items-center justify-center"
-              >
-                <ChevronRight />
-              </button>
-            </div>
-          </div>
-
-          <div className="flex space-x-2 overflow-x-auto py-2 px-4">
-            {videoSlides.map((video, i) => (
-              <div
-                key={video.id}
-                onClick={() => setCurrentVideoIndex(i)}
-                className={`relative h-16 w-24 rounded cursor-pointer transition-all flex-shrink-0 ${
-                  i === currentVideoIndex
-                    ? "ring-2 ring-blue-500 scale-105"
-                    : "opacity-70 hover:opacity-100"
-                }`}
-              >
-                {videoThumbnails[video.id] ? (
-                  <img
-                    src={videoThumbnails[video.id]}
-                    alt={`Video ${video.id}`}
-                    className="w-full h-full object-cover rounded"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-gray-600 rounded flex items-center justify-center">
-                    <div className="text-white text-xs text-center">
-                      Loading
-                    </div>
-                  </div>
-                )}
-
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-white text-sm bg-black/50 rounded-full p-1">
-                    ▶
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section> */}
 
       {/* ---------- LIGHTBOX ---------- */}
       <Lightbox

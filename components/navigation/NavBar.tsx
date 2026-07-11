@@ -24,16 +24,11 @@ const NavBar = () => {
   const { setIsSignUpOpen, setIsSignInOpen } = useAuthDialogsStore();
 
   const [scrolled, setScrolled] = useState(false);
-  const [hasMounted, setHasMounted] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const pathName = usePathname();
   const localePath = pathName?.split("/")[1] ?? "";
   const routeWithoutLocale = pathName.replace(`/${localePath}`, "") || "/";
-
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,8 +42,6 @@ const NavBar = () => {
     setIsSignUpOpen(false);
     setIsSignInOpen(true);
   };
-
-  if (!hasMounted) return null;
 
   const isNotHomePage = routeWithoutLocale !== "/";
   const navbarClasses =
@@ -68,10 +61,11 @@ const NavBar = () => {
         <Link href="/">
           <Image
             src={logoSrc}
-            alt="Logo"
-            width={400}
-            height={400}
-            className="w-full h-16"
+            alt="Arctic Dream Tours Logo"
+            width={220}
+            height={64}
+            priority
+            className="h-16 w-auto"
           />
         </Link>
 

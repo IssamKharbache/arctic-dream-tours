@@ -41,7 +41,7 @@ export function WhyChooseUs() {
     <section
       className="py-16 px-4 md:px-6 lg:px-8 relative bg-cover bg-center bg-no-repeat"
       style={{
-        backgroundImage: "url('/aurora.jpg')",
+        backgroundImage: "url('/aurora.webp')",
       }}
     >
       {/* Dark overlay for better text readability */}

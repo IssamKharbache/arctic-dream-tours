@@ -1,5 +1,9 @@
 {
   "activity": {
+    "title": {
+      "main": "冬日仙境",
+      "description": "探索迷人的芬兰冬季，欣赏北极光、白雪皑皑的风景，并体验独一无二的北极探险。"
+    },
     "buttons": {
       "bookNow": "立即预订"
     },

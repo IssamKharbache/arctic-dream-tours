@@ -1,5 +1,9 @@
 {
   "activity": {
+    "title": {
+      "main": "Winter Wonderland",
+      "description": "Discover the enchanting Finnish winter with northern lights, snow-covered landscapes, and unique Arctic experiences."
+    },
     "buttons": {
       "bookNow": "Book Now"
     },

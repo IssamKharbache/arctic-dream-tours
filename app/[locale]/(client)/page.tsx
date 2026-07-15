@@ -19,10 +19,7 @@ const HomePage = async () => {
       <HeroSection />
       {/* activities cards Section */}
       {/* Winter Activities Section */}
-      <ActivitiesSection
-        title="Winter Wonderland"
-        description="Discover the enchanting Finnish winter with northern lights, snow-covered landscapes, and unique Arctic experiences."
-      />
+      <ActivitiesSection />
       {/* why choose us*/}
       <WhyChooseUs />
       {/* Gallery */}

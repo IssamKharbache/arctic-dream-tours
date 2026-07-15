@@ -50,11 +50,10 @@ export function WhyChooseUs() {
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Why Choose Us
+            {t("title")}
           </h2>
           <p className="text-lg text-gray-200 max-w-2xl mx-auto">
-            Experience Finland with confidence through our expert-guided
-            adventures and personalized service
+            {t("description")}
           </p>
         </div>
 

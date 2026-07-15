@@ -12,6 +12,7 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { useTranslations } from "next-intl";
 
 async function fetchActivities(): Promise<Activity[]> {
   const res = await fetch(`${baseUrl}/api/activity/get-all`);
@@ -19,15 +20,8 @@ async function fetchActivities(): Promise<Activity[]> {
   return data.data;
 }
 
-interface ActivitiesSectionProps {
-  title: string;
-  description?: string;
-}
-
-export function ActivitiesSection({
-  title,
-  description,
-}: ActivitiesSectionProps) {
+export function ActivitiesSection() {
+  const t = useTranslations("activity");
   const {
     data: activities = [],
     isLoading,
@@ -45,13 +39,12 @@ export function ActivitiesSection({
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            {title}
+            {t("title.main")}
           </h2>
-          {description && (
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              {description}
-            </p>
-          )}
+
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            {t("title.description")}
+          </p>
         </div>
 
         {isLoading ? (

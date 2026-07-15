@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
 import { routing, localeMeta, LocaleType } from "@/i18n/routing";
 import { useState } from "react";
+import Image from "next/image";
 
 interface LocaleSwitcherSelectProps {
   defaultValue: string;
@@ -20,7 +21,7 @@ export default function LocaleSwitcherSelect({
   const params = useParams();
 
   const [selectedLocale, setSelectedLocale] = useState<LocaleType>(
-    defaultValue as LocaleType
+    defaultValue as LocaleType,
   );
   function onSelectChange(nextLocale: LocaleType) {
     setSelectedLocale(nextLocale);
@@ -29,7 +30,7 @@ export default function LocaleSwitcherSelect({
       // are used in combination with a given `pathname`. Since the two will
       // always match for the current route, we can skip runtime checks.
       { pathname, params },
-      { locale: nextLocale as Locale }
+      { locale: nextLocale as Locale },
     );
   }
 
@@ -40,7 +41,12 @@ export default function LocaleSwitcherSelect({
         aria-label={label}
       >
         <span className="flex items-center gap-2">
-          <span>{localeMeta[selectedLocale].flag}</span>
+          <Image
+            src={`https://flagcdn.com/24x18/${localeMeta[selectedLocale].country}.png`}
+            alt=""
+            width={24}
+            height={18}
+          />
           <span className="text-sm">{localeMeta[selectedLocale].label}</span>
         </span>
       </SelectTrigger>
@@ -49,7 +55,12 @@ export default function LocaleSwitcherSelect({
         {routing.locales.map((locale) => (
           <SelectItem key={locale} value={locale}>
             <div className="flex items-center gap-2">
-              <span>{localeMeta[locale].flag}</span>
+              <Image
+                src={`https://flagcdn.com/24x18/${localeMeta[locale].country}.png`}
+                alt=""
+                width={24}
+                height={18}
+              />
               <span className="text-sm">{localeMeta[locale].label}</span>
             </div>
           </SelectItem>

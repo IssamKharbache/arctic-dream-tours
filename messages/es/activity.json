@@ -1,5 +1,9 @@
 {
   "activity": {
+    "title": {
+      "main": "Paraíso Invernal",
+      "description": "Descubre el encantador invierno finlandés con auroras boreales, paisajes cubiertos de nieve y experiencias únicas en el Ártico."
+    },
     "buttons": {
       "bookNow": "Reservar ahora"
     },

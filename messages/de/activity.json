@@ -1,5 +1,9 @@
 {
   "activity": {
+    "title": {
+      "main": "Winterwunderland",
+      "description": "Entdecken Sie den zauberhaften finnischen Winter mit Nordlichtern, schneebedeckten Landschaften und einzigartigen Erlebnissen in der Arktis."
+    },
     "buttons": {
       "bookNow": "Jetzt buchen"
     },

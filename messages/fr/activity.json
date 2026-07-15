@@ -1,5 +1,9 @@
 {
   "activity": {
+    "title": {
+      "main": "Pays des Merveilles Hivernal",
+      "description": "Découvrez le charme de l’hiver finlandais avec les aurores boréales, des paysages enneigés et des expériences uniques en Arctique."
+    },
     "buttons": {
       "bookNow": "Réserver"
     },

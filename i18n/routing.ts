@@ -100,12 +100,12 @@ export const routing = defineRouting({
 export type LocaleType = keyof typeof localeMeta;
 
 export const localeMeta = {
-  en: { label: "English", flag: "🇺🇸" },
-  fr: { label: "Français", flag: "🇫🇷" },
-  de: { label: "Deutsch", flag: "🇩🇪" },
-  ar: { label: "العربية", flag: "🇸🇦" },
-  zh: { label: "中文", flag: "🇨🇳" },
-  ja: { label: "日本語", flag: "🇯🇵" },
-  it: { label: "Italiano", flag: "🇮🇹" },
-  es: { label: "Español", flag: "🇪🇸" },
+  en: { label: "English", country: "us" },
+  fr: { label: "Français", country: "fr" },
+  de: { label: "Deutsch", country: "de" },
+  ar: { label: "العربية", country: "sa" },
+  zh: { label: "中文", country: "cn" },
+  ja: { label: "日本語", country: "jp" },
+  it: { label: "Italiano", country: "it" },
+  es: { label: "Español", country: "es" },
 };

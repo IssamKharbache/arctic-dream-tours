@@ -1,5 +1,9 @@
 {
   "activity": {
+    "title": {
+      "main": "Paese delle Meraviglie Invernale",
+      "description": "Scopri l'incantevole inverno finlandese con l'aurora boreale, paesaggi innevati ed esperienze uniche nell'Artico."
+    },
     "buttons": {
       "bookNow": "Prenota ora"
     },

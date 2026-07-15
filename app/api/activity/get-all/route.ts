@@ -8,6 +8,16 @@ export const GET = async () => {
         createdAt: "desc",
       },
     });
+
+    activityData.sort((a, b) => {
+      const aIsNorthern = a.title.toLowerCase().includes("northern light");
+      const bIsNorthern = b.title.toLowerCase().includes("northern light");
+
+      if (aIsNorthern === bIsNorthern) return 0;
+
+      return aIsNorthern ? -1 : 1;
+    });
+
     return NextResponse.json({
       data: activityData,
     });
@@ -19,7 +29,7 @@ export const GET = async () => {
       },
       {
         status: 500,
-      }
+      },
     );
   }
 };

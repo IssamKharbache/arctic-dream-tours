@@ -9,18 +9,9 @@ import {
   Users,
   Check,
   MessageCircle,
-  TreePine,
-  Dog,
-  Ship,
-  UtensilsCrossed,
-  Sparkles,
   Compass,
 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
-
-/**
- * ---- DATA -------------------------------------------------------------
- */
 
 type DayItem = { day: string; label: string };
 
@@ -131,7 +122,6 @@ const INCLUDED = [
   { icon: Coffee, label: "Hot drinks & snacks" },
 ];
 
-/** Shared card shell so every tile in the grid — pricing or CTA — is identical in height. */
 const CARD_HEIGHT = "h-[620px]";
 
 function PricingCard({ pkg }: { pkg: Package }) {
@@ -216,7 +206,6 @@ function PricingCard({ pkg }: { pkg: Package }) {
   );
 }
 
-/** The 6th tile: not a priced package, an invitation to build a custom trip. */
 function CustomizeCard() {
   return (
     <div
@@ -245,49 +234,61 @@ function CustomizeCard() {
 
 export default function LaplandPackages() {
   return (
-    <section className="relative overflow-hidden py-20 bg-slate-900 ">
-      <style>{`
-        .font-display { font-family: 'Fraunces', ui-serif, Georgia, serif; }
-        .aurora-band {
-          position: absolute;
-          left: -10%;
-          width: 120%;
-          filter: blur(40px);
-          opacity: 0.55;
-          mix-blend-mode: screen;
-          animation: aurora-drift 16s ease-in-out infinite;
-        }
-        .aurora-band--a {
-          top: -5%;
-          height: 220px;
-          background: linear-gradient(90deg, transparent, #2fbf8f, #6fe3e8, transparent);
-          animation-duration: 18s;
-        }
-        .aurora-band--b {
-          top: 12%;
-          height: 180px;
-          background: linear-gradient(90deg, transparent, #3fd6a6, transparent);
-          animation-duration: 22s;
-          animation-delay: -6s;
-        }
-        .aurora-band--c {
-          top: 25%;
-          height: 140px;
-          background: linear-gradient(90deg, transparent, #9b7ee8, #6fe3e8, transparent);
-          opacity: 0.35;
-          animation-duration: 26s;
-          animation-delay: -3s;
-        }
-        @keyframes aurora-drift {
-          0% { transform: translateX(-4%) translateY(0); }
-          50% { transform: translateX(4%) translateY(10px); }
-          100% { transform: translateX(-4%) translateY(0); }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .aurora-band { animation: none; }
-        }
-      `}</style>
+    <section
+      className="relative overflow-hidden py-20 mt-16 bg-slate-900 "
+      style={{ backgroundImage: "url('/packages/iglos.jpg')" }}
+    >
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/70 to-slate-950/90" />
+      {/* Aurora */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div
+          className="
+        absolute
+        -left-[10%]
+        top-[-5%]
+        h-[220px]
+        w-[120%]
+        bg-[linear-gradient(90deg,transparent,#2fbf8f,#6fe3e8,transparent)]
+        opacity-55
+        blur-[40px]
+        mix-blend-screen
+        animate-[aurora-drift_18s_ease-in-out_infinite]
+      "
+        />
 
+        <div
+          className="
+        absolute
+        -left-[10%]
+        top-[12%]
+        h-[180px]
+        w-[120%]
+        bg-[linear-gradient(90deg,transparent,#3fd6a6,transparent)]
+        opacity-55
+        blur-[40px]
+        mix-blend-screen
+        animate-[aurora-drift_22s_ease-in-out_infinite]
+        [animation-delay:-6s]
+      "
+        />
+
+        <div
+          className="
+        absolute
+        -left-[10%]
+        top-[25%]
+        h-[140px]
+        w-[120%]
+        bg-[linear-gradient(90deg,transparent,#9b7ee8,#6fe3e8,transparent)]
+        opacity-35
+        blur-[40px]
+        mix-blend-screen
+        animate-[aurora-drift_26s_ease-in-out_infinite]
+        [animation-delay:-3s]
+      "
+        />
+      </div>
       <div className="relative mx-auto max-w-6xl px-4 mt-14">
         <div className="text-center">
           <p className="text-[11px] uppercase tracking-[0.2em] text-[#6FE3E8]">

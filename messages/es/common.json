@@ -1,22 +1,23 @@
 {
-    "Navbar": {
-        "home": "Inicio",
-        "about": "Sobre nosotros",
-        "contact": "Contáctanos",
-        "myProfile": "Mi perfil",
-        "account": "Cuenta",
-        "bookings": "Reservas",
-        "dashboard": "Panel de control",
-        "logout": "Cerrar sesión",
-        "signUp": "Registrarse",
-        "logIn": "Iniciar sesión",
-        "bookNow": "Reservar ahora"
+  "Navbar": {
+    "home": "Inicio",
+    "about": "Sobre nosotros",
+    "contact": "Contáctanos",
+    "packages": "Paquetes",
+    "myProfile": "Mi perfil",
+    "account": "Cuenta",
+    "bookings": "Reservas",
+    "dashboard": "Panel de control",
+    "logout": "Cerrar sesión",
+    "signUp": "Registrarse",
+    "logIn": "Iniciar sesión",
+    "bookNow": "Reservar ahora"
+  },
+  "HomePage": {
+    "header": "¡Esta es la página principal!",
+    "welcome": {
+      "title": "Bienvenido a Arctic Dream Tours"
     },
-    "HomePage": {
-        "header": "¡Esta es la página principal!",
-        "welcome": {
-            "title": "Bienvenido a Arctic Dream Tours"
-        },
-        "link": "Ir a la página de contacto"
-    }
+    "link": "Ir a la página de contacto"
+  }
 }

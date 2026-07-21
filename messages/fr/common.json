@@ -1,22 +1,23 @@
 {
-    "Navbar": {
-        "home": "Accueil",
-        "about": "À propos",
-        "contact": "Contactez-nous",
-        "myProfile": "Mon profil",
-        "account": "Compte",
-        "bookings": "Réservations",
-        "dashboard": "Tableau de bord",
-        "logout": "Se déconnecter",
-        "signUp": "S'inscrire",
-        "logIn": "Se connecter",
-        "bookNow": "Réserver maintenant"
+  "Navbar": {
+    "home": "Accueil",
+    "about": "À propos",
+    "contact": "Contactez-nous",
+    "packages": "Forfaits",
+    "myProfile": "Mon profil",
+    "account": "Compte",
+    "bookings": "Réservations",
+    "dashboard": "Tableau de bord",
+    "logout": "Se déconnecter",
+    "signUp": "S'inscrire",
+    "logIn": "Se connecter",
+    "bookNow": "Réserver maintenant"
+  },
+  "HomePage": {
+    "header": "Ceci est la page d'accueil !",
+    "welcome": {
+      "title": "Bienvenue aux circuits du rêve arctique"
     },
-    "HomePage": {
-        "header": "Ceci est la page d'accueil !",
-        "welcome": {
-            "title": "Bienvenue aux circuits du rêve arctique"
-        },
-        "link": "Aller à la page de contact"
-    }
+    "link": "Aller à la page de contact"
+  }
 }

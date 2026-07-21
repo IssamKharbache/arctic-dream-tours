@@ -1,20 +1,21 @@
 {
-    "Navbar": {
-        "home": "Startseite",
-        "about": "Über uns",
-        "contact": "Kontakt",
-        "myProfile": "Mein Profil",
-        "account": "Konto",
-        "bookings": "Buchungen",
-        "dashboard": "Dashboard",
-        "logout": "Abmelden",
-        "signUp": "Registrieren",
-        "logIn": "Anmelden",
-        "bookNow": "Jetzt buchen"
-    },
-    "HomePage": {
-        "header": "Dies ist die Startseite!",
-        "welcome": { "title": "Willkommen bei Arctic Dream Tours" },
-        "link": "Zur Kontaktseite"
-    }
+  "Navbar": {
+    "home": "Startseite",
+    "about": "Über uns",
+    "contact": "Kontakt",
+    "packages": "Reisepakete",
+    "myProfile": "Mein Profil",
+    "account": "Konto",
+    "bookings": "Buchungen",
+    "dashboard": "Dashboard",
+    "logout": "Abmelden",
+    "signUp": "Registrieren",
+    "logIn": "Anmelden",
+    "bookNow": "Jetzt buchen"
+  },
+  "HomePage": {
+    "header": "Dies ist die Startseite!",
+    "welcome": { "title": "Willkommen bei Arctic Dream Tours" },
+    "link": "Zur Kontaktseite"
+  }
 }

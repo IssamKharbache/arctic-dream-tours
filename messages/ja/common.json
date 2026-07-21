@@ -1,22 +1,23 @@
 {
-    "Navbar": {
-        "home": "ホーム",
-        "about": "私たちについて",
-        "contact": "お問い合わせ",
-        "myProfile": "マイプロフィール",
-        "account": "アカウント",
-        "bookings": "予約",
-        "dashboard": "ダッシュボード",
-        "logout": "ログアウト",
-        "signUp": "サインアップ",
-        "logIn": "ログイン",
-        "bookNow": "今すぐ予約"
+  "Navbar": {
+    "home": "ホーム",
+    "about": "私たちについて",
+    "contact": "お問い合わせ",
+    "myProfile": "マイプロフィール",
+    "packages": "ツアーパッケージ",
+    "account": "アカウント",
+    "bookings": "予約",
+    "dashboard": "ダッシュボード",
+    "logout": "ログアウト",
+    "signUp": "サインアップ",
+    "logIn": "ログイン",
+    "bookNow": "今すぐ予約"
+  },
+  "HomePage": {
+    "header": "这是主页！",
+    "welcome": {
+      "title": "欢迎来到北极梦幻之旅"
     },
-    "HomePage": {
-        "header": "这是主页！",
-        "welcome": {
-            "title": "欢迎来到北极梦幻之旅"
-        },
-        "link": "前往联系页面"
-    }
+    "link": "前往联系页面"
+  }
 }

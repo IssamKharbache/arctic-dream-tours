@@ -588,5 +588,21 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 input[type="number"] {
-  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* animations for packages page */
+
+@keyframes aurora-drift {
+  0% {
+    transform: translateX(-4%) translateY(0);
+  }
+
+  50% {
+    transform: translateX(4%) translateY(10px);
+  }
+
+  100% {
+    transform: translateX(-4%) translateY(0);
+  }
 }

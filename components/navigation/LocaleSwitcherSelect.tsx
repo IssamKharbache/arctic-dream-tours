@@ -44,7 +44,7 @@ export default function LocaleSwitcherSelect({
           <Image
             src={`https://flagcdn.com/24x18/${localeMeta[selectedLocale].country}.png`}
             alt=""
-            width={24}
+            width={18}
             height={18}
           />
           <span className="text-sm">{localeMeta[selectedLocale].label}</span>
@@ -58,7 +58,7 @@ export default function LocaleSwitcherSelect({
               <Image
                 src={`https://flagcdn.com/24x18/${localeMeta[locale].country}.png`}
                 alt=""
-                width={24}
+                width={18}
                 height={18}
               />
               <span className="text-sm">{localeMeta[locale].label}</span>

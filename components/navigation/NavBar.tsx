@@ -29,9 +29,6 @@ const NavBar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  //store
-  const { openPromobar } = usePromobarStore();
-
   const pathName = usePathname();
   const localePath = pathName?.split("/")[1] ?? "";
   const routeWithoutLocale = pathName.replace(`/${localePath}`, "") || "/";
@@ -62,7 +59,8 @@ const NavBar = () => {
     <>
       <PromoBar />
       <nav
-        className={`fixed ${openPromobar ? "top-[88px]" : "top-0  "} w-full z-50 transition-all duration-300 ${navbarClasses}`}
+        style={{ top: "var(--promobar-height, 0px)" }}
+        className={`fixed w-full z-50 transition-all duration-300 ${navbarClasses}`}
       >
         <div className="max-w-[1700px] mx-auto px-4 sm:px-6 flex items-center justify-between">
           {/* Logo */}

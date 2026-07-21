@@ -235,7 +235,7 @@ function CustomizeCard() {
 export default function LaplandPackages() {
   return (
     <section
-      className="relative overflow-hidden py-20 mt-16 bg-slate-900 "
+      className="relative overflow-hidden py-20 mt-22 md:mt-16 bg-slate-900 "
       style={{ backgroundImage: "url('/packages/iglos.jpg')" }}
     >
       {/* Dark overlay */}

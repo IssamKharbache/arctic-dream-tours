@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   Plane,
   Car,
@@ -19,8 +20,12 @@ type Package = {
   id: string;
   name: string;
   duration: string;
-  price: number;
-
+  /** Flat price — used for packages that don't have a with/without hotel split */
+  price?: number;
+  /** Per-person price when a 5★ hotel room (1–2 pax) is included */
+  priceWithHotel?: number;
+  /** Per-person price when accommodation is not included */
+  priceWithoutHotel?: number;
   itinerary: DayItem[];
   popular?: boolean;
 };
@@ -30,7 +35,8 @@ const PACKAGES: Package[] = [
     id: "classic",
     name: "Lapland Classic",
     duration: "4 DAYS / 3 NIGHTS",
-    price: 600,
+    priceWithHotel: 2550,
+    priceWithoutHotel: 1050,
     itinerary: [
       { day: "Day 1", label: "Santa Claus Village & Snowman World" },
       {
@@ -45,7 +51,8 @@ const PACKAGES: Package[] = [
     id: "dream",
     name: "Lapland Dream",
     duration: "6 DAYS / 5 NIGHTS",
-    price: 980,
+    priceWithHotel: 4580,
+    priceWithoutHotel: 1580,
     itinerary: [
       { day: "Day 1", label: "Santa Claus Village & Snowman World" },
       {
@@ -62,7 +69,8 @@ const PACKAGES: Package[] = [
     id: "ultimate",
     name: "Full Lapland Experience",
     duration: "8 DAYS / 7 NIGHTS",
-    price: 1490,
+    priceWithHotel: 7630,
+    priceWithoutHotel: 2380,
     popular: true,
     itinerary: [
       { day: "Day 1", label: "Santa Claus Village & Snowman World" },
@@ -122,9 +130,62 @@ const INCLUDED = [
   { icon: Coffee, label: "Hot drinks & snacks" },
 ];
 
-const CARD_HEIGHT = "h-[620px]";
+const CARD_HEIGHT = "h-[680px]";
+
+function HotelToggle({
+  withHotel,
+  onChange,
+}: {
+  withHotel: boolean;
+  onChange: (v: boolean) => void;
+}) {
+  return (
+    <div
+      role="tablist"
+      aria-label="Accommodation option"
+      className="mt-4 inline-flex w-full rounded-full border border-white/15 bg-white/[0.04] p-1"
+    >
+      <button
+        type="button"
+        role="tab"
+        aria-selected={withHotel}
+        onClick={() => onChange(true)}
+        className={`flex-1 rounded-full px-2.5 py-1.5 text-[11px] font-semibold uppercase tracking-wide transition-colors duration-200 cursor-pointer ${
+          withHotel
+            ? "bg-[#6FE3E8] text-[#0A1626]"
+            : "text-[#9FB2CB] hover:text-white"
+        }`}
+      >
+        With Hotel 5★
+      </button>
+      <button
+        type="button"
+        role="tab"
+        aria-selected={!withHotel}
+        onClick={() => onChange(false)}
+        className={`flex-1 rounded-full px-2.5 py-1.5 text-[11px] font-semibold uppercase tracking-wide transition-colors duration-200 cursor-pointer ${
+          !withHotel
+            ? "bg-[#6FE3E8] text-[#0A1626]"
+            : "text-[#9FB2CB] hover:text-white"
+        }`}
+      >
+        Without Hotel
+      </button>
+    </div>
+  );
+}
 
 function PricingCard({ pkg }: { pkg: Package }) {
+  const hasHotelOption =
+    pkg.priceWithHotel !== undefined && pkg.priceWithoutHotel !== undefined;
+  const [withHotel, setWithHotel] = useState(true);
+
+  const displayPrice = hasHotelOption
+    ? withHotel
+      ? pkg.priceWithHotel!
+      : pkg.priceWithoutHotel!
+    : pkg.price!;
+
   return (
     <div
       className={`relative flex ${CARD_HEIGHT} flex-col rounded-2xl border p-6 backdrop-blur-md ${
@@ -150,10 +211,25 @@ function PricingCard({ pkg }: { pkg: Package }) {
       <div className="mt-5 flex items-baseline gap-1">
         <span className="text-sm text-[#9FB2CB]">From</span>
         <span className="text-4xl font-bold text-white">
-          €{pkg.price.toLocaleString()}
+          €{displayPrice.toLocaleString()}
         </span>
         <span className="text-sm text-[#9FB2CB]">/ person</span>
       </div>
+
+      {hasHotelOption && (
+        <>
+          <HotelToggle withHotel={withHotel} onChange={setWithHotel} />
+          <p className="mt-2 flex items-center gap-1.5 text-[11px] text-[#9FB2CB]">
+            <Users
+              className="h-3 w-3 shrink-0 text-[#6FE3E8]"
+              strokeWidth={2}
+            />
+            {withHotel
+              ? "5★ hotel room included, for 1–2 people"
+              : "Activities & transfers only — accommodation not included"}
+          </p>
+        </>
+      )}
 
       <ul className="mt-5 flex-1 space-y-2.5 overflow-hidden">
         {pkg.itinerary.map((d, i) => (

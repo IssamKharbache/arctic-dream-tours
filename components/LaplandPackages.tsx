@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Plane,
   Car,
@@ -11,6 +11,9 @@ import {
   Check,
   MessageCircle,
   Compass,
+  Sparkles,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 
@@ -20,15 +23,31 @@ type Package = {
   id: string;
   name: string;
   duration: string;
-  /** Flat price — used for packages that don't have a with/without hotel split */
   price?: number;
-  /** Per-person price when a 5★ hotel room (1–2 pax) is included */
   priceWithHotel?: number;
-  /** Per-person price when accommodation is not included */
   priceWithoutHotel?: number;
   itinerary: DayItem[];
   popular?: boolean;
 };
+
+// Shape returned by /api/activity/get-all — extend as needed.
+// NOTE: assumed the cover image field is called `image` — rename to match
+// your API response (e.g. `imageUrl` / `coverImage` / `thumbnail`) if different.
+type Activity = {
+  id: string | number;
+  title: string;
+  imageUrl?: string;
+};
+
+// NOTE: adjust this to whatever base URL your app already uses elsewhere
+// (e.g. import it from a shared lib/api file if you have one).
+const baseUrl = process.env.NEXT_PUBLIC_API_URL ?? "";
+
+async function fetchActivities(): Promise<Activity[]> {
+  const res = await fetch(`${baseUrl}/api/activity/get-all`);
+  const data = await res.json();
+  return data.data;
+}
 
 const PACKAGES: Package[] = [
   {
@@ -84,39 +103,6 @@ const PACKAGES: Package[] = [
       { day: "Day 6", label: "Ranua Wildlife Park" },
       { day: "Day 7", label: "Korouoma Frozen Waterfalls Tour" },
       { day: "Day 8", label: "Icebreaker Cruise Experience" },
-    ],
-  },
-  {
-    id: "luxury",
-    name: "Arctic Luxury Experience",
-    duration: "9 DAYS / 8 NIGHTS",
-    price: 1790,
-    itinerary: [
-      {
-        day: "Days 1–8",
-        label: "All activities from the Ultimate Lapland Experience",
-      },
-      { day: "Added", label: "Icebreaker Cruise Experience" },
-      { day: "Added", label: "Dinner at the Arctic SnowHotel Ice Restaurant" },
-    ],
-  },
-  {
-    id: "vip",
-    name: "Complete Lapland VIP Experience",
-    duration: "10 DAYS / 9 NIGHTS",
-    price: 2190,
-    itinerary: [
-      {
-        day: "Days 1–9",
-        label: "All activities from the Arctic Luxury Experience",
-      },
-      { day: "Added", label: "1 Night in a Glass Igloo" },
-      { day: "Added", label: "Dinner at the Arctic SnowHotel Ice Restaurant" },
-      { day: "Added", label: "Luxury accommodation throughout" },
-      {
-        day: "Added",
-        label: "Private VIP airport transfers & private transport",
-      },
     ],
   },
 ];
@@ -282,28 +268,165 @@ function PricingCard({ pkg }: { pkg: Package }) {
   );
 }
 
-function CustomizeCard() {
+function ActivityCard({ activity }: { activity: Activity }) {
   return (
-    <div
-      className={`relative flex ${CARD_HEIGHT} flex-col items-center justify-center rounded-2xl border border-dashed border-[#E8A94A]/50 bg-white/[0.04] p-6 text-center backdrop-blur-md`}
-    >
-      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/10">
-        <Compass className="h-5 w-5 text-[#E8A94A]" strokeWidth={1.75} />
-      </div>
-      <h3 className="font-display mt-4 text-lg font-semibold text-white">
-        Customize your experience
-      </h3>
-      <p className="mt-3 text-sm text-[#9FB2CB]">
-        Have different dates, a bigger group, or activities you'd like to mix
-        and match? Tell us what you have in mind and we'll build a private
-        itinerary just for you.
+    <div className="group relative h-40 w-56 shrink-0 snap-start overflow-hidden rounded-xl border border-white/10 bg-white/[0.04] sm:h-44 sm:w-64">
+      {activity.imageUrl ? (
+        <img
+          src={activity.imageUrl}
+          alt={activity.title}
+          loading="lazy"
+          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+      ) : (
+        <div className="flex h-full w-full items-center justify-center bg-white/[0.04]">
+          <Compass className="h-6 w-6 text-[#6FE3E8]/60" strokeWidth={1.5} />
+        </div>
+      )}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0A1626] via-[#0A1626]/10 to-transparent" />
+      <p className="absolute inset-x-0 bottom-0 p-3 text-sm font-semibold leading-tight text-white">
+        {activity.title}
       </p>
-      <Link href="/contact" className="mt-6 w-full">
-        <button className="flex w-full items-center justify-center gap-2 rounded-full border border-[#E8A94A] bg-transparent px-4 py-2.5 text-sm font-semibold text-[#E8A94A] transition-colors duration-200 hover:bg-[#E8A94A] hover:text-[#0A1626] cursor-pointer">
-          <MessageCircle className="h-4 w-4" />
-          Talk to us
-        </button>
-      </Link>
+    </div>
+  );
+}
+
+function ActivitySlider({ activities }: { activities: Activity[] }) {
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  const scrollByCard = (direction: "left" | "right") => {
+    const track = trackRef.current;
+    if (!track) return;
+    const amount = track.clientWidth * 0.8 * (direction === "left" ? -1 : 1);
+    track.scrollBy({ left: amount, behavior: "smooth" });
+  };
+
+  return (
+    <div className="relative">
+      <div
+        ref={trackRef}
+        className="flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {activities.map((activity) => (
+          <ActivityCard key={activity.id} activity={activity} />
+        ))}
+      </div>
+
+      {activities.length > 2 && (
+        <>
+          <button
+            type="button"
+            aria-label="Scroll activities left"
+            onClick={() => scrollByCard("left")}
+            className="absolute -left-3 top-1/2 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-[#0A1626]/80 text-white backdrop-blur-md transition-colors duration-200 hover:bg-[#0A1626] cursor-pointer sm:flex"
+          >
+            <ChevronLeft className="h-4 w-4" strokeWidth={2} />
+          </button>
+          <button
+            type="button"
+            aria-label="Scroll activities right"
+            onClick={() => scrollByCard("right")}
+            className="absolute -right-3 top-1/2 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-[#0A1626]/80 text-white backdrop-blur-md transition-colors duration-200 hover:bg-[#0A1626] cursor-pointer sm:flex"
+          >
+            <ChevronRight className="h-4 w-4" strokeWidth={2} />
+          </button>
+        </>
+      )}
+    </div>
+  );
+}
+
+function CustomizeSection() {
+  const [activities, setActivities] = useState<Activity[]>([]);
+  const [status, setStatus] = useState<"loading" | "success" | "error">(
+    "loading",
+  );
+
+  useEffect(() => {
+    let cancelled = false;
+
+    fetchActivities()
+      .then((data) => {
+        if (cancelled) return;
+        setActivities(Array.isArray(data) ? data : []);
+        setStatus("success");
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setStatus("error");
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return (
+    <div className="mt-14 rounded-2xl border border-dashed border-[#E8A94A]/50 bg-white/[0.04] p-6 backdrop-blur-md md:p-8">
+      {/* Pitch + CTA */}
+      <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-start gap-4">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/10">
+            <Compass className="h-5 w-5 text-[#E8A94A]" strokeWidth={1.75} />
+          </div>
+          <div>
+            <h3 className="font-display text-xl font-semibold text-white">
+              Build your own itinerary
+            </h3>
+            <p className="mt-1.5 max-w-lg text-sm leading-relaxed text-[#9FB2CB]">
+              Our packages are designed to be flexible. Pick your preferred
+              package, choose the activities you love from our selection, and
+              we'll tailor your itinerary into a unique experience just for you.
+            </p>
+          </div>
+        </div>
+        <Link href="/contact" className="w-full sm:w-auto">
+          <button className="flex w-full items-center justify-center gap-2 rounded-full border border-[#E8A94A] bg-transparent px-4 py-2.5 text-sm font-semibold text-[#E8A94A] transition-colors duration-200 hover:bg-[#E8A94A] hover:text-[#0A1626] cursor-pointer sm:w-auto">
+            <MessageCircle className="h-4 w-4" />
+            Talk to us
+          </button>
+        </Link>
+      </div>
+
+      {/* Activities slider */}
+      <div className="mt-6 border-t border-white/10 pt-6">
+        <div className="flex items-center gap-2">
+          <Sparkles className="h-4 w-4 text-[#6FE3E8]" strokeWidth={1.75} />
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-[#6FE3E8]">
+            Activities you can choose from
+          </span>
+        </div>
+
+        {status === "loading" && (
+          <div className="mt-4 flex gap-3 overflow-hidden">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <span
+                key={i}
+                className="h-40 w-56 shrink-0 animate-pulse rounded-xl bg-white/[0.06] sm:h-44 sm:w-64"
+              />
+            ))}
+          </div>
+        )}
+
+        {status === "error" && (
+          <p className="mt-4 text-sm text-[#9FB2CB]">
+            We couldn't load the full activity list right now — reach out and
+            we'll walk you through every option.
+          </p>
+        )}
+
+        {status === "success" && activities.length === 0 && (
+          <p className="mt-4 text-sm text-[#9FB2CB]">
+            Reach out and we'll walk you through every activity we offer.
+          </p>
+        )}
+
+        {status === "success" && activities.length > 0 && (
+          <div className="mt-4">
+            <ActivitySlider activities={activities} />
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -383,8 +506,9 @@ export default function LaplandPackages() {
           {PACKAGES.map((pkg) => (
             <PricingCard key={pkg.id} pkg={pkg} />
           ))}
-          <CustomizeCard />
         </div>
+
+        <CustomizeSection />
 
         <div className="mt-14 rounded-2xl border border-white/15 bg-white/[0.06] p-6 backdrop-blur-md">
           <h3 className="font-display text-lg font-semibold text-white">

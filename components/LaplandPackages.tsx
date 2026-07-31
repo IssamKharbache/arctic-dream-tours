@@ -22,8 +22,6 @@ type Activity = {
   imageUrl?: string;
 };
 
-// NOTE: adjust this to whatever base URL your app already uses elsewhere
-// (e.g. import it from a shared lib/api file if you have one).
 const baseUrl = process.env.NEXT_PUBLIC_URL ?? "";
 
 async function fetchActivities(): Promise<Activity[]> {
@@ -35,7 +33,7 @@ async function fetchActivities(): Promise<Activity[]> {
 // ---- WhatsApp booking helpers -------------------------------------------
 
 // No "+", no spaces — just country code + number.
-const WHATSAPP_NUMBER = "212625372570";
+const WHATSAPP_NUMBER = "358404121843";
 
 function buildWhatsAppMessage(pkg: Package, withHotel: boolean) {
   const hasHotelOption =

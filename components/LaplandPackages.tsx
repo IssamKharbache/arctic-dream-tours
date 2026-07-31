@@ -3,10 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import {
   Plane,
-  Car,
   Coffee,
   Home,
-  Shirt,
   Users,
   Check,
   MessageCircle,
@@ -16,23 +14,8 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
+import { INCLUDED, Package, PACKAGES } from "@/app/data/laplandPackages";
 
-type DayItem = { day: string; label: string };
-
-type Package = {
-  id: string;
-  name: string;
-  duration: string;
-  price?: number;
-  priceWithHotel?: number;
-  priceWithoutHotel?: number;
-  itinerary: DayItem[];
-  popular?: boolean;
-};
-
-// Shape returned by /api/activity/get-all — extend as needed.
-// NOTE: assumed the cover image field is called `image` — rename to match
-// your API response (e.g. `imageUrl` / `coverImage` / `thumbnail`) if different.
 type Activity = {
   id: string | number;
   title: string;
@@ -41,7 +24,7 @@ type Activity = {
 
 // NOTE: adjust this to whatever base URL your app already uses elsewhere
 // (e.g. import it from a shared lib/api file if you have one).
-const baseUrl = process.env.NEXT_PUBLIC_API_URL ?? "";
+const baseUrl = process.env.NEXT_PUBLIC_URL ?? "";
 
 async function fetchActivities(): Promise<Activity[]> {
   const res = await fetch(`${baseUrl}/api/activity/get-all`);
@@ -49,72 +32,53 @@ async function fetchActivities(): Promise<Activity[]> {
   return data.data;
 }
 
-const PACKAGES: Package[] = [
-  {
-    id: "classic",
-    name: "Lapland Classic",
-    duration: "4 DAYS / 3 NIGHTS",
-    priceWithHotel: 2550,
-    priceWithoutHotel: 1050,
-    itinerary: [
-      { day: "Day 1", label: "Santa Claus Village & Snowman World" },
-      {
-        day: "Day 2",
-        label: "Husky Safari, Reindeer Experience & Arctic SnowHotel",
-      },
-      { day: "Day 3", label: "Snowmobile Adventure & Northern Lights Tour" },
-      { day: "Day 4", label: "Rovaniemi City Tour & Shopping" },
-    ],
-  },
-  {
-    id: "dream",
-    name: "Lapland Dream",
-    duration: "6 DAYS / 5 NIGHTS",
-    priceWithHotel: 4580,
-    priceWithoutHotel: 1580,
-    itinerary: [
-      { day: "Day 1", label: "Santa Claus Village & Snowman World" },
-      {
-        day: "Day 2",
-        label: "Husky Safari, Reindeer Experience & Arctic SnowHotel",
-      },
-      { day: "Day 3", label: "Snowmobile Adventure & Northern Lights Tour" },
-      { day: "Day 4", label: "Rovaniemi City Tour & Shopping" },
-      { day: "Day 5", label: "Finnish Horse Riding Experience" },
-      { day: "Day 6", label: "Ranua Wildlife Park" },
-    ],
-  },
-  {
-    id: "ultimate",
-    name: "Full Lapland Experience",
-    duration: "8 DAYS / 7 NIGHTS",
-    priceWithHotel: 7630,
-    priceWithoutHotel: 2380,
-    popular: true,
-    itinerary: [
-      { day: "Day 1", label: "Santa Claus Village & Snowman World" },
-      {
-        day: "Day 2",
-        label: "Husky Safari, Reindeer Experience & Arctic SnowHotel",
-      },
-      { day: "Day 3", label: "Snowmobile Adventure & Northern Lights Tour" },
-      { day: "Day 4", label: "Rovaniemi City Tour & Shopping" },
-      { day: "Day 5", label: "Finnish Horse Riding Experience" },
-      { day: "Day 6", label: "Ranua Wildlife Park" },
-      { day: "Day 7", label: "Korouoma Frozen Waterfalls Tour" },
-      { day: "Day 8", label: "Icebreaker Cruise Experience" },
-    ],
-  },
-];
+// ---- WhatsApp booking helpers -------------------------------------------
 
-const INCLUDED = [
-  { icon: Plane, label: "Airport transfers" },
-  { icon: Home, label: "Accommodation with breakfast" },
-  { icon: Users, label: "English-speaking guide" },
-  { icon: Car, label: "Transport during activities" },
-  { icon: Shirt, label: "Winter clothing, when required" },
-  { icon: Coffee, label: "Hot drinks & snacks" },
-];
+// No "+", no spaces — just country code + number.
+const WHATSAPP_NUMBER = "212625372570";
+
+function buildWhatsAppMessage(pkg: Package, withHotel: boolean) {
+  const hasHotelOption =
+    pkg.priceWithHotel !== undefined && pkg.priceWithoutHotel !== undefined;
+
+  const price = hasHotelOption
+    ? withHotel
+      ? pkg.priceWithHotel!
+      : pkg.priceWithoutHotel!
+    : pkg.price!;
+
+  const itineraryText = pkg.itinerary
+    .map((d) => `${d.day}: ${d.label}`)
+    .join("\n");
+
+  const lines = [
+    "Hi! I'd like to book this package:",
+    "",
+    `${pkg.name}`,
+    `${pkg.duration}`,
+    `€${price.toLocaleString()} / person${
+      hasHotelOption
+        ? withHotel
+          ? " (With Hotel 5★)"
+          : " (Without Hotel)"
+        : ""
+    }`,
+    "",
+    "Itinerary:",
+    itineraryText,
+    "",
+    "Can you tell me more about availability and next steps?",
+  ];
+
+  return lines.join("\n");
+}
+
+function getWhatsAppLink(pkg: Package, withHotel: boolean) {
+  const message = buildWhatsAppMessage(pkg, withHotel);
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}
+
+// ---------------------------------------------------------------------------
 
 const CARD_HEIGHT = "h-[680px]";
 
@@ -255,15 +219,18 @@ function PricingCard({ pkg }: { pkg: Package }) {
         </div>
       </div>
 
-      <button
-        className={`w-full rounded-full px-4 py-2.5 text-sm font-semibold transition-colors duration-200 cursor-pointer mt-5 ${
+      <a
+        href={getWhatsAppLink(pkg, withHotel)}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`mt-5 flex w-full items-center justify-center rounded-full px-4 py-2.5 text-sm font-semibold transition-colors duration-200 cursor-pointer ${
           pkg.popular
             ? "bg-[#E8A94A] text-[#0A1626] hover:bg-[#F2BE6B]"
             : "bg-white/10 text-white hover:bg-white/20"
         }`}
       >
         Book this package
-      </button>
+      </a>
     </div>
   );
 }

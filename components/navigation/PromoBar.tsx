@@ -9,8 +9,6 @@ export default function PromoBar() {
   const { openPromobar, setOpenPromoBar } = usePromobarStore();
   const navRef = useRef<HTMLElement>(null);
 
-  // Keep --promobar-height in sync with the real rendered height,
-  // at every breakpoint, instead of hardcoding offsets elsewhere.
   useEffect(() => {
     const el = navRef.current;
     if (!el) return;
@@ -63,15 +61,33 @@ export default function PromoBar() {
       <div className="relative mx-auto flex max-w-7xl flex-col gap-3 px-4 py-3 pr-12 sm:px-6 sm:py-4 sm:pr-16 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
         {/* Copy */}
         <div className="flex items-center gap-3 min-w-0">
+          {/* NEW badge */}
+          <span className="relative hidden shrink-0 items-center gap-1.5 rounded-full border border-emerald-400/40 bg-emerald-400/10 px-3 py-1 text-xs font-bold tracking-wide text-emerald-300 sm:inline-flex">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+            </span>
+            NEW
+          </span>
+
           <div className="min-w-0">
-            <h3 className="text-base font-bold text-white sm:text-xl">
-              Discover our new Lapland Packages
+            <h3 className="flex items-center gap-2 text-base font-bold text-white sm:text-xl">
+              {/* Mobile-only inline NEW badge (compact) */}
+              <span className="relative inline-flex shrink-0 items-center gap-1 rounded-full border border-emerald-400/40 bg-emerald-400/10 px-2 py-0.5 text-[10px] font-bold tracking-wide text-emerald-300 sm:hidden">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                </span>
+                NEW
+              </span>
+              <Sparkles className="hidden h-4 w-4 shrink-0 text-emerald-300 sm:inline-block" />
+              <span className="truncate">Lapland Tour Packages Are Here</span>
             </h3>
 
             {/* Full details on tablet/desktop */}
             <div className="hidden items-center text-sm text-slate-300 md:flex">
               <Mountain className="mr-1 inline h-4 w-4 shrink-0 text-cyan-300" />
-              Multi-day adventures from
+              Unforgettable Arctic adventures from
               <span className="mx-1 font-bold text-white">€600/person</span>
               <span className="mx-2 text-cyan-400">•</span>
               Accommodation
@@ -84,8 +100,8 @@ export default function PromoBar() {
 
             {/* Condensed details on mobile */}
             <p className="truncate text-xs text-slate-300 md:hidden">
-              From <span className="font-bold text-white">€600/person</span> ·
-              Accommodation & Activities
+              Arctic adventures from{" "}
+              <span className="font-bold text-white">€600/person</span>
             </p>
           </div>
         </div>
@@ -95,7 +111,7 @@ export default function PromoBar() {
           href="/packages"
           className="group inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400 px-5 py-2.5 text-sm font-bold text-slate-900 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(34,211,238,.45)] sm:px-7 sm:py-3"
         >
-          Explore Packages
+          Explore Now
           <ArrowRight className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1 sm:h-5 sm:w-5" />
         </Link>
       </div>

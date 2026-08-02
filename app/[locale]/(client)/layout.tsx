@@ -4,6 +4,7 @@ import SignupDialog from "@/components/auth/dialogs/SignupDialog";
 import Footer from "@/components/footer/Footer";
 import LocaleSwitcher from "@/components/navigation/LocaleSwitcher";
 import NavBar from "@/components/navigation/NavBar";
+import NewPackagesDialog from "@/components/PromoDialog";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 
 export default function ClientLayout({
@@ -13,6 +14,8 @@ export default function ClientLayout({
 }>) {
   return (
     <div>
+      <NewPackagesDialog />
+
       <NavBar />
       <AuthModalTrigger />
       <SignupDialog />

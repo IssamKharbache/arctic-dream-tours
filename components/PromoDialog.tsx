@@ -1,53 +1,60 @@
 "use client";
 
 import { Link } from "@/i18n/navigation";
+import Image from "next/image";
 import { useNewPackagesDialogStore } from "@/store/zustand/NewPackagesDialog";
 import {
   X,
   Mountain,
   Plane,
   Sparkles,
-  Snowflake,
-  Compass,
   BedDouble,
+  Compass,
   ArrowRight,
 } from "lucide-react";
 import { useEffect } from "react";
 
-const SESSION_KEY = "lapland-packages-dialog-seen";
+interface Package {
+  id: "classic" | "dream" | "ultimate";
+  name: string;
+  duration: string;
+  priceWithHotel: number;
+  priceWithoutHotel: number;
+  popular?: boolean;
+}
 
-const highlights = [
+const PACKAGES: Package[] = [
   {
-    icon: Snowflake,
-    title: "Arctic Adventures",
-    description:
-      "Chase the Northern Lights and explore snow-covered wilderness.",
+    id: "classic",
+    name: "Lapland Classic",
+    duration: "4 DAYS / 3 NIGHTS",
+    priceWithHotel: 2550,
+    priceWithoutHotel: 1050,
   },
   {
-    icon: BedDouble,
-    title: "Handpicked Stays",
-    description:
-      "Comfortable accommodation included for every night of your trip.",
+    id: "dream",
+    name: "Lapland Dream",
+    duration: "6 DAYS / 5 NIGHTS",
+    priceWithHotel: 4580,
+    priceWithoutHotel: 1580,
   },
   {
-    icon: Compass,
-    title: "Guided Activities",
-    description:
-      "Husky sledding, snowmobiling, and more — all arranged for you.",
-  },
-  {
-    icon: Plane,
-    title: "Airport Transfers",
-    description: "Seamless pickup and drop-off, no logistics to worry about.",
+    id: "ultimate",
+    name: "Full Lapland Experience",
+    duration: "8 DAYS / 7 NIGHTS",
+    priceWithHotel: 7630,
+    priceWithoutHotel: 2380,
+    popular: true,
   },
 ];
 
 export default function NewPackagesDialog() {
   const { open, setOpen } = useNewPackagesDialogStore();
+
   useEffect(() => {
     setOpen(true);
   }, [setOpen]);
-  // Close on Escape
+
   useEffect(() => {
     if (!open) return;
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -57,7 +64,6 @@ export default function NewPackagesDialog() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [open, setOpen]);
 
-  // Lock scroll while open
   useEffect(() => {
     if (open) {
       const original = document.body.style.overflow;
@@ -77,27 +83,22 @@ export default function NewPackagesDialog() {
       aria-modal="true"
       aria-labelledby="new-packages-title"
     >
-      {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm"
+        className="absolute inset-0 bg-slate-950/85 backdrop-blur-sm"
         onClick={() => setOpen(false)}
       />
 
-      {/* Dialog */}
-      <div className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-cyan-400/20 bg-gradient-to-br from-slate-950 via-cyan-950 to-slate-950 shadow-[0_0_80px_rgba(34,211,238,.15)]">
-        {/* Aurora */}
-        <div className="pointer-events-none absolute inset-0 opacity-40">
-          <div className="absolute -top-16 left-1/4 h-52 w-96 rounded-full bg-cyan-400 blur-3xl animate-pulse" />
-          <div
-            className="absolute top-10 right-0 h-52 w-96 rounded-full bg-emerald-400 blur-3xl animate-pulse"
-            style={{ animationDelay: "1s" }}
-          />
-        </div>
+      <div className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-cyan-400/20 shadow-[0_0_100px_rgba(34,211,238,.2)]">
+        {/* Real aurora photo background */}
+        <Image
+          src="/aurora.jpg"
+          alt=""
+          fill
+          priority
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/70 to-slate-950/90" />
 
-        {/* Grid */}
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.03)_1px,transparent_1px)] bg-[size:40px_40px]" />
-
-        {/* Close button */}
         <button
           onClick={() => setOpen(false)}
           aria-label="Close dialog"
@@ -106,46 +107,74 @@ export default function NewPackagesDialog() {
           <X size={20} />
         </button>
 
-        {/* Content */}
         <div className="relative max-h-[85vh] overflow-y-auto px-6 py-8 sm:px-10 sm:py-10">
-          {/* Title */}
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="relative inline-flex items-center gap-1.5 rounded-full border border-emerald-400/40 bg-emerald-400/10 px-3 py-1 text-xs font-bold tracking-wide text-emerald-300 backdrop-blur-sm">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+              </span>
+              NEW
+            </span>
+            <span className="inline-flex items-center rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-xs font-bold tracking-wide text-cyan-300 backdrop-blur-sm">
+              2026 / 2027 SEASON
+            </span>
+          </div>
+
+          {/* Big heading */}
           <h2
             id="new-packages-title"
-            className="mt-4 flex items-center gap-2 text-2xl font-bold text-white sm:text-3xl"
+            className="mt-4 flex items-center gap-2 text-3xl font-bold text-white drop-shadow-lg sm:text-4xl"
           >
-            <Sparkles className="h-6 w-6 shrink-0 text-emerald-300" />
-            Lapland Tour Packages Are Here
+            <Sparkles className="h-7 w-7 shrink-0 text-emerald-300" />
+            Our New Packages
           </h2>
 
-          <p className="mt-3 max-w-lg text-sm text-slate-300 sm:text-base">
+          <p className="mt-3 max-w-lg text-sm text-slate-200 drop-shadow sm:text-base">
             Explore the Arctic like never before. Unforgettable adventures await
-            — from <span className="font-bold text-white">€600/person</span>,
-            with accommodation, activities, and airport transfers all included.
+            this winter season.
           </p>
 
-          {/* Highlights grid */}
-          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {highlights.map(({ icon: Icon, title, description }) => (
+          {/* Package cards — text only, no images */}
+          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+            {PACKAGES.map((pkg) => (
               <div
-                key={title}
-                className="flex items-start gap-3 rounded-xl border border-cyan-400/10 bg-white/[0.03] p-4"
+                key={pkg.id}
+                className={`flex flex-col rounded-xl border p-4 backdrop-blur-md ${
+                  pkg.popular
+                    ? "border-amber-400/50 bg-amber-400/5"
+                    : "border-white/10 bg-slate-950/40"
+                }`}
               >
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-cyan-400/10 text-cyan-300">
-                  <Icon className="h-5 w-5" />
-                </span>
-                <div>
-                  <h3 className="text-sm font-bold text-white">{title}</h3>
-                  <p className="mt-0.5 text-xs text-slate-400">{description}</p>
+                <div className="flex items-center justify-between gap-2">
+                  <h3 className="text-sm font-bold text-white">{pkg.name}</h3>
+                  {pkg.popular && (
+                    <span className="shrink-0 rounded-full bg-amber-400 px-2 py-0.5 text-[9px] font-bold tracking-wide text-slate-900">
+                      POPULAR
+                    </span>
+                  )}
                 </div>
+                <p className="mt-1 text-[11px] font-medium tracking-wide text-slate-400">
+                  {pkg.duration}
+                </p>
+                <p className="mt-3 text-sm text-white">
+                  From{" "}
+                  <span className="font-bold text-emerald-300">
+                    €{pkg.priceWithoutHotel}
+                  </span>
+                  <span className="text-slate-400"> /person</span>
+                </p>
               </div>
             ))}
           </div>
-
-          {/* CTA row */}
+          <p className="mt-5 text-sm text-slate-300">
+            We handle your accommodation, activities, and airport transfers — so
+            you don&apos;t have to.
+          </p>
           <div className="mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
             <button
               onClick={() => setOpen(false)}
-              className="text-sm font-medium text-slate-400 transition-colors hover:text-white"
+              className="text-sm font-medium text-slate-300 transition-colors hover:text-white"
             >
               Maybe later
             </button>
@@ -155,6 +184,7 @@ export default function NewPackagesDialog() {
               onClick={() => setOpen(false)}
               className="group inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400 px-6 py-3 text-sm font-bold text-slate-900 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(34,211,238,.45)]"
             >
+              <Mountain className="h-4 w-4 shrink-0" />
               Explore Packages
               <ArrowRight className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>

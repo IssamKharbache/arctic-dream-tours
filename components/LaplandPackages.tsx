@@ -4,14 +4,14 @@ import { useEffect, useRef, useState } from "react";
 import {
   Plane,
   Coffee,
-  Home,
-  Users,
   Check,
   MessageCircle,
   Compass,
   Sparkles,
   ChevronLeft,
   ChevronRight,
+  Snowflake,
+  BedDouble,
 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { INCLUDED, Package, PACKAGES } from "@/app/data/laplandPackages";
@@ -23,7 +23,6 @@ type Activity = {
 };
 
 const baseUrl = process.env.NEXT_PUBLIC_URL ?? "";
-
 async function fetchActivities(): Promise<Activity[]> {
   const res = await fetch(`${baseUrl}/api/activity/get-all`);
   const data = await res.json();
@@ -32,7 +31,6 @@ async function fetchActivities(): Promise<Activity[]> {
 
 // ---- WhatsApp booking helpers -------------------------------------------
 
-// No "+", no spaces — just country code + number.
 const WHATSAPP_NUMBER = "358404121843";
 
 function buildWhatsAppMessage(pkg: Package, withHotel: boolean) {
@@ -70,7 +68,16 @@ function buildWhatsAppMessage(pkg: Package, withHotel: boolean) {
 
   return lines.join("\n");
 }
+//booking function for customizing expe
+function getWhatsappLinkForMoreInfos() {
+  const text = `Hi! I'd like to create a customized Arctic experience.
 
+I'm interested in building my own itinerary by selecting the activities I'd like to include.
+
+Could you provide more information about availability, pricing, and the next steps for booking?`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+}
+//booking function
 function getWhatsAppLink(pkg: Package, withHotel: boolean) {
   const message = buildWhatsAppMessage(pkg, withHotel);
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
@@ -134,6 +141,9 @@ function PricingCard({ pkg }: { pkg: Package }) {
       : pkg.priceWithoutHotel!
     : pkg.price!;
 
+  // Glass Igloo night is only part of the "With Hotel" option
+  const showIgloo = hasHotelOption ? withHotel : false;
+
   return (
     <div
       className={`relative flex ${CARD_HEIGHT} flex-col rounded-2xl border p-6 backdrop-blur-md ${
@@ -167,15 +177,29 @@ function PricingCard({ pkg }: { pkg: Package }) {
       {hasHotelOption && (
         <>
           <HotelToggle withHotel={withHotel} onChange={setWithHotel} />
-          <p className="mt-2 flex items-center gap-1.5 text-[11px] text-[#9FB2CB]">
-            <Users
-              className="h-3 w-3 shrink-0 text-[#6FE3E8]"
-              strokeWidth={2}
-            />
-            {withHotel
-              ? "5★ hotel room included, for 1–2 people"
-              : "Activities & transfers only — accommodation not included"}
-          </p>
+          {withHotel ? (
+            <div className="mt-2 text-[11px]">
+              <li className="flex items-start gap-2 text-sm text-[#D7E1EE]">
+                <BedDouble
+                  className="mt-0.5 h-4 w-4 shrink-0 text-[#6FE3E8]"
+                  strokeWidth={2}
+                />
+                <span>5 star hotel room included, for 1–2 people</span>
+              </li>
+
+              <li className="flex items-start gap-2 text-sm text-[#D7E1EE]">
+                <Snowflake
+                  className="mt-0.5 h-4 w-4 shrink-0 text-[#6FE3E8]"
+                  strokeWidth={2}
+                />
+                <span>1 Night in Glass Igloo</span>
+              </li>
+            </div>
+          ) : (
+            <p className="mt-2 text-[11px] text-[#9FB2CB]">
+              Activities & transfers only — accommodation not included
+            </p>
+          )}
         </>
       )}
 
@@ -191,7 +215,9 @@ function PricingCard({ pkg }: { pkg: Package }) {
         ))}
       </ul>
 
-      <div className="grid grid-cols-3 gap-2 border-t border-white/10 pt-4 text-center">
+      <div
+        className={`grid grid-cols-2 gap-2 border-t border-white/10 pt-2  text-center `}
+      >
         <div className="flex flex-col items-center gap-1">
           <Plane className="h-4 w-4 text-[#6FE3E8]" strokeWidth={1.75} />
           <span className="text-[10px] leading-tight text-[#9FB2CB]">
@@ -200,14 +226,7 @@ function PricingCard({ pkg }: { pkg: Package }) {
             Transfers
           </span>
         </div>
-        <div className="flex flex-col items-center gap-1">
-          <Home className="h-4 w-4 text-[#6FE3E8]" strokeWidth={1.75} />
-          <span className="text-[10px] leading-tight text-[#9FB2CB]">
-            1 Night in
-            <br />
-            Glass Igloo
-          </span>
-        </div>
+
         <div className="flex flex-col items-center gap-1">
           <Coffee className="h-4 w-4 text-[#6FE3E8]" strokeWidth={1.75} />
           <span className="text-[10px] leading-tight text-[#9FB2CB]">
@@ -341,16 +360,22 @@ function CustomizeSection() {
             <p className="mt-1.5 max-w-lg text-sm leading-relaxed text-[#9FB2CB]">
               Our packages are designed to be flexible. Pick your preferred
               package, choose the activities you love from our selection, and
-              we'll tailor your itinerary into a unique experience just for you.
+              we&apos;ll tailor your itinerary into a unique experience just for
+              you.
             </p>
           </div>
         </div>
-        <Link href="/contact" className="w-full sm:w-auto">
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href={getWhatsappLinkForMoreInfos()}
+          className="w-full sm:w-auto"
+        >
           <button className="flex w-full items-center justify-center gap-2 rounded-full border border-[#E8A94A] bg-transparent px-4 py-2.5 text-sm font-semibold text-[#E8A94A] transition-colors duration-200 hover:bg-[#E8A94A] hover:text-[#0A1626] cursor-pointer sm:w-auto">
             <MessageCircle className="h-4 w-4" />
             Talk to us
           </button>
-        </Link>
+        </a>
       </div>
 
       {/* Activities slider */}

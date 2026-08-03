@@ -22,7 +22,6 @@ export function ActivitiesClient({ initialActivities }: ActivitiesClientProps) {
           .toLowerCase()
           .includes(searchTerm.toLowerCase()) ||
         activity.location.toLowerCase().includes(searchTerm.toLowerCase());
-
       const matchesDifficulty =
         selectedDifficulty === "ALL" ||
         activity.difficulty === selectedDifficulty;

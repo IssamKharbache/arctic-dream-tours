@@ -13,7 +13,6 @@ import {
   Snowflake,
   BedDouble,
 } from "lucide-react";
-import { Link } from "@/i18n/navigation";
 import { INCLUDED, Package, PACKAGES } from "@/app/data/laplandPackages";
 
 type Activity = {
@@ -98,7 +97,7 @@ function HotelToggle({
     <div
       role="tablist"
       aria-label="Accommodation option"
-      className="mt-4 inline-flex w-full rounded-full border border-white/15 bg-white/[0.04] p-1"
+      className="mt-4 inline-flex w-full rounded-full border border-white/15 bg-white/4 p-1"
     >
       <button
         type="button"
@@ -141,15 +140,12 @@ function PricingCard({ pkg }: { pkg: Package }) {
       : pkg.priceWithoutHotel!
     : pkg.price!;
 
-  // Glass Igloo night is only part of the "With Hotel" option
-  const showIgloo = hasHotelOption ? withHotel : false;
-
   return (
     <div
       className={`relative flex ${CARD_HEIGHT} flex-col rounded-2xl border p-6 backdrop-blur-md ${
         pkg.popular
           ? "border-[#E8A94A]/60 bg-white/10 shadow-[0_0_0_1px_rgba(232,169,74,0.25),0_20px_50px_-15px_rgba(232,169,74,0.35)]"
-          : "border-white/15 bg-white/[0.06]"
+          : "border-white/15 bg-white/6"
       }`}
     >
       {pkg.popular && (
@@ -254,7 +250,7 @@ function PricingCard({ pkg }: { pkg: Package }) {
 
 function ActivityCard({ activity }: { activity: Activity }) {
   return (
-    <div className="group relative h-40 w-56 shrink-0 snap-start overflow-hidden rounded-xl border border-white/10 bg-white/[0.04] sm:h-44 sm:w-64">
+    <div className="group relative h-40 w-56 shrink-0 snap-start overflow-hidden rounded-xl border border-white/10 bg-white/4 sm:h-44 sm:w-64">
       {activity.imageUrl ? (
         <img
           src={activity.imageUrl}
@@ -263,11 +259,11 @@ function ActivityCard({ activity }: { activity: Activity }) {
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
       ) : (
-        <div className="flex h-full w-full items-center justify-center bg-white/[0.04]">
+        <div className="flex h-full w-full items-center justify-center bg-white/4">
           <Compass className="h-6 w-6 text-[#6FE3E8]/60" strokeWidth={1.5} />
         </div>
       )}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0A1626] via-[#0A1626]/10 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-t from-[#0A1626] via-[#0A1626]/10 to-transparent" />
       <p className="absolute inset-x-0 bottom-0 p-3 text-sm font-semibold leading-tight text-white">
         {activity.title}
       </p>

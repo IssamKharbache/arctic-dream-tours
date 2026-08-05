@@ -50,7 +50,7 @@ export const PACKAGES: Package[] = [
   {
     id: "ultimate",
     name: "Full Lapland Experience",
-    duration: "8 DAYS / 7 NIGHTS",
+    duration: "7 DAYS / 6 NIGHTS",
     priceWithHotel: 7630,
     priceWithoutHotel: 2380,
     popular: true,
@@ -65,7 +65,6 @@ export const PACKAGES: Package[] = [
       { day: "Day 5", label: "Finnish Horse Riding Experience" },
       { day: "Day 6", label: "Ranua Wildlife Park" },
       { day: "Day 7", label: "Korouoma Frozen Waterfalls Tour" },
-      { day: "Day 8", label: "Icebreaker Cruise Experience" },
     ],
   },
 ];

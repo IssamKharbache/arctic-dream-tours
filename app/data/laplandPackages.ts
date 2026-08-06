@@ -17,7 +17,7 @@ export const PACKAGES: Package[] = [
     id: "classic",
     name: "Lapland Classic",
     duration: "4 DAYS / 3 NIGHTS",
-    priceWithHotel: 2550,
+    priceWithHotel: 3300,
     priceWithoutHotel: 1050,
     itinerary: [
       { day: "Day 1", label: "Santa Claus Village & Snowman World" },
@@ -33,8 +33,8 @@ export const PACKAGES: Package[] = [
     id: "dream",
     name: "Lapland Dream",
     duration: "6 DAYS / 5 NIGHTS",
-    priceWithHotel: 4580,
-    priceWithoutHotel: 1580,
+    priceWithHotel: 5330,
+    priceWithoutHotel: 1380,
     itinerary: [
       { day: "Day 1", label: "Santa Claus Village & Snowman World" },
       {
@@ -51,8 +51,8 @@ export const PACKAGES: Package[] = [
     id: "ultimate",
     name: "Full Lapland Experience",
     duration: "7 DAYS / 6 NIGHTS",
-    priceWithHotel: 7630,
-    priceWithoutHotel: 2380,
+    priceWithHotel: 6050,
+    priceWithoutHotel: 1560,
     popular: true,
     itinerary: [
       { day: "Day 1", label: "Santa Claus Village & Snowman World" },

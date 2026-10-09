@@ -76,7 +76,7 @@ function getWhatsAppLink(pkg: Package) {
 
 // ---------------------------------------------------------------------------
 
-const CARD_HEIGHT = "h-[680px]";
+const CARD_HEIGHT = "h-170";
 
 function PricingCard({ pkg }: { pkg: Package }) {
   const displayPrice = getPackagePrice(pkg);
@@ -98,7 +98,7 @@ function PricingCard({ pkg }: { pkg: Package }) {
         <h3 className="text-2xl font-semibold leading-tight text-white">
           {pkg.name}
         </h3>
-        <span className="mt-1.5 inline-block rounded-full bg-[#E8A94A]/15 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-[#E8A94A]">
+        <span className="mt-2 inline-block rounded-full bg-[#E8A94A]/15 px-3.5 py-1 text-sm font-semibold uppercase tracking-wide text-[#E8A94A]">
           {pkg.duration}
         </span>
       </div>
@@ -176,6 +176,7 @@ function ActivityCard({ activity }: { activity: Activity }) {
   return (
     <div className="group relative h-40 w-56 shrink-0 snap-start overflow-hidden rounded-xl border border-white/10 bg-white/4 sm:h-44 sm:w-64">
       {activity.imageUrl ? (
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           src={activity.imageUrl}
           alt={activity.title}
@@ -266,7 +267,7 @@ function CustomizeSection() {
   }, []);
 
   return (
-    <div className="mt-14 rounded-2xl border border-dashed border-[#E8A94A]/50 bg-white/[0.04] p-6 backdrop-blur-md md:p-8">
+    <div className="mt-14 rounded-2xl border border-dashed border-[#E8A94A]/50 bg-white/4 p-6 backdrop-blur-md md:p-8">
       {/* Pitch + CTA */}
       <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-start gap-4">
@@ -312,7 +313,7 @@ function CustomizeSection() {
             {Array.from({ length: 5 }).map((_, i) => (
               <span
                 key={i}
-                className="h-40 w-56 shrink-0 animate-pulse rounded-xl bg-white/[0.06] sm:h-44 sm:w-64"
+                className="h-40 w-56 shrink-0 animate-pulse rounded-xl bg-white/6 sm:h-44 sm:w-64"
               />
             ))}
           </div>
@@ -320,14 +321,14 @@ function CustomizeSection() {
 
         {status === "error" && (
           <p className="mt-4 text-sm text-[#9FB2CB]">
-            We couldn't load the full activity list right now — reach out and
-            we'll walk you through every option.
+            We couldn&apos;t load the full activity list right now — reach out
+            and we&apos;ll walk you through every option.
           </p>
         )}
 
         {status === "success" && activities.length === 0 && (
           <p className="mt-4 text-sm text-[#9FB2CB]">
-            Reach out and we'll walk you through every activity we offer.
+            Reach out and we&apos;ll walk you through every activity we offer.
           </p>
         )}
 
@@ -348,19 +349,19 @@ export default function LaplandPackages() {
       style={{ backgroundImage: "url('/packages/iglos.jpg')" }}
     >
       {/* Dark overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/70 to-slate-950/90" />
+      <div className="absolute inset-0 bg-linear-to-b from-slate-950/80 via-slate-950/70 to-slate-950/90" />
       {/* Aurora */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div
           className="
         absolute
         -left-[10%]
-        top-[-5%]
-        h-[220px]
+        -top-[5%]
+        h-55
         w-[120%]
         bg-[linear-gradient(90deg,transparent,#2fbf8f,#6fe3e8,transparent)]
         opacity-55
-        blur-[40px]
+        blur-2xl
         mix-blend-screen
         animate-[aurora-drift_18s_ease-in-out_infinite]
       "
@@ -371,11 +372,11 @@ export default function LaplandPackages() {
         absolute
         -left-[10%]
         top-[12%]
-        h-[180px]
+        h-45
         w-[120%]
         bg-[linear-gradient(90deg,transparent,#3fd6a6,transparent)]
         opacity-55
-        blur-[40px]
+        blur-2xl
         mix-blend-screen
         animate-[aurora-drift_22s_ease-in-out_infinite]
         [animation-delay:-6s]
@@ -387,11 +388,11 @@ export default function LaplandPackages() {
         absolute
         -left-[10%]
         top-[25%]
-        h-[140px]
+        h-35
         w-[120%]
         bg-[linear-gradient(90deg,transparent,#9b7ee8,#6fe3e8,transparent)]
         opacity-35
-        blur-[40px]
+        blur-2xl
         mix-blend-screen
         animate-[aurora-drift_26s_ease-in-out_infinite]
         [animation-delay:-3s]
@@ -408,7 +409,7 @@ export default function LaplandPackages() {
           </h2>
           <p className="mx-auto mt-3 max-w-md text-sm text-[#9FB2CB]">
             Every package below is a complete, ready-to-go itinerary — pick the
-            length that fits your trip and we'll handle the rest.
+            length that fits your trip and we&apos;ll handle the rest.
           </p>
         </div>
 
@@ -420,7 +421,7 @@ export default function LaplandPackages() {
 
         <CustomizeSection />
 
-        <div className="mt-14 rounded-2xl border border-white/15 bg-white/[0.06] p-6 backdrop-blur-md">
+        <div className="mt-14 rounded-2xl border border-white/15 bg-white/6 p-6 backdrop-blur-md">
           <h3 className="font-display text-lg font-semibold text-white">
             Every package includes
           </h3>
@@ -428,7 +429,7 @@ export default function LaplandPackages() {
             {INCLUDED.map(({ icon: Icon, label }, i) => (
               <div
                 key={i}
-                className="flex items-center gap-3 rounded-xl bg-white/[0.04] px-4 py-3 text-sm text-[#D7E1EE]"
+                className="flex items-center gap-3 rounded-xl bg-white/4 px-4 py-3 text-sm text-[#D7E1EE]"
               >
                 <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/10">
                   <Icon className="h-4 w-4 text-[#6FE3E8]" strokeWidth={1.75} />

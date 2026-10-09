@@ -16,7 +16,7 @@ export const PACKAGES: Package[] = [
   {
     id: "classic",
     name: "Lapland Classic",
-    duration: "4 DAYS / 3 NIGHTS",
+    duration: "4 DAYS",
     priceWithHotel: 3300,
     priceWithoutHotel: 1050,
     itinerary: [
@@ -32,7 +32,7 @@ export const PACKAGES: Package[] = [
   {
     id: "dream",
     name: "Lapland Dream",
-    duration: "6 DAYS / 5 NIGHTS",
+    duration: "6 DAYS",
     priceWithHotel: 5330,
     priceWithoutHotel: 1380,
     itinerary: [
@@ -50,7 +50,7 @@ export const PACKAGES: Package[] = [
   {
     id: "ultimate",
     name: "Full Lapland Experience",
-    duration: "7 DAYS / 6 NIGHTS",
+    duration: "7 DAYS",
     priceWithHotel: 6050,
     priceWithoutHotel: 1560,
     popular: true,

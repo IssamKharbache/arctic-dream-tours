@@ -71,10 +71,6 @@ export const PACKAGES: Package[] = [
 
 export const INCLUDED = [
   { icon: Plane, label: "Airport transfers" },
-  {
-    icon: Home,
-    label: "Accommodation with breakfast (when booked with hotel)",
-  },
   { icon: Users, label: "Guides available in your language" },
   { icon: Car, label: "Transport during activities" },
   { icon: Shirt, label: "Winter clothing, when required" },

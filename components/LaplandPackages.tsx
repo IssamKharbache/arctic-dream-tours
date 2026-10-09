@@ -10,8 +10,7 @@ import {
   Sparkles,
   ChevronLeft,
   ChevronRight,
-  Snowflake,
-  BedDouble,
+  BadgeCheck,
 } from "lucide-react";
 import { INCLUDED, Package, PACKAGES } from "@/app/data/laplandPackages";
 
@@ -32,15 +31,14 @@ async function fetchActivities(): Promise<Activity[]> {
 
 const WHATSAPP_NUMBER = "358404121843";
 
-function buildWhatsAppMessage(pkg: Package, withHotel: boolean) {
-  const hasHotelOption =
-    pkg.priceWithHotel !== undefined && pkg.priceWithoutHotel !== undefined;
+// Single price per package (activities & transfers only, no hotel).
+// Falls back to priceWithoutHotel if the data file still uses the old shape.
+function getPackagePrice(pkg: Package): number {
+  return (pkg.price ?? pkg.priceWithoutHotel) as number;
+}
 
-  const price = hasHotelOption
-    ? withHotel
-      ? pkg.priceWithHotel!
-      : pkg.priceWithoutHotel!
-    : pkg.price!;
+function buildWhatsAppMessage(pkg: Package) {
+  const price = getPackagePrice(pkg);
 
   const itineraryText = pkg.itinerary
     .map((d) => `${d.day}: ${d.label}`)
@@ -51,13 +49,7 @@ function buildWhatsAppMessage(pkg: Package, withHotel: boolean) {
     "",
     `${pkg.name}`,
     `${pkg.duration}`,
-    `€${price.toLocaleString()} / person${
-      hasHotelOption
-        ? withHotel
-          ? " (With Hotel 5★)"
-          : " (Without Hotel)"
-        : ""
-    }`,
+    `€${price.toLocaleString()} / person`,
     "",
     "Itinerary:",
     itineraryText,
@@ -77,8 +69,8 @@ Could you provide more information about availability, pricing, and the next ste
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
 }
 //booking function
-function getWhatsAppLink(pkg: Package, withHotel: boolean) {
-  const message = buildWhatsAppMessage(pkg, withHotel);
+function getWhatsAppLink(pkg: Package) {
+  const message = buildWhatsAppMessage(pkg);
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 }
 
@@ -86,59 +78,8 @@ function getWhatsAppLink(pkg: Package, withHotel: boolean) {
 
 const CARD_HEIGHT = "h-[680px]";
 
-function HotelToggle({
-  withHotel,
-  onChange,
-}: {
-  withHotel: boolean;
-  onChange: (v: boolean) => void;
-}) {
-  return (
-    <div
-      role="tablist"
-      aria-label="Accommodation option"
-      className="mt-4 inline-flex w-full rounded-full border border-white/15 bg-white/4 p-1"
-    >
-      <button
-        type="button"
-        role="tab"
-        aria-selected={withHotel}
-        onClick={() => onChange(true)}
-        className={`flex-1 rounded-full px-2.5 py-1.5 text-[11px] font-semibold uppercase tracking-wide transition-colors duration-200 cursor-pointer ${
-          withHotel
-            ? "bg-[#6FE3E8] text-[#0A1626]"
-            : "text-[#9FB2CB] hover:text-white"
-        }`}
-      >
-        With Hotel 5★
-      </button>
-      <button
-        type="button"
-        role="tab"
-        aria-selected={!withHotel}
-        onClick={() => onChange(false)}
-        className={`flex-1 rounded-full px-2.5 py-1.5 text-[11px] font-semibold uppercase tracking-wide transition-colors duration-200 cursor-pointer ${
-          !withHotel
-            ? "bg-[#6FE3E8] text-[#0A1626]"
-            : "text-[#9FB2CB] hover:text-white"
-        }`}
-      >
-        Without Hotel
-      </button>
-    </div>
-  );
-}
-
 function PricingCard({ pkg }: { pkg: Package }) {
-  const hasHotelOption =
-    pkg.priceWithHotel !== undefined && pkg.priceWithoutHotel !== undefined;
-  const [withHotel, setWithHotel] = useState(true);
-
-  const displayPrice = hasHotelOption
-    ? withHotel
-      ? pkg.priceWithHotel!
-      : pkg.priceWithoutHotel!
-    : pkg.price!;
+  const displayPrice = getPackagePrice(pkg);
 
   return (
     <div
@@ -170,34 +111,17 @@ function PricingCard({ pkg }: { pkg: Package }) {
         <span className="text-sm text-[#9FB2CB]">/ person</span>
       </div>
 
-      {hasHotelOption && (
-        <>
-          <HotelToggle withHotel={withHotel} onChange={setWithHotel} />
-          {withHotel ? (
-            <div className="mt-2 text-[11px]">
-              <li className="flex items-start gap-2 text-sm text-[#D7E1EE]">
-                <BedDouble
-                  className="mt-0.5 h-4 w-4 shrink-0 text-[#6FE3E8]"
-                  strokeWidth={2}
-                />
-                <span>5 star hotel room included, for 1–2 people</span>
-              </li>
-
-              <li className="flex items-start gap-2 text-sm text-[#D7E1EE]">
-                <Snowflake
-                  className="mt-0.5 h-4 w-4 shrink-0 text-[#6FE3E8]"
-                  strokeWidth={2}
-                />
-                <span>1 Night in Glass Igloo</span>
-              </li>
-            </div>
-          ) : (
-            <p className="mt-2 text-[11px] text-[#9FB2CB]">
-              Activities & transfers only — accommodation not included
-            </p>
-          )}
-        </>
-      )}
+      {/* Free booking help note */}
+      <div className="mt-4 flex items-start gap-2 rounded-xl border border-[#6FE3E8]/25 bg-[#6FE3E8]/10 px-3 py-2.5">
+        <BadgeCheck
+          className="mt-0.5 h-4 w-4 shrink-0 text-[#6FE3E8]"
+          strokeWidth={2}
+        />
+        <p className="text-xs leading-snug text-[#D7E1EE]">
+          Book a package and we&apos;ll help you with your hotel booking{" "}
+          <span className="font-semibold text-white">free of charge</span>.
+        </p>
+      </div>
 
       <ul className="mt-5 flex-1 space-y-2.5 overflow-hidden">
         {pkg.itinerary.map((d, i) => (
@@ -233,7 +157,7 @@ function PricingCard({ pkg }: { pkg: Package }) {
       </div>
 
       <a
-        href={getWhatsAppLink(pkg, withHotel)}
+        href={getWhatsAppLink(pkg)}
         target="_blank"
         rel="noopener noreferrer"
         className={`mt-5 flex w-full items-center justify-center rounded-full px-4 py-2.5 text-sm font-semibold transition-colors duration-200 cursor-pointer ${

@@ -11,8 +11,6 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import PromoBar from "./PromoBar";
-import { usePromobarStore } from "@/store/zustand/promoBar";
 
 const menus = [
   { key: "home", href: "/" },
@@ -56,115 +54,112 @@ const NavBar = () => {
     isNotHomePage || scrolled ? "/logoArctic.png" : "/arcticLogoDark.png";
 
   return (
-    <>
-      <PromoBar />
-      <nav
-        style={{ top: "var(--promobar-height, 0px)" }}
-        className={`fixed w-full z-50 transition-all duration-300 ${navbarClasses}`}
-      >
-        <div className="max-w-[1700px] mx-auto px-4 sm:px-6 flex items-center justify-between">
-          {/* Logo */}
-          <Link href="/">
-            <Image
-              src={logoSrc}
-              alt="Arctic Dream Tours Logo"
-              width={220}
-              height={64}
-              priority
-              className="h-16 w-auto"
-            />
+    <nav
+      style={{ top: "var(--promobar-height, 0px)" }}
+      className={`fixed w-full z-50 transition-all duration-300 ${navbarClasses}`}
+    >
+      <div className="max-w-[1700px] mx-auto px-4 sm:px-6 flex items-center justify-between">
+        {/* Logo */}
+        <Link href="/">
+          <Image
+            src={logoSrc}
+            alt="Arctic Dream Tours Logo"
+            width={220}
+            height={64}
+            priority
+            className="h-16 w-auto"
+          />
+        </Link>
+
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center gap-5">
+          {menus.map((menu, idx) => (
+            <Link
+              className={`font-semibold hover:text-primary duration-300 ${
+                isNotHomePage || scrolled ? "text-gray-800" : "text-white"
+              }`}
+              key={idx}
+              href={menu.href as "/" | "/about" | "/contact"}
+            >
+              {t(menu.key)}
+            </Link>
+          ))}
+        </div>
+
+        {/* Desktop Right Menu */}
+        <div className="hidden md:flex items-center gap-4 ">
+          <Link href="/activities">
+            <Button
+              className={`cursor-pointer  ${isNotHomePage || scrolled ? "" : ""}`}
+            >
+              {t("bookNow")}
+            </Button>
           </Link>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-5">
+          {session ? (
+            <AuthDropDownMenu />
+          ) : (
+            <button
+              onClick={openSignIn}
+              className={`py-1 px-7 rounded-2xl cursor-pointer ${
+                isNotHomePage || scrolled
+                  ? "outline-black outline-1 hover:bg-black hover:text-white"
+                  : "outline-white outline-1 text-black hover:bg-white"
+              }`}
+            >
+              {t("logIn")}
+            </button>
+          )}
+        </div>
+
+        {/* Mobile Hamburger */}
+        <div className="md:hidden flex items-center">
+          <button onClick={() => setMobileOpen(!mobileOpen)}>
+            {mobileOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Animated Mobile Menu */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -20, opacity: 0 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="md:hidden absolute top-full left-0 w-full bg-white shadow-lg py-4 px-6 flex flex-col gap-4"
+          >
             {menus.map((menu, idx) => (
               <Link
-                className={`font-semibold hover:text-primary duration-300 ${
-                  isNotHomePage || scrolled ? "text-gray-800" : "text-white"
-                }`}
                 key={idx}
                 href={menu.href as "/" | "/about" | "/contact"}
+                className="font-semibold text-gray-800 hover:text-primary"
+                onClick={() => setMobileOpen(false)}
               >
                 {t(menu.key)}
               </Link>
             ))}
-          </div>
-
-          {/* Desktop Right Menu */}
-          <div className="hidden md:flex items-center gap-4 ">
             <Link href="/activities">
-              <Button
-                className={`cursor-pointer  ${isNotHomePage || scrolled ? "" : ""}`}
-              >
-                {t("bookNow")}
-              </Button>
+              <Button className="w-full">{t("bookNow")}</Button>
             </Link>
-
             {session ? (
               <AuthDropDownMenu />
             ) : (
-              <button
-                onClick={openSignIn}
-                className={`py-1 px-7 rounded-2xl cursor-pointer ${
-                  isNotHomePage || scrolled
-                    ? "outline-black outline-1 hover:bg-black hover:text-white"
-                    : "outline-white outline-1 text-black hover:bg-white"
-                }`}
+              <Button
+                onClick={() => {
+                  openSignIn();
+                  setMobileOpen(false);
+                }}
+                className="w-full"
               >
                 {t("logIn")}
-              </button>
+              </Button>
             )}
-          </div>
-
-          {/* Mobile Hamburger */}
-          <div className="md:hidden flex items-center">
-            <button onClick={() => setMobileOpen(!mobileOpen)}>
-              {mobileOpen ? <X size={28} /> : <Menu size={28} />}
-            </button>
-          </div>
-        </div>
-
-        {/* Animated Mobile Menu */}
-        <AnimatePresence>
-          {mobileOpen && (
-            <motion.div
-              initial={{ y: -20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -20, opacity: 0 }}
-              transition={{ duration: 0.25, ease: "easeInOut" }}
-              className="md:hidden absolute top-full left-0 w-full bg-white shadow-lg py-4 px-6 flex flex-col gap-4"
-            >
-              {menus.map((menu, idx) => (
-                <Link
-                  key={idx}
-                  href={menu.href as "/" | "/about" | "/contact"}
-                  className="font-semibold text-gray-800 hover:text-primary"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {t(menu.key)}
-                </Link>
-              ))}
-              <Link href="/activities">
-                <Button className="w-full">{t("bookNow")}</Button>
-              </Link>
-              {session ? (
-                <AuthDropDownMenu />
-              ) : (
-                <Button
-                  onClick={() => {
-                    openSignIn();
-                    setMobileOpen(false);
-                  }}
-                  className="w-full"
-                >
-                  {t("logIn")}
-                </Button>
-              )}
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </nav>
-    </>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </nav>
   );
 };
 

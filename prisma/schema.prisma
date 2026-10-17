@@ -1,135 +1,189 @@
 generator client {
-    provider = "prisma-client-js"
-    output   = "../node_modules/.prisma/client"
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-    id              String    @id @default(uuid()) @db.Uuid
-    firstName       String
-    lastName        String
-    email           String    @unique
-    password        String
-    isEmailVerified Boolean   @default(false)
-    role            Role      @default(USER)
-    createdAt       DateTime  @default(now())
-    updatedAt       DateTime  @updatedAt
-    bookings        Booking[]
+  id              String    @id @default(uuid()) @db.Uuid
+  firstName       String
+  lastName        String
+  email           String    @unique
+  password        String
+  isEmailVerified Boolean   @default(false)
+  role            Role      @default(USER)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  bookings        Booking[]
 }
 
 model EmailVerification {
-    id        String   @id @default(uuid())
-    email     String   @unique
-    code      String
-    expiresAt DateTime
-    createdAt DateTime @default(now())
+  id        String   @id @default(uuid())
+  email     String   @unique
+  code      String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
 
-    @@index([email])
+  @@index([email])
 }
 
 model Activity {
-    id                 String             @id @default(uuid()) @db.Uuid
-    title              String
-    slug               String             @unique
-    description        String
-    shortDescription   String
-    cancellationPolicy String?
-    included           String[]
-    difficulty         ActivityDifficulty
-    bring              String?
-    tags               String[]
-    duration           String
-    meetingPoints      String[]
-    bookingCutoffHours Int?
-    liveTourGuide      Boolean
-    location           String
-    adultPrice         Float
-    childPrice         Float?
-    privateTourPrice   Float
-    isForChild         Boolean
+  id                 String             @id @default(uuid()) @db.Uuid
+  title              String
+  slug               String             @unique
+  description        String
+  shortDescription   String
+  cancellationPolicy String?
+  included           String[]
+  difficulty         ActivityDifficulty
+  bring              String?
+  tags               String[]
+  duration           String
+  meetingPoints      String[]
+  bookingCutoffHours Int?
+  liveTourGuide      Boolean
+  location           String
+  adultPrice         Float
+  childPrice         Float?
+  privateTourPrice   Float
+  isForChild         Boolean
 
-    imageUrl  String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    imageKey  String
-    startDate DateTime
-    endDate   DateTime
+  imageUrl  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  imageKey  String
+  startDate DateTime
+  endDate   DateTime
 
-    departureHours String[]
-    booking        Booking[]
+  departureHours String[]
+  booking        Booking[]
+
+  packageBookingActivities PackageBookingActivity[]
 }
 
 model Booking {
-    id              String         @id @default(uuid()) @db.Uuid
-    activityId      String         @db.Uuid
-    activity        Activity       @relation(fields: [activityId], references: [id])
-    date            DateTime
-    adults          Int            @default(1)
-    children        Int            @default(0)
-    infants         Int            @default(0)
-    totalPrice      Float
-    bookingRef      String         @unique
-    firstName       String
-    lastName        String
-    email           String
-    phone           String
-    status          Booking_Status @default(PENDING)
-    departureHour   String
-    pickUpLocation  String
-    dropOffLocation String
-    isPrivate       Boolean        @default(false)
-    createdAt       DateTime       @default(now())
+  id              String         @id @default(uuid()) @db.Uuid
+  activityId      String         @db.Uuid
+  activity        Activity       @relation(fields: [activityId], references: [id])
+  date            DateTime
+  adults          Int            @default(1)
+  children        Int            @default(0)
+  infants         Int            @default(0)
+  totalPrice      Float
+  bookingRef      String         @unique
+  firstName       String
+  lastName        String
+  email           String
+  phone           String
+  status          Booking_Status @default(PENDING)
+  departureHour   String
+  pickUpLocation  String
+  dropOffLocation String
+  isPrivate       Boolean        @default(false)
+  createdAt       DateTime       @default(now())
 
-    // Optional link to User
-    userId String? @db.Uuid
-    user   User?   @relation(fields: [userId], references: [id])
+  // Optional link to User
+  userId String? @db.Uuid
+  user   User?   @relation(fields: [userId], references: [id])
 
-    @@index([activityId])
-    @@index([date])
-    @@index([userId])
+  @@index([activityId])
+  @@index([date])
+  @@index([userId])
 }
 
 model Emails {
-    id          String   @id @default(uuid()) @db.Uuid
-    email       String
-    fullName    String
-    phoneNumber String?
-    message     String
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @default(now())
+  id          String   @id @default(uuid()) @db.Uuid
+  email       String
+  fullName    String
+  phoneNumber String?
+  message     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
 }
 
 model Blog {
-    id         String   @id @default(uuid())
-    title      String
-    slug       String   @unique
-    content    String
-    keywords   String[]
-    coverImage String?
-    createdAt  DateTime @default(now())
-    updatedAt  DateTime @updatedAt
+  id         String   @id @default(uuid())
+  title      String
+  slug       String   @unique
+  content    String
+  keywords   String[]
+  coverImage String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 enum Role {
-    USER
-    ADMIN
-    MODERATOR
+  USER
+  ADMIN
+  MODERATOR
 }
 
 enum ActivityDifficulty {
-    EASY
-    MODERATE
-    HARD
-    EXTREME
+  EASY
+  MODERATE
+  HARD
+  EXTREME
 }
 
 enum Booking_Status {
-    PENDING
-    CONFIRMED
-    PAID
-    CANCELLED
+  PENDING
+  CONFIRMED
+  PAID
+  CANCELLED
+}
+
+model PackageBooking {
+  id          String @id @default(uuid()) @db.Uuid
+  packageId   String
+  packageName String
+  bookingRef  String @unique
+
+  firstName       String
+  lastName        String
+  email           String
+  phone           String
+  pickUpLocation  String
+  dropOffLocation String
+
+  adults   Int @default(1)
+  children Int @default(0)
+  infants  Int @default(0)
+
+  totalPrice Float
+  status     Booking_Status @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  activities PackageBookingActivity[]
+
+  @@index([email])
+  @@index([createdAt])
+}
+
+model PackageBookingActivity {
+  id String @id @default(uuid()) @db.Uuid
+
+  packageBookingId String         @db.Uuid
+  packageBooking   PackageBooking @relation(fields: [packageBookingId], references: [id], onDelete: Cascade)
+
+  activityId String   @db.Uuid
+  activity   Activity @relation(fields: [activityId], references: [id])
+
+  date          DateTime
+  isBonus       Boolean  @default(false)
+  activityTitle String
+  departureHour String?
+  adultPrice    Float
+  childPrice    Float?
+  totalPrice    Float
+  createdAt     DateTime @default(now())
+
+  @@index([packageBookingId])
+  @@index([activityId])
+  @@index([date])
 }

@@ -1,15 +1,28 @@
-import { Plane, Car, Coffee, Home, Shirt, Users } from "lucide-react";
-type DayItem = { day: string; label: string };
+import { Plane, Car, Coffee, Shirt, Users } from "lucide-react";
+export type BonusActivity = { id: string; title: string };
 
 export type Package = {
   id: string;
   name: string;
   duration: string;
-  price?: number;
-  priceWithHotel?: number;
-  priceWithoutHotel?: number;
-  itinerary: DayItem[];
+  // How many activities the client chooses from our list.
+  pickCount: number;
+  // Free activities added on top of the picks.
+  bonusActivities: BonusActivity[];
   popular?: boolean;
+};
+
+const CITY_TOUR: BonusActivity = {
+  id: "bonus-city-tour",
+  title: "City Center Tour",
+};
+const SANTA_VISIT: BonusActivity = {
+  id: "bonus-santa-visit",
+  title: "Santa Claus Visit",
+};
+const SNOWHOTEL_TOUR: BonusActivity = {
+  id: "bonus-snowhotel-tour",
+  title: "Arctic SnowHotel Tour",
 };
 
 export const PACKAGES: Package[] = [
@@ -17,55 +30,23 @@ export const PACKAGES: Package[] = [
     id: "classic",
     name: "Lapland Classic",
     duration: "4 DAYS",
-    priceWithHotel: 3300,
-    priceWithoutHotel: 1050,
-    itinerary: [
-      { day: "Day 1", label: "Santa Claus Village & Snowman World" },
-      {
-        day: "Day 2",
-        label: "Husky Safari, Reindeer Experience & Arctic SnowHotel",
-      },
-      { day: "Day 3", label: "Snowmobile Adventure & Northern Lights Tour" },
-      { day: "Day 4", label: "Rovaniemi City Tour & Shopping" },
-    ],
+    pickCount: 4,
+    bonusActivities: [CITY_TOUR],
   },
   {
     id: "dream",
     name: "Lapland Dream",
     duration: "6 DAYS",
-    priceWithHotel: 5330,
-    priceWithoutHotel: 1380,
-    itinerary: [
-      { day: "Day 1", label: "Santa Claus Village & Snowman World" },
-      {
-        day: "Day 2",
-        label: "Husky Safari, Reindeer Experience & Arctic SnowHotel",
-      },
-      { day: "Day 3", label: "Snowmobile Adventure & Northern Lights Tour" },
-      { day: "Day 4", label: "Rovaniemi City Tour & Shopping" },
-      { day: "Day 5", label: "Finnish Horse Riding Experience" },
-      { day: "Day 6", label: "Ranua Wildlife Park" },
-    ],
+    pickCount: 6,
+    bonusActivities: [CITY_TOUR, SANTA_VISIT],
   },
   {
     id: "ultimate",
     name: "Full Lapland Experience",
     duration: "7 DAYS",
-    priceWithHotel: 6050,
-    priceWithoutHotel: 1560,
+    pickCount: 7,
     popular: true,
-    itinerary: [
-      { day: "Day 1", label: "Santa Claus Village & Snowman World" },
-      {
-        day: "Day 2",
-        label: "Husky Safari, Reindeer Experience & Arctic SnowHotel",
-      },
-      { day: "Day 3", label: "Snowmobile Adventure & Northern Lights Tour" },
-      { day: "Day 4", label: "Rovaniemi City Tour & Shopping" },
-      { day: "Day 5", label: "Finnish Horse Riding Experience" },
-      { day: "Day 6", label: "Ranua Wildlife Park" },
-      { day: "Day 7", label: "Korouoma Frozen Waterfalls Tour" },
-    ],
+    bonusActivities: [CITY_TOUR, SANTA_VISIT, SNOWHOTEL_TOUR],
   },
 ];
 

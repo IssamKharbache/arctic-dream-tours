@@ -47,10 +47,17 @@ export type Picked = {
 
 export type LoadStatus = "loading" | "success" | "error";
 
+
+export type CheckoutData = {
+  bookingId: string;
+  bookingRef: string;
+  clientSecret: string;
+};
+
 export type StepProps = {
   pkg: Package;
   activities: Activity[];
   status: LoadStatus;
   onCancel: () => void;
-  onNext: (selection: PackageSelection) => void;
+  onNext: (checkout: CheckoutData) => void;
 };

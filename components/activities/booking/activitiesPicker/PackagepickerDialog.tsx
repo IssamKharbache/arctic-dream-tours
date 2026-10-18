@@ -25,12 +25,6 @@ import type {
 import { useActivityPickerStore } from "@/store/zustand/activityPickerStore";
 import ActivitiesStep from "./activitiesStep";
 
-type CheckoutData = {
-  bookingId: string;
-  bookingRef: string;
-  clientSecret: string;
-};
-
 type Props = {
   pkg: Package | null;
   activities: Activity[];
@@ -100,6 +94,8 @@ const handleNext = (data: StepResult) => {
 
   onContinue(data);
 };
+
+
   return (
     <Dialog open={!!pkg} onOpenChange={handleOpenChange}>
       <DialogContent className="flex h-[88vh] min-w-[70vw] flex-col gap-5 overflow-y-auto rounded-2xl bg-[#FBFAF8] focus:outline-none">

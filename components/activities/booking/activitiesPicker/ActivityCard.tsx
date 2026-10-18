@@ -109,7 +109,19 @@ export default function ActivityCard({
         <p className="line-clamp-2 text-[15px] font-semibold leading-snug tracking-tight text-gray-900">
           {activity.title}
         </p>
+<div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-gray-500">
+    <span>
+      Adult: <span className="font-semibold text-gray-800">{activity.adultPrice} €</span>
+    </span>
 
+    {activity.isForChild && (
+      <span>
+        Child: <span className="font-semibold text-gray-800">
+          {activity.childPrice ?? 0} €
+        </span>
+      </span>
+    )}
+  </div>
         {unsuitable && (
           <p className="text-xs font-medium text-red-500">
             Not available when booking with children.
@@ -143,7 +155,7 @@ export default function ActivityCard({
             </p>
           )
         )}
-
+  
         <div className="mt-3 space-y-1 text-sm">
           <p className="text-gray-500">
             {members.adults} {members.adults === 1 ? "adult" : "adults"} ×{" "}

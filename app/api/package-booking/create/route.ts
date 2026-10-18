@@ -197,17 +197,21 @@ export async function POST(req: Request) {
         }
 
         return {
-          activityId: activity.id,
-          date: selection.date,
-          departureHour: hours.length > 0 ? selection.departureHour : null,
-          isBonus: false,
-          activityTitle: activity.title,
-          adultPrice: activity.adultPrice,
-          childPrice: activity.childPrice,
-          totalPrice: round2(
-            activity.adultPrice * adults + (activity.childPrice ?? 0) * children,
-          ),
-        };
+  activity: {
+    connect: { id: activity.id },
+  },
+  date: selection.date,
+  departureHour:
+    hours.length > 0 ? selection.departureHour! : "Not required",
+  isBonus: false,
+  activityTitle: activity.title,
+  adultPrice: activity.adultPrice,
+  childPrice: activity.childPrice,
+  totalPrice: round2(
+    activity.adultPrice * adults +
+      (activity.childPrice ?? 0) * children,
+  ),
+};
       });
 
       const totalPrice = round2(
@@ -249,6 +253,7 @@ export async function POST(req: Request) {
           bookingRef: booking.bookingRef,
           totalPrice: booking.totalPrice,
           status: booking.status,
+          publicToken: booking.publicToken,
           activities: booking.activities,
         },
       },

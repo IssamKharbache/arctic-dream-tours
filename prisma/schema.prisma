@@ -152,6 +152,8 @@ model PackageBooking {
   adults   Int @default(1)
   children Int @default(0)
   infants  Int @default(0)
+  stripeSessionId String? @unique
+  publicToken String @unique @default(uuid())
 
   totalPrice Float
   status     Booking_Status @default(PENDING)
@@ -177,7 +179,7 @@ model PackageBookingActivity {
   date          DateTime
   isBonus       Boolean  @default(false)
   activityTitle String
-  departureHour String?
+  departureHour String
   adultPrice    Float
   childPrice    Float?
   totalPrice    Float

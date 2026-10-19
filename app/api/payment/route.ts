@@ -2,8 +2,14 @@
 import { stripe } from "@/utils/stripe";
 import { NextRequest, NextResponse } from "next/server";
 
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth/authOptions";
+
 export const POST = async (request: NextRequest) => {
   try {
+
+    const authSession = await getServerSession(authOptions);
+const userId = authSession?.user?.id ?? "";
     const { bookingData } = await request.json();
 
     if (!bookingData) {
@@ -43,6 +49,7 @@ export const POST = async (request: NextRequest) => {
         bookingRef: bookingData.bookingRef,
         departureHour: bookingData.departureHour,
         totalPrice: bookingData.totalPrice!.toString(),
+         userId,
       },
       automatic_tax: { enabled: true },
       return_url: `${baseUrl}/en/booking/success/${encodeURIComponent(bookingData.bookingRef)}?session_id={CHECKOUT_SESSION_ID}`,

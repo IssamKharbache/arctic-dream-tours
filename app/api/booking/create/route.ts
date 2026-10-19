@@ -11,7 +11,9 @@ import { sendAlertEmail } from "@/lib/auth/sendAlertEmail";
 
 export const POST = async (req: Request) => {
   try {
-    const session = await getServerSession(authOptions);
+   const session = await getServerSession(authOptions);
+   const userId = session?.user?.id ?? null;
+
     const body = await req.json();
 
     // Extract booking fields
@@ -78,7 +80,7 @@ export const POST = async (req: Request) => {
         ...customerData,
         date: new Date(bookingData.date),
         totalPrice,
-        userId: session?.user?.id,
+       userId,
         status: "PENDING",
       },
       include: {

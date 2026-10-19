@@ -1,12 +1,35 @@
+
 import { randomUUID } from "node:crypto";
-import { db } from "@/lib/database/db";
 import { NextResponse } from "next/server";
+
+import { db } from "@/lib/database/db";
 import { customerDetailsSchema } from "@/lib/schema/validations/validation";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth/authOptions";
 
 const PACKAGE_RULES = {
-  classic: { name: "Lapland Classic", pickCount: 4 },
-  dream: { name: "Lapland Dream", pickCount: 6 },
-  ultimate: { name: "Full Lapland Experience", pickCount: 7 },
+  classic: {
+    name: "Lapland Classic",
+    pickCount: 4,
+    bonusTitles: ["City Center Tour"],
+  },
+  dream: {
+    name: "Lapland Dream",
+    pickCount: 6,
+    bonusTitles: [
+      "City Center Tour",
+      "Meet Santa & the Snowman and Enjoy a Salmon Lunch Inside an Igloo",
+    ],
+  },
+  ultimate: {
+    name: "Full Lapland Experience",
+    pickCount: 7,
+    bonusTitles: [
+      "City Center Tour",
+      "Meet Santa & the Snowman and Enjoy a Salmon Lunch Inside an Igloo",
+      "Arctic Snow Hotel Tour",
+    ],
+  },
 } as const;
 
 type PackageId = keyof typeof PACKAGE_RULES;
@@ -15,7 +38,8 @@ type Selection = {
   activityId: string;
   date: Date;
   dateKey: string;
-  departureHour: string | null;
+  departureHour: string;
+  isBonus: boolean;
 };
 
 const UUID_PATTERN =
@@ -29,11 +53,14 @@ const fail = (message: string, errors?: unknown) =>
   });
 
 const isCount = (value: unknown, min: number): value is number =>
-  typeof value === "number" && Number.isInteger(value) && value >= min;
+  typeof value === "number" &&
+  Number.isInteger(value) &&
+  value >= min;
 
 const round2 = (value: number) => Math.round(value * 100) / 100;
 
-const monthDay = (date: Date) => date.getUTCMonth() * 100 + date.getUTCDate();
+const monthDay = (date: Date) =>
+  date.getUTCMonth() * 100 + date.getUTCDate();
 
 function isInSeason(
   activity: { startDate: Date; endDate: Date },
@@ -42,12 +69,78 @@ function isInSeason(
   const start = monthDay(activity.startDate);
   const end = monthDay(activity.endDate);
   const current = monthDay(date);
+
   return start <= end
     ? current >= start && current <= end
     : current >= start || current <= end;
 }
 
+function parseSelections(
+  input: unknown,
+  isBonus: boolean,
+): Selection[] {
+  if (!Array.isArray(input)) {
+    throw new BookingError(
+      isBonus
+        ? "Invalid bonus activity selections"
+        : "Invalid activity selections",
+    );
+  }
+
+  return input.map((item) => {
+    if (!item || typeof item !== "object") {
+      throw new BookingError("Invalid activity selection");
+    }
+
+    const { activityId, date: dateKey, departureHour } =
+      item as Record<string, unknown>;
+
+    if (
+      typeof activityId !== "string" ||
+      !UUID_PATTERN.test(activityId) ||
+      typeof dateKey !== "string" ||
+      !/^\d{4}-\d{2}-\d{2}$/.test(dateKey)
+    ) {
+      throw new BookingError(
+        isBonus
+          ? "Each bonus requires a valid activity ID and date"
+          : "Each activity requires a valid ID and date",
+      );
+    }
+
+    const date = new Date(`${dateKey}T00:00:00.000Z`);
+
+    if (
+      Number.isNaN(date.getTime()) ||
+      date.toISOString().slice(0, 10) !== dateKey
+    ) {
+      throw new BookingError("Invalid activity date");
+    }
+
+    if (
+      typeof departureHour !== "string" ||
+      departureHour.trim() === ""
+    ) {
+      throw new BookingError(
+        "Every activity requires a departure hour",
+      );
+    }
+
+    return {
+      activityId,
+      date,
+      dateKey,
+      departureHour,
+      isBonus,
+    };
+  });
+}
+
+
+
 export async function POST(req: Request) {
+   const session = await getServerSession(authOptions);
+const userId = session?.user?.id ?? null;
   try {
     const body: unknown = await req.json().catch(() => null);
 
@@ -67,7 +160,12 @@ export async function POST(req: Request) {
     const packageId = data.packageId as PackageId;
     const packageRule = PACKAGE_RULES[packageId];
 
-    if (!data.members || typeof data.members !== "object") {
+
+    if (
+      !data.members ||
+      typeof data.members !== "object" ||
+      Array.isArray(data.members)
+    ) {
       return fail("Invalid member selection");
     }
 
@@ -76,14 +174,21 @@ export async function POST(req: Request) {
       unknown
     >;
 
-    if (!isCount(adults, 1) || !isCount(children, 0) || !isCount(infants, 0)) {
+    if (
+      !isCount(adults, 1) ||
+      !isCount(children, 0) ||
+      !isCount(infants, 0)
+    ) {
       return fail("Invalid member counts");
     }
 
     const customerResult = customerDetailsSchema.safeParse(data.customer);
 
     if (!customerResult.success) {
-      return fail("Customer validation failed", customerResult.error.flatten());
+      return fail(
+        "Customer validation failed",
+        customerResult.error.flatten(),
+      );
     }
 
     const customer = customerResult.data;
@@ -97,123 +202,148 @@ export async function POST(req: Request) {
       );
     }
 
-    const selections: Selection[] = [];
-
-    for (const item of data.activities as unknown[]) {
-      if (!item || typeof item !== "object") {
-        return fail("Invalid activity selection");
-      }
-
-      const {
-        activityId,
-        date: dateKey,
-        departureHour,
-      } = item as Record<string, unknown>;
-
-      if (
-        typeof activityId !== "string" ||
-        !UUID_PATTERN.test(activityId) ||
-        typeof dateKey !== "string" ||
-        !/^\d{4}-\d{2}-\d{2}$/.test(dateKey)
-      ) {
-        return fail("Each activity requires a valid ID and date");
-      }
-
-      const date = new Date(`${dateKey}T00:00:00.000Z`);
-
-      if (
-        Number.isNaN(date.getTime()) ||
-        date.toISOString().slice(0, 10) !== dateKey
-      ) {
-        return fail("Invalid activity date");
-      }
-
-      if (
-        departureHour !== undefined &&
-        departureHour !== null &&
-        typeof departureHour !== "string"
-      ) {
-        return fail("Invalid departure hour");
-      }
-
-      selections.push({
-        activityId,
-        date,
-        dateKey,
-        departureHour: departureHour || null,
-      });
+    if (
+      !Array.isArray(data.bonusActivities) ||
+      data.bonusActivities.length !== packageRule.bonusTitles.length
+    ) {
+      return fail(
+        `This package requires exactly ${packageRule.bonusTitles.length} bonus activities`,
+      );
     }
 
+    const paidSelections = parseSelections(data.activities, false);
+    const bonusSelections = parseSelections(data.bonusActivities, true);
+    const selections = [...paidSelections, ...bonusSelections];
+
+    // An activity may only be selected once.
     const activityIds = selections.map((item) => item.activityId);
 
     if (new Set(activityIds).size !== activityIds.length) {
       return fail("An activity cannot be selected more than once");
     }
 
-    if (new Set(selections.map((item) => item.dateKey)).size !== selections.length) {
+    // Every paid and bonus activity must have its own date.
+    const dateKeys = selections.map((item) => item.dateKey);
+
+    if (new Set(dateKeys).size !== dateKeys.length) {
       return fail("Each activity must be on a different day");
     }
 
     const booking = await db.$transaction(async (tx) => {
       const activities = await tx.activity.findMany({
-        where: { id: { in: activityIds } },
+        where: {
+          id: { in: activityIds },
+        },
       });
 
       const activitiesById = new Map(
         activities.map((activity) => [activity.id, activity]),
       );
 
+      if (activitiesById.size !== activityIds.length) {
+        throw new BookingError(
+          "One or more selected activities were not found",
+        );
+      }
+
+      // Verify bonus identities using server-controlled package rules.
+      const submittedBonusTitles = bonusSelections.map((selection) => {
+        const activity = activitiesById.get(selection.activityId);
+
+        if (!activity) {
+          throw new BookingError(
+            "A selected bonus activity was not found",
+          );
+        }
+
+        return activity.title;
+      });
+
+      const expectedTitles = [...packageRule.bonusTitles].sort();
+      const actualTitles = [...submittedBonusTitles].sort();
+
+      if (
+        expectedTitles.some(
+          (title, index) => title !== actualTitles[index],
+        )
+      ) {
+        throw new BookingError(
+          "The selected bonus activities do not match this package",
+        );
+      }
+
       const records = selections.map((selection) => {
         const activity = activitiesById.get(selection.activityId);
 
         if (!activity) {
-          throw new BookingError("One or more selected activities were not found");
+          throw new BookingError(
+            "One or more selected activities were not found",
+          );
         }
 
+        // Apply the activity's booking cutoff.
         const earliest = new Date(
-          Date.now() + (activity.bookingCutoffHours ?? 0) * 3_600_000,
+          Date.now() +
+            (activity.bookingCutoffHours ?? 0) * 3_600_000,
         );
         earliest.setUTCHours(0, 0, 0, 0);
 
-        if (selection.date < earliest || !isInSeason(activity, selection.date)) {
+        if (
+          selection.date < earliest ||
+          !isInSeason(activity, selection.date)
+        ) {
           throw new BookingError(
             `${activity.title} is not available on ${selection.dateKey}`,
           );
         }
 
         if (children > 0 && !activity.isForChild) {
-          throw new BookingError(`${activity.title} does not accept children`);
+          throw new BookingError(
+            `${activity.title} does not accept children`,
+          );
         }
 
+        // Every activity must have a configured, valid departure hour.
         const hours = activity.departureHours;
 
         if (
-          hours.length > 0 &&
-          (!selection.departureHour || !hours.includes(selection.departureHour))
+          hours.length === 0 ||
+          !hours.includes(selection.departureHour)
         ) {
           throw new BookingError(
             `Please choose a valid departure time for ${activity.title}`,
           );
         }
 
+        const adultPrice = selection.isBonus
+          ? 0
+          : activity.adultPrice;
+
+        const childPrice = selection.isBonus
+          ? 0
+          : (activity.childPrice ?? 0);
+
+        const totalPrice = selection.isBonus
+          ? 0
+          : round2(
+              adultPrice * adults + childPrice * children,
+            );
+
         return {
-  activity: {
-    connect: { id: activity.id },
-  },
-  date: selection.date,
-  departureHour:
-    hours.length > 0 ? selection.departureHour! : "Not required",
-  isBonus: false,
-  activityTitle: activity.title,
-  adultPrice: activity.adultPrice,
-  childPrice: activity.childPrice,
-  totalPrice: round2(
-    activity.adultPrice * adults +
-      (activity.childPrice ?? 0) * children,
-  ),
-};
+          activity: {
+            connect: { id: activity.id },
+          },
+          date: selection.date,
+          departureHour: selection.departureHour,
+          isBonus: selection.isBonus,
+          activityTitle: activity.title,
+          adultPrice,
+          childPrice,
+          totalPrice,
+        };
       });
 
+      // Only paid activities contribute to the package total.
       const totalPrice = round2(
         records.reduce((sum, record) => sum + record.totalPrice, 0),
       );
@@ -232,6 +362,7 @@ export async function POST(req: Request) {
           lastName: customer.lastName,
           email: customer.email,
           phone: customer.phone,
+          userId:userId ?? null,
           pickUpLocation: customer.pickUpLocation,
           dropOffLocation: customer.dropOffLocation,
           adults,
@@ -239,9 +370,13 @@ export async function POST(req: Request) {
           infants,
           totalPrice,
           status: "PENDING",
-          activities: { create: records },
+          activities: {
+            create: records,
+          },
         },
-        include: { activities: true },
+        include: {
+          activities: true,
+        },
       });
     });
 

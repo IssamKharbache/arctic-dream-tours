@@ -40,8 +40,7 @@ export default function ActivityDateDialog({
   const [hour, setHour] = useState<string | undefined>(initialHour);
 
   const hours = activity.departureHours ?? [];
-  const canConfirm = !!draft && (hours.length === 0 || !!hour);
-
+const canConfirm = !!draft && hours.length > 0 && !!hour;
   const defaultMonth = useMemo(
     () => initialDate ?? findFirstSelectableDate(activity, takenDates),
     [activity, initialDate, takenDates],
@@ -81,6 +80,12 @@ export default function ActivityDateDialog({
 
         {draft && hours.length > 0 && (
           <div>
+            {hours.length === 0 && (
+  <p className="text-sm text-red-600">
+    No departure times are available for this activity.
+    Please contact us for assistance.
+  </p>
+)}
             <p className="mb-2 flex items-center gap-2 text-sm font-semibold text-gray-900">
               <Clock className="h-4 w-4 text-[#B9822B]" />
               Departure time
@@ -118,7 +123,7 @@ export default function ActivityDateDialog({
             type="button"
             className="rounded-full bg-gray-900 px-8 text-white hover:bg-gray-800"
             disabled={!canConfirm}
-            onClick={() => draft && onConfirm(draft, hour)}
+            onClick={() => draft && hour && onConfirm(draft, hour)}
           >
             {initialDate ? "Update" : "Add to my trip"}
           </Button>

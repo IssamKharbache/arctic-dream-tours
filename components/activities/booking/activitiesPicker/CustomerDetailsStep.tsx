@@ -76,6 +76,10 @@ export default function CustomerDetailsStep({
   const picked = useActivityPickerStore((state) => state.picked);
   const members = useActivityPickerStore((state) => state.members);
 
+  const bonusActivities = useActivityPickerStore(
+  (state) => state.bonusActivities,
+);
+
   const form = useForm<BookingCustomerFormData>({
     resolver: zodResolver(customerDetailsSchema),
     defaultValues: customer,
@@ -89,16 +93,24 @@ export default function CustomerDetailsStep({
     setSubmitError(null);
 
     try {
-      const payload = {
-        packageId: pkg.id,
-        members,
-        customer: customerData,
-        activities: picked.map((pick) => ({
-          activityId: pick.id,
-          date: format(pick.date, "yyyy-MM-dd"),
-          departureHour: pick.departureHour ?? null,
-        })),
-      };
+    
+const payload = {
+  packageId: pkg.id,
+  members,
+  customer: customerData,
+
+  activities: picked.map((pick) => ({
+    activityId: pick.id,
+    date: format(pick.date, "yyyy-MM-dd"),
+    departureHour: pick.departureHour,
+  })),
+
+  bonusActivities: bonusActivities.map((bonus) => ({
+    activityId: bonus.activityId,
+    date: bonus.date,
+    departureHour: bonus.departureHour,
+  })),
+};
 
       // Step 1: Create the package booking.
       const bookingResponse = await fetch(

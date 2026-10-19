@@ -4,6 +4,7 @@ import type { BookingCustomerFormData } from "@/lib/schema/validations/validatio
 export type Activity = {
   id: string;
   title: string;
+  slug:string;
   imageUrl?: string | null;
   location?: string | null;
   difficulty?: string | null;
@@ -22,9 +23,16 @@ export type MembersSelection = {
   infants: number;
 };
 
-export type CustomerDetailsData = BookingCustomerFormData;
+export type CustomerDetailsData = BookingCustomerFormData;1
 
-export type PackageStep = 1 | 2 | 3;
+
+export type BonusActivitySelection = {
+  activityId: string;
+  date: string;
+  departureHour: string;
+};
+
+export type PackageStep = 1 | 2 | 3 | 4;
 
 export type PackageSelection = {
   packageId: string;
@@ -33,6 +41,11 @@ export type PackageSelection = {
     date: string;
     departureHour?: string;
   }[];
+   bonusActivity: {
+    activityId: string;
+    date: string;
+    departureHour: string;
+  };
   bonusActivityIds: string[];
   total: number;
   members: MembersSelection;

@@ -1,29 +1,34 @@
 import { Plane, Car, Coffee, Shirt, Users } from "lucide-react";
-export type BonusActivity = { id: string; title: string };
 
-export type Package = {
+export type BonusActivity = {
   id: string;
-  name: string;
-  duration: string;
-  // How many activities the client chooses from our list.
-  pickCount: number;
-  // Free activities added on top of the picks.
-  bonusActivities: BonusActivity[];
-  popular?: boolean;
+  title: string;
 };
 
 const CITY_TOUR: BonusActivity = {
   id: "bonus-city-tour",
   title: "City Center Tour",
 };
+
 const SANTA_VISIT: BonusActivity = {
   id: "bonus-santa-visit",
-  title: "Santa Claus Visit",
+  title: "Meet Santa & the Snowman and Enjoy a Salmon Lunch Inside an Igloo",
 };
+
 const SNOWHOTEL_TOUR: BonusActivity = {
   id: "bonus-snowhotel-tour",
-  title: "Arctic SnowHotel Tour",
+  title: "Arctic Snow Hotel Tour",
 };
+
+export type Package = {
+  id: string;
+  name: string;
+  duration: string;
+  pickCount: number;
+  bonusActivities: BonusActivity[];
+  popular?: boolean;
+};
+
 
 export const PACKAGES: Package[] = [
   {

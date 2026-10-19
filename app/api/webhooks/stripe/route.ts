@@ -5,9 +5,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { sendBookingEmail } from "@/lib/auth/sendBookingEmail";
 import { sendPackageBookingEmail } from "@/lib/auth/sendPackageBookingEmail";
 import type Stripe from "stripe";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth/authOptions";
 
 export const POST = async (req: NextRequest) => {
   console.log("Webhook received");
+
 
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
@@ -321,6 +324,7 @@ export const POST = async (req: NextRequest) => {
             isPrivate: metadata.isPrivateTour === "true",
             bookingRef: metadata.bookingRef,
             departureHour: metadata.departureHour,
+            userId : metadata.userId || null,
           },
         });
 

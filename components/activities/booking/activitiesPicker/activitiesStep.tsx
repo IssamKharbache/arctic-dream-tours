@@ -22,6 +22,8 @@ import ActivityCard from "./ActivityCard";
 import MembersStep from "./MembersStep";
 import CustomerDetailsStep from "./CustomerDetailsStep";
 
+import BonusActivitiesStep from "./BonusActivitiesStep";
+
 const GRID =
   "m-2 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4";
 
@@ -43,23 +45,38 @@ export default function ActivitiesStep({
   const members = useActivityPickerStore((state) => state.members);
   const setMembers = useActivityPickerStore((state) => state.setMembers);
 
+  const paidActivities = useMemo(
+  () =>
+    activities.filter(
+      (activity) =>
+        !pkg.bonusActivities.some(
+          (bonus) => bonus.title === activity.title,
+        ),
+    ),
+  [activities, pkg.bonusActivities],
+);
+
   const customerSubmitRef = useRef<(() => void) | null>(null);
 
   const isFull = picked.length === pkg.pickCount;
 
 const total = useMemo(
   () =>
-    activities
+    paidActivities
       .filter((activity) =>
         picked.some((pick) => pick.id === activity.id),
       )
       .reduce(
-        (sum, activity) =>
-          sum + getActivityTotal(activity, members),
+        (sum, activity) => sum + getActivityTotal(activity, members),
         0,
       ),
-  [activities, picked, members],
+  [paidActivities, picked, members],
 );
+
+const bonusActivities = useActivityPickerStore(
+  (state) => state.bonusActivities,
+);
+
   const takenDates = useMemo(
     () =>
       picked
@@ -86,7 +103,6 @@ const confirmDate = (date: Date, departureHour?: string) => {
   const removePick = (id: string) => {
     setPicked(picked.filter((pick) => pick.id !== id));
   };
-
 const handleContinue = () => {
   if (step === 1) {
     setStep(2);
@@ -96,9 +112,35 @@ const handleContinue = () => {
   if (step === 2) {
     if (!isFull) return;
     setStep(3);
+    return;
+  }
+
+  if (step === 3) {
+    const requiredBonusCount = pkg.bonusActivities.length;
+
+    const allBonusesSelected =
+      bonusActivities.length === requiredBonusCount &&
+      pkg.bonusActivities.every((bonus) => {
+        const activity = activities.find(
+          (item) => item.title === bonus.title,
+        );
+
+        return (
+          activity &&
+          bonusActivities.some(
+            (selection) =>
+              selection.activityId === activity.id &&
+              !!selection.date &&
+              !!selection.departureHour,
+          )
+        );
+      });
+
+    if (!allBonusesSelected) return;
+
+    setStep(4);
   }
 };
-
 const handleBack = () => {
   if (step > 1) {
     setStep((step - 1) as 1 | 2 | 3);
@@ -152,7 +194,7 @@ const handleBack = () => {
 
                 {status === "success" && (
                   <div className={GRID}>
-                    {activities.map((activity) => {
+                    {paidActivities.map((activity) => {
                       const pick = picked.find(
                         (item) => item.id === activity.id,
                       );
@@ -177,13 +219,18 @@ const handleBack = () => {
               </section>
             </div>
           </>
-        ) :  (
-<CustomerDetailsStep
- submitRef={customerSubmitRef}
-  pkg={pkg}
-  total={total}
-  onNext={onNext}
-/>
+        ) : step === 3 ? (
+  <BonusActivitiesStep
+    pkg={pkg}
+    activities={activities}
+  />
+) : (
+  <CustomerDetailsStep
+    submitRef={customerSubmitRef}
+    pkg={pkg}
+    total={total}
+    onNext={onNext}
+  />
 )}
 
 <DialogFooter className="flex-shrink-0 gap-2">
@@ -196,24 +243,41 @@ const handleBack = () => {
     {step === 1 ? "Cancel" : "Back"}
   </Button>
 
-  {step < 3 ? (
-    <Button
-      type="button"
-      className="rounded-full bg-gray-900 px-10 text-white hover:bg-gray-800"
-      disabled={step === 2 && !isFull}
-      onClick={handleContinue}
-    >
-      {step === 1 ? "Choose activities" : "Continue"}
-    </Button>
-  ) : (
-    <Button
-      type="button"
-      className="rounded-full bg-gray-900 px-10 text-white hover:bg-gray-800"
-      onClick={() => customerSubmitRef.current?.()}
-    >
-      Continue
-    </Button>
-  )}
+  {step < 4 ? (
+  <Button
+    disabled={
+      (step === 2 && !isFull) ||
+      (step === 3 &&
+        (bonusActivities.length !== pkg.bonusActivities.length ||
+          pkg.bonusActivities.some((bonus) => {
+            const activity = activities.find(
+              (item) => item.title === bonus.title,
+            );
+
+            return (
+              !activity ||
+              !bonusActivities.some(
+                (selection) =>
+                  selection.activityId === activity.id &&
+                  !!selection.date &&
+                  !!selection.departureHour,
+              )
+            );
+          })))
+    }
+    onClick={handleContinue}
+  >
+    {step === 1
+      ? "Choose activities"
+      : step === 2
+        ? "Continue to bonus activities"
+        : "Continue to customer details"}
+  </Button>
+) : (
+  <Button onClick={() => customerSubmitRef.current?.()}>
+    Continue to payment
+  </Button>
+)}
 </DialogFooter>
       </div>
 

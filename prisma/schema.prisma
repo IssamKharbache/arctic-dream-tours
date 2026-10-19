@@ -19,6 +19,7 @@ model User {
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   bookings        Booking[]
+  packageBooking  PackageBooking[]
 }
 
 model EmailVerification {
@@ -141,6 +142,10 @@ model PackageBooking {
   packageId   String
   packageName String
   bookingRef  String @unique
+
+  // Optional link to User
+  userId String? @db.Uuid
+  user   User?   @relation(fields: [userId], references: [id])
 
   firstName       String
   lastName        String

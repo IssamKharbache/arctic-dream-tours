@@ -222,13 +222,6 @@ const userId = session?.user?.id ?? null;
       return fail("An activity cannot be selected more than once");
     }
 
-    // Every paid and bonus activity must have its own date.
-    const dateKeys = selections.map((item) => item.dateKey);
-
-    if (new Set(dateKeys).size !== dateKeys.length) {
-      return fail("Each activity must be on a different day");
-    }
-
     const booking = await db.$transaction(async (tx) => {
       const activities = await tx.activity.findMany({
         where: {

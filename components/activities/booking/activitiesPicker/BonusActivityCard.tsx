@@ -1,4 +1,3 @@
-
 "use client";
 
 import { CalendarDays, Check, Clock, Compass, Gift } from "lucide-react";
@@ -18,7 +17,19 @@ export default function BonusActivityCard({
   onChooseDate,
 }: BonusActivityCardProps) {
   return (
-    <div className="group flex flex-col overflow-hidden rounded-2xl bg-white text-left shadow-sm ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
+    <div
+      role="button"
+      tabIndex={0}
+      aria-label={`Choose date and time for ${activity.title}`}
+      onClick={onChooseDate}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          onChooseDate();
+        }
+      }}
+      className="group flex cursor-pointer flex-col overflow-hidden rounded-2xl bg-white text-left shadow-sm ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600"
+    >
       <div className="relative h-44 w-full shrink-0 overflow-hidden bg-gray-100">
         {activity.imageUrl ? (
           <img
@@ -82,7 +93,11 @@ export default function BonusActivityCard({
           type="button"
           variant={selection ? "outline" : "default"}
           className="mt-2 w-full"
-          onClick={onChooseDate}
+          tabIndex={-1}
+          onClick={(event) => {
+            event.stopPropagation();
+            onChooseDate();
+          }}
         >
           {selection ? "Change date and time" : "Choose date and time"}
         </Button>

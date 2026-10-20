@@ -25,7 +25,6 @@ export default function BonusActivitiesStep({
   pkg,
   activities,
 }: Props) {
-  const picked = useActivityPickerStore((state) => state.picked);
   const bonusActivities = useActivityPickerStore(
     (state) => state.bonusActivities,
   );
@@ -47,16 +46,6 @@ export default function BonusActivitiesStep({
     [pkg.bonusActivities, activities],
   );
 
-  // Paid activities and other bonuses occupy their selected dates.
-  const takenDates = useMemo(() => {
-    const paidDates = picked.map((item) => item.date);
-
-    const otherBonusDates = bonusActivities
-      .filter((item) => item.activityId !== editing?.id)
-      .map((item) => parseISO(item.date));
-
-    return [...paidDates, ...otherBonusDates];
-  }, [picked, bonusActivities, editing]);
 
   const getSelection = (activityId: string) =>
     bonusActivities.find((item) => item.activityId === activityId);
@@ -102,7 +91,8 @@ export default function BonusActivitiesStep({
         </h3>
         <p className="mt-1 text-sm text-gray-500">
           These experiences are included in your package. Choose a
-          different date and departure time for each one.
+          date and departure time for each one. Multiple experiences
+          can be scheduled on the same day.
         </p>
       </div>
 
@@ -150,10 +140,10 @@ export default function BonusActivitiesStep({
           initialDate={
             getSelection(editing.id)
               ? parseISO(getSelection(editing.id)!.date)
-              : findFirstSelectableDate(editing, takenDates)
+              : findFirstSelectableDate(editing)
           }
           initialHour={getSelection(editing.id)?.departureHour}
-          takenDates={takenDates}
+
           onConfirm={confirmDate}
           onClose={() => setEditing(null)}
         />

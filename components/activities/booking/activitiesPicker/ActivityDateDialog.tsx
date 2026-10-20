@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useMemo, useState } from "react";
@@ -23,7 +24,6 @@ type Props = {
   activity: Activity;
   initialDate?: Date;
   initialHour?: string;
-  takenDates: Date[];
   onConfirm: (date: Date, departureHour?: string) => void;
   onClose: () => void;
 };
@@ -32,7 +32,6 @@ export default function ActivityDateDialog({
   activity,
   initialDate,
   initialHour,
-  takenDates,
   onConfirm,
   onClose,
 }: Props) {
@@ -40,16 +39,17 @@ export default function ActivityDateDialog({
   const [hour, setHour] = useState<string | undefined>(initialHour);
 
   const hours = activity.departureHours ?? [];
-const canConfirm = !!draft && hours.length > 0 && !!hour;
+  const canConfirm = !!draft && hours.length > 0 && !!hour;
+
   const defaultMonth = useMemo(
-    () => initialDate ?? findFirstSelectableDate(activity, takenDates),
-    [activity, initialDate, takenDates],
+    () => initialDate ?? findFirstSelectableDate(activity),
+    [activity, initialDate],
   );
 
-  const season = `${format(new Date(activity.startDate), "d MMM")} to ${format(
-    new Date(activity.endDate),
+  const season = `${format(
+    new Date(activity.startDate),
     "d MMM",
-  )}`;
+  )} to ${format(new Date(activity.endDate), "d MMM")}`;
 
   return (
     <Dialog open onOpenChange={(open) => !open && onClose()}>
@@ -58,7 +58,9 @@ const canConfirm = !!draft && hours.length > 0 && !!hour;
           <DialogTitle className="text-lg font-semibold tracking-tight">
             {activity.title}
           </DialogTitle>
-          <DialogDescription>Available every year, {season}</DialogDescription>
+          <DialogDescription>
+            Available every year, {season}
+          </DialogDescription>
         </DialogHeader>
 
         <div className="flex justify-center">
@@ -67,46 +69,43 @@ const canConfirm = !!draft && hours.length > 0 && !!hour;
             selected={draft}
             onSelect={setDraft}
             defaultMonth={defaultMonth}
-            disabled={(date) => !isSelectable(activity, date, takenDates)}
+            disabled={(date) => !isSelectable(activity, date)}
             initialFocus
           />
         </div>
 
-        {takenDates.length > 0 && (
-          <p className="text-center text-xs text-gray-400">
-            Days already planned for another activity are unavailable.
-          </p>
-        )}
-
-        {draft && hours.length > 0 && (
+        {draft && (
           <div>
-            {hours.length === 0 && (
-  <p className="text-sm text-red-600">
-    No departure times are available for this activity.
-    Please contact us for assistance.
-  </p>
-)}
-            <p className="mb-2 flex items-center gap-2 text-sm font-semibold text-gray-900">
-              <Clock className="h-4 w-4 text-[#B9822B]" />
-              Departure time
-            </p>
-            <div className="grid grid-cols-3 gap-2">
-              {hours.map((option) => (
-                <Button
-                  key={option}
-                  type="button"
-                  variant="outline"
-                  onClick={() => setHour(option)}
-                  className={`rounded-xl ${
-                    hour === option
-                      ? "border-gray-900 bg-gray-900 text-white hover:bg-gray-800 hover:text-white"
-                      : "hover:border-[#E8A94A]"
-                  }`}
-                >
-                  {option}
-                </Button>
-              ))}
-            </div>
+            {hours.length === 0 ? (
+              <p className="text-sm text-red-600">
+                No departure times are available for this activity.
+                Please contact us for assistance.
+              </p>
+            ) : (
+              <>
+                <p className="mb-2 flex items-center gap-2 text-sm font-semibold text-gray-900">
+                  <Clock className="h-4 w-4 text-[#B9822B]" />
+                  Departure time
+                </p>
+
+                <div className="grid grid-cols-3 gap-2">
+                  {hours.map((option) => (
+                    <Button
+                      key={option}
+                      type="button"
+                      variant="outline"
+                      onClick={() => setHour(option)}
+                      className={`rounded-xl ${hour === option
+                          ? "border-gray-900 bg-gray-900 text-white hover:bg-gray-800 hover:text-white"
+                          : "hover:border-[#E8A94A]"
+                        }`}
+                    >
+                      {option}
+                    </Button>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         )}
 
@@ -119,11 +118,16 @@ const canConfirm = !!draft && hours.length > 0 && !!hour;
           >
             Cancel
           </Button>
+
           <Button
             type="button"
             className="rounded-full bg-gray-900 px-8 text-white hover:bg-gray-800"
             disabled={!canConfirm}
-            onClick={() => draft && hour && onConfirm(draft, hour)}
+            onClick={() => {
+              if (draft && hour) {
+                onConfirm(draft, hour);
+              }
+            }}
           >
             {initialDate ? "Update" : "Add to my trip"}
           </Button>

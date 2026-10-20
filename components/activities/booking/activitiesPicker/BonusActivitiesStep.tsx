@@ -47,17 +47,6 @@ export default function BonusActivitiesStep({
     [pkg.bonusActivities, activities],
   );
 
-  // TEMPORARY DEBUG LOG
-  console.log(
-    "Bonus activity debug:",
-    bonuses.map(({ bonus, activity }) => ({
-      bonusTitle: bonus.title,
-      matchedActivityTitle: activity?.title,
-      departureHours: activity?.departureHours,
-    })),
-  );
-
-
   // Paid activities and other bonuses occupy their selected dates.
   const takenDates = useMemo(() => {
     const paidDates = picked.map((item) => item.date);

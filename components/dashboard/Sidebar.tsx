@@ -37,20 +37,21 @@ const navigationItems = [
         url: "/dashboard",
         icon: Home,
       },
-      // {
-      //   title: "Analytics",
-      //   url: "/dashboard/analytics",
-      //   icon: TrendingUp,
-      // },
+
     ],
   },
   {
     title: "Bookings",
     items: [
       {
-        title: "All Bookings",
+        title: "Activity Booking",
         url: "/dashboard/bookings",
         icon: Ticket,
+      },
+      {
+        title: "Package Booking",
+        url: "/dashboard/package-bookings",
+        icon: Users,
       },
       {
         title: "Customers",

@@ -56,7 +56,6 @@ export const PACKAGES: Package[] = [
 ];
 
 export const INCLUDED = [
-  { icon: Plane, label: "Airport transfers" },
   { icon: Users, label: "Guides available in your language" },
   { icon: Car, label: "Transport during activities" },
   { icon: Shirt, label: "Winter clothing, when required" },

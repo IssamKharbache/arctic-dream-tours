@@ -1,11 +1,12 @@
 import { create } from "zustand";
 
-interface PromobarType {
-  openPromobar: boolean;
-  setOpenPromoBar: (openPromobar: boolean) => void;
+interface NewPackagesDialogState {
+  open: boolean;
+  setOpen: (open: boolean) => void;
 }
 
-export const usePromobarStore = create<PromobarType>((set) => ({
-  openPromobar: true,
-  setOpenPromoBar: (openPromobar: boolean) => set({ openPromobar }),
-}));
+export const useNewPackagesDialogStore =
+  create<NewPackagesDialogState>((set) => ({
+    open: false,
+    setOpen: (open) => set({ open }),
+  }));

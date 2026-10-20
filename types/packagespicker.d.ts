@@ -23,7 +23,7 @@ export type MembersSelection = {
   infants: number;
 };
 
-export type CustomerDetailsData = BookingCustomerFormData;1
+export type CustomerDetailsData = BookingCustomerFormData;
 
 
 export type BonusActivitySelection = {
@@ -31,8 +31,7 @@ export type BonusActivitySelection = {
   date: string;
   departureHour: string;
 };
-
-export type PackageStep = 1 | 2 | 3 | 4;
+export type PackageStep = 1 | 2 | 3 | 4 | 5;
 
 export type PackageSelection = {
   packageId: string;

@@ -1,180 +1,208 @@
 "use client";
 
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import Image from "next/image";
 import { useNewPackagesDialogStore } from "@/store/zustand/NewPackagesDialog";
 import {
   X,
   Mountain,
-  Plane,
   Sparkles,
-  BedDouble,
-  Compass,
   ArrowRight,
+  CalendarDays,
+  Users,
+  CheckCircle2,
+  Gift,
 } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-interface Package {
-  id: "classic" | "dream" | "ultimate";
-  name: string;
-  duration: string;
-  priceWithHotel: number;
-  priceWithoutHotel: number;
-  popular?: boolean;
-}
+const SHOW_DELAY_MS = 800;
 
-const PACKAGES: Package[] = [
+const FEATURES = [
   {
-    id: "classic",
-    name: "Lapland Classic",
-    duration: "4 DAYS / 3 NIGHTS",
-    priceWithHotel: 2550,
-    priceWithoutHotel: 1050,
+    icon: Mountain,
+    title: "Choose your adventures",
+    description:
+      "Build your own itinerary by selecting the activities you want to experience.",
   },
   {
-    id: "dream",
-    name: "Lapland Dream",
-    duration: "6 DAYS / 5 NIGHTS",
-    priceWithHotel: 4580,
-    priceWithoutHotel: 1580,
+    icon: CalendarDays,
+    title: "Pick your dates",
+    description:
+      "Choose dates for your selected activities and plan your Arctic getaway.",
   },
   {
-    id: "ultimate",
-    name: "Full Lapland Experience",
-    duration: "8 DAYS / 7 NIGHTS",
-    priceWithHotel: 7630,
-    priceWithoutHotel: 2380,
-    popular: true,
+    icon: Users,
+    title: "Travel your way",
+    description:
+      "Add adults, children, and infants to calculate your booking price.",
   },
 ];
 
 export default function NewPackagesDialog() {
   const { open, setOpen } = useNewPackagesDialogStore();
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setOpen(true);
-  }, [setOpen]);
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isHome) {
+      setOpen(false);
+      return;
+    }
+
+    const timer = setTimeout(() => setOpen(true), SHOW_DELAY_MS);
+
+    return () => clearTimeout(timer);
+  }, [isHome, setOpen]);
 
   useEffect(() => {
     if (!open) return;
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
     };
+
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [open, setOpen]);
 
   useEffect(() => {
-    if (open) {
-      const original = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
-      return () => {
-        document.body.style.overflow = original;
-      };
-    }
+    if (!open) return;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
   }, [open]);
 
-  if (!open) return null;
+  if (!mounted || !isHome || !open) return null;
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-5"
       role="dialog"
       aria-modal="true"
       aria-labelledby="new-packages-title"
     >
-      <div
-        className="absolute inset-0 bg-slate-950/85 backdrop-blur-sm"
+      {/* Backdrop */}
+      <button
+        type="button"
+        aria-label="Close dialog"
+        className="absolute inset-0 cursor-default bg-slate-950/85 backdrop-blur-sm"
         onClick={() => setOpen(false)}
       />
 
-      <div className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-cyan-400/20 shadow-[0_0_100px_rgba(34,211,238,.2)]">
-        {/* Real aurora photo background */}
+      {/* Dialog */}
+      <div className="relative isolate w-full max-w-2xl overflow-hidden rounded-2xl border border-cyan-300/20 shadow-[0_0_100px_rgba(34,211,238,.18)]">
         <Image
           src="/aurora.jpg"
           alt=""
           fill
           priority
-          className="object-cover"
+          sizes="(max-width: 672px) 100vw, 672px"
+          className="-z-20 object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/70 to-slate-950/90" />
+
+        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-slate-950/90 via-slate-950/80 to-slate-950/95" />
 
         <button
+          type="button"
           onClick={() => setOpen(false)}
           aria-label="Close dialog"
-          className="absolute right-4 top-4 z-10 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+          className="absolute right-3 top-3 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/20 text-white/75 transition hover:bg-white/10 hover:text-white"
         >
           <X size={20} />
         </button>
 
-        <div className="relative max-h-[85vh] overflow-y-auto px-6 py-8 sm:px-10 sm:py-10">
+        <div className="relative max-h-[90dvh] overflow-y-auto px-5 py-7 sm:px-9 sm:py-9">
+          {/* Eyebrow */}
           <div className="flex flex-wrap items-center gap-2">
-            <span className="relative inline-flex items-center gap-1.5 rounded-full border border-emerald-400/40 bg-emerald-400/10 px-3 py-1 text-xs font-bold tracking-wide text-emerald-300 backdrop-blur-sm">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-              </span>
-              NEW
-            </span>
-            <span className="inline-flex items-center rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-xs font-bold tracking-wide text-cyan-300 backdrop-blur-sm">
-              2026 / 2027 SEASON
+            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-300/30 bg-emerald-300/10 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-emerald-200">
+              <Sparkles size={14} />
+              A new way to explore Lapland
             </span>
           </div>
 
-          {/* Big heading */}
+          {/* Main message */}
           <h2
             id="new-packages-title"
-            className="mt-4 flex items-center gap-2 text-3xl font-bold text-white drop-shadow-lg sm:text-4xl"
+            className="mt-5 max-w-xl text-3xl font-bold leading-tight text-white drop-shadow-lg sm:text-4xl"
           >
-            <Sparkles className="h-7 w-7 shrink-0 text-emerald-300" />
-            Our New Packages
+            Your Lapland adventure.
+            <span className="block text-emerald-300">
+              Your way.
+            </span>
           </h2>
 
-          <p className="mt-3 max-w-lg text-sm text-slate-200 drop-shadow sm:text-base">
-            Explore the Arctic like never before. Unforgettable adventures await
-            this winter season.
+          <p className="mt-4 max-w-xl text-sm leading-6 text-slate-200 sm:text-base sm:leading-7">
+            From husky safaris and Northern Lights to unforgettable Arctic
+            experiences, create a trip that feels like yours. Choose your
+            activities, select your dates, and personalize your booking.
           </p>
 
-          {/* Package cards — text only, no images */}
-          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-            {PACKAGES.map((pkg) => (
+          {/* Feature list */}
+          <div className="mt-7 grid gap-3 sm:grid-cols-3">
+            {FEATURES.map(({ icon: Icon, title, description }) => (
               <div
-                key={pkg.id}
-                className={`flex flex-col rounded-xl border p-4 backdrop-blur-md ${
-                  pkg.popular
-                    ? "border-amber-400/50 bg-amber-400/5"
-                    : "border-white/10 bg-slate-950/40"
-                }`}
+                key={title}
+                className="rounded-xl border border-white/10 bg-slate-950/40 p-4 backdrop-blur-sm"
               >
-                <div className="flex items-center justify-between gap-2">
-                  <h3 className="text-sm font-bold text-white">{pkg.name}</h3>
-                  {pkg.popular && (
-                    <span className="shrink-0 rounded-full bg-amber-400 px-2 py-0.5 text-[9px] font-bold tracking-wide text-slate-900">
-                      POPULAR
-                    </span>
-                  )}
+                <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg border border-cyan-300/20 bg-cyan-300/10 text-cyan-200">
+                  <Icon size={19} />
                 </div>
-                <p className="mt-1 text-[11px] font-medium tracking-wide text-slate-400">
-                  {pkg.duration}
-                </p>
-                <p className="mt-3 text-sm text-white">
-                  From{" "}
-                  <span className="font-bold text-emerald-300">
-                    €{pkg.priceWithoutHotel}
-                  </span>
-                  <span className="text-slate-400"> /person</span>
+
+                <h3 className="text-lg font-semibold text-white">
+                  {title}
+                </h3>
+
+                <p className="mt-2 text-sm leading-5 text-slate-300">
+                  {description}
                 </p>
               </div>
             ))}
           </div>
-          <p className="mt-5 text-sm text-slate-300">
-            We handle your accommodation, activities, and airport transfers — so
-            you don&apos;t have to.
-          </p>
-          <div className="mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
+
+          {/* Bonus feature */}
+          <div className="mt-4 flex gap-3 rounded-xl border border-amber-300/20 bg-amber-300/[0.07] p-4">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-amber-300/10 text-amber-200">
+              <Gift size={19} />
+            </div>
+
+            <div>
+              <h3 className="text-sm font-semibold text-white">
+                Discover bonus activities
+              </h3>
+              <p className="mt-1 text-xs leading-5 text-slate-300">
+                Look out for bonus experiences available with your package
+                selection.
+              </p>
+            </div>
+          </div>
+
+          {/* Reassurance */}
+          <div className="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-xs text-slate-300">
+            <span className="inline-flex items-center gap-1.5">
+              <CheckCircle2 size={15} className="text-emerald-300" />
+              Secure online payment
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <CheckCircle2 size={15} className="text-emerald-300" />
+              Clear activity pricing
+            </span>
+          </div>
+
+          {/* Actions */}
+          <div className="mt-7 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
             <button
+              type="button"
               onClick={() => setOpen(false)}
-              className="text-sm font-medium text-slate-300 transition-colors hover:text-white"
+              className="py-2 text-sm font-medium text-slate-300 transition hover:text-white"
             >
               Maybe later
             </button>
@@ -182,11 +210,14 @@ export default function NewPackagesDialog() {
             <Link
               href="/packages"
               onClick={() => setOpen(false)}
-              className="group inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400 px-6 py-3 text-sm font-bold text-slate-900 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(34,211,238,.45)]"
+              className="group inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-cyan-300 to-emerald-300 px-6 py-3.5 text-sm font-bold text-slate-950 transition duration-300 hover:scale-[1.02] hover:shadow-[0_0_35px_rgba(34,211,238,.25)]"
             >
-              <Mountain className="h-4 w-4 shrink-0" />
-              Explore Packages
-              <ArrowRight className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
+              <Mountain size={18} />
+              Build Your Adventure
+              <ArrowRight
+                size={17}
+                className="transition-transform group-hover:translate-x-1"
+              />
             </Link>
           </div>
         </div>

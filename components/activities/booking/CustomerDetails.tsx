@@ -206,7 +206,7 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = ({
                 className="w-full"
                 defaultValue={
                   currentPickup &&
-                  !Object.values(pickupOptions).includes(currentPickup)
+                    !Object.values(pickupOptions).includes(currentPickup)
                     ? currentPickup
                     : ""
                 }
@@ -251,7 +251,7 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = ({
                 className="w-full"
                 defaultValue={
                   currentDropoff &&
-                  !Object.values(dropoffOptions).includes(currentDropoff)
+                    !Object.values(dropoffOptions).includes(currentDropoff)
                     ? currentDropoff
                     : ""
                 }

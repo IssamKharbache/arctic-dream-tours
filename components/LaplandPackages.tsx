@@ -6,9 +6,6 @@ import {
   Plane,
   Coffee,
   Check,
-  Compass,
-  ChevronLeft,
-  ChevronRight,
   Gift,
 } from "lucide-react";
 
@@ -76,11 +73,10 @@ function PricingCard({
 }) {
   return (
     <div
-      className={`relative flex h-full flex-col rounded-2xl border p-6 backdrop-blur-md ${
-        pkg.popular
-          ? "border-[#E8A94A]/60 bg-white/10 shadow-[0_0_0_1px_rgba(232,169,74,0.25),0_20px_50px_-15px_rgba(232,169,74,0.35)]"
-          : "border-white/15 bg-white/6"
-      }`}
+      className={`relative flex h-full flex-col rounded-2xl border p-6 backdrop-blur-md ${pkg.popular
+        ? "border-[#E8A94A]/60 bg-white/10 shadow-[0_0_0_1px_rgba(232,169,74,0.25),0_20px_50px_-15px_rgba(232,169,74,0.35)]"
+        : "border-white/15 bg-white/6"
+        }`}
     >
       {pkg.popular && (
         <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[#E8A94A] px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-[#0A1626]">
@@ -130,6 +126,17 @@ function PricingCard({
             </li>
           ))}
         </ul>
+        <ul className="mt-3 space-y-2.5">
+          <li
+            className="flex items-start gap-2 text-sm text-[#D7E1EE]"
+          >
+            <Check
+              className="mt-0.5 h-4 w-4 shrink-0 text-[#6FE3E8]"
+              strokeWidth={2}
+            />
+            <span>Airport transfer</span>
+          </li>
+        </ul>
       </div>
 
       <div className="flex-1" />
@@ -157,11 +164,10 @@ function PricingCard({
       <button
         type="button"
         onClick={() => onSelect(pkg)}
-        className={`mt-5 flex w-full cursor-pointer items-center justify-center rounded-full px-4 py-2.5 text-sm font-semibold transition-colors duration-200 ${
-          pkg.popular
-            ? "bg-[#E8A94A] text-[#0A1626] hover:bg-[#F2BE6B]"
-            : "bg-white/10 text-white hover:bg-white/20"
-        }`}
+        className={`mt-5 flex w-full cursor-pointer items-center justify-center rounded-full px-4 py-2.5 text-sm font-semibold transition-colors duration-200 ${pkg.popular
+          ? "bg-[#E8A94A] text-[#0A1626] hover:bg-[#F2BE6B]"
+          : "bg-white/10 text-white hover:bg-white/20"
+          }`}
       >
         Book this package
       </button>
@@ -169,83 +175,6 @@ function PricingCard({
   );
 }
 
-function ActivityCard({ activity }: { activity: Activity }) {
-  return (
-    <div className="group relative h-40 w-56 shrink-0 snap-start overflow-hidden rounded-xl border border-white/10 bg-white/4 sm:h-44 sm:w-64">
-      {activity.imageUrl ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={activity.imageUrl}
-          alt={activity.title}
-          loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-        />
-      ) : (
-        <div className="flex h-full w-full items-center justify-center bg-white/4">
-          <Compass
-            className="h-6 w-6 text-[#6FE3E8]/60"
-            strokeWidth={1.5}
-          />
-        </div>
-      )}
-
-      <div className="absolute inset-0 bg-linear-to-t from-[#0A1626] via-[#0A1626]/10 to-transparent" />
-
-      <p className="absolute inset-x-0 bottom-0 p-3 text-sm font-semibold leading-tight text-white">
-        {activity.title}
-      </p>
-    </div>
-  );
-}
-
-function ActivitySlider({ activities }: { activities: Activity[] }) {
-  const trackRef = useRef<HTMLDivElement>(null);
-
-  const scrollByCard = (direction: "left" | "right") => {
-    const track = trackRef.current;
-    if (!track) return;
-
-    const amount =
-      track.clientWidth * 0.8 * (direction === "left" ? -1 : 1);
-
-    track.scrollBy({ left: amount, behavior: "smooth" });
-  };
-
-  return (
-    <div className="relative">
-      <div
-        ref={trackRef}
-        className="flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-      >
-        {activities.map((activity) => (
-          <ActivityCard key={activity.id} activity={activity} />
-        ))}
-      </div>
-
-      {activities.length > 2 && (
-        <>
-          <button
-            type="button"
-            aria-label="Scroll activities left"
-            onClick={() => scrollByCard("left")}
-            className="absolute -left-3 top-1/2 hidden h-9 w-9 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-[#0A1626]/80 text-white backdrop-blur-md transition-colors duration-200 hover:bg-[#0A1626] sm:flex"
-          >
-            <ChevronLeft className="h-4 w-4" strokeWidth={2} />
-          </button>
-
-          <button
-            type="button"
-            aria-label="Scroll activities right"
-            onClick={() => scrollByCard("right")}
-            className="absolute -right-3 top-1/2 hidden h-9 w-9 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-[#0A1626]/80 text-white backdrop-blur-md transition-colors duration-200 hover:bg-[#0A1626] sm:flex"
-          >
-            <ChevronRight className="h-4 w-4" strokeWidth={2} />
-          </button>
-        </>
-      )}
-    </div>
-  );
-}
 
 export default function LaplandPackages() {
   const { activities, status } = useActivities();
@@ -257,7 +186,6 @@ export default function LaplandPackages() {
     try {
       localStorage.setItem("packageSelection", JSON.stringify(selection));
     } catch {
-      // Local storage may be unavailable.
     }
 
     console.log("Package selection:", selection);
@@ -310,7 +238,7 @@ export default function LaplandPackages() {
             Every package includes
           </h3>
 
-          <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
             {INCLUDED.map(({ icon: Icon, label }, index) => (
               <div
                 key={index}
@@ -339,6 +267,7 @@ export default function LaplandPackages() {
         }}
         onContinue={handleContinue}
       />
+
     </section>
   );
 }

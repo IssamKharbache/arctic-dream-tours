@@ -193,7 +193,7 @@ export default function LaplandPackages() {
 
   return (
     <section
-      className="relative mt-22 overflow-hidden bg-slate-900 py-20 md:mt-16"
+      className="relative  overflow-hidden bg-slate-900 py-20 "
       style={{ backgroundImage: "url('/packages/iglos.jpg')" }}
     >
       <div className="absolute inset-0 bg-linear-to-b from-slate-950/80 via-slate-950/70 to-slate-950/90" />

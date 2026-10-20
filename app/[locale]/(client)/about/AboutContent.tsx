@@ -286,7 +286,7 @@ export default function AboutContent() {
           <p className="text-xl mb-8 text-pretty leading-relaxed opacity-90">
             {t("cta.subtitle")}
           </p>
-          <Link href="/contact">
+          <Link href="/packages">
             <Button
               size="lg"
               variant="secondary"

@@ -55,7 +55,6 @@ const NavBar = () => {
 
   return (
     <nav
-      style={{ top: "var(--promobar-height, 0px)" }}
       className={`fixed w-full z-50 transition-all duration-300 ${navbarClasses}`}
     >
       <div className="max-w-[1700px] mx-auto px-4 sm:px-6 flex items-center justify-between">
@@ -75,9 +74,8 @@ const NavBar = () => {
         <div className="hidden md:flex items-center gap-5">
           {menus.map((menu, idx) => (
             <Link
-              className={`font-semibold hover:text-primary duration-300 ${
-                isNotHomePage || scrolled ? "text-gray-800" : "text-white"
-              }`}
+              className={`font-semibold hover:text-primary duration-300 ${isNotHomePage || scrolled ? "text-gray-800" : "text-white"
+                }`}
               key={idx}
               href={menu.href as "/" | "/about" | "/contact"}
             >
@@ -101,11 +99,10 @@ const NavBar = () => {
           ) : (
             <button
               onClick={openSignIn}
-              className={`py-1 px-7 rounded-2xl cursor-pointer ${
-                isNotHomePage || scrolled
-                  ? "outline-black outline-1 hover:bg-black hover:text-white"
-                  : "outline-white outline-1 text-black hover:bg-white"
-              }`}
+              className={`py-1 px-7 rounded-2xl cursor-pointer ${isNotHomePage || scrolled
+                ? "outline-black outline-1 hover:bg-black hover:text-white"
+                : "outline-white outline-1 text-black hover:bg-white"
+                }`}
             >
               {t("logIn")}
             </button>

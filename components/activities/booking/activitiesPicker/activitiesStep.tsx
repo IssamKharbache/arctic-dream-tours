@@ -97,12 +97,6 @@ export default function ActivitiesStep({
     [activities, bonusActivities, pkg.bonusActivities],
   );
 
-  const takenDates = useMemo(
-    () =>
-      picked.filter((pick) => pick.id !== editing?.id).map((pick) => pick.date),
-    [picked, editing],
-  );
-
   const confirmDate = (date: Date, departureHour?: string) => {
     if (!editing) return;
 
@@ -274,7 +268,6 @@ export default function ActivitiesStep({
           initialHour={
             picked.find((pick) => pick.id === editing.id)?.departureHour
           }
-          takenDates={takenDates}
           onConfirm={confirmDate}
           onClose={() => setEditing(null)}
         />
